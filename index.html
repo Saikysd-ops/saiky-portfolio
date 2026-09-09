@@ -1858,10 +1858,18 @@
     transition:opacity .3s ease, transform .3s ease;}
   .habit-card:hover .habit-reveal{opacity:1;transform:translateY(0);}
 
+  /* one closing line under the four habits */
+  .habits-close{margin:48px 0 0;max-width:46ch;
+    font-family:var(--font-display);font-style:italic;font-weight:400;
+    font-size:clamp(20px,2.3vw,27px);line-height:1.4;color:var(--ink);
+    padding-top:38px;border-top:1px solid var(--line);}
+  .habits-close b{font-style:normal;font-weight:500;color:var(--accent);}
+
   @media (max-width:760px){
     .habits-grid{grid-template-columns:1fr;}
     .habit-card{padding:30px 28px 26px;}
     .habit-card p{min-height:0;}
+    .habits-close{font-size:19px;padding-top:28px;margin-top:34px;}
   }
   @media (prefers-reduced-motion:reduce){
     .habit-card,.habit-num,.habit-glyph,.habit-seq,.habit-card p,.habit-reveal{transition:none;}
@@ -2805,6 +2813,8 @@
       </div>
 
     </div>
+
+    <p class="habits-close">I care less about producing more screens and more about making <b>the right thing</b> clear enough to build, use, and scale.</p>
   </section>
 
   <section class="video-sec" id="reel">
