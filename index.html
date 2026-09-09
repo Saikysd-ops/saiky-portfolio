@@ -62,27 +62,30 @@
     border:1.5px solid var(--ink);
     display:inline-flex;align-items:center;justify-content:center;
     transition:transform .25s ease, border-color .25s ease, color .3s ease;}
-  .theme-dot:hover{transform:translateY(-1px);border-color:var(--accent);color:var(--accent);}
-  :root[data-theme="dark"] .theme-dot:hover{color:var(--violet);}
+  /* hover only on real pointers — on touch, :hover sticks after a tap and
+     left the toggle stuck in the purple accent colour */
+  @media (hover:hover){
+    .theme-dot:hover{transform:translateY(-1px);border-color:var(--accent);color:var(--accent);}
+    :root[data-theme="dark"] .theme-dot:hover{color:var(--violet);}
+    .theme-dot:hover .sunmoon{transform:rotate(12deg);}
+    :root[data-theme="dark"] .theme-dot:hover .sunmoon{transform:rotate(-12deg);}
+  }
 
-  /* sun ⇄ moon: rays retract, a crescent bite slides across, the whole mark rotates */
+  /* sun ⇄ moon: two whole shapes crossfade + spin — no SVG mask or animated
+     geometry attributes (those silently fail on some mobile Safari builds,
+     leaving a plain filled disc) */
   .sunmoon{width:20px;height:20px;overflow:visible;
     transition:transform .6s cubic-bezier(.34,1.56,.64,1);}
-  .sunmoon .sm-core{fill:currentColor;transition:r .5s cubic-bezier(.34,1.56,.64,1);}
-  .sunmoon .sm-bite{transition:cx .5s cubic-bezier(.34,1.56,.64,1), cy .5s cubic-bezier(.34,1.56,.64,1);}
-  .sunmoon .sm-rays{transform-origin:12px 12px;
-    transition:opacity .35s ease, transform .5s cubic-bezier(.34,1.56,.64,1);}
+  .sunmoon .sm-sun, .sunmoon .sm-moon{
+    transform-box:fill-box;transform-origin:center;
+    transition:opacity .3s ease, transform .5s cubic-bezier(.34,1.56,.64,1);}
   .sunmoon .sm-rays line{transition:stroke-width .4s ease;}
-  /* light mode = sun: rays out, full disc */
-  .sunmoon{transform:rotate(0deg);}
-  .sunmoon .sm-rays{opacity:1;transform:scale(1);}
-  /* dark mode = moon: rays fold in, disc shrinks, bite slides over */
-  :root[data-theme="dark"] .sunmoon{transform:rotate(-135deg);}
-  :root[data-theme="dark"] .sunmoon .sm-core{r:7.4;}
-  :root[data-theme="dark"] .sunmoon .sm-bite{cx:17.5;cy:7.5;}
-  :root[data-theme="dark"] .sunmoon .sm-rays{opacity:0;transform:scale(.4);}
-  .theme-dot:hover .sunmoon{transform:rotate(28deg);}
-  :root[data-theme="dark"] .theme-dot:hover .sunmoon{transform:rotate(-160deg);}
+  /* light = sun */
+  .sunmoon .sm-sun{opacity:1;transform:none;}
+  .sunmoon .sm-moon{opacity:0;transform:rotate(-60deg) scale(.4);}
+  /* dark = moon */
+  :root[data-theme="dark"] .sunmoon .sm-sun{opacity:0;transform:rotate(60deg) scale(.4);}
+  :root[data-theme="dark"] .sunmoon .sm-moon{opacity:1;transform:none;}
   @media (prefers-reduced-motion:reduce){
     .sunmoon, .sunmoon *{transition:none;}
   }
@@ -192,8 +195,8 @@
     transition:--mr .35s cubic-bezier(.22,1,.36,1);}
   .img-stack{position:relative;display:grid;transition:transform .12s ease-out;transform-style:preserve-3d;will-change:transform;}
   .img-stack img{grid-area:1/1;width:100%;display:block;border-radius:10px;position:relative;z-index:1;transition:filter .3s ease, opacity .3s ease;}
-  .img-stack .light-img{mix-blend-mode:multiply;opacity:.9;filter:blur(.3px);}
-  .img-stack .dark-img{opacity:0;pointer-events:none;filter:blur(.3px);}
+  .img-stack .light-img{mix-blend-mode:multiply;opacity:.92;}
+  .img-stack .dark-img{opacity:0;pointer-events:none;}
   :root[data-theme="dark"] .img-stack .light-img{opacity:0;pointer-events:none;}
   :root[data-theme="dark"] .img-stack .dark-img{opacity:.9;pointer-events:auto;}
   .img-stack .bw-img{opacity:0;pointer-events:none;}
@@ -222,8 +225,14 @@
     filter:grayscale(1) contrast(1.06);
   }
 
-  .portrait-frame:hover .light-img{filter:contrast(1.06) brightness(1.03) blur(.3px);}
-  .portrait-frame:hover .dark-img{filter:brightness(1.06) saturate(1.1) blur(.3px);}
+  .portrait-frame:hover .light-img{filter:contrast(1.06) brightness(1.03);}
+  .portrait-frame:hover .dark-img{filter:brightness(1.06) saturate(1.1);}
+  /* touch devices: drop the 3D tilt context so the portrait renders crisp
+     (a 3D layer forces GPU resampling and softens the low-res source) */
+  @media (hover:none){
+    .portrait-frame{perspective:none;}
+    .img-stack{transform:none!important;transform-style:flat;will-change:auto;}
+  }
   .shine{position:absolute;inset:0;border-radius:10px;overflow:hidden;pointer-events:none;}
   .shine::after{content:'';position:absolute;top:-90%;left:-70%;width:35%;height:280%;
     background:linear-gradient(120deg, transparent, rgba(255,255,255,.65), transparent);
@@ -1998,10 +2007,13 @@
       background:var(--paper-raised);padding:0 32px;
       max-height:0;overflow:hidden;opacity:0;
       transition:max-height .35s ease, opacity .25s ease, padding .35s ease;}
-    .navbar.open .navlinks{max-height:340px;opacity:1;padding:12px 32px 20px;
+    /* big bottom padding extends the links panel's background down far enough
+       that the actions row (positioned below) always overlaps empty padding,
+       never the Résumé link — and there's never a gap showing page behind */
+    .navbar.open .navlinks{max-height:360px;opacity:1;padding:12px 32px 46px;
       border-top:1px solid var(--line);}
-    .navbar.open .nav-right{max-height:160px;opacity:1;padding:14px 32px 22px;
-      flex-direction:row;align-items:center;gap:12px;top:calc(100% + 190px);
+    .navbar.open .nav-right{max-height:160px;opacity:1;padding:16px 32px 24px;
+      flex-direction:row;align-items:center;gap:12px;top:calc(100% + 210px);
       border-bottom-left-radius:16px;border-bottom-right-radius:16px;
       box-shadow:0 26px 44px -22px rgba(20,20,27,.24);}
     .navbar.open .navlinks a{border-bottom:1px solid var(--line);}
@@ -2118,6 +2130,22 @@
     .sv-gate-form{padding:32px 22px 26px;}
     .nda-title{font-size:22px;}
   }
+  /* work-card thumbnails on phones: the browser/phone mockup was floating in a
+     tall 5:4 frame with a big empty colour band and a heavy shadow that read
+     as bleeding past the card. Tighten the frame, let the mockup fill more of
+     it, and lighten the shadow — applied to every card for consistency. */
+  @media (max-width:760px){
+    .work-thumb{aspect-ratio:4/3;}
+    /* stats stack to one column here — drop the reserved 2-line label height
+       (it only exists to align dividers between side-by-side cards) */
+    .work-stats .lbl{min-height:0;}
+    .work-stats .stat{gap:3px;}
+    .shot-thumb{padding:14px 12px 40px;}
+    .shot-thumb .monitor{box-shadow:0 0 0 1px rgba(255,255,255,.22),
+      0 8px 20px -10px rgba(12,10,30,.4);}
+    .phone-thumb{padding:16px 18px 44px;}
+    #mdThumb .shot-stage::after, #scThumb .shot-stage::after{height:9%;}
+  }
 </style>
 </head>
 <body>
@@ -2149,21 +2177,20 @@
         <span class="nav-clock" id="navClock" title="Bengaluru, India">BLR <b>--:--</b></span>
         <button class="theme-dot" id="themeToggle" aria-label="Toggle dark mode">
           <svg class="sunmoon" viewBox="0 0 24 24" aria-hidden="true">
-            <mask id="moonMask">
-              <rect x="0" y="0" width="24" height="24" fill="#fff"/>
-              <circle class="sm-bite" cx="24" cy="9" r="7" fill="#000"/>
-            </mask>
-            <circle class="sm-core" cx="12" cy="12" r="5.2" mask="url(#moonMask)"/>
-            <g class="sm-rays" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
-              <line x1="12" y1="1.6"  x2="12" y2="3.6"/>
-              <line x1="12" y1="20.4" x2="12" y2="22.4"/>
-              <line x1="1.6"  y1="12" x2="3.6"  y2="12"/>
-              <line x1="20.4" y1="12" x2="22.4" y2="12"/>
-              <line x1="4.6"  y1="4.6"  x2="6.0"  y2="6.0"/>
-              <line x1="18.0" y1="18.0" x2="19.4" y2="19.4"/>
-              <line x1="4.6"  y1="19.4" x2="6.0"  y2="18.0"/>
-              <line x1="18.0" y1="6.0"  x2="19.4" y2="4.6"/>
+            <g class="sm-sun">
+              <circle cx="12" cy="12" r="5.2" fill="currentColor"/>
+              <g class="sm-rays" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+                <line x1="12" y1="1.6"  x2="12" y2="3.6"/>
+                <line x1="12" y1="20.4" x2="12" y2="22.4"/>
+                <line x1="1.6"  y1="12" x2="3.6"  y2="12"/>
+                <line x1="20.4" y1="12" x2="22.4" y2="12"/>
+                <line x1="4.6"  y1="4.6"  x2="6.0"  y2="6.0"/>
+                <line x1="18.0" y1="18.0" x2="19.4" y2="19.4"/>
+                <line x1="4.6"  y1="19.4" x2="6.0"  y2="18.0"/>
+                <line x1="18.0" y1="6.0"  x2="19.4" y2="4.6"/>
+              </g>
             </g>
+            <path class="sm-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" fill="currentColor"/>
           </svg>
         </button>
         <button class="say-hi" data-goto="contact">Let's talk <span class="cta-arrow">→</span></button>
