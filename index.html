@@ -1714,6 +1714,33 @@
     .case-cardgrid--5{grid-template-columns:1fr;}
     .case-compare,.case-flow{grid-template-columns:1fr;}
     .case-flow-arrow{transform:rotate(90deg);}
+    /* cards stack to one column here — the equal-height min no longer helps and
+       just leaves dead space under short cards */
+    .case-card{min-height:0;padding:20px 18px;}
+    /* mockups: shrink the big decorative top margins so a screenshot doesn't
+       sit alone in a screenful of empty space */
+    .case-sec .shotbox-desktop[style]{margin-top:28px!important;}
+    .shotbox-desktop{padding:7px 7px 10px;border-radius:13px;}
+    .shotbox-desktop .shotbox-crop{max-height:68vh;}
+    /* solution gallery: crop each screen to one tidy shape instead of a fixed
+       pixel height that leaves white space under wide screenshots */
+    .dl-showcase-item .shotbox-crop{height:auto;aspect-ratio:3/2;}
+    .dl-showcase-item .shotbox-crop img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+    /* D&D milestone flow: the 7-across timeline is unreadable on a phone —
+       restack it as a clean vertical list with a connecting rail */
+    .dl-flow{margin-top:40px;}
+    .dl-flow-track{display:none;}
+    .dl-flow-labels{flex-direction:column;gap:0;margin-top:0;
+      border-left:2px solid var(--line);padding-left:22px;}
+    .dl-flow-label{flex:none;text-align:left;padding:14px 0;font-size:13px;font-weight:600;
+      color:var(--ink);line-height:1.45;position:relative;}
+    .dl-flow-label::before{content:"";position:absolute;left:-27px;top:19px;
+      width:10px;height:10px;border-radius:50%;background:var(--ink-soft);
+      box-shadow:0 0 0 3px var(--paper);}
+    .dl-flow-label b{display:block;font-size:14px;margin-bottom:1px;}
+    .dl-flow-label .loc{display:inline-block;font-size:11px;font-weight:500;margin:4px 0 0;}
+    .dl-flow-label .date{display:block;margin:2px 0 0;font-size:10px;font-weight:400;
+      color:var(--ink-soft);}
     /* full-bleed dark sections (margin:0 -100vw) intentionally create a very
        wide box so the background reaches both edges — clip that overflow
        at the root so it never produces an actual horizontal scrollbar */
