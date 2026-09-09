@@ -283,10 +283,13 @@
   .stat:hover .stat-icon svg{transform:scale(1.05);}
   .hero-rule{border:0;border-top:1px solid var(--line);margin:22px 0 18px;}
   .hero-stats{grid-template-columns:repeat(2,1fr);gap:34px 20px;margin-bottom:16px;}
-  .work-stats{grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;padding-top:28px;
+  .work-stats{grid-template-columns:repeat(3,1fr);gap:14px;margin-top:auto;padding-top:24px;
     border-top:1px solid var(--line);margin-bottom:0;}
-  .work-stats .num{font-size:29px;}
-  .work-stats .lbl{font-size:11px;color:var(--ink-soft);opacity:.7;}
+  .work-stats .num{font-size:29px;line-height:1.1;}
+  .work-stats .stat{display:flex;flex-direction:column;gap:5px;}
+  /* reserve two label lines so a wrapping label on one card doesn't push its
+     divider higher than the other card's in the same row */
+  .work-stats .lbl{font-size:11px;line-height:1.4;color:var(--ink-soft);opacity:.7;min-height:2.8em;}
   .work-stats-2x2{grid-template-columns:repeat(2,1fr);row-gap:22px;}
   .hero-stats .num{font-size:26px;}
   .hero-label{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;
@@ -319,7 +322,7 @@
   .work h2{font-family:var(--font-display);font-weight:500;font-size:clamp(34px,4.4vw,52px);line-height:1.05;margin:0 0 12px;color:var(--ink);letter-spacing:-.01em;}
   .work .sub{font-size:16px;color:var(--ink-soft);margin:0 0 32px;padding-bottom:28px;border-bottom:1px solid var(--line);}
   .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:44px 34px;align-items:stretch;}
-  .work-card{display:grid;grid-template-rows:auto auto auto 1fr;text-decoration:none;color:inherit;cursor:pointer;
+  .work-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
     border-radius:14px;outline:none;}
   .work-card:focus-visible{outline:3px solid var(--violet);outline-offset:6px;}
   .work-thumb{position:relative;aspect-ratio:5/4;border-radius:12px;overflow:hidden;margin-bottom:16px;
@@ -421,14 +424,16 @@
   .t-violet{background:linear-gradient(150deg, #7156D6, #503AA8);}
   .t-green{background:linear-gradient(150deg, var(--pine), var(--teal));}
   .t-amber{background:linear-gradient(150deg, var(--gold), var(--ember));}
-  .work-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13.5px;color:var(--ink-soft);opacity:.75;margin-bottom:6px;}
+  .work-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13.5px;color:var(--ink-soft);opacity:.75;margin-bottom:6px;min-height:24px;}
   .work-meta .yr{flex-shrink:0;}
-  .work-meta .co{display:inline-flex;align-items:center;gap:7px;}
-  .work-meta .wm-mark{height:21px;width:auto;}
-  .work-card h3{font-size:21.5px;font-weight:600;color:var(--ink);margin:0 0 7px;letter-spacing:-.01em;}
-  /* What it is → Why it matters → Impact, on a shared row grid so blocks
-     sit on identical baselines across every card in a row */
-  .work-body{display:grid;grid-template-rows:auto auto auto 1fr;row-gap:0;flex:1;}
+  .work-meta .co{display:inline-flex;align-items:center;gap:7px;min-width:0;}
+  /* one logo size across every card, whatever the source (img or inline svg) */
+  .work-meta .co img, .work-meta .co svg, .work-meta .wm-mark{height:18px;width:auto;flex-shrink:0;vertical-align:middle;}
+  .work-card h3{font-size:21.5px;font-weight:600;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;line-height:1.25;}
+  /* card is a flex column so the impact block (divider + stats + note) can be
+     pinned to the bottom — that keeps the divider on the same line across
+     both cards in a row regardless of how long each description runs */
+  .work-body{display:flex;flex-direction:column;flex:1;}
   .work-card .desc{font-size:15.5px;line-height:1.5;color:var(--ink);margin:0;min-height:1.5em;}
   /* subtle editorial accent — a short rule, not a container */
   .work-card .opp{position:relative;font-size:15px;font-weight:500;line-height:1.5;
@@ -455,9 +460,11 @@
     width:14px;text-align:left;}
   .work-metric .fig.arrow.wide{width:auto;min-width:44px;}
   .work-metric .lbl{font-size:15px;color:var(--ink-soft);line-height:1.45;}
-  /* release / pilot note closing the impact block */
-  .work-note{margin-top:9px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.02em;
-    color:var(--ink-soft);opacity:.75;line-height:1.5;}
+  /* release / pilot note closing the impact block — reserve two lines so the
+     divider above the stats lands on the same row in both cards even when one
+     note wraps and the other doesn't */
+  .work-note{margin-top:10px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.02em;
+    color:var(--ink-soft);opacity:.75;line-height:1.5;min-height:3em;}
   /* accents darkened to meet contrast on the paper background; the figure/arrow
      carries the meaning, so colour is never the only signal */
   .m-teal{color:#14705C;} .m-blue{color:#2E52B8;} .m-lime{color:#4F7A2E;} .m-coral{color:#B4472E;}
@@ -1984,16 +1991,21 @@
     .navbar.scrolled nav.top{padding:12px 0;}
     .logo{font-size:14px;letter-spacing:.1em;white-space:nowrap;}
     .nav-toggle{display:inline-flex;}
-    /* links + actions collapse into a sheet under the bar */
+    /* links + actions collapse into one prominent panel under the bar */
     .navlinks, .nav-right{
       position:absolute;left:0;right:0;top:100%;
       flex-direction:column;align-items:flex-start;gap:0;
-      background:var(--paper);padding:0 32px;
+      background:var(--paper-raised);padding:0 32px;
       max-height:0;overflow:hidden;opacity:0;
       transition:max-height .35s ease, opacity .25s ease, padding .35s ease;}
-    .navbar.open .navlinks{max-height:260px;opacity:1;padding:10px 32px 0;border-top:1px solid var(--line);}
-    .navbar.open .nav-right{max-height:160px;opacity:1;padding:6px 32px 20px;
-      flex-direction:row;align-items:center;gap:12px;top:calc(100% + 150px);}
+    .navbar.open .navlinks{max-height:340px;opacity:1;padding:12px 32px 20px;
+      border-top:1px solid var(--line);}
+    .navbar.open .nav-right{max-height:160px;opacity:1;padding:14px 32px 22px;
+      flex-direction:row;align-items:center;gap:12px;top:calc(100% + 190px);
+      border-bottom-left-radius:16px;border-bottom-right-radius:16px;
+      box-shadow:0 26px 44px -22px rgba(20,20,27,.24);}
+    .navbar.open .navlinks a{border-bottom:1px solid var(--line);}
+    .navbar.open .navlinks a:last-child{border-bottom:none;}
     .navlinks a{font-size:17px;padding:12px 0;width:100%;}
     .say-hi{font-size:14px;padding:9px 18px;}
     .theme-dot{width:36px;height:36px;}
@@ -2290,7 +2302,7 @@
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Discover <i>→</i> Evaluate <i>→</i> Monitor</div>
         </div>
-                <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:16px;width:auto;vertical-align:middle"><span>· Enterprise AI</span></span><span class="yr">2025–Now</span></div>
+                <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart"><span>· Enterprise AI</span></span><span class="yr">2025–Now</span></div>
         <h3>Supplier Matrix</h3>
         <div class="work-body"><p class="desc">Performance, risk, and capability signals lived across fragmented systems. Supplier Matrix unified them into one trusted decision layer for supplier discovery, evaluation, and monitoring.</p>
         <p class="opp">From fragmented signals to faster, more confident supplier decisions.</p>
@@ -2321,7 +2333,7 @@
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Gap <i>→</i> Diagnose <i>→</i> Act</div>
         </div>
-        <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:16px;width:auto;vertical-align:middle"><span>· Enterprise AI</span></span><span class="yr">2026–Now</span></div>
+        <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart"><span>· Enterprise AI</span></span><span class="yr">2026–Now</span></div>
         <h3>Scintilla × Supplier One</h3>
         <div class="work-body"><p class="desc">Turned inventory gaps into explainable recommendations suppliers can act on inside Supplier One.</p>
         <p class="mini-flow">Alert → Insight → Recommendation → Action</p>
@@ -2351,7 +2363,7 @@
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Plan <i>→</i> Optimize <i>→</i> Deliver</div>
         </div>
-        <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:16px;width:auto;vertical-align:middle"><span>· Ops</span></span><span class="yr">2022–23</span></div>
+        <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart"><span>· Ops</span></span><span class="yr">2022–23</span></div>
         <h3>Omni Routes</h3>
         <div class="work-body"><p class="desc">Real-time shipment visibility across fulfillment, distribution, and last-mile operations — because teams lost visibility across every handoff.</p>
         <p class="opp">Every handoff used to be a black box. Now it's one trackable journey, start to finish.</p>
@@ -2432,7 +2444,7 @@
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Plan <i>→</i> Track <i>→</i> Resolve</div>
         </div>
-        <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-012-5da437191d59.png" alt="Maersk" style="height:16px;width:auto;vertical-align:middle"><span>· Logistics</span></span><span class="yr">2020–22</span></div>
+        <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-012-5da437191d59.png" alt="Maersk"><span>· Logistics</span></span><span class="yr">2020–22</span></div>
         <h3>Delivery Planning</h3>
         <div class="work-body"><p class="desc">Bringing fragmented delivery milestones into one planning experience—improving visibility and reducing preventable demurrage and detention costs.</p>
         <p class="opp">Turning scattered milestones into one plan teams can act on.</p>
@@ -2905,7 +2917,6 @@
           <a class="foot2-top" href="#" data-scroll-top>Back to top <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10 V2 M2.5 5.5 L6 2 L9.5 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
   </footer>
-  <footer class="note">v332 — fixed the divider-overlap bug from your screenshot, then checked the rest of the document for the same pattern rather than assuming it was isolated. Measured every page's footer clearance directly: found the copyright text on the final page overlapping its divider by 9px (matching your screenshot), and a second, less visible instance on the color-system page where the accessibility note overlapped its footer by the same 9px — both had the same root cause, a last paragraph with no margin-bottom before the absolutely-positioned footer. Fixed both by adding margin-bottom to the containing element. Verified all four pages' footer gaps after the fix: 83px, 15px, 47px, 47px — all positive, no more overlaps. The 15px one (logo usage page) was already clear space, not touching, so left as is rather than over-fixing.</footer>
 </div>
 </div>
 
@@ -5875,15 +5886,24 @@ try{
   }
 
   function size(){
+    /* the home view can be display:none (another page is showing) when a
+       resize / font-load / theme-change fires — measuring then returns 0 and
+       would collapse the stage, leaving COMPLEXITY / CLARITY invisible until a
+       reload. Bail and keep the last good measurements instead. */
+    if(stage.offsetParent === null) return;
     [wC, wL].forEach(w=>{ w.style.visibility='hidden'; w.style.position='static'; });
     const rC = wC.getBoundingClientRect();
     const rL = wL.getBoundingClientRect();
     [wC, wL].forEach(w=>{ w.style.visibility=''; w.style.position='absolute'; });
+    if(!rC.width || !rL.width) return;
     wC._w = rC.width; wL._w = rL.width;
     const maxH = Math.max(rC.height, rL.height);
     stage.style.height = (Math.ceil(maxH) + 8) + 'px';
     stage.style.width = (Math.ceil(rC.width) + 14) + 'px';
   }
+  /* let other scripts (view router, theme toggle) re-measure when the
+     headline becomes visible again */
+  window.__resizeHeadline = size;
   /* size the stage to whichever word is about to be shown, so the h1's own
      box — and therefore the hover-mask's reach — never extends past the
      actual visible letters into reserved empty space for the other word */
@@ -6275,6 +6295,11 @@ try{
     document.body.classList.toggle('on-case-scintilla', caseScintilla);
     document.body.classList.toggle('on-case-supplier-insights', caseSupplierInsights);
     document.body.classList.toggle('on-case-code-puppy', caseCodePuppy);
+    /* headline word-stage measures to 0 while hidden — re-fit it whenever the
+       home view comes back so COMPLEXITY / CLARITY don't stay collapsed */
+    if(!about && !work && !brand && !caseSupplier && !caseDelivery && !caseBawsala && !caseSolv && !caseOmni && !caseScintilla && !caseSupplierInsights && !caseCodePuppy && window.__resizeHeadline){
+      requestAnimationFrame(()=>{ try{ window.__resizeHeadline(); }catch(e){} });
+    }
     if(brand) loadBrandFrame();
     if(caseSupplier) initCaseJumpnav('caseJumpnav');
     if(caseDelivery) initCaseJumpnav('caseJumpnavDelivery');
@@ -6436,10 +6461,13 @@ try{
       const y = t.getBoundingClientRect().top + window.scrollY - 88;
       window.scrollTo({top:y, behavior: reduce ? 'auto' : 'smooth'});
     };
-    if(document.body.classList.contains('on-about')){
-      if(reduce || !loader){ show('home'); run(); return; }
+    /* any non-home view (about / work / brand / a case study) — switch back to
+       home first, then land on the contact ("Get in touch") section */
+    const onSubview = /\bon-(about|work|brand|case)/.test(document.body.className);
+    if(onSubview){
+      if(reduce || !loader){ show('home'); run(); setTimeout(run, 80); return; }
       loader.classList.add('on');
-      setTimeout(()=>{ show('home'); run(); setTimeout(()=>loader.classList.remove('on'), 300); }, 2000);
+      setTimeout(()=>{ show('home'); run(); setTimeout(run, 80); setTimeout(()=>loader.classList.remove('on'), 300); }, 2000);
     } else { run(); }
   }
   document.querySelectorAll('[data-goto]').forEach(el=>{
@@ -6619,6 +6647,12 @@ document.getElementById('themeToggle').addEventListener('click', ()=>{
       brandFrame.contentDocument.documentElement.setAttribute('data-theme', newTheme);
     }
   }catch(e){}
+  /* re-fit the hero headline after the theme swap settles (font metrics /
+     reflow) so COMPLEXITY / CLARITY never end up collapsed */
+  if(window.__resizeHeadline){
+    requestAnimationFrame(()=>{ try{ window.__resizeHeadline(); }catch(e){} });
+    setTimeout(()=>{ try{ window.__resizeHeadline && window.__resizeHeadline(); }catch(e){} }, 360);
+  }
 });
 })();
 }catch(e){ console.error('[init block]', e); }
