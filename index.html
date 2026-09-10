@@ -608,6 +608,18 @@
   .lm-line{height:5px;border-radius:3px;background:rgba(20,20,27,.16);}
   .lab-mock.dark .lm-line{background:rgba(255,255,255,.2);}
   .w70{width:70%;} .w45{width:45%;} .w60{width:60%;} .w55{width:55%;} .w80{width:80%;} .w65{width:65%;} .w40{width:40%;}
+  /* One Paw Away lab-card thumbnail mini-mock */
+  .opw-lm-cats{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:2px 0;}
+  .opw-lm-cats i{display:block;aspect-ratio:1;border-radius:4px;}
+  .opw-lm-cats i:nth-child(1){background:#DDEEDD;}
+  .opw-lm-cats i:nth-child(2){background:#F6DFD5;}
+  .opw-lm-cats i:nth-child(3){background:#E6DCF7;}
+  .opw-lm-cats i:nth-child(4){background:#FAE8CD;}
+  .opw-lm-food{display:flex;align-items:center;gap:6px;background:#F5F3EE;border-radius:6px;padding:6px;margin-top:2px;}
+  .opw-lm-food span{width:18px;height:18px;border-radius:5px;flex-shrink:0;background:radial-gradient(circle at 40% 35%,#F0D2A6,#E0AE76);}
+  .opw-lm-food em{flex:1;display:flex;flex-direction:column;gap:3px;}
+  .opw-lm-food em b{display:block;height:4px;width:64%;border-radius:2px;background:rgba(20,20,27,.28);}
+  .opw-lm-food em i{display:block;height:3px;width:44%;border-radius:2px;background:rgba(20,20,27,.16);}
   .lab-timer{background:#fff;border-radius:9px;padding:16px 26px;text-align:center;
     font-family:var(--font-display);font-size:26px;color:var(--ink);line-height:1;
     box-shadow:0 4px 10px -6px rgba(12,10,30,.2);}
@@ -1105,6 +1117,11 @@
   body.on-case-code-puppy #view-about,body.on-case-code-puppy #view-brand,body.on-case-code-puppy #view-case-supplier,body.on-case-code-puppy #view-case-delivery,body.on-case-code-puppy #view-case-bawsala,body.on-case-code-puppy #view-case-solv,body.on-case-code-puppy #view-case-omni,body.on-case-code-puppy #view-case-scintilla,body.on-case-code-puppy #view-case-supplier-insights{display:none;}
   body.on-case-code-puppy #view-case-code-puppy{display:block;}
 
+  #view-case-onepaw{display:none;}
+  body.on-case-onepaw #view-home,body.on-case-onepaw #view-work,
+  body.on-case-onepaw #view-about,body.on-case-onepaw #view-brand,body.on-case-onepaw #view-case-supplier,body.on-case-onepaw #view-case-delivery,body.on-case-onepaw #view-case-bawsala,body.on-case-onepaw #view-case-solv,body.on-case-onepaw #view-case-omni,body.on-case-onepaw #view-case-scintilla,body.on-case-onepaw #view-case-supplier-insights,body.on-case-onepaw #view-case-code-puppy{display:none;}
+  body.on-case-onepaw #view-case-onepaw{display:block;}
+
   .case{padding-top:32px;padding-bottom:100px;}
   .case-back{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);
     font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);
@@ -1538,6 +1555,50 @@
     box-shadow:0 2px 22px rgba(0,0,0,.14);}
   :root[data-theme="dark"] .glass-frame{background:rgba(255,255,255,.07);
     border:1px solid rgba(255,255,255,.16);box-shadow:0 26px 54px -20px rgba(0,0,0,.6);}
+
+  /* One Paw Away — inline app mockup, built as a screenshot-style recreation so
+     it keeps a fixed light UI inside the dark phone bezel regardless of theme */
+  .opw-shot{margin:44px auto 0;max-width:352px;}
+  .opw-phone .shotbox-phone{margin:0;}
+  .opw-phone .shotbox-crop{aspect-ratio:9/17.6;overflow:hidden;background:#FBFAF8;display:block;}
+  :root[data-theme="dark"] .opw-phone .shotbox-crop{background:#FBFAF8;}
+  .opw-screen{width:100%;height:100%;display:flex;flex-direction:column;
+    font-family:var(--font-body);color:#1B1B22;background:#FBFAF8;padding:13px 14px 0;font-size:12px;line-height:1.35;}
+  .opw-status{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:600;padding:2px 2px 12px;}
+  .opw-status-dots{display:flex;gap:3px;align-items:center;}
+  .opw-status-dots i{width:4px;height:4px;border-radius:50%;background:#1B1B22;display:block;}
+  .opw-greet{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px;}
+  .opw-hello{display:block;font-size:11.5px;color:#7A7A82;}
+  .opw-name{display:block;font-family:var(--font-display);font-weight:500;font-size:18px;line-height:1.15;}
+  .opw-avatar{width:33px;height:33px;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(150deg,#E8C79A,#D89A63);box-shadow:0 0 0 2px #fff,0 0 0 3px #EFE7DE;}
+  .opw-cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;}
+  .opw-cat{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;
+    min-height:58px;font-size:8.5px;font-weight:500;color:#4A4A52;text-align:center;line-height:1.25;}
+  .opw-cat-ic{width:100%;aspect-ratio:1;border-radius:13px;display:flex;align-items:center;justify-content:center;}
+  .opw-cat-ic svg{width:17px;height:17px;}
+  .opw-cat-ic--food{background:#E4F0E4;color:#3E7A4F;}
+  .opw-cat-ic--serv{background:#FBE6DE;color:#D06A4E;}
+  .opw-cat-ic--comm{background:#EDE6FA;color:#6C4BC7;}
+  .opw-cat-ic--shop{background:#FCEFD6;color:#C58C2E;}
+  .opw-sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+  .opw-sec-head b{font-size:12.5px;font-weight:600;}
+  .opw-sec-head span{font-size:9.5px;color:#7546D8;font-weight:500;}
+  .opw-prod{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #EDE9E2;
+    border-radius:15px;padding:9px 8px 9px 9px;box-shadow:0 8px 22px -14px rgba(20,16,40,.18);}
+  .opw-prod-img{width:36px;height:36px;border-radius:10px;flex-shrink:0;
+    background:radial-gradient(circle at 40% 35%,#F3D9B6,#E7B980);display:flex;align-items:center;justify-content:center;}
+  .opw-prod-img svg{width:20px;height:20px;color:#7A5326;}
+  .opw-prod-txt{flex:1;min-width:0;}
+  .opw-prod-txt b{display:block;font-size:10.5px;font-weight:600;line-height:1.25;}
+  .opw-prod-txt span{display:block;font-size:8px;color:#8A8A92;margin-top:2px;line-height:1.3;}
+  .opw-prod-arrow{width:20px;height:20px;border-radius:50%;background:#F4F1EB;
+    display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+  .opw-nav{margin-top:auto;display:flex;justify-content:space-between;padding:9px 2px 11px;border-top:1px solid #EEEBE4;}
+  .opw-nav span{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:7.5px;color:#A6A6AE;font-weight:500;}
+  .opw-nav span svg{width:14px;height:14px;}
+  .opw-nav span.is-on{color:#7546D8;}
+  @media (max-width:560px){ .opw-shot{max-width:250px;} }
 
   /* Future-state concept modal — a single reusable overlay pattern (backdrop
      blur + centered card) that follows the page's own light/dark variables
@@ -2675,6 +2736,7 @@
           <button class="chip is-on" data-filter="all">All</button>
           <button class="chip" data-filter="ai">AI POCs</button>
           <button class="chip" data-filter="vibe">Vibe coded</button>
+          <button class="chip" data-filter="startup">0→1</button>
         </div>
       </div>
 
@@ -2689,6 +2751,17 @@
         <a class="lab-card" data-cat="vibe" data-view="case-code-puppy" role="link" tabindex="0">
           <div class="lab-thumb lab-thumb--photo"><img src="assets/images/image-017-55c506771318.png" alt="Vibe Coding VQA — AI-assisted visual QA illustration"></div>
           <div class="lab-body"><div class="lab-tag">Vibe coded</div><h3>Code Puppy VQA</h3><p>AI-assisted visual QA — comparing Dev against Figma to speed up fidelity review.</p><span class="btn btn-outline btn-small lab-cta">View case study <span class="cta-arrow">→</span></span></div>
+        </a>
+        <a class="lab-card" data-cat="startup" data-view="case-onepaw" role="link" tabindex="0">
+          <div class="lab-thumb lt-warm">
+            <div class="lab-mock">
+              <div class="lm-bar"></div>
+              <div class="opw-lm-cats"><i></i><i></i><i></i><i></i></div>
+              <div class="lm-line w70"></div>
+              <div class="opw-lm-food"><span></span><em><b></b><i></i></em></div>
+            </div>
+          </div>
+          <div class="lab-body"><div class="lab-tag">0→1 Exploration</div><h3>One Paw Away</h3><p>An early-stage startup experiment — turning a broad pet-care vision into a focused MVP direction.</p><span class="btn btn-outline btn-small lab-cta">View case study <span class="cta-arrow">→</span></span></div>
         </a>
         </div>
       </div>
@@ -5544,6 +5617,147 @@
   </div>
 </div>
 
+<div id="view-case-onepaw">
+  <div class="wrap case">
+
+    <a class="case-back" data-view="work"><span class="case-back-arrow">←</span> Back to work</a>
+
+    <nav class="case-jumpnav" id="caseJumpnavOnepaw">
+      <div class="case-jump-group">
+        <a class="case-jump-item" href="#opw-overview"><i></i>Introduction</a>
+        <a class="case-jump-item" href="#opw-overview"><i></i>Overview</a>
+      </div>
+      <div class="case-jump-group">
+        <div class="case-jump-lbl">Process</div>
+        <a class="case-jump-item" href="#opw-challenge"><i></i>The challenge</a>
+        <a class="case-jump-item" href="#opw-approach"><i></i>My approach</a>
+        <a class="case-jump-item" href="#opw-exploration"><i></i>The exploration</a>
+      </div>
+      <div class="case-jump-group">
+        <div class="case-jump-lbl">Outcome</div>
+        <a class="case-jump-item" href="#opw-outcome"><i></i>Outcome</a>
+      </div>
+    </nav>
+
+    <div class="case-hero" id="opw-overview">
+      <div class="eyebrow-lbl">Early-stage startup experiment · One Paw Away</div>
+      <h1 class="case-h1">A startup idea, <span class="case-gradient">explored from scratch</span>.</h1>
+      <p class="case-lede">I helped turn One Paw Away's broad pet-care vision into a focused product direction — mapping the experience, defining the MVP, and prototyping what could come next.</p>
+
+      <div class="case-meta">
+        <div><dt>Role</dt><dd>Product Design · UX · 0→1 Exploration</dd></div>
+        <div><dt>Timeline</dt><dd>2019–2020</dd></div>
+        <div><dt>Team</dt><dd>CEO + CTO + 4 developers — direct collaboration</dd></div>
+        <div><dt>Type</dt><dd>Early-stage startup experiment</dd></div>
+        <div><dt>Platform</dt><dd>Mobile · Pet care</dd></div>
+      </div>
+      <div class="case-source-note">Prototypes · Experiments · Ideas beyond the brief — a fast 0→1 exploration with a founding team, not a shipped product.</div>
+
+      <p class="case-p" style="margin-top:28px">A quick 0→1 exploration for a startup with a big idea. I worked with One Paw Away to turn an ambitious pet-care vision into a clearer product experience — exploring what the MVP could look like, how the ecosystem could connect, and where design could create the most value early on.</p>
+
+      <div class="opw-shot">
+        <div class="opw-phone">
+          <div class="shotbox-phone"><div class="shotbox-crop">
+            <div class="opw-screen">
+              <div class="opw-status"><span>9:41</span><span class="opw-status-dots"><i></i><i></i><i></i></span></div>
+              <div class="opw-greet">
+                <div><span class="opw-hello">Good morning,</span><span class="opw-name">Buddy!</span></div>
+                <span class="opw-avatar" aria-hidden="true"></span>
+              </div>
+              <div class="opw-cats">
+                <div class="opw-cat"><span class="opw-cat-ic opw-cat-ic--food"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 11h18a9 9 0 0 1-18 0Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 8c0-2 3-2 3-4M9 8C9 6 7 6 7 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>Fresh Food</div>
+                <div class="opw-cat"><span class="opw-cat-ic opw-cat-ic--serv"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.7"/></svg></span>Pet Services</div>
+                <div class="opw-cat"><span class="opw-cat-ic opw-cat-ic--comm"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c.6-3 2.8-4.5 5.5-4.5S13.9 16 14.5 19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M16.5 14.6c2.2.3 3.7 1.8 4.2 4.4M15.5 6.6a2.6 2.6 0 1 1 1 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>Community</div>
+                <div class="opw-cat"><span class="opw-cat-ic opw-cat-ic--shop"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>Shop</div>
+              </div>
+              <div class="opw-sec-head"><b>Recommended for Buddy</b><span>See all</span></div>
+              <div class="opw-prod">
+                <span class="opw-prod-img"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16a8 8 0 0 1-16 0Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="9" cy="8.5" r="1.3" fill="currentColor"/><circle cx="13" cy="7.5" r="1.3" fill="currentColor"/><circle cx="16" cy="10" r="1.1" fill="currentColor"/></svg></span>
+                <div class="opw-prod-txt"><b>Fresh Chicken Bowl</b><span>Vet approved · No preservatives</span></div>
+                <span class="opw-prod-arrow" aria-hidden="true">→</span>
+              </div>
+              <div class="opw-nav">
+                <span class="is-on"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11 12 4l8 7M6 10v9h12v-9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Home</span>
+                <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.9"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>Explore</span>
+                <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h2l2 11h10l2-8H7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.3" fill="currentColor"/><circle cx="17" cy="20" r="1.3" fill="currentColor"/></svg>Cart</span>
+                <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.9"/><path d="M5 20c1-4 4-5.5 7-5.5S18 16 19 20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>Community</span>
+                <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.9"/><path d="M5.5 19.5c1-3.6 3.7-5.2 6.5-5.2s5.5 1.6 6.5 5.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>Profile</span>
+              </div>
+            </div>
+          </div></div>
+        </div>
+        <div class="case-caption" style="text-align:center">The home screen concept — fresh food, pet services, community and shop in one pet-care hub, with recommendations tied to the pet.</div>
+      </div>
+    </div>
+
+    <section class="case-sec" id="opw-challenge">
+      <div class="case-num">01 / The challenge</div>
+      <h2 class="case-h2">An exciting vision — food, services and community in one place — but broad.</h2>
+      <p class="case-p">One Paw Away wanted to bring food, services, and community together in one place for pet parents. The vision was exciting, but broad. The founding team needed to see the product concretely before committing engineering time to an MVP.</p>
+      <div class="case-bridge">
+        <div class="case-bridge-lbl">The decision</div>
+        <p class="case-p" style="margin:0"><b>Give the idea structure before building it</b> — map the core experience and define the MVP first.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" id="opw-approach">
+      <div class="case-num">02 / My approach</div>
+      <h2 class="case-h2">Give the idea structure — then make it tangible.</h2>
+      <p class="case-p">I helped give the idea structure — mapping the core experience, simplifying the journey, and exploring the product through early concepts and prototypes. Working directly with the CEO and CTO kept decisions fast, and the four-person dev team could react to concepts as they took shape.</p>
+      <div class="case-cardgrid case-cardgrid--4">
+        <div class="case-card"><div class="case-card-eyebrow">01 / Map</div><h3>The core experience</h3><p>Lay out the pet-care journey and where the product actually adds value.</p></div>
+        <div class="case-card"><div class="case-card-eyebrow">02 / Simplify</div><h3>The journey</h3><p>Cut the vision down to the few things an MVP has to do well.</p></div>
+        <div class="case-card"><div class="case-card-eyebrow">03 / Prototype</div><h3>Early concepts</h3><p>Turn the direction into screens the team could see and pressure-test.</p></div>
+        <div class="case-card"><div class="case-card-eyebrow">04 / Align</div><h3>With the founders</h3><p>Direct CEO and CTO collaboration to lock the MVP scope.</p></div>
+      </div>
+    </section>
+
+    <section class="case-sec case-sec--dark" id="opw-exploration">
+      <div class="case-num">03 / The exploration</div>
+      <h2 class="case-h2">Four threads, one connected pet-care experience.</h2>
+      <div class="case-cardgrid case-cardgrid--4">
+        <div class="case-card"><div class="case-tag">Food</div><h3>Fresh &amp; healthy pet food</h3><p>Vet-approved recipes with no preservatives, recommended per pet.</p></div>
+        <div class="case-card"><div class="case-tag">Services</div><h3>Pet services discovery</h3><p>Find and book trusted grooming, vet and care services nearby.</p></div>
+        <div class="case-card"><div class="case-tag">Community</div><h3>Community &amp; connections</h3><p>A place for pet parents to share, learn and grow together.</p></div>
+        <div class="case-card"><div class="case-tag">System</div><h3>A unified pet-care experience</h3><p>One hub instead of separate apps for food, services and community.</p></div>
+      </div>
+      <div class="case-flow">
+        <div class="case-flow-stack">
+          <div class="case-flow-box"><b>Fresh food</b><span>Recipes · recommendations · reorder</span></div>
+          <div class="case-flow-box"><b>Pet services</b><span>Discover · book · manage</span></div>
+          <div class="case-flow-box"><b>Community</b><span>Share · learn · connect</span></div>
+        </div>
+        <div class="case-flow-arrow">→</div>
+        <div class="case-flow-stack">
+          <div class="case-flow-box"><b>One pet profile</b><span>Everything tied to the pet, not the feature</span></div>
+          <div class="case-flow-box"><b>One home screen</b><span>Food, services and community in one place</span></div>
+        </div>
+      </div>
+      <div class="case-caption" style="text-align:center;max-width:60ch;margin-left:auto;margin-right:auto">The exploration kept coming back to the same idea — a single pet-care experience, organised around the pet rather than around three separate products.</div>
+    </section>
+
+    <section class="case-sec case-sec--statement" id="opw-outcome">
+      <div class="case-num">04 / Outcome</div>
+      <h2 class="case-h2" style="text-align:center">A clearer product direction — and a starting point to build from.</h2>
+      <p class="case-p" style="max-width:60ch;margin-left:auto;margin-right:auto;text-align:center">A clearer product direction and a tangible starting point for turning the startup vision into an MVP. The founding team walked away with the core experience mapped, the MVP scoped, and concept screens to build against.</p>
+      <blockquote class="case-quote" style="margin-left:auto;margin-right:auto;text-align:center">"The value early on wasn't polish — it was turning a broad idea into something the team could actually build."</blockquote>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:28px">
+        <span class="chip">0→1 exploration</span>
+        <span class="chip">Product direction</span>
+        <span class="chip">MVP definition</span>
+        <span class="chip">Prototyping</span>
+        <span class="chip">Startup</span>
+      </div>
+      <div class="case-source-note" style="text-align:center;margin-top:24px">Early-stage startup collaboration · 2019–2020 · concept and direction work, not a shipped product.</div>
+    </section>
+
+    <section class="case-sec case-sec--statement">
+      <a class="text-link" data-view="work">Back to all work <span class="cta-arrow">→</span></a>
+    </section>
+
+  </div>
+</div>
+
 <script type="text/plain" id="brandDocSrc"><!doctype html>
 <html lang="en">
 <head>
@@ -6458,7 +6672,7 @@ try{
     else if(workSection && cta){ workSection.insertBefore(grid, cta); }
   }
   function show(view, push){
-    const about = view === 'about', work = view === 'work', brand = view === 'brand', caseSupplier = view === 'case-supplier', caseDelivery = view === 'case-delivery', caseBawsala = view === 'case-bawsala', caseSolv = view === 'case-solv', caseOmni = view === 'case-omni', caseScintilla = view === 'case-scintilla', caseSupplierInsights = view === 'case-supplier-insights', caseCodePuppy = view === 'case-code-puppy';
+    const about = view === 'about', work = view === 'work', brand = view === 'brand', caseSupplier = view === 'case-supplier', caseDelivery = view === 'case-delivery', caseBawsala = view === 'case-bawsala', caseSolv = view === 'case-solv', caseOmni = view === 'case-omni', caseScintilla = view === 'case-scintilla', caseSupplierInsights = view === 'case-supplier-insights', caseCodePuppy = view === 'case-code-puppy', caseOnepaw = view === 'case-onepaw';
     document.body.classList.toggle('on-about', about);
     document.body.classList.toggle('on-work', work);
     document.body.classList.toggle('on-brand', brand);
@@ -6470,9 +6684,10 @@ try{
     document.body.classList.toggle('on-case-scintilla', caseScintilla);
     document.body.classList.toggle('on-case-supplier-insights', caseSupplierInsights);
     document.body.classList.toggle('on-case-code-puppy', caseCodePuppy);
+    document.body.classList.toggle('on-case-onepaw', caseOnepaw);
     /* headline word-stage measures to 0 while hidden — re-fit it whenever the
        home view comes back so COMPLEXITY / CLARITY don't stay collapsed */
-    if(!about && !work && !brand && !caseSupplier && !caseDelivery && !caseBawsala && !caseSolv && !caseOmni && !caseScintilla && !caseSupplierInsights && !caseCodePuppy && window.__resizeHeadline){
+    if(!about && !work && !brand && !caseSupplier && !caseDelivery && !caseBawsala && !caseSolv && !caseOmni && !caseScintilla && !caseSupplierInsights && !caseCodePuppy && !caseOnepaw && window.__resizeHeadline){
       requestAnimationFrame(()=>{ try{ window.__resizeHeadline(); }catch(e){} });
     }
     if(brand) loadBrandFrame();
@@ -6496,6 +6711,7 @@ try{
     if(caseScintilla) initCaseJumpnav('caseJumpnavScintilla');
     if(caseSupplierInsights) initCaseJumpnav('caseJumpnavSupplierInsights');
     if(caseCodePuppy) initCaseJumpnav('caseJumpnavCodePuppy');
+    if(caseOnepaw) initCaseJumpnav('caseJumpnavOnepaw');
     if(caseCodePuppy){
       var cpVideo = document.querySelector('#cp-action video');
       if(cpVideo && !cpVideo.dataset.blobLoaded){
@@ -6538,7 +6754,7 @@ try{
     document.querySelectorAll('.navlinks a').forEach(a=>a.classList.remove('is-current'));
     const link = document.querySelector('.navlinks a[data-view="'+view+'"]');
     if(link) link.classList.add('is-current');
-    if(push !== false){ try{ history.pushState({view}, '', work ? '#work' : about ? '#about' : brand ? '#brand' : caseSupplier ? '#case-supplier-matrix' : caseDelivery ? '#case-delivery-dnd' : caseBawsala ? '#case-bawsala' : caseSolv ? '#case-solv-paylater' : caseOmni ? '#case-omni-routes' : caseScintilla ? '#case-scintilla' : caseSupplierInsights ? '#case-supplier-insights' : caseCodePuppy ? '#case-code-puppy' : '#'); }catch(e){} }
+    if(push !== false){ try{ history.pushState({view}, '', work ? '#work' : about ? '#about' : brand ? '#brand' : caseSupplier ? '#case-supplier-matrix' : caseDelivery ? '#case-delivery-dnd' : caseBawsala ? '#case-bawsala' : caseSolv ? '#case-solv-paylater' : caseOmni ? '#case-omni-routes' : caseScintilla ? '#case-scintilla' : caseSupplierInsights ? '#case-supplier-insights' : caseCodePuppy ? '#case-code-puppy' : caseOnepaw ? '#case-one-paw-away' : '#'); }catch(e){} }
     /* jump instantly — smooth scrolling would animate the whole page while switching views */
     const root = document.documentElement, prev = root.style.scrollBehavior;
     root.style.scrollBehavior = 'auto';
@@ -6651,7 +6867,7 @@ try{
     el.style.cursor='pointer';
     el.addEventListener('click', (ev)=>{ ev.preventDefault(); gotoSection(el.getAttribute('data-goto')); });
   });
-  const fromHash = ()=> location.hash === '#about' ? 'about' : location.hash === '#work' ? 'work' : location.hash === '#brand' ? 'brand' : location.hash === '#case-supplier-matrix' ? 'case-supplier' : location.hash === '#case-delivery-dnd' ? 'case-delivery' : location.hash === '#case-bawsala' ? 'case-bawsala' : location.hash === '#case-solv-paylater' ? 'case-solv' : location.hash === '#case-omni-routes' ? 'case-omni' : location.hash === '#case-scintilla' ? 'case-scintilla' : location.hash === '#case-supplier-insights' ? 'case-supplier-insights' : location.hash === '#case-code-puppy' ? 'case-code-puppy' : 'home';
+  const fromHash = ()=> location.hash === '#about' ? 'about' : location.hash === '#work' ? 'work' : location.hash === '#brand' ? 'brand' : location.hash === '#case-supplier-matrix' ? 'case-supplier' : location.hash === '#case-delivery-dnd' ? 'case-delivery' : location.hash === '#case-bawsala' ? 'case-bawsala' : location.hash === '#case-solv-paylater' ? 'case-solv' : location.hash === '#case-omni-routes' ? 'case-omni' : location.hash === '#case-scintilla' ? 'case-scintilla' : location.hash === '#case-supplier-insights' ? 'case-supplier-insights' : location.hash === '#case-code-puppy' ? 'case-code-puppy' : location.hash === '#case-one-paw-away' ? 'case-onepaw' : 'home';
   window.addEventListener('popstate', ()=> show(fromHash(), false));
   if(location.hash !== '' && location.hash !== '#') show(fromHash(), false);
 })();
