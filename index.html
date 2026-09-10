@@ -1544,23 +1544,29 @@
   :root[data-theme="dark"] .glass-frame{background:rgba(255,255,255,.07);
     border:1px solid rgba(255,255,255,.16);box-shadow:0 26px 54px -20px rgba(0,0,0,.6);}
 
-  /* One Paw Away — hero phone + screenshot galleries. Screens are shown in full
-     inside a fixed-height phone frame that scrolls, so nothing is cropped; each
-     phone + its caption are centred together in the grid cell. */
+  /* One Paw Away — hero phone + screenshot galleries.
+     The base .shotbox-phone absolutely-positions its image inside a fixed-size
+     window (a crop, no scroll). Here we want the opposite: the full screen
+     flows normally inside a fixed-height frame that scrolls, so nothing is cut.
+     That means overriding the phone's fixed size, the crop's overflow, AND the
+     image's position:absolute (an absolute child can't drive a scrollbar). */
   .opw-shot{margin:44px auto 0;max-width:300px;}
-  .opw-hero-phone{margin:0;}
-  .opw-hero-phone .shotbox-crop{height:540px;overflow-y:auto;overflow-x:hidden;
-    scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
-  .opw-hero-phone img{width:100%;height:auto;display:block;}
+  .opw-hero-phone.shotbox-phone{width:100%;height:auto;}
+  .opw-hero-phone .shotbox-crop{height:540px;border-radius:18px;
+    overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
+  .opw-hero-phone .shotbox-crop img{position:static;width:100%;height:auto;display:block;}
+
+  #view-case-onepaw .case-shotgrid .case-shotbox{min-height:0;padding:0;}
   #view-case-onepaw .case-shotgrid > div{max-width:270px;margin-left:auto;margin-right:auto;}
-  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{height:440px;overflow-y:auto;overflow-x:hidden;
-    scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
-  #view-case-onepaw .case-shotgrid .shotbox-phone img{width:100%;height:auto;display:block;}
-  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop::-webkit-scrollbar,
-  .opw-hero-phone .shotbox-crop::-webkit-scrollbar{width:5px;}
-  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop::-webkit-scrollbar-thumb,
-  .opw-hero-phone .shotbox-crop::-webkit-scrollbar-thumb{background:rgba(0,0,0,.22);border-radius:5px;}
+  #view-case-onepaw .case-shotgrid .shotbox-phone{width:100%;height:auto;}
+  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{height:440px;border-radius:18px;
+    overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
+  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop img{position:static;width:100%;height:auto;display:block;}
   #view-case-onepaw .case-shotgrid .case-caption{max-width:100%;text-align:center;}
+  .opw-hero-phone .shotbox-crop::-webkit-scrollbar,
+  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop::-webkit-scrollbar{width:5px;}
+  .opw-hero-phone .shotbox-crop::-webkit-scrollbar-thumb,
+  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop::-webkit-scrollbar-thumb{background:rgba(0,0,0,.22);border-radius:6px;}
   @media (max-width:560px){
     .opw-shot{max-width:240px;}
     .opw-hero-phone .shotbox-crop{height:460px;}
