@@ -1544,16 +1544,29 @@
   :root[data-theme="dark"] .glass-frame{background:rgba(255,255,255,.07);
     border:1px solid rgba(255,255,255,.16);box-shadow:0 26px 54px -20px rgba(0,0,0,.6);}
 
-  /* One Paw Away — hero phone + screenshot galleries. Each screen is cropped to
-     a consistent phone viewport (top-anchored) so a set of very different
-     screen heights reads as one tidy gallery. */
-  .opw-shot{margin:44px auto 0;max-width:320px;}
+  /* One Paw Away — hero phone + screenshot galleries. Screens are shown in full
+     inside a fixed-height phone frame that scrolls, so nothing is cropped; each
+     phone + its caption are centred together in the grid cell. */
+  .opw-shot{margin:44px auto 0;max-width:300px;}
   .opw-hero-phone{margin:0;}
-  .opw-hero-phone .shotbox-crop{aspect-ratio:9/17.4;overflow:hidden;}
-  .opw-hero-phone img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
-  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{aspect-ratio:9/19;overflow:hidden;}
-  #view-case-onepaw .case-shotgrid .shotbox-phone img{width:100%;height:100%;object-fit:cover;object-position:top;}
-  @media (max-width:560px){ .opw-shot{max-width:240px;} }
+  .opw-hero-phone .shotbox-crop{height:540px;overflow-y:auto;overflow-x:hidden;
+    scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
+  .opw-hero-phone img{width:100%;height:auto;display:block;}
+  #view-case-onepaw .case-shotgrid > div{max-width:270px;margin-left:auto;margin-right:auto;}
+  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{height:440px;overflow-y:auto;overflow-x:hidden;
+    scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
+  #view-case-onepaw .case-shotgrid .shotbox-phone img{width:100%;height:auto;display:block;}
+  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop::-webkit-scrollbar,
+  .opw-hero-phone .shotbox-crop::-webkit-scrollbar{width:5px;}
+  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop::-webkit-scrollbar-thumb,
+  .opw-hero-phone .shotbox-crop::-webkit-scrollbar-thumb{background:rgba(0,0,0,.22);border-radius:5px;}
+  #view-case-onepaw .case-shotgrid .case-caption{max-width:100%;text-align:center;}
+  @media (max-width:560px){
+    .opw-shot{max-width:240px;}
+    .opw-hero-phone .shotbox-crop{height:460px;}
+    #view-case-onepaw .case-shotgrid > div{max-width:240px;}
+    #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{height:400px;}
+  }
 
   /* Future-state concept modal — a single reusable overlay pattern (backdrop
      blur + centered card) that follows the page's own light/dark variables
@@ -2708,7 +2721,7 @@
           <div class="lab-body"><div class="lab-tag">Vibe coded</div><h3>Code Puppy VQA</h3><p>AI-assisted visual QA — comparing Dev against Figma to speed up fidelity review.</p><span class="btn btn-outline btn-small lab-cta">View case study <span class="cta-arrow">→</span></span></div>
         </a>
         <a class="lab-card" data-cat="startup" data-view="case-onepaw" role="link" tabindex="0">
-          <div class="lab-thumb lab-thumb--photo"><img src="assets/images/opw-card.jpg" alt="One Paw Away — pet-care app concept: Fresh Food and a colourful services grid"></div>
+          <div class="lab-thumb lab-thumb--photo"><img src="assets/images/opw-card.jpg" alt="One Paw Away — 'a happier life for every paw': pet-care app concept illustration"></div>
           <div class="lab-body"><div class="lab-tag">0→1 Exploration</div><h3>One Paw Away</h3><p>An early-stage startup experiment — turning a broad pet-care vision into a focused MVP direction.</p><span class="btn btn-outline btn-small lab-cta">View case study <span class="cta-arrow">→</span></span></div>
         </a>
         </div>
