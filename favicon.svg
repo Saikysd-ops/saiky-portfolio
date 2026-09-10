@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" role="img" aria-label="Saiky Desai">
+  <style>
+    .s1 { fill: #B8B8B8; }
+    .s2 { fill: #858585; }
+    .s3 { fill: #17171B; }
+    .dot { fill: #5B2A68; }
+    @media (prefers-color-scheme: dark) {
+      .s1 { fill: #BDBDBD; }
+      .s2 { fill: #D8D8D8; }
+      .s3 { fill: #F5F5F5; }
+      .dot { fill: #BC80CC; }
+    }
+  </style>
+  <ellipse class="s1" cx="21" cy="10"   rx="6"   ry="2.9"/>
+  <ellipse class="s2" cx="21" cy="19.5" rx="9.2" ry="4.4"/>
+  <ellipse class="s3" cx="21" cy="31"   rx="13"  ry="5.8"/>
+  <circle  class="dot" cx="33.6" cy="19.5" r="2.8"/>
+</svg>
