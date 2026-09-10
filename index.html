@@ -1545,33 +1545,51 @@
     border:1px solid rgba(255,255,255,.16);box-shadow:0 26px 54px -20px rgba(0,0,0,.6);}
 
   /* One Paw Away — hero phone + screenshot galleries.
-     The base .shotbox-phone absolutely-positions its image inside a fixed-size
-     window (a crop, no scroll). Here we want the opposite: the full screen
-     flows normally inside a fixed-height frame that scrolls, so nothing is cut.
-     That means overriding the phone's fixed size, the crop's overflow, AND the
-     image's position:absolute (an absolute child can't drive a scrollbar). */
-  .opw-shot{margin:44px auto 0;max-width:300px;}
+     Every frame is a fixed 812px phone viewport; the full screen flows inside
+     it and scrolls when it's taller. The base .shotbox-phone absolutely-
+     positions its image (which can't drive a scrollbar), so we reset it to
+     static and drop the phone's fixed size. */
+  .opw-shot{margin:60px auto 0;max-width:376px;}
   .opw-hero-phone.shotbox-phone{width:100%;height:auto;}
-  .opw-hero-phone .shotbox-crop{height:540px;border-radius:18px;
+  .opw-hero-phone .shotbox-crop{height:812px;border-radius:18px;
     overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
   .opw-hero-phone .shotbox-crop img{position:static;width:100%;height:auto;display:block;}
 
-  #view-case-onepaw .case-shotgrid .case-shotbox{min-height:0;padding:0;}
-  #view-case-onepaw .case-shotgrid > div{max-width:270px;margin-left:auto;margin-right:auto;}
+  /* clean, spacious 2-up galleries — not the tight bordered card grid */
+  #view-case-onepaw .case-shotgrid{grid-template-columns:repeat(2,1fr);gap:56px 44px;
+    background:transparent;border:0;border-radius:0;overflow:visible;
+    margin-top:52px;margin-bottom:8px;}
+  #view-case-onepaw .case-shotgrid .case-shotbox{min-height:0;padding:0;background:transparent;}
+  #view-case-onepaw .case-shotgrid > div{max-width:376px;margin-left:auto;margin-right:auto;}
   #view-case-onepaw .case-shotgrid .shotbox-phone{width:100%;height:auto;}
-  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{height:440px;border-radius:18px;
+  #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{height:812px;border-radius:18px;
     overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
   #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop img{position:static;width:100%;height:auto;display:block;}
-  #view-case-onepaw .case-shotgrid .case-caption{max-width:100%;text-align:center;}
+  #view-case-onepaw .case-shotgrid .case-caption{max-width:100%;text-align:center;margin-top:18px;}
   .opw-hero-phone .shotbox-crop::-webkit-scrollbar,
   #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop::-webkit-scrollbar{width:5px;}
   .opw-hero-phone .shotbox-crop::-webkit-scrollbar-thumb,
   #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop::-webkit-scrollbar-thumb{background:rgba(0,0,0,.22);border-radius:6px;}
-  @media (max-width:560px){
-    .opw-shot{max-width:240px;}
-    .opw-hero-phone .shotbox-crop{height:460px;}
-    #view-case-onepaw .case-shotgrid > div{max-width:240px;}
-    #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{height:400px;}
+
+  /* premium breathing room, scoped to this case study */
+  #view-case-onepaw .case-sec{padding:96px 0;}
+  #view-case-onepaw .case-hero{margin-bottom:108px;}
+  #view-case-onepaw .case-sec--dark{padding:88px 100vw;}
+  #view-case-onepaw .case-sec .case-h3{margin-top:76px;}
+  #view-case-onepaw .case-sec .case-h3:first-of-type{margin-top:44px;}
+  #view-case-onepaw .case{padding-bottom:128px;}
+
+  @media (max-width:760px){
+    #view-case-onepaw .case-sec{padding:60px 0;}
+    #view-case-onepaw .case-hero{margin-bottom:60px;}
+    #view-case-onepaw .case-sec--dark{padding:56px 100vw;}
+    #view-case-onepaw .case-sec .case-h3{margin-top:52px;}
+    #view-case-onepaw .case{padding-bottom:80px;}
+    .opw-shot{max-width:320px;margin-top:44px;}
+    .opw-hero-phone .shotbox-crop,
+    #view-case-onepaw .case-shotgrid .shotbox-phone .shotbox-crop{height:74vh;max-height:680px;}
+    #view-case-onepaw .case-shotgrid{grid-template-columns:1fr;gap:44px;margin-top:40px;}
+    #view-case-onepaw .case-shotgrid > div{max-width:320px;}
   }
 
   /* Future-state concept modal — a single reusable overlay pattern (backdrop
@@ -5701,24 +5719,24 @@
 
       <h3 class="case-h3">Fresh food, end to end</h3>
       <p class="case-p">The food journey carried the most product value early — a subscription model, pet-size guidance, and recipes that read like real meals, not SKUs.</p>
-      <div class="case-cardgrid case-cardgrid--4 case-shotgrid">
+      <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-food-list.jpg" alt="Food category screen — Fresh Food, Dry Food and Chew Food as large cards"></div></div></div><div class="case-caption">Browse — Fresh, Dry or Chew</div></div>
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-fresh-food.jpg" alt="Fresh Food detail — subscription plans (Trial, Weekly, Monthly), select pet size S to XXL, meals per day, and a recipe list with a Veg-only toggle"></div></div></div><div class="case-caption">Configure — plan, pet size, meals</div></div>
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-recipe.jpg" alt="Recipe detail — Fresh Veggies and Chicken at Rs 200 per day, ingredient photo, description and Add to Cart"></div></div></div><div class="case-caption">Choose — a real recipe, not a SKU</div></div>
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-chew-food.jpg" alt="Chew Food list — treat products with descriptions, price, Add to Cart and a quantity stepper, plus a View Cart bar"></div></div></div><div class="case-caption">Add — treats and one-off products</div></div>
       </div>
 
-      <h3 class="case-h3" style="margin-top:44px">Services, community and content</h3>
+      <h3 class="case-h3">Services, community and content</h3>
       <p class="case-p">Around food sat everything else a pet parent needs — a services grid, a pet forum, a photo feed (Pawgraphy), and articles surfaced from the home screen.</p>
-      <div class="case-cardgrid case-cardgrid--3 case-shotgrid">
+      <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-dashboard.jpg" alt="Home screen — Fresh Food and a Services grid: Adoption, Missing, Spa, Vet, Stores, Kennels, Parks and Food"></div></div></div><div class="case-caption">Services — one grid, every need</div></div>
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-pawgraphy.jpg" alt="Pawgraphy post — a pet photo by Melinda Brown with Boops, comments from other pet parents and a message input"></div></div></div><div class="case-caption">Pawgraphy — a feed for pet parents</div></div>
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-articles.jpg" alt="Articles — a swipe-up card from the dashboard with categorised pet-care articles, dates and read times"></div></div></div><div class="case-caption">Articles — pulled up from home</div></div>
       </div>
 
-      <h3 class="case-h3" style="margin-top:44px">Profiles and missing pets</h3>
+      <h3 class="case-h3">Profiles and missing pets</h3>
       <p class="case-p">Everything tied back to two profiles — the pet parent and the pet — and a Missing flow for reporting and finding lost pets in the community.</p>
-      <div class="case-cardgrid case-cardgrid--4 case-shotgrid">
+      <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-user-profile.jpg" alt="User profile — Jessca Patel with post, follower and following counts, a pet list, and a photo grid with Posts, Adoptions and Missing tabs"></div></div></div><div class="case-caption">Pet parent — posts, pets, follows</div></div>
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-pet-profile.jpg" alt="Pet profile — Donny, a male Labrador, with personal info and other details like breed, likes, dislikes and food"></div></div></div><div class="case-caption">Pet — the record everything hangs off</div></div>
         <div><div class="case-shotbox"><div class="shotbox-phone"><div class="shotbox-crop"><img src="assets/images/opw-reports.jpg" alt="Reports — My Missing Posts and Reports By Me tabs, with missing-pet cards showing age, gender, location, missing date, colour and reward"></div></div></div><div class="case-caption">Missing — report and track</div></div>
