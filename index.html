@@ -1059,12 +1059,10 @@
   .dot-badge__center-dot{fill:var(--line);}
   .dot-badge__text{font-family:var(--font-display);font-size:21px;font-weight:700;
     letter-spacing:.02em;text-transform:uppercase;}
-  .dot-badge__word{fill:var(--ink-soft);opacity:.4;
-    transition:fill .3s ease,opacity .3s ease;}
-  .dot-badge__word.is-seen{fill:var(--ink);opacity:1;}
-  .dot-badge__word.is-active{fill:var(--accent);opacity:1;}
+  .dot-badge__word{fill:var(--ink);}
   .dot-badge__label{font-family:var(--font-body);font-size:22px;font-weight:700;
-    fill:var(--ink);}
+    fill:var(--ink-soft);opacity:.35;transition:opacity .4s ease,fill .3s ease;}
+  .dot-badge__label.is-seen{fill:var(--ink);opacity:1;}
   .dot-badge__dot{fill:var(--accent);}
   @media (max-width:560px){.dot-badge{width:400px;height:400px;}}
 
@@ -2895,11 +2893,13 @@
           <line class="dot-badge__tick" x1="685" y1="440" x2="720" y2="440"/>
           <line class="dot-badge__tick" x1="440" y1="685" x2="440" y2="720"/>
           <line class="dot-badge__tick" x1="195" y1="440" x2="160" y2="440"/>
-          <text class="dot-badge__label" x="440" y="130" text-anchor="middle" dominant-baseline="middle">Understand</text>
-          <text class="dot-badge__label" x="750" y="440" text-anchor="start" dominant-baseline="middle">Structure</text>
-          <text class="dot-badge__label" x="440" y="750" text-anchor="middle" dominant-baseline="middle">Simplify</text>
-          <text class="dot-badge__label" x="130" y="440" text-anchor="end" dominant-baseline="middle">Clarity</text>
-          <text class="dot-badge__text"><textPath href="#dotBadgePathWork" startOffset="0" textLength="1378" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan></textPath></text>
+          <text class="dot-badge__label" data-step="0" x="440" y="130" text-anchor="middle" dominant-baseline="middle">Understand</text>
+          <text class="dot-badge__label" data-step="1" x="750" y="440" text-anchor="start" dominant-baseline="middle">Structure</text>
+          <text class="dot-badge__label" data-step="2" x="440" y="750" text-anchor="middle" dominant-baseline="middle">Simplify</text>
+          <text class="dot-badge__label" data-step="3" x="130" y="440" text-anchor="end" dominant-baseline="middle">Clarity</text>
+          <g id="dotBadgeQuoteGroupWork" style="transform-origin:440px 440px">
+            <text class="dot-badge__text"><textPath href="#dotBadgePathWork" startOffset="0" textLength="1378" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word">A SMALL DOT CAN CHANGE PERSPECTIVE &#8212; SAIKY DESAI &#183; A SMALL DOT CAN CHANGE PERSPECTIVE &#8212; SAIKY DESAI &#183; </tspan></textPath></text>
+          </g>
           <circle class="dot-badge__center-dot" cx="440" cy="440" r="6"/>
           <circle class="dot-badge__dot" id="dotBadgeDotWork" cx="440" cy="440" r="9"/>
         </svg>
@@ -6125,12 +6125,10 @@ h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
 .dot-badge__center-dot{fill:var(--line);}
 .dot-badge__text{font-family:"Fraunces",Georgia,serif;font-size:21px;font-weight:700;
   letter-spacing:.02em;text-transform:uppercase;}
-.dot-badge__word{fill:var(--slate);opacity:.4;
-  transition:fill .3s ease,opacity .3s ease;}
-.dot-badge__word.is-seen{fill:var(--ink);opacity:1;}
-.dot-badge__word.is-active{fill:var(--aubergine);opacity:1;}
+.dot-badge__word{fill:var(--ink);}
 .dot-badge__label{font-family:"Satoshi",sans-serif;font-size:22px;font-weight:700;
-  fill:var(--ink);}
+  fill:var(--slate);opacity:.35;transition:opacity .4s ease,fill .3s ease;}
+.dot-badge__label.is-seen{fill:var(--ink);opacity:1;}
 .dot-badge__dot{fill:var(--aubergine);}
 @media (max-width:560px){.dot-badge{width:360px;height:360px;}}
 h3{font-size:18px;line-height:1.2}
@@ -6414,11 +6412,13 @@ h3{font-size:18px;line-height:1.2}
         <line class="dot-badge__tick" x1="685" y1="440" x2="720" y2="440"/>
         <line class="dot-badge__tick" x1="440" y1="685" x2="440" y2="720"/>
         <line class="dot-badge__tick" x1="195" y1="440" x2="160" y2="440"/>
-        <text class="dot-badge__label" x="440" y="130" text-anchor="middle" dominant-baseline="middle">Understand</text>
-        <text class="dot-badge__label" x="750" y="440" text-anchor="start" dominant-baseline="middle">Structure</text>
-        <text class="dot-badge__label" x="440" y="750" text-anchor="middle" dominant-baseline="middle">Simplify</text>
-        <text class="dot-badge__label" x="130" y="440" text-anchor="end" dominant-baseline="middle">Clarity</text>
-        <text class="dot-badge__text"><textPath href="#dotBadgePathBrand" startOffset="0" textLength="1378" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan></textPath></text>
+        <text class="dot-badge__label" data-step="0" x="440" y="130" text-anchor="middle" dominant-baseline="middle">Understand</text>
+        <text class="dot-badge__label" data-step="1" x="750" y="440" text-anchor="start" dominant-baseline="middle">Structure</text>
+        <text class="dot-badge__label" data-step="2" x="440" y="750" text-anchor="middle" dominant-baseline="middle">Simplify</text>
+        <text class="dot-badge__label" data-step="3" x="130" y="440" text-anchor="end" dominant-baseline="middle">Clarity</text>
+        <g id="dotBadgeQuoteGroupBrand" style="transform-origin:440px 440px">
+          <text class="dot-badge__text"><textPath href="#dotBadgePathBrand" startOffset="0" textLength="1378" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word">A SMALL DOT CAN CHANGE PERSPECTIVE &#8212; SAIKY DESAI &#183; A SMALL DOT CAN CHANGE PERSPECTIVE &#8212; SAIKY DESAI &#183; </tspan></textPath></text>
+        </g>
         <circle class="dot-badge__center-dot" cx="440" cy="440" r="6"/>
         <circle class="dot-badge__dot" id="dotBadgeDotBrand" cx="440" cy="440" r="9"/>
       </svg>
@@ -6588,13 +6588,13 @@ try{
    in degrees (0=3 o'clock, -90=12 o'clock, going clockwise), and the
    position along the journey (center -> ring, then one full sweep
    around it) at progress t in [0,1]. ARRIVAL holds the t-value at
-   which each of the 8 quote words gets its turn — the first word is
-   "reached" from the very start (t=0), each later one exactly as the
-   dot's sweep passes it, so a word lighting up bold always lines up
-   with the dot actually being there. */
+   which the dot reaches each of the four compass words — Understand
+   is "reached" from the very start (t=0), the other three exactly as
+   the dot's sweep passes their position, so a word fading to black
+   always lines up with the dot actually being there. The quote's own
+   color never changes; only these four outside words animate. */
 const DOT_BADGE_GEOM = {cx:440, cy:440, r:265, startAngle:-90};
-const DOT_BADGE_WORD_COUNT = 8;
-const DOT_BADGE_ARRIVAL = Array.from({length:DOT_BADGE_WORD_COUNT}, (_,i)=> i===0 ? 0 : 0.15 + (0.85 * i/DOT_BADGE_WORD_COUNT));
+const DOT_BADGE_ARRIVAL = [0, 0.15 + 0.85*0.25, 0.15 + 0.85*0.5, 0.15 + 0.85*0.75];
 function dotBadgePoint(angleDeg, radius){
   const rad = angleDeg * Math.PI / 180;
   return [DOT_BADGE_GEOM.cx + radius*Math.cos(rad), DOT_BADGE_GEOM.cy + radius*Math.sin(rad)];
@@ -6621,11 +6621,10 @@ function dotBadgeProgress(top, vh){
   const startY = vh * 0.85, endY = vh * 0.15;
   return (startY - top) / (startY - endY);
 }
-function dotBadgeApplyLabels(words, activeIndex){
-  words.forEach(w=>{
-    const i = Number(w.dataset.w);
-    w.classList.toggle('is-active', i === activeIndex);
-    w.classList.toggle('is-seen', i < activeIndex);
+function dotBadgeApplyLabels(labels, activeIndex){
+  labels.forEach(l=>{
+    const step = Number(l.dataset.step);
+    l.classList.toggle('is-seen', step <= activeIndex);
   });
 }
 
@@ -7232,7 +7231,7 @@ try{
              Work page, from out here. */
           const brandBadge = doc.getElementById('dotBadgeRingBrand');
           const brandDot = doc.getElementById('dotBadgeDotBrand');
-          const brandLabels = doc.querySelectorAll('#dotBadgeRingBrand .dot-badge__word');
+          const brandLabels = doc.querySelectorAll('#dotBadgeRingBrand .dot-badge__label');
           if(brandBadge && brandDot){
             const brandApplyStep = (t)=>{
               const {x,y,active} = dotBadgeAt(t);
@@ -7259,6 +7258,24 @@ try{
               }, {passive:true});
               brandCompute();
             }
+          }
+          /* the quote keeps turning here too — a plain, continuous tie to
+             the outer window's scroll (not the bounded 0-1 dot journey),
+             so it never stops or resets. Its own color stays fixed; the
+             group just rotates around the badge's own center. */
+          const brandQuoteGroup = doc.getElementById('dotBadgeQuoteGroupBrand');
+          if(brandQuoteGroup && !(frame.contentWindow.matchMedia && frame.contentWindow.matchMedia('(prefers-reduced-motion: reduce)').matches)){
+            let brandRotTicking = false;
+            const applyBrandRot = ()=>{
+              brandRotTicking = false;
+              brandQuoteGroup.setAttribute('transform', 'rotate(' + ((window.scrollY * 0.06) % 360) + ' 440 440)');
+            };
+            window.addEventListener('scroll', ()=>{
+              if(brandRotTicking) return;
+              brandRotTicking = true;
+              requestAnimationFrame(applyBrandRot);
+            }, {passive:true});
+            applyBrandRot();
           }
         }catch(e){}
       });
@@ -7447,7 +7464,7 @@ try{
 (function(){
   const badge = document.getElementById('dotBadgeRingWork');
   const dot = document.getElementById('dotBadgeDotWork');
-  const labels = document.querySelectorAll('#dotBadgeRingWork .dot-badge__word');
+  const labels = document.querySelectorAll('#dotBadgeRingWork .dot-badge__label');
   if(!badge || !dot) return;
   const applyStep = (t)=>{
     const {x,y,active} = dotBadgeAt(t);
@@ -7471,6 +7488,28 @@ try{
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   compute();
+})();
+
+/* the quote keeps turning — a plain, continuous scroll tie (not
+   bounded to the dot's one-time 0-1 journey), independent of the
+   dot/label story so it never stops or resets. Its own color stays
+   fixed; the group just rotates around the badge's own center. */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const quoteGroup = document.getElementById('dotBadgeQuoteGroupWork');
+  if(!quoteGroup) return;
+  let ticking = false;
+  function apply(){
+    ticking = false;
+    quoteGroup.setAttribute('transform', 'rotate(' + ((window.scrollY * 0.06) % 360) + ' 440 440)');
+  }
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(apply);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  apply();
 })();
 }catch(e){ console.error('[section error]', e); }
 
