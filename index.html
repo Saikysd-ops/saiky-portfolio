@@ -6592,7 +6592,7 @@ try{
    "reached" from the very start (t=0), each later one exactly as the
    dot's sweep passes it, so a word lighting up bold always lines up
    with the dot actually being there. */
-const DOT_BADGE_GEOM = {cx:440, cy:440, r:220, startAngle:-90};
+const DOT_BADGE_GEOM = {cx:440, cy:440, r:265, startAngle:-90};
 const DOT_BADGE_WORD_COUNT = 8;
 const DOT_BADGE_ARRIVAL = Array.from({length:DOT_BADGE_WORD_COUNT}, (_,i)=> i===0 ? 0 : 0.15 + (0.85 * i/DOT_BADGE_WORD_COUNT));
 function dotBadgePoint(angleDeg, radius){
