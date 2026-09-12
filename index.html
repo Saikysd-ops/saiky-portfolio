@@ -1041,32 +1041,27 @@
   @media (max-width:880px){ .offclock{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:560px){ .offclock{grid-template-columns:1fr;} }
 
-  /* signature — a small story told with one dot: the quote sits at the
-     center where the dot starts; as the page scrolls it travels out and
-     around the ring, revealing Understand → Structure → Simplify in
-     turn and landing beside Clarity — the brand hero's own words,
-     echoed here. Labels sit a clear ring outside the track so nothing
-     touches the circle. */
+  /* signature — the quote runs the full ring (like the very first
+     version), bold and spacious; a single dot starts at the center
+     and sweeps out and around as the page scrolls, lighting each word
+     bold in turn as it passes — a highlight sweeping through the
+     sentence rather than a static wall of text. */
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
     overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   .dot-signature{text-align:center;padding:96px 0;}
   .dot-signature + .lab{border-top:none;}
   @media (max-width:760px){.dot-signature{padding:64px 0;}}
-  .dot-badge{position:relative;width:420px;height:420px;margin:0 auto;}
+  .dot-badge{position:relative;width:480px;height:480px;margin:0 auto;}
   .dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
   .dot-badge__track{fill:none;stroke:var(--line);stroke-width:1;}
-  .dot-badge__quote-line{font-family:var(--font-display);font-style:italic;font-weight:500;
-    font-size:15px;fill:var(--ink);}
-  .dot-badge__by-center{font-family:var(--font-display);font-weight:500;
-    font-size:11px;letter-spacing:.04em;fill:var(--ink-soft);}
-  .dot-badge__label{font-family:var(--font-display);font-size:16px;font-weight:500;
-    letter-spacing:.03em;text-transform:uppercase;fill:var(--ink-soft);
-    opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.85);
-    transition:opacity .45s ease,transform .45s ease,fill .3s ease,font-weight .3s ease;}
-  .dot-badge__label.is-seen{opacity:.5;transform:scale(1);}
-  .dot-badge__label.is-active{fill:var(--ink);font-weight:700;opacity:1;transform:scale(1);}
+  .dot-badge__text{font-family:var(--font-display);font-size:20px;font-weight:700;
+    letter-spacing:.02em;text-transform:uppercase;}
+  .dot-badge__word{fill:var(--ink-soft);opacity:.4;
+    transition:fill .3s ease,opacity .3s ease;}
+  .dot-badge__word.is-seen{fill:var(--ink);opacity:1;}
+  .dot-badge__word.is-active{fill:var(--accent);opacity:1;}
   .dot-badge__dot{fill:var(--accent);}
-  @media (max-width:560px){.dot-badge{width:310px;height:310px;}}
+  @media (max-width:560px){.dot-badge{width:340px;height:340px;}}
 
   /* closing */
   .closing{border-top:1px solid var(--line);text-align:center;}
@@ -2887,17 +2882,12 @@
     <section class="work all-work"><div id="workMount"></div></section>
 
     <div class="dot-signature">
-      <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai. Understand. Structure. Simplify. Clarity.">
-        <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="0 0 480 480" aria-hidden="true">
-          <circle class="dot-badge__track" cx="240" cy="240" r="150"/>
-          <text class="dot-badge__quote-line" x="240" y="220" text-anchor="middle" dominant-baseline="middle">"A small dot can</text>
-          <text class="dot-badge__quote-line" x="240" y="242" text-anchor="middle" dominant-baseline="middle">change perspective."</text>
-          <text class="dot-badge__by-center" x="240" y="268" text-anchor="middle" dominant-baseline="middle">— SAIKY DESAI</text>
-          <text class="dot-badge__label" data-step="0" x="240" y="56" text-anchor="middle" dominant-baseline="middle">UNDERSTAND.</text>
-          <text class="dot-badge__label" data-step="1" x="424" y="240" text-anchor="middle" dominant-baseline="middle">STRUCTURE.</text>
-          <text class="dot-badge__label" data-step="2" x="240" y="424" text-anchor="middle" dominant-baseline="middle">SIMPLIFY.</text>
-          <text class="dot-badge__label" data-step="3" x="56" y="240" text-anchor="middle" dominant-baseline="middle">CLARITY.</text>
-          <circle class="dot-badge__dot" id="dotBadgeDotWork" cx="240" cy="240" r="7"/>
+      <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai">
+        <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="0 0 520 520" aria-hidden="true">
+          <defs><path id="dotBadgePathWork" d="M260,260 m-190,0 a190,190 0 1 1 380,0 a190,190 0 1 1 -380,0"/></defs>
+          <circle class="dot-badge__track" cx="260" cy="260" r="190"/>
+          <text class="dot-badge__text"><textPath href="#dotBadgePathWork" startOffset="2%" textLength="1000" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI</tspan></textPath></text>
+          <circle class="dot-badge__dot" id="dotBadgeDotWork" cx="260" cy="260" r="8"/>
         </svg>
       </div>
     </div>
@@ -6112,21 +6102,17 @@ h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 .dot-signature{text-align:center;padding:72px 0;}
-.dot-badge{position:relative;width:360px;height:360px;margin:0 auto;}
+.dot-badge{position:relative;width:400px;height:400px;margin:0 auto;}
 .dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
 .dot-badge__track{fill:none;stroke:var(--line);stroke-width:1;}
-.dot-badge__quote-line{font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:500;
-  font-size:15px;fill:var(--ink);}
-.dot-badge__by-center{font-family:"Fraunces",Georgia,serif;font-weight:500;
-  font-size:11px;letter-spacing:.04em;fill:var(--slate);}
-.dot-badge__label{font-family:"Fraunces",Georgia,serif;font-size:16px;font-weight:500;
-  letter-spacing:.03em;text-transform:uppercase;fill:var(--slate);
-  opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.85);
-  transition:opacity .45s ease,transform .45s ease,fill .3s ease,font-weight .3s ease;}
-.dot-badge__label.is-seen{opacity:.5;transform:scale(1);}
-.dot-badge__label.is-active{fill:var(--ink);font-weight:700;opacity:1;transform:scale(1);}
+.dot-badge__text{font-family:"Fraunces",Georgia,serif;font-size:20px;font-weight:700;
+  letter-spacing:.02em;text-transform:uppercase;}
+.dot-badge__word{fill:var(--slate);opacity:.4;
+  transition:fill .3s ease,opacity .3s ease;}
+.dot-badge__word.is-seen{fill:var(--ink);opacity:1;}
+.dot-badge__word.is-active{fill:var(--aubergine);opacity:1;}
 .dot-badge__dot{fill:var(--aubergine);}
-@media (max-width:560px){.dot-badge{width:270px;height:270px;}}
+@media (max-width:560px){.dot-badge{width:300px;height:300px;}}
 h3{font-size:18px;line-height:1.2}
 .mono{font-family:"IBM Plex Mono",monospace}
 .muted{color:var(--slate)}
@@ -6400,17 +6386,12 @@ h3{font-size:18px;line-height:1.2}
   <p style="margin-top:12px;font-size:20px;line-height:1.45">The logo stays stable; <span class="gradient-text">Complexity → Clarity</span> carries the expressive color on the website.</p>
 
   <div class="dot-signature">
-    <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai. Understand. Structure. Simplify. Clarity.">
-      <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="0 0 480 480" aria-hidden="true">
-        <circle class="dot-badge__track" cx="240" cy="240" r="150"/>
-        <text class="dot-badge__quote-line" x="240" y="220" text-anchor="middle" dominant-baseline="middle">"A small dot can</text>
-        <text class="dot-badge__quote-line" x="240" y="242" text-anchor="middle" dominant-baseline="middle">change perspective."</text>
-        <text class="dot-badge__by-center" x="240" y="268" text-anchor="middle" dominant-baseline="middle">— SAIKY DESAI</text>
-        <text class="dot-badge__label" data-step="0" x="240" y="56" text-anchor="middle" dominant-baseline="middle">UNDERSTAND.</text>
-        <text class="dot-badge__label" data-step="1" x="424" y="240" text-anchor="middle" dominant-baseline="middle">STRUCTURE.</text>
-        <text class="dot-badge__label" data-step="2" x="240" y="424" text-anchor="middle" dominant-baseline="middle">SIMPLIFY.</text>
-        <text class="dot-badge__label" data-step="3" x="56" y="240" text-anchor="middle" dominant-baseline="middle">CLARITY.</text>
-        <circle class="dot-badge__dot" id="dotBadgeDotBrand" cx="240" cy="240" r="7"/>
+    <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai">
+      <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="0 0 520 520" aria-hidden="true">
+        <defs><path id="dotBadgePathBrand" d="M260,260 m-190,0 a190,190 0 1 1 380,0 a190,190 0 1 1 -380,0"/></defs>
+        <circle class="dot-badge__track" cx="260" cy="260" r="190"/>
+        <text class="dot-badge__text"><textPath href="#dotBadgePathBrand" startOffset="2%" textLength="1000" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI</tspan></textPath></text>
+        <circle class="dot-badge__dot" id="dotBadgeDotBrand" cx="260" cy="260" r="8"/>
       </svg>
     </div>
   </div>
@@ -6576,30 +6557,28 @@ try{
 /* dot-signature travel — shared math for both the Work page and the
    Brand doc instances: a point on a circle (cx,cy,r) at a given angle
    in degrees (0=3 o'clock, -90=12 o'clock, going clockwise), and the
-   position along the whole journey (center -> ring -> arc through the
-   four labels) at progress t in [0,1]. ARRIVAL holds the t-value at
-   which the dot reaches each label — Understand is "reached" from the
-   very start (t=0), the other three exactly as the dot's arc gets
-   there, so a label lighting up always lines up with the dot arriving
-   beside it. */
-const DOT_BADGE_GEOM = {cx:240, cy:240, r:150, angles:[-90,0,90,180]};
-const DOT_BADGE_ARRIVAL = [0, 0.15 + 0.85/3, 0.15 + (0.85/3)*2, 1];
+   position along the journey (center -> ring, then one full sweep
+   around it) at progress t in [0,1]. ARRIVAL holds the t-value at
+   which each of the 8 quote words gets its turn — the first word is
+   "reached" from the very start (t=0), each later one exactly as the
+   dot's sweep passes it, so a word lighting up bold always lines up
+   with the dot actually being there. */
+const DOT_BADGE_GEOM = {cx:260, cy:260, r:190, startAngle:-90};
+const DOT_BADGE_WORD_COUNT = 8;
+const DOT_BADGE_ARRIVAL = Array.from({length:DOT_BADGE_WORD_COUNT}, (_,i)=> i===0 ? 0 : 0.15 + (0.85 * i/DOT_BADGE_WORD_COUNT));
 function dotBadgePoint(angleDeg, radius){
   const rad = angleDeg * Math.PI / 180;
   return [DOT_BADGE_GEOM.cx + radius*Math.cos(rad), DOT_BADGE_GEOM.cy + radius*Math.sin(rad)];
 }
 function dotBadgeAt(t){
   t = Math.max(0, Math.min(1, t));
-  const {r, angles} = DOT_BADGE_GEOM;
+  const {r, startAngle} = DOT_BADGE_GEOM;
   let x, y;
   if(t < 0.15){
-    [x, y] = dotBadgePoint(angles[0], r * (t/0.15));
+    [x, y] = dotBadgePoint(startAngle, r * (t/0.15));
   } else {
-    const segT = (t - 0.15) / 0.85;
-    const segIndex = Math.min(2, Math.floor(segT * 3));
-    const segLocal = (segT * 3) - segIndex;
-    const angle = angles[segIndex] + (angles[segIndex+1] - angles[segIndex]) * segLocal;
-    [x, y] = dotBadgePoint(angle, r);
+    const sweep = (t - 0.15) / 0.85; // 0..1 once around the full circle
+    [x, y] = dotBadgePoint(startAngle + 360*sweep, r);
   }
   let active = 0;
   for(let i=0;i<DOT_BADGE_ARRIVAL.length;i++){ if(t >= DOT_BADGE_ARRIVAL[i] - 1e-6) active = i; }
@@ -6613,11 +6592,11 @@ function dotBadgeProgress(top, vh){
   const startY = vh * 0.85, endY = vh * 0.15;
   return (startY - top) / (startY - endY);
 }
-function dotBadgeApplyLabels(labels, activeIndex){
-  labels.forEach(l=>{
-    const step = Number(l.dataset.step);
-    l.classList.toggle('is-active', step === activeIndex);
-    l.classList.toggle('is-seen', step < activeIndex);
+function dotBadgeApplyLabels(words, activeIndex){
+  words.forEach(w=>{
+    const i = Number(w.dataset.w);
+    w.classList.toggle('is-active', i === activeIndex);
+    w.classList.toggle('is-seen', i < activeIndex);
   });
 }
 
@@ -7224,7 +7203,7 @@ try{
              Work page, from out here. */
           const brandBadge = doc.getElementById('dotBadgeRingBrand');
           const brandDot = doc.getElementById('dotBadgeDotBrand');
-          const brandLabels = doc.querySelectorAll('#dotBadgeRingBrand .dot-badge__label');
+          const brandLabels = doc.querySelectorAll('#dotBadgeRingBrand .dot-badge__word');
           if(brandBadge && brandDot){
             const brandApplyStep = (t)=>{
               const {x,y,active} = dotBadgeAt(t);
@@ -7439,7 +7418,7 @@ try{
 (function(){
   const badge = document.getElementById('dotBadgeRingWork');
   const dot = document.getElementById('dotBadgeDotWork');
-  const labels = document.querySelectorAll('#dotBadgeRingWork .dot-badge__label');
+  const labels = document.querySelectorAll('#dotBadgeRingWork .dot-badge__word');
   if(!badge || !dot) return;
   const applyStep = (t)=>{
     const {x,y,active} = dotBadgeAt(t);
