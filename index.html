@@ -1041,6 +1041,35 @@
   @media (max-width:880px){ .offclock{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:560px){ .offclock{grid-template-columns:1fr;} }
 
+  /* signature — a small quote with the brand's dot falling into place on
+     the last "i" of Desai, standing in for the mark's own stone + dot. */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .dot-signature{text-align:center;padding:12px 0 8px;}
+  .dot-signature__quote{font-family:var(--font-display);font-style:italic;font-weight:500;
+    font-size:clamp(24px,3.6vw,42px);line-height:1.28;letter-spacing:-.01em;
+    color:var(--ink);margin:0 0 20px;}
+  .dot-signature__by{font-family:var(--font-display);font-weight:500;
+    font-size:clamp(16px,1.7vw,20px);color:var(--ink-soft);margin:0;letter-spacing:.01em;}
+  .dot-signature__i{position:relative;display:inline-block;}
+  .dot-signature__dot{position:absolute;left:50%;top:.06em;width:.16em;height:.16em;
+    border-radius:50%;background:var(--accent);
+    transform:translate(-50%,-64px) scale(.6);opacity:0;}
+  .dot-signature.in-view .dot-signature__dot{
+    animation:sigDotFall 1.05s cubic-bezier(.3,.08,.2,1) .25s forwards;}
+  @keyframes sigDotFall{
+    0%{transform:translate(-50%,-64px) scale(.6);opacity:0;}
+    10%{opacity:1;}
+    52%{transform:translate(-50%,0) scale(1);}
+    66%{transform:translate(-50%,-13px) scale(.96);}
+    80%{transform:translate(-50%,0) scale(1);}
+    90%{transform:translate(-50%,-5px) scale(.985);}
+    100%{transform:translate(-50%,0) scale(1);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .dot-signature__dot{opacity:1;transform:translate(-50%,0) scale(1);animation:none;}
+  }
+
   /* closing */
   .closing{border-top:1px solid var(--line);text-align:center;}
   .closing h2{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,4.2vw,52px);
@@ -2858,6 +2887,11 @@
       <p class="work-sub">A selection of products, systems and experiments shaped across fintech, AI, enterprise and everyday life.</p>
     </section>
     <section class="work all-work"><div id="workMount"></div></section>
+
+    <div class="dot-signature" role="img" aria-label="A small dot can change perspective. — Saiky Desai">
+      <p class="dot-signature__quote" aria-hidden="true">"A small dot can change perspective."</p>
+      <p class="dot-signature__by" aria-hidden="true">— Saiky Desa<span class="dot-signature__i">ı<span class="dot-signature__dot"></span></span></p>
+    </div>
 
     <section class="lab">
       <div class="lab-head">
@@ -5994,7 +6028,7 @@
 <title>Saiky Desai — Brand Guidelines</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
 <style>
 :root {
@@ -6058,6 +6092,36 @@ h1,h2,h3,p{margin:0}
 h1,h2,.display{font-family:"Fraunces",Georgia,serif}
 h1{font-size:clamp(48px,7vw,88px);line-height:.95;font-weight:500;letter-spacing:-.04em}
 h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
+.philosophy-quote{font-size:clamp(15px,2.5vw,32px);white-space:nowrap}
+@media(max-width:560px){.philosophy-quote{white-space:normal;font-size:clamp(19px,4.6vw,26px);line-height:1.15}}
+
+/* signature — the brand's dot falling into place on the last "i" of Desai */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.dot-signature{text-align:center;padding:8px 0 4px;}
+.dot-signature__quote{font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:500;
+  font-size:clamp(22px,3vw,36px);line-height:1.28;letter-spacing:-.01em;
+  color:var(--ink);margin:0 0 18px;}
+.dot-signature__by{font-family:"Fraunces",Georgia,serif;font-weight:500;
+  font-size:clamp(15px,1.5vw,18px);color:var(--slate);margin:0;letter-spacing:.01em;}
+.dot-signature__i{position:relative;display:inline-block;}
+.dot-signature__dot{position:absolute;left:50%;top:.06em;width:.16em;height:.16em;
+  border-radius:50%;background:var(--aubergine);
+  transform:translate(-50%,-56px) scale(.6);opacity:0;}
+.dot-signature.in-view .dot-signature__dot{
+  animation:sigDotFall 1.05s cubic-bezier(.3,.08,.2,1) .25s forwards;}
+@keyframes sigDotFall{
+  0%{transform:translate(-50%,-56px) scale(.6);opacity:0;}
+  10%{opacity:1;}
+  52%{transform:translate(-50%,0) scale(1);}
+  66%{transform:translate(-50%,-12px) scale(.96);}
+  80%{transform:translate(-50%,0) scale(1);}
+  90%{transform:translate(-50%,-4px) scale(.985);}
+  100%{transform:translate(-50%,0) scale(1);}
+}
+@media (prefers-reduced-motion:reduce){
+  .dot-signature__dot{opacity:1;transform:translate(-50%,0) scale(1);animation:none;}
+}
 h3{font-size:18px;line-height:1.2}
 .mono{font-family:"IBM Plex Mono",monospace}
 .muted{color:var(--slate)}
@@ -6254,7 +6318,7 @@ h3{font-size:18px;line-height:1.2}
 
   <div style="margin-top:44px">
     <div class="kicker">Design philosophy</div>
-    <h2 style="margin-top:8px">"I believe humane design starts with understanding people."</h2>
+    <h2 class="philosophy-quote" style="margin-top:8px">"I believe humane design starts with understanding people."</h2>
     <div class="design-philosophy-visual">
       <img class="dp-img-light" src="assets/images/image-018-6da924f6ac8b.png" alt="Illustrated statement in Japanese katakana: I believe humane design starts with understanding people">
       <img class="dp-img-dark" src="assets/images/image-019-6352d95792b1.png" alt="Illustrated statement in Japanese katakana: I believe humane design starts with understanding people">
@@ -6329,6 +6393,12 @@ h3{font-size:18px;line-height:1.2}
   <div class="rule"></div>
   <div class="kicker">Digital expression</div>
   <p style="margin-top:12px;font-size:20px;line-height:1.45">The logo stays stable; <span class="gradient-text">Complexity → Clarity</span> carries the expressive color on the website.</p>
+
+  <div class="rule" style="margin-top:36px"></div>
+  <div class="dot-signature" role="img" aria-label="A small dot can change perspective. — Saiky Desai">
+    <p class="dot-signature__quote" aria-hidden="true">"A small dot can change perspective."</p>
+    <p class="dot-signature__by" aria-hidden="true">— Saiky Desa<span class="dot-signature__i">ı<span class="dot-signature__dot"></span></span></p>
+  </div>
 
   <div class="footer"><span>SAIKY DESAI · LOGO USAGE</span><span>© 2026 Saiky Desai</span></div>
 </section>
@@ -7054,18 +7124,62 @@ try{
           const doc = frame.contentWindow.document;
           const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
           doc.documentElement.setAttribute('data-theme', currentTheme);
+          let raf = null;
           const resize = ()=>{
-            frame.style.height = doc.documentElement.scrollHeight + 'px';
+            if(raf) return;
+            raf = frame.contentWindow.requestAnimationFrame(()=>{
+              raf = null;
+              /* the taller of body/documentElement — a responsive reflow that
+                 shrinks the content must still shrink the iframe back down,
+                 not leave the old (taller) height behind as blank scroll */
+              const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+              frame.style.height = h + 'px';
+            });
           };
+          frame._resize = resize;
           resize();
-          setTimeout(resize, 300); /* fonts/images settling */
+          setTimeout(resize, 300);  /* fonts/images settling */
+          setTimeout(resize, 1000); /* late webfont swaps */
           if(frame.contentWindow.ResizeObserver){
-            new frame.contentWindow.ResizeObserver(resize).observe(frame.contentWindow.document.body);
+            const ro = new frame.contentWindow.ResizeObserver(resize);
+            ro.observe(doc.documentElement);
+            ro.observe(doc.body);
+          }
+          frame.contentWindow.addEventListener('resize', resize);
+          /* the signature's dot-fall plays once, when it scrolls into view
+             inside the iframe — driven from here since the doc itself
+             carries no script of its own */
+          const sig = doc.querySelector('.dot-signature');
+          if(sig){
+            const reduceMotion = frame.contentWindow.matchMedia && frame.contentWindow.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if(reduceMotion || !frame.contentWindow.IntersectionObserver){
+              sig.classList.add('in-view');
+            } else {
+              const sigIo = new frame.contentWindow.IntersectionObserver((entries)=>{
+                entries.forEach(en=>{
+                  if(en.isIntersecting){ sig.classList.add('in-view'); sigIo.unobserve(en.target); resize(); }
+                });
+              }, {threshold:.4});
+              sigIo.observe(sig);
+            }
           }
         }catch(e){}
       });
     }catch(e){ console.error('[brand frame]', e); }
   }
+  /* belt-and-suspenders: the iframe's own ResizeObserver should catch a
+     responsive reflow, but if the outer window is what actually resized
+     (rotating a device, dragging the browser edge), re-run it explicitly
+     once things settle so a shorter mobile-vs-desktop layout can't leave
+     the old taller height behind as blank scroll. */
+  let brandResizeT = null;
+  window.addEventListener('resize', ()=>{
+    clearTimeout(brandResizeT);
+    brandResizeT = setTimeout(()=>{
+      const frame = document.getElementById('brandFrame');
+      if(frame && frame._resize) frame._resize();
+    }, 150);
+  });
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function go(view){
     if(reduce || !loader){ show(view); return; }
@@ -7209,7 +7323,7 @@ try{
 /* subtle scroll choreography — work cards + impact panel fade/lift in once, on first view */
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const targets = document.querySelectorAll('.work-card, .impact');
+  const targets = document.querySelectorAll('.work-card, .impact, .dot-signature');
   if(!('IntersectionObserver' in window) || !targets.length) return;
   targets.forEach(el=>el.classList.add('reveal-io'));
   const io = new IntersectionObserver((entries)=>{
