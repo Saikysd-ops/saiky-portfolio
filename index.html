@@ -5324,6 +5324,7 @@
         <div class="case-jump-lbl">Solution</div>
         <a class="case-jump-item" href="#si-experiments"><i></i>Signal to plan</a>
         <a class="case-jump-item" href="#si-po"><i></i>Purchase-order impact</a>
+        <a class="case-jump-item" href="#si-flow"><i></i>The continuity flow</a>
         <a class="case-jump-item" href="#si-principles"><i></i>Merchant in control</a>
         <a class="case-jump-item" href="#si-beyond"><i></i>Beyond the brief</a>
       </div>
@@ -5430,6 +5431,28 @@
           <li><b>Supports decisions:</b> Gives associates a clear cost signal when evaluating suppliers and making sourcing decisions.</li>
         </ul>
       </div>
+
+      <div class="term-popover-card" id="popover-tts" role="dialog" aria-label="TTS definition">
+        <button type="button" class="term-popover-close" aria-label="Close">&times;</button>
+        <div class="term-popover-title">TTS — Time to Shift</div>
+        <p class="term-popover-body">How long it takes to identify, qualify, select and get an alternative supplier ready to actually supply — from the decision to move volume to that supplier being able to deliver it.</p>
+        <div class="term-popover-subhead">Why is it important?</div>
+        <ul class="term-popover-list">
+          <li><b>Sets the timeline:</b> Tells the merchant how soon a continuity plan can realistically start covering the gap.</li>
+          <li><b>Separates readiness from risk:</b> A low-risk alternative that takes months to onboard may be worse than a slightly riskier one that's ready in weeks.</li>
+        </ul>
+      </div>
+
+      <div class="term-popover-card" id="popover-ttr" role="dialog" aria-label="TTR definition">
+        <button type="button" class="term-popover-close" aria-label="Close">&times;</button>
+        <div class="term-popover-title">TTR — Time to Recovery</div>
+        <p class="term-popover-body">How long it takes the business and supply chain to recover after a supplier disruption and return to an acceptable operating level — the full cost of the disruption in time, not just dollars.</p>
+        <div class="term-popover-subhead">Why is it important?</div>
+        <ul class="term-popover-list">
+          <li><b>Completes the trade-off:</b> Cost and risk alone don't say how long the business is exposed — TTR does.</li>
+          <li><b>Justifies the premium:</b> A faster recovery can be worth paying more per unit for.</li>
+        </ul>
+      </div>
     </section>
 
     <section class="case-sec" id="si-before-after">
@@ -5497,7 +5520,7 @@
           <div class="case-tag">03 · Compare</div>
           <span class="ai-mark"><svg class="ai-mark-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2c.62 5.06 1.86 7.3 7 8-5.14.7-6.38 2.94-7 8-.62-5.06-1.86-7.3-7-8 5.14-.7 6.38-2.94 7-8Z"/></svg>Surety ranks the alternatives</span>
           <h3 class="case-h3" style="margin-top:10px">From exposure to qualified alternatives</h3>
-          <p class="case-p">Surety evaluates suppliers who could realistically cover the gap — matching capacity, on-time delivery, CPMU, D&amp;B risk and time to recover — and ranks them, rather than leaving the merchant to build the comparison from scratch.</p>
+          <p class="case-p">Surety evaluates suppliers who could realistically cover the gap — matching capacity, on-time delivery, CPMU, D&amp;B risk, <button type="button" class="term-trigger" data-popover="tts">time to shift</button> and <button type="button" class="term-trigger" data-popover="ttr">time to recovery</button> — and ranks them, rather than leaving the merchant to build the comparison from scratch.</p>
           <p class="case-p" style="margin-top:14px"><i>Design question: How might AI explain why one option is recommended instead of just presenting a ranked list?</i></p>
         </div>
         <div>
@@ -5509,7 +5532,7 @@
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid" style="margin-top:1px">
         <div>
           <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-083-6818f5bf644d.png" alt="Decision screen — Option 1 mitigate with Northwind vs Option 2 build continuity plan with Supplier B, recommended"></div></div></div>
-          <div class="case-caption case-caption--ai"><svg class="ai-mark-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2c.62 5.06 1.86 7.3 7 8-5.14.7-6.38 2.94-7 8-.62-5.06-1.86-7.3-7-8 5.14-.7 6.38-2.94 7-8Z"/></svg>Surety proposes: mitigate with Northwind, or shift 25% of volume to Supplier B.</div>
+          <div class="case-caption case-caption--ai"><svg class="ai-mark-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2c.62 5.06 1.86 7.3 7 8-5.14.7-6.38 2.94-7 8-.62-5.06-1.86-7.3-7-8 5.14-.7 6.38-2.94 7-8Z"/></svg>Surety proposes: mitigate with Northwind, or shift the affected 17% of volume to Supplier B.</div>
         </div>
         <div class="case-exp-copy">
           <div class="case-tag">04 · Decide</div>
@@ -5518,6 +5541,11 @@
           <p class="case-p">The concept turns the evidence into two concrete paths — mitigate with the current supplier, or build a continuity plan with the recommended alternative — each with clear targets, so the merchant chooses between two well-defined outcomes instead of starting from a blank page.</p>
           <p class="case-p" style="margin-top:14px"><i>Design question: How might AI shorten the distance between a recommendation and a decision the merchant is ready to commit to?</i></p>
         </div>
+      </div>
+
+      <div class="case-bridge" style="margin-top:1px">
+        <div class="case-bridge-lbl">The key decision</div>
+        <p class="case-p" style="margin:0"><b>Show the trade-off instead of prescribing an answer.</b> "Problem → replace the supplier" becomes "problem → evaluate → decide between two strategies" — mitigate the current supplier, or protect continuity with a qualified alternative. Surety never recommends abandoning Northwind; it makes the cost of each path visible and lets the merchant choose.</p>
       </div>
     </section>
 
@@ -5553,10 +5581,68 @@
           <div class="case-caption case-caption--ai"><svg class="ai-mark-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2c.62 5.06 1.86 7.3 7 8-5.14.7-6.38 2.94-7 8-.62-5.06-1.86-7.3-7-8 5.14-.7 6.38-2.94 7-8Z"/></svg>Surety projects: moving 17% of volume (120K units) to Supplier B costs an estimated +3.8% (~$96K).</div>
         </div>
       </div>
+
+      <p class="case-p" style="margin-top:32px">For the Merchant and Operations side of the workflow, the concept breaks execution into three deliberate steps rather than one big "confirm" button — reviewing exactly what's affected, choosing how much of it to move, and only then executing.</p>
+      <div class="case-cardgrid case-cardgrid--3" style="margin-top:16px">
+        <div class="case-card"><div class="case-card-lbl">01</div><h3>Review POs</h3><p>See all 4 purchase orders the gap touches — 120K units, $860K in value, 12 items — each with its own status and recommendation.</p></div>
+        <div class="case-card"><div class="case-card-lbl">02</div><h3>Decide volume</h3><p>Select which orders to move. Three "at risk" POs (100K units, 83% of the impacted volume) move to Supplier B; the fourth stays with Northwind on watch.</p></div>
+        <div class="case-card"><div class="case-card-lbl">03</div><h3>Execute actions</h3><p>Confirm only once the system validates the alternative can actually absorb the selected volume — not before.</p></div>
+      </div>
+      <div class="case-bridge" style="margin-top:1px">
+        <div class="case-bridge-lbl">Guardrail, not a rubber stamp</div>
+        <p class="case-p" style="margin:0">Before "Move selected POs" can be confirmed, Surety checks the math: <b>100K units is within Supplier B's available 25% capacity</b> — so the merchant can never commit a shift the alternative can't actually cover.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" id="si-flow">
+      <div class="case-num">06 / The continuity flow</div>
+      <h2 class="case-h2">One loop, two personas, a decision instead of a verdict.</h2>
+      <p class="case-p">Northwind's on-time delivery drops from 95% to 78%, creating a potential continuity signal. Supplier Matrix translates that signal into business exposure — 120K units and roughly $2.4M in revenue at risk over the next six months — then evaluates qualified alternatives. Supplier B can fully cover the gap, with stronger delivery performance and lower risk, but costs about $42K more. Instead of simply telling the sourcing manager to replace Northwind, the concept shows the trade-off and gives them two responses: recover Northwind, or protect continuity by shifting the affected volume. Once a decision is made, it connects to the impacted purchase orders and the continuity-planning workflow.</p>
+
+      <h3 class="case-h3" style="margin-top:36px">Two roles, one shared loop</h3>
+      <div class="case-compare" style="margin-top:16px">
+        <div class="case-compare-col">
+          <div class="case-tag">Sourcing Manager</div>
+          <h3 class="case-compare-h3">Analyzes, evaluates, recommends</h3>
+          <div class="case-row"><b>Monitor</b><span>Supplier performance and risk signals.</span></div>
+          <div class="case-row"><b>Evaluate</b><span>Alternatives and supplier potential.</span></div>
+          <div class="case-row"><b>Recommend</b><span>Build the mitigation or continuity plan.</span></div>
+          <div class="case-row"><b>Negotiate</b><span>Terms with the qualified alternative.</span></div>
+        </div>
+        <div class="case-compare-col case-compare-col--accent">
+          <div class="case-tag">Merchant</div>
+          <h3 class="case-compare-h3">Decides, executes, owns the outcome</h3>
+          <div class="case-row"><b>Review</b><span>Business impact and the recommendation.</span></div>
+          <div class="case-row"><b>Approve</b><span>Allocate the volume and purchase orders.</span></div>
+          <div class="case-row"><b>Execute</b><span>Move the plan into action.</span></div>
+          <div class="case-row"><b>Monitor</b><span>Track the business outcome.</span></div>
+        </div>
+      </div>
+
+      <h3 class="case-h3" style="margin-top:44px">Six steps, one loop back to the start</h3>
+      <div class="case-cardgrid case-cardgrid--3" style="margin-top:16px">
+        <div class="case-card"><div class="case-card-lbl">01</div><h3>Signal &amp; analyze</h3><p>Northwind's on-time delivery declines 95% → 78%.</p></div>
+        <div class="case-card"><div class="case-card-lbl">02</div><h3>Understand impact</h3><p>What does the supplier signal potentially mean for the business?</p></div>
+        <div class="case-card"><div class="case-card-lbl">03</div><h3>Evaluate</h3><p>Can Northwind recover? Are qualified alternatives available — on performance, capacity, cost and risk?</p></div>
+        <div class="case-card"><div class="case-card-lbl">04</div><h3>Choose strategy</h3><p><b>A</b> — mitigate Northwind, or <b>B</b> — protect continuity with Supplier B.</p></div>
+        <div class="case-card"><div class="case-card-lbl">05</div><h3>Handoff &amp; execute</h3><p>Sourcing hands off the recommendation; the Merchant decides volume and purchase orders.</p></div>
+        <div class="case-card"><div class="case-card-lbl">06</div><h3>Monitor</h3><p>Did Northwind recover? Did the continuity action improve the outcome?</p></div>
+      </div>
+      <div class="case-caption" style="text-align:center;max-width:56ch;margin:18px auto 0"><b>↺ Reassess</b> — the loop feeds back into step 1, updating the strategy as performance and new signals come in.</div>
+
+      <div class="case-cardgrid case-cardgrid--4" style="margin-top:36px">
+        <div class="case-card"><div class="case-card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="case-card-eyebrow">Reduced disruption</div><p>Protect in-stock and the customer experience.</p></div>
+        <div class="case-card"><div class="case-card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="case-card-eyebrow">Faster decisions</div><p>From signal to action, with clear ownership at each step.</p></div>
+        <div class="case-card"><div class="case-card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 19c.6-3 2.8-4.5 5.5-4.5S13.9 17.5 14.5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.4" stroke="currentColor" stroke-width="1.5"/><path d="M16 14.6c2.2.3 3.9 1.8 4.4 4.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="case-card-eyebrow">Better collaboration</div><p>Sourcing and Merchant work from the same evidence.</p></div>
+        <div class="case-card"><div class="case-card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 19h18M6 19V11m6 8V6m6 13v-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="m4 9 5-4 4 3 6-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="case-card-eyebrow">Stronger results</div><p>Mitigate revenue impact and build supply resilience.</p></div>
+      </div>
+
+      <p class="case-p" style="margin-top:28px">A supplier continuity signal is detected. Sourcing understands the potential business impact, compares qualified alternatives, and determines whether the current supplier should be mitigated or an alternative should be recommended. If continuity action is recommended, Merchant and Operations can review the impacted orders, decide exactly which volume should move, validate that the alternative supplier can absorb it, and then execute.</p>
+      <blockquote class="case-quote">"Supplier Matrix supports the decision across personas — rather than simply surfacing a risk score."</blockquote>
     </section>
 
     <section class="case-sec case-sec--dark" id="si-principles">
-      <div class="case-num">06 / Designing Surety with the merchant in control</div>
+      <div class="case-num">07 / Designing Surety with the merchant in control</div>
       <h2 class="case-h2">Explainable, bounded and always reviewable.</h2>
       <div class="case-cardgrid case-cardgrid--4">
         <div class="case-card"><div class="case-card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3c.6 4.2 2 5.6 6.2 6.2C14 9.8 12.6 11.2 12 15.4c-.6-4.2-2-5.6-6.2-6.2C10 8.6 11.4 7.2 12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M18.3 15c.28 1.7.86 2.28 2.4 2.4-1.54.12-2.12.7-2.4 2.4-.28-1.7-.86-2.28-2.4-2.4 1.54-.12 2.12-.7 2.4-2.4Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></div><div class="case-card-eyebrow">What AI could do</div><p>Connect relevant evidence, quantify exposure, rank qualified alternatives and draft a reviewable plan — including which purchase orders it would touch.</p></div>
@@ -5567,7 +5653,7 @@
     </section>
 
     <section class="case-sec" id="si-beyond">
-      <div class="case-num">07 / Beyond the brief</div>
+      <div class="case-num">08 / Beyond the brief</div>
       <h2 class="case-h2">From viewing metrics to acting on a recommendation.</h2>
       <div class="case-cardgrid case-cardgrid--4">
         <div class="case-card case-card--before"><div class="case-card-eyebrow">Traditional</div><h3>View supplier metrics</h3><p>Surface meaningful signals before the merchant has to hunt for them.</p></div>
@@ -5586,7 +5672,7 @@
     </section>
 
     <section class="case-sec" id="si-testing">
-      <div class="case-num">08 / What I was testing</div>
+      <div class="case-num">09 / What I was testing</div>
       <h2 class="case-h2">Three questions this POC was built to answer.</h2>
       <div class="case-cardgrid case-cardgrid--3">
         <div class="case-card"><div class="case-card-eyebrow">01</div><h3>Explainable recommendations</h3><p>Can the recommendation be understood, challenged and trusted?</p></div>
@@ -5596,14 +5682,14 @@
     </section>
 
     <section class="case-sec case-sec--dark" id="si-ai-role">
-      <div class="case-num">09 / Surety's role</div>
+      <div class="case-num">10 / Surety's role</div>
       <h2 class="case-h2">A decision-support layer, not an autonomous decision-maker.</h2>
       <p class="case-p"><b>Surety was explored as a decision-support layer</b> across signal detection, business-impact translation, supplier ranking, recommendation and purchase-order mapping. The surrounding experience — workflow, information architecture, interaction model and visual design — was designed to keep the merchant in control at every step.</p>
       <div class="case-source-note">This was a concept-level POC using representative supplier data and scenario values to explore the experience, not a production model or validated recommendation engine.</div>
     </section>
 
     <section class="case-sec case-sec--statement" id="si-outcome">
-      <div class="case-num">10 / Outcome</div>
+      <div class="case-num">11 / Outcome</div>
       <h2 class="case-h2" style="text-align:center">From data-heavy workflow to decision-support experience.</h2>
       <p class="case-p" style="max-width:60ch;margin-left:auto;margin-right:auto;text-align:center">This POC demonstrates how I think beyond the immediate interface: identifying where intelligence can reduce cognitive load, making recommendations explainable, and designing AI around the merchant's decision rather than around the technology.</p>
       <blockquote class="case-quote" style="margin-left:auto;margin-right:auto;text-align:center">"AI proposes. The merchant decides."</blockquote>
