@@ -6064,9 +6064,10 @@ h3{font-size:18px;line-height:1.2}
 .small{font-size:13px;line-height:1.55}
 .rule{height:1px;background:var(--line);margin:28px 0}
 .brand-header{
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;
   padding-bottom:20px;border-bottom:1px solid var(--line)
 }
+.logo-box{flex-shrink:0}
 .wordmark{
   font:700 22px/1 "IBM Plex Mono",monospace;letter-spacing:.12em
 }
@@ -6144,8 +6145,8 @@ h3{font-size:18px;line-height:1.2}
 .favicon{width:48px;height:48px;border:1px solid var(--line);display:grid;place-items:center;background:var(--card);border-radius:12px}
 .favicon .brand-mark{width:36px;height:36px}
 .palette-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}
-.palette-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-.swatch{min-height:170px;border-radius:12px;padding:14px;display:flex;flex-direction:column;justify-content:end}
+.palette-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.swatch{min-height:170px;min-width:0;border-radius:12px;padding:14px;display:flex;flex-direction:column;justify-content:end;overflow-wrap:anywhere}
 .swatch .hex{font:600 12px "IBM Plex Mono",monospace;opacity:.9}
 .swatch .name{font-weight:700;margin-top:5px}
 .light-text{color:#fff}
@@ -6153,7 +6154,8 @@ h3{font-size:18px;line-height:1.2}
 .semantic{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
 .semantic .swatch{min-height:125px}
 .semantic .tint{font:500 10px "IBM Plex Mono",monospace;margin-top:12px;opacity:.75}
-.expressive{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px}
+.expressive{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px;min-width:0}
+.expressive-swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
 .gradient-bar{height:92px;border-radius:12px;background:linear-gradient(100deg,#3157D5,#7546D8,#C54879,#E46B5D)}
 .access{margin-top:30px;margin-bottom:56px}
 .contrast-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
@@ -6188,10 +6190,14 @@ h3{font-size:18px;line-height:1.2}
   .hero-top,.type-grid,.philosophy,.logo-grid,.expressive{grid-template-columns:1fr}
   .hero-top{align-items:start;gap:28px}
   .hero-mark-card{margin-top:8px}
-  .palette-grid{grid-template-columns:repeat(2,1fr)}
+  .brand-header{flex-direction:column;align-items:flex-start}
+  .palette-grid,.expressive-swatches{grid-template-columns:repeat(3,1fr)}
   .semantic,.contrast-grid{grid-template-columns:1fr 1fr}
   .logo-rules{grid-template-columns:1fr}
   .footer{position:static;margin-top:40px}
+}
+@media(max-width:480px){
+  .palette-grid,.expressive-swatches,.semantic,.contrast-grid{grid-template-columns:1fr 1fr}
 }
 @media print{
   body{background:#fff}
@@ -6352,7 +6358,7 @@ h3{font-size:18px;line-height:1.2}
 
   <div style="margin-top:28px">
     <div class="kicker">Supporting neutrals</div>
-    <div class="palette-grid" style="margin-top:12px;grid-template-columns:repeat(5,1fr)">
+    <div class="palette-grid" style="margin-top:12px">
       <div class="swatch light-text" style="min-height:130px;background:#452064"><span class="hex">#452064</span><span class="name">Deep Plum</span><span class="small">Hover / Active</span></div>
       <div class="swatch light-text" style="min-height:130px;background:#17171C"><span class="hex">#17171C</span><span class="name">Near Black</span><span class="small">Text / Ink</span></div>
       <div class="swatch dark-text" style="min-height:130px;background:#F8F7F4;border:1px solid #DFDDD8"><span class="hex">#F8F7F4</span><span class="name">Warm Ivory</span><span class="small">Background</span></div>
@@ -6376,7 +6382,7 @@ h3{font-size:18px;line-height:1.2}
   <div class="expressive">
     <div>
       <div class="kicker">Expressive accents · use sparingly</div>
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px">
+      <div class="expressive-swatches">
         <div class="swatch light-text" style="min-height:105px;background:#7546D8"><span class="hex">#7546D8</span><span class="name">Violet</span></div>
         <div class="swatch light-text" style="min-height:105px;background:#A65CCB"><span class="hex">#A65CCB</span><span class="name">Orchid</span></div>
         <div class="swatch light-text" style="min-height:105px;background:#C54879"><span class="hex">#C54879</span><span class="name">Rose</span></div>
