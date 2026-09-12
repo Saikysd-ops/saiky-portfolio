@@ -915,12 +915,14 @@
   :root[data-theme="dark"] .belief-visual .belief-img-dark{display:block;}
   @media (max-width:760px){.belief-visual{padding:32px 0;}}
   /* brand lockup — sits between the "off the clock" cards and the life gallery */
-  .lockup-break{display:flex;justify-content:center;padding:40px 0;}
-  .lockup-break img{display:block;width:100%;max-width:560px;height:auto;}
+  .lockup-break{background:var(--paper);padding:56px 0;
+    position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .lockup-break img{display:block;width:100%;max-width:1400px;height:auto;margin:0 auto;padding:0 32px;}
   .lockup-break .lockup-img-dark{display:none;}
   :root[data-theme="dark"] .lockup-break .lockup-img-light{display:none;}
   :root[data-theme="dark"] .lockup-break .lockup-img-dark{display:block;}
-  @media (max-width:560px){.lockup-break{padding:28px 0;}.lockup-break img{max-width:340px;}}
+  @media (max-width:760px){.lockup-break{padding:32px 0;}}
   .timeline .eyebrow-lbl{font-family:var(--font-display);font-style:normal;font-weight:600;
     font-size:26px;letter-spacing:-.01em;text-transform:none;color:var(--ink);margin-bottom:4px;}
   .timeline-lede{font-family:var(--font-display);font-style:italic;font-weight:400;
