@@ -1041,40 +1041,20 @@
   @media (max-width:880px){ .offclock{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:560px){ .offclock{grid-template-columns:1fr;} }
 
-  /* signature — a quiet, spacious interlude: the brand's dot drops in,
-     settles, and sends out a slow ripple, echoing the stacked-stones
+  /* signature — a quiet, spacious interlude: a small looping Lottie dot
+     drops in, settles, and sends out a ripple, echoing the stacked-stones
      mark's own dot without competing with it for attention. */
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
     overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   .dot-signature{text-align:center;padding:96px 0;}
   .dot-signature + .lab{border-top:none;}
   @media (max-width:760px){.dot-signature{padding:64px 0;}}
-  .dot-signature__mark{display:flex;justify-content:center;margin-bottom:30px;}
-  .dot-signature__mark svg{overflow:visible;}
-  .ds-core{fill:var(--accent);transform-origin:32px 32px;
-    animation:dsDrop 1s cubic-bezier(.3,.08,.2,1) forwards;}
-  .ds-ring{fill:none;stroke:var(--accent);stroke-width:1.4;opacity:0;transform-origin:32px 32px;}
-  .ds-ring--1{animation:dsRipple 2.6s ease-out 1s infinite;}
-  .ds-ring--2{animation:dsRipple 2.6s ease-out 2.3s infinite;}
-  @keyframes dsDrop{
-    0%{transform:translateY(-30px) scale(.5);opacity:0;}
-    55%{transform:translateY(0) scale(1);opacity:1;}
-    72%{transform:translateY(-4px) scale(.97);}
-    100%{transform:translateY(0) scale(1);opacity:1;}
-  }
-  @keyframes dsRipple{
-    0%{r:4;stroke-width:2.4;opacity:.5;}
-    100%{r:20;stroke-width:.4;opacity:0;}
-  }
+  .dot-signature__mark{width:38px;height:38px;margin:0 auto 26px;}
   .dot-signature__quote{font-family:var(--font-display);font-style:italic;font-weight:500;
     font-size:clamp(24px,3.6vw,42px);line-height:1.28;letter-spacing:-.01em;
     color:var(--ink);margin:0 0 22px;}
   .dot-signature__by{font-family:var(--font-display);font-weight:500;
     font-size:clamp(16px,1.6vw,19px);color:var(--ink-soft);margin:0;letter-spacing:.03em;}
-  @media (prefers-reduced-motion:reduce){
-    .ds-core{opacity:1;transform:none;animation:none;}
-    .ds-ring{animation:none;}
-  }
 
   /* closing */
   .closing{border-top:1px solid var(--line);text-align:center;}
@@ -2895,13 +2875,7 @@
     <section class="work all-work"><div id="workMount"></div></section>
 
     <div class="dot-signature">
-      <div class="dot-signature__mark" aria-hidden="true">
-        <svg viewBox="0 0 64 64" width="34" height="34">
-          <circle class="ds-ring ds-ring--1" cx="32" cy="32" r="4"/>
-          <circle class="ds-ring ds-ring--2" cx="32" cy="32" r="4"/>
-          <circle class="ds-core" cx="32" cy="32" r="4"/>
-        </svg>
-      </div>
+      <div class="dot-signature__mark" id="dotLottieWork" aria-hidden="true"></div>
       <p class="dot-signature__quote">"A small dot can change perspective."</p>
       <p class="dot-signature__by">— Saiky Desai</p>
     </div>
@@ -6108,38 +6082,18 @@ h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
 .philosophy-quote{font-size:clamp(15px,2.5vw,32px);white-space:nowrap}
 @media(max-width:560px){.philosophy-quote{white-space:normal;font-size:clamp(19px,4.6vw,26px);line-height:1.15}}
 
-/* signature — a quiet, spacious interlude: the brand's dot drops in,
-   settles, and sends out a slow ripple, echoing the stacked-stones
+/* signature — a quiet, spacious interlude: a small looping Lottie dot
+   drops in, settles, and sends out a ripple, echoing the stacked-stones
    mark's own dot without competing with it for attention. */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 .dot-signature{text-align:center;padding:72px 0;}
-.dot-signature__mark{display:flex;justify-content:center;margin-bottom:26px;}
-.dot-signature__mark svg{overflow:visible;}
-.ds-core{fill:var(--aubergine);transform-origin:32px 32px;
-  animation:dsDrop 1s cubic-bezier(.3,.08,.2,1) forwards;}
-.ds-ring{fill:none;stroke:var(--aubergine);stroke-width:1.4;opacity:0;transform-origin:32px 32px;}
-.ds-ring--1{animation:dsRipple 2.6s ease-out 1s infinite;}
-.ds-ring--2{animation:dsRipple 2.6s ease-out 2.3s infinite;}
-@keyframes dsDrop{
-  0%{transform:translateY(-30px) scale(.5);opacity:0;}
-  55%{transform:translateY(0) scale(1);opacity:1;}
-  72%{transform:translateY(-4px) scale(.97);}
-  100%{transform:translateY(0) scale(1);opacity:1;}
-}
-@keyframes dsRipple{
-  0%{r:4;stroke-width:2.4;opacity:.5;}
-  100%{r:20;stroke-width:.4;opacity:0;}
-}
+.dot-signature__mark{width:34px;height:34px;margin:0 auto 24px;}
 .dot-signature__quote{font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:500;
   font-size:clamp(22px,3vw,36px);line-height:1.28;letter-spacing:-.01em;
   color:var(--ink);margin:0 0 20px;}
 .dot-signature__by{font-family:"Fraunces",Georgia,serif;font-weight:500;
   font-size:clamp(15px,1.5vw,18px);color:var(--slate);margin:0;letter-spacing:.03em;}
-@media (prefers-reduced-motion:reduce){
-  .ds-core{opacity:1;transform:none;animation:none;}
-  .ds-ring{animation:none;}
-}
 h3{font-size:18px;line-height:1.2}
 .mono{font-family:"IBM Plex Mono",monospace}
 .muted{color:var(--slate)}
@@ -6413,13 +6367,7 @@ h3{font-size:18px;line-height:1.2}
   <p style="margin-top:12px;font-size:20px;line-height:1.45">The logo stays stable; <span class="gradient-text">Complexity → Clarity</span> carries the expressive color on the website.</p>
 
   <div class="dot-signature">
-    <div class="dot-signature__mark" aria-hidden="true">
-      <svg viewBox="0 0 64 64" width="30" height="30">
-        <circle class="ds-ring ds-ring--1" cx="32" cy="32" r="4"/>
-        <circle class="ds-ring ds-ring--2" cx="32" cy="32" r="4"/>
-        <circle class="ds-core" cx="32" cy="32" r="4"/>
-      </svg>
-    </div>
+    <div class="dot-signature__mark" id="dotLottieBrand" aria-hidden="true"></div>
     <p class="dot-signature__quote">"A small dot can change perspective."</p>
     <p class="dot-signature__by">— Saiky Desai</p>
   </div>
@@ -6579,8 +6527,15 @@ h3{font-size:18px;line-height:1.2}
 </html>
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie_light.min.js"></script>
 <script>
 try{
+
+/* dot-signature mark — a hand-authored Lottie: a dot drops in, settles,
+   sends out one ripple, fades, and loops. Fill/stroke are placeholder
+   values, recolored to the live theme's accent after render (see the
+   two lottie.loadAnimation() call sites below). */
+window.DOT_SIGNATURE_LOTTIE = {"v":"5.9.6","fr":30,"ip":0,"op":90,"w":64,"h":64,"nm":"dotSignature","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":4,"nm":"dot","sr":1,"ks":{"o":{"a":1,"k":[{"t":0,"s":[0],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":8,"s":[100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":75,"s":[100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":88,"s":[0]}]},"r":{"a":0,"k":0},"p":{"a":0,"k":[32,32,0]},"a":{"a":0,"k":[0,0,0]},"s":{"a":1,"k":[{"t":0,"s":[40,40,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":8,"s":[112,112,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":14,"s":[100,100,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":75,"s":[100,100,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":88,"s":[88,88,100]}]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"el","p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[16,16]},"nm":"ellipse"},{"ty":"fl","c":{"a":0,"k":[0.357,0.165,0.408,1]},"o":{"a":0,"k":100},"nm":"fill"},{"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}],"nm":"dotGroup"}],"ip":0,"op":90,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":4,"nm":"ring","sr":1,"ks":{"o":{"a":1,"k":[{"t":14,"s":[0],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":19,"s":[45],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":62,"s":[0]}]},"r":{"a":0,"k":0},"p":{"a":0,"k":[32,32,0]},"a":{"a":0,"k":[0,0,0]},"s":{"a":1,"k":[{"t":14,"s":[25,25,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":62,"s":[155,155,100]}]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"el","p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[24,24]},"nm":"ellipse"},{"ty":"st","c":{"a":0,"k":[0.357,0.165,0.408,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":3.2},"nm":"stroke"},{"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}],"nm":"ringGroup"}],"ip":0,"op":90,"st":0,"bm":0}]};
 
 /* headline word-stage: size to fit, then loop — COMPLEXITY animates in, holds, animates out, CLARITY animates in, holds, animates out, repeat */
 (function(){
@@ -7176,6 +7131,21 @@ try{
             ro.observe(doc.body);
           }
           frame.contentWindow.addEventListener('resize', resize);
+          /* the signature's dot mark — same Lottie data as the Work page,
+             using the outer page's already-loaded lottie instance so the
+             library isn't fetched twice; aubergine is constant across the
+             brand doc's own light/dark modes, so no recolor pass needed. */
+          const markEl = doc.getElementById('dotLottieBrand');
+          if(markEl && window.lottie){
+            try{
+              const brandReduce = frame.contentWindow.matchMedia && frame.contentWindow.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              const brandAnim = lottie.loadAnimation({
+                container: markEl, renderer: 'svg', loop: true,
+                autoplay: !brandReduce, animationData: DOT_SIGNATURE_LOTTIE
+              });
+              if(brandReduce) brandAnim.addEventListener('DOMLoaded', ()=>brandAnim.goToAndStop(14, true));
+            }catch(e){}
+          }
         }catch(e){}
       });
     }catch(e){ console.error('[brand frame]', e); }
@@ -7352,6 +7322,33 @@ try{
     });
   }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
   targets.forEach(el=>io.observe(el));
+})();
+
+/* the dot-signature's mark, as a small looping Lottie: a dot drops in,
+   settles, sends out a ripple, fades, repeats — recolored to the
+   current theme's accent once rendered, since the animation data
+   itself is authored with a placeholder fill/stroke. */
+(function(){
+  const el = document.getElementById('dotLottieWork');
+  if(!el || !window.lottie) return;
+  try{
+    const anim = lottie.loadAnimation({
+      container: el, renderer: 'svg', loop: true,
+      autoplay: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      animationData: DOT_SIGNATURE_LOTTIE
+    });
+    anim.addEventListener('DOMLoaded', ()=>{
+      /* fixed 2-layer structure (ring under, dot on top) — lottie-web
+         paints layers[] back-to-front, so path[0] is always the ring
+         (stroke) and path[1] always the dot (fill). Not read off the
+         rendered attributes, since the ring's stroke isn't populated
+         until its first visible frame and DOMLoaded fires before that. */
+      const paths = el.querySelectorAll('path');
+      if(paths[0]) paths[0].style.stroke = 'var(--accent)';
+      if(paths[1]) paths[1].style.fill = 'var(--accent)';
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) anim.goToAndStop(14, true);
+    });
+  }catch(e){ console.error('[dot lottie]', e); }
 })();
 }catch(e){ console.error('[section error]', e); }
 
