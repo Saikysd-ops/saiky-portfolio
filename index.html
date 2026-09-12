@@ -1041,28 +1041,32 @@
   @media (max-width:880px){ .offclock{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:560px){ .offclock{grid-template-columns:1fr;} }
 
-  /* signature — the quote runs the full ring, repeated twice so it
-     reads continuously with no gap, bold and large; a single dot
-     starts at the center and sweeps the whole circle as the page
-     scrolls, lighting each word bold as it passes. Tight margins so
-     the circle itself fills the badge instead of floating in
-     leftover space. */
+  /* signature — matches the reference render: the quote runs the full
+     ring seamlessly (repeated twice, no gap), a small static dot marks
+     the center, and the four words sit outside the circle on their
+     own ticks, sans-serif and always legible. The traveling dot rides
+     the quote's own circle and sweeps it as the page scrolls, bolding
+     each word in accent as it passes. */
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
     overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   .dot-signature{text-align:center;padding:96px 0;}
   .dot-signature + .lab{border-top:none;}
   @media (max-width:760px){.dot-signature{padding:64px 0;}}
-  .dot-badge{position:relative;width:560px;height:560px;margin:0 auto;}
-  .dot-badge__ring{display:block;width:100%;height:100%;}
+  .dot-badge{position:relative;width:620px;height:620px;margin:0 auto;}
+  .dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
   .dot-badge__track{fill:none;stroke:var(--line);stroke-width:1;}
+  .dot-badge__tick{stroke:var(--line);stroke-width:1;}
+  .dot-badge__center-dot{fill:var(--line);}
   .dot-badge__text{font-family:var(--font-display);font-size:21px;font-weight:700;
     letter-spacing:.02em;text-transform:uppercase;}
   .dot-badge__word{fill:var(--ink-soft);opacity:.4;
     transition:fill .3s ease,opacity .3s ease;}
   .dot-badge__word.is-seen{fill:var(--ink);opacity:1;}
   .dot-badge__word.is-active{fill:var(--accent);opacity:1;}
+  .dot-badge__label{font-family:var(--font-body);font-size:22px;font-weight:700;
+    fill:var(--ink);}
   .dot-badge__dot{fill:var(--accent);}
-  @media (max-width:560px){.dot-badge{width:380px;height:380px;}}
+  @media (max-width:560px){.dot-badge{width:400px;height:400px;}}
 
   /* closing */
   .closing{border-top:1px solid var(--line);text-align:center;}
@@ -2883,12 +2887,21 @@
     <section class="work all-work"><div id="workMount"></div></section>
 
     <div class="dot-signature">
-      <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai">
-        <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="0 0 540 540" aria-hidden="true">
-          <defs><path id="dotBadgePathWork" d="M270,270 m-225,0 a225,225 0 1 1 450,0 a225,225 0 1 1 -450,0"/></defs>
-          <circle class="dot-badge__track" cx="270" cy="270" r="225"/>
-          <text class="dot-badge__text"><textPath href="#dotBadgePathWork" startOffset="2%" textLength="1300" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan></textPath></text>
-          <circle class="dot-badge__dot" id="dotBadgeDotWork" cx="270" cy="270" r="9"/>
+      <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai. Understand. Structure. Simplify. Clarity.">
+        <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="0 0 880 880" aria-hidden="true">
+          <defs><path id="dotBadgePathWork" d="M440,440 m-220,0 a220,220 0 1 1 440,0 a220,220 0 1 1 -440,0"/></defs>
+          <circle class="dot-badge__track" cx="440" cy="440" r="220"/>
+          <line class="dot-badge__tick" x1="440" y1="195" x2="440" y2="160"/>
+          <line class="dot-badge__tick" x1="685" y1="440" x2="720" y2="440"/>
+          <line class="dot-badge__tick" x1="440" y1="685" x2="440" y2="720"/>
+          <line class="dot-badge__tick" x1="195" y1="440" x2="160" y2="440"/>
+          <text class="dot-badge__label" x="440" y="130" text-anchor="middle" dominant-baseline="middle">Understand</text>
+          <text class="dot-badge__label" x="750" y="440" text-anchor="start" dominant-baseline="middle">Structure</text>
+          <text class="dot-badge__label" x="440" y="750" text-anchor="middle" dominant-baseline="middle">Simplify</text>
+          <text class="dot-badge__label" x="130" y="440" text-anchor="end" dominant-baseline="middle">Clarity</text>
+          <text class="dot-badge__text"><textPath href="#dotBadgePathWork" startOffset="0" textLength="1378" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan></textPath></text>
+          <circle class="dot-badge__center-dot" cx="440" cy="440" r="6"/>
+          <circle class="dot-badge__dot" id="dotBadgeDotWork" cx="440" cy="440" r="9"/>
         </svg>
       </div>
     </div>
@@ -6105,17 +6118,21 @@ h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 .dot-signature{text-align:center;padding:72px 0;}
-.dot-badge{position:relative;width:480px;height:480px;margin:0 auto;}
-.dot-badge__ring{display:block;width:100%;height:100%;}
+.dot-badge{position:relative;width:540px;height:540px;margin:0 auto;}
+.dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
 .dot-badge__track{fill:none;stroke:var(--line);stroke-width:1;}
+.dot-badge__tick{stroke:var(--line);stroke-width:1;}
+.dot-badge__center-dot{fill:var(--line);}
 .dot-badge__text{font-family:"Fraunces",Georgia,serif;font-size:21px;font-weight:700;
   letter-spacing:.02em;text-transform:uppercase;}
 .dot-badge__word{fill:var(--slate);opacity:.4;
   transition:fill .3s ease,opacity .3s ease;}
 .dot-badge__word.is-seen{fill:var(--ink);opacity:1;}
 .dot-badge__word.is-active{fill:var(--aubergine);opacity:1;}
+.dot-badge__label{font-family:"Satoshi",sans-serif;font-size:22px;font-weight:700;
+  fill:var(--ink);}
 .dot-badge__dot{fill:var(--aubergine);}
-@media (max-width:560px){.dot-badge{width:340px;height:340px;}}
+@media (max-width:560px){.dot-badge{width:360px;height:360px;}}
 h3{font-size:18px;line-height:1.2}
 .mono{font-family:"IBM Plex Mono",monospace}
 .muted{color:var(--slate)}
@@ -6389,12 +6406,21 @@ h3{font-size:18px;line-height:1.2}
   <p style="margin-top:12px;font-size:20px;line-height:1.45">The logo stays stable; <span class="gradient-text">Complexity → Clarity</span> carries the expressive color on the website.</p>
 
   <div class="dot-signature">
-    <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai">
-      <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="0 0 540 540" aria-hidden="true">
-        <defs><path id="dotBadgePathBrand" d="M270,270 m-225,0 a225,225 0 1 1 450,0 a225,225 0 1 1 -450,0"/></defs>
-        <circle class="dot-badge__track" cx="270" cy="270" r="225"/>
-        <text class="dot-badge__text"><textPath href="#dotBadgePathBrand" startOffset="2%" textLength="1300" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan></textPath></text>
-        <circle class="dot-badge__dot" id="dotBadgeDotBrand" cx="270" cy="270" r="9"/>
+    <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai. Understand. Structure. Simplify. Clarity.">
+      <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="0 0 880 880" aria-hidden="true">
+        <defs><path id="dotBadgePathBrand" d="M440,440 m-220,0 a220,220 0 1 1 440,0 a220,220 0 1 1 -440,0"/></defs>
+        <circle class="dot-badge__track" cx="440" cy="440" r="220"/>
+        <line class="dot-badge__tick" x1="440" y1="195" x2="440" y2="160"/>
+        <line class="dot-badge__tick" x1="685" y1="440" x2="720" y2="440"/>
+        <line class="dot-badge__tick" x1="440" y1="685" x2="440" y2="720"/>
+        <line class="dot-badge__tick" x1="195" y1="440" x2="160" y2="440"/>
+        <text class="dot-badge__label" x="440" y="130" text-anchor="middle" dominant-baseline="middle">Understand</text>
+        <text class="dot-badge__label" x="750" y="440" text-anchor="start" dominant-baseline="middle">Structure</text>
+        <text class="dot-badge__label" x="440" y="750" text-anchor="middle" dominant-baseline="middle">Simplify</text>
+        <text class="dot-badge__label" x="130" y="440" text-anchor="end" dominant-baseline="middle">Clarity</text>
+        <text class="dot-badge__text"><textPath href="#dotBadgePathBrand" startOffset="0" textLength="1378" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan><tspan class="dot-badge__word" data-w="0">A </tspan><tspan class="dot-badge__word" data-w="1">SMALL </tspan><tspan class="dot-badge__word" data-w="2">DOT </tspan><tspan class="dot-badge__word" data-w="3">CAN </tspan><tspan class="dot-badge__word" data-w="4">CHANGE </tspan><tspan class="dot-badge__word" data-w="5">PERSPECTIVE </tspan><tspan class="dot-badge__word" data-w="6">&#8212; SAIKY </tspan><tspan class="dot-badge__word" data-w="7">DESAI &#183; </tspan></textPath></text>
+        <circle class="dot-badge__center-dot" cx="440" cy="440" r="6"/>
+        <circle class="dot-badge__dot" id="dotBadgeDotBrand" cx="440" cy="440" r="9"/>
       </svg>
     </div>
   </div>
@@ -6566,7 +6592,7 @@ try{
    "reached" from the very start (t=0), each later one exactly as the
    dot's sweep passes it, so a word lighting up bold always lines up
    with the dot actually being there. */
-const DOT_BADGE_GEOM = {cx:270, cy:270, r:225, startAngle:-90};
+const DOT_BADGE_GEOM = {cx:440, cy:440, r:220, startAngle:-90};
 const DOT_BADGE_WORD_COUNT = 8;
 const DOT_BADGE_ARRIVAL = Array.from({length:DOT_BADGE_WORD_COUNT}, (_,i)=> i===0 ? 0 : 0.15 + (0.85 * i/DOT_BADGE_WORD_COUNT));
 function dotBadgePoint(angleDeg, radius){
