@@ -914,6 +914,13 @@
   :root[data-theme="dark"] .belief-visual .belief-img-light{display:none;}
   :root[data-theme="dark"] .belief-visual .belief-img-dark{display:block;}
   @media (max-width:760px){.belief-visual{padding:32px 0;}}
+  /* brand lockup — sits between the "off the clock" cards and the life gallery */
+  .lockup-break{display:flex;justify-content:center;padding:40px 0;}
+  .lockup-break img{display:block;width:100%;max-width:560px;height:auto;}
+  .lockup-break .lockup-img-dark{display:none;}
+  :root[data-theme="dark"] .lockup-break .lockup-img-light{display:none;}
+  :root[data-theme="dark"] .lockup-break .lockup-img-dark{display:block;}
+  @media (max-width:560px){.lockup-break{padding:28px 0;}.lockup-break img{max-width:340px;}}
   .timeline .eyebrow-lbl{font-family:var(--font-display);font-style:normal;font-weight:600;
     font-size:26px;letter-spacing:-.01em;text-transform:none;color:var(--ink);margin-bottom:4px;}
   .timeline-lede{font-family:var(--font-display);font-style:italic;font-weight:400;
@@ -3119,6 +3126,11 @@
         <svg class="oc-ic" viewBox="0 0 28 28"><path d="M5 11.5h14v7.5a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 13.5h2.6a3 3 0 0 1 0 6H19" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path class="a-steam" d="M9.5 7.8c1.2-1.4 1.2-2.6 0-4M14.5 7.8c1.2-1.4 1.2-2.6 0-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <h4>Music &amp; coffee</h4><p>South Indian filter coffee. Good music. Repeat.</p>
       </a>
+    </div>
+
+    <div class="lockup-break">
+      <img class="lockup-img-light" src="assets/images/brand-lockup-light.png" alt="好奇心をかたちに。 Give form to curiosity. — brand lockup with a pen-nib mark">
+      <img class="lockup-img-dark" src="assets/images/brand-lockup-dark.png" alt="好奇心をかたちに。 Give form to curiosity. — brand lockup with a pen-nib mark">
     </div>
 
     <div class="life-gallery">
@@ -6298,6 +6310,14 @@ h3{font-size:18px;line-height:1.2}
 </g>
 </svg></div><span class="small mono">32–48 px</span></div></div>
     <div class="rule-card"><strong>Do not modify</strong><span class="small muted">No gradients inside the logo, shadows, outlines, distortion, rotation, or arbitrary color substitutions.</span></div>
+  </div>
+
+  <div class="rule"></div>
+  <div class="kicker">Tagline lockup</div>
+  <p class="muted" style="margin-top:12px;max-width:650px">好奇心をかたちに — "give form to curiosity" — paired with a pen-nib mark standing in for the act of shaping an idea into something real. Treat it as a signature moment, not a repeating asset.</p>
+  <div class="design-philosophy-visual" style="margin-top:20px">
+    <img class="dp-img-light" src="assets/images/brand-lockup-light.png" alt="好奇心をかたちに。 Give form to curiosity. — brand lockup with a pen-nib mark">
+    <img class="dp-img-dark" src="assets/images/brand-lockup-dark.png" alt="好奇心をかたちに。 Give form to curiosity. — brand lockup with a pen-nib mark">
   </div>
 
   <div class="rule"></div>
