@@ -7133,7 +7133,7 @@ try{
           const doc = frame.contentWindow.document;
           const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
           doc.documentElement.setAttribute('data-theme', currentTheme);
-          let raf = null;
+          let raf = null, lastH = 0;
           const resize = ()=>{
             if(raf) return;
             raf = frame.contentWindow.requestAnimationFrame(()=>{
@@ -7142,6 +7142,12 @@ try{
                  shrinks the content must still shrink the iframe back down,
                  not leave the old (taller) height behind as blank scroll */
               const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+              /* skip the write entirely when nothing actually changed — this
+                 fires on every ResizeObserver/inner-resize tick, and setting
+                 style.height needlessly forces a layout on the outer page,
+                 which is what made fast scrolling on the brand page snag */
+              if(h === lastH) return;
+              lastH = h;
               frame.style.height = h + 'px';
             });
           };
@@ -7163,9 +7169,16 @@ try{
      responsive reflow, but if the outer window is what actually resized
      (rotating a device, dragging the browser edge), re-run it explicitly
      once things settle so a shorter mobile-vs-desktop layout can't leave
-     the old taller height behind as blank scroll. */
-  let brandResizeT = null;
+     the old taller height behind as blank scroll.
+     Guarded on width actually changing — mobile browsers fire 'resize'
+     purely from the address bar hiding/showing while scrolling (only
+     innerHeight moves), and re-measuring + re-setting the iframe's height
+     on every one of those mid-scroll was what made fast scrolling on the
+     brand page feel like it kept snagging. */
+  let brandResizeT = null, brandLastW = window.innerWidth;
   window.addEventListener('resize', ()=>{
+    if(window.innerWidth === brandLastW) return;
+    brandLastW = window.innerWidth;
     clearTimeout(brandResizeT);
     brandResizeT = setTimeout(()=>{
       const frame = document.getElementById('brandFrame');
