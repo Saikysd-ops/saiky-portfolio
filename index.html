@@ -1041,22 +1041,24 @@
   @media (max-width:880px){ .offclock{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:560px){ .offclock{grid-template-columns:1fr;} }
 
-  /* signature — a circular badge: the quote runs the full ring, a small
-     looping Lottie dot sits at its center, and the ring itself turns as
-     the page scrolls (see the scroll listener further down this file). */
+  /* signature — a small story told with one dot: it starts at the
+     center and, as the page scrolls, travels out and around the ring
+     through Understand → Structure → Simplify, landing beside Clarity —
+     the brand hero's own words, echoed here. */
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
     overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   .dot-signature{text-align:center;padding:96px 0;}
   .dot-signature + .lab{border-top:none;}
   @media (max-width:760px){.dot-signature{padding:64px 0;}}
   .dot-badge{position:relative;width:340px;height:340px;margin:0 auto;}
-  .dot-badge__ring{display:block;width:100%;height:100%;will-change:transform;}
-  .dot-badge__text{font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:.02em;
-    text-transform:uppercase;fill:var(--ink);}
-  .dot-badge__center{position:absolute;left:50%;top:50%;width:44px;height:44px;
-    transform:translate(-50%,-50%);}
-  @media (max-width:560px){.dot-badge{width:250px;height:250px;}
-    .dot-badge__center{width:34px;height:34px;}}
+  .dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
+  .dot-badge__track{fill:none;stroke:var(--line);stroke-width:1;}
+  .dot-badge__label{font-family:var(--font-display);font-size:15px;font-weight:500;
+    letter-spacing:.03em;text-transform:uppercase;fill:var(--ink-soft);
+    opacity:.5;transition:opacity .35s ease,fill .35s ease;}
+  .dot-badge__label.is-active{fill:var(--ink);font-weight:700;opacity:1;}
+  .dot-badge__dot{fill:var(--accent);}
+  @media (max-width:560px){.dot-badge{width:250px;height:250px;}}
 
   /* closing */
   .closing{border-top:1px solid var(--line);text-align:center;}
@@ -2877,12 +2879,15 @@
     <section class="work all-work"><div id="workMount"></div></section>
 
     <div class="dot-signature">
-      <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai">
+      <div class="dot-badge" role="img" aria-label="Understand. Structure. Simplify. Clarity. — a small dot can change perspective">
         <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="0 0 360 360" aria-hidden="true">
-          <defs><path id="dotBadgePathWork" d="M180,180 m-150,0 a150,150 0 1 1 300,0 a150,150 0 1 1 -300,0"/></defs>
-          <text class="dot-badge__text"><textPath href="#dotBadgePathWork" startOffset="0" textLength="920" lengthAdjust="spacingAndGlyphs">A SMALL DOT CAN CHANGE PERSPECTIVE &#183; SAIKY DESAI &#183; A SMALL DOT CAN CHANGE PERSPECTIVE &#183; SAIKY DESAI &#183; </textPath></text>
+          <circle class="dot-badge__track" cx="180" cy="180" r="150"/>
+          <text class="dot-badge__label" data-step="0" x="180" y="26" text-anchor="middle" dominant-baseline="middle">UNDERSTAND.</text>
+          <text class="dot-badge__label" data-step="1" x="334" y="180" text-anchor="middle" dominant-baseline="middle">STRUCTURE.</text>
+          <text class="dot-badge__label" data-step="2" x="180" y="334" text-anchor="middle" dominant-baseline="middle">SIMPLIFY.</text>
+          <text class="dot-badge__label" data-step="3" x="26" y="180" text-anchor="middle" dominant-baseline="middle">CLARITY.</text>
+          <circle class="dot-badge__dot" id="dotBadgeDotWork" cx="180" cy="180" r="7"/>
         </svg>
-        <div class="dot-badge__center" id="dotLottieWork" aria-hidden="true"></div>
       </div>
     </div>
 
@@ -6088,20 +6093,23 @@ h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
 .philosophy-quote{font-size:clamp(15px,2.5vw,32px);white-space:nowrap}
 @media(max-width:560px){.philosophy-quote{white-space:normal;font-size:clamp(19px,4.6vw,26px);line-height:1.15}}
 
-/* signature — a circular badge: the quote runs the full ring, a small
-   looping Lottie dot sits at its center, and the ring itself turns as
-   the page scrolls (driven from the outer page's script, since this
-   iframe carries no script of its own). */
+/* signature — a small story told with one dot: it starts at the
+   center and, as the page scrolls, travels out and around the ring
+   through Understand → Structure → Simplify, landing beside Clarity —
+   driven from the outer page's script since this iframe never scrolls
+   on its own (scrolling="no"). */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 .dot-signature{text-align:center;padding:72px 0;}
 .dot-badge{position:relative;width:290px;height:290px;margin:0 auto;}
-.dot-badge__ring{display:block;width:100%;height:100%;will-change:transform;}
-.dot-badge__text{font-family:"Fraunces",Georgia,serif;font-size:17px;font-weight:700;letter-spacing:.02em;
-  text-transform:uppercase;fill:var(--ink);}
-.dot-badge__center{position:absolute;left:50%;top:50%;width:40px;height:40px;
-  transform:translate(-50%,-50%);}
-@media (max-width:560px){.dot-badge{width:220px;height:220px;}.dot-badge__center{width:32px;height:32px;}}
+.dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
+.dot-badge__track{fill:none;stroke:var(--line);stroke-width:1;}
+.dot-badge__label{font-family:"Fraunces",Georgia,serif;font-size:15px;font-weight:500;
+  letter-spacing:.03em;text-transform:uppercase;fill:var(--slate);
+  opacity:.5;transition:opacity .35s ease,fill .35s ease;}
+.dot-badge__label.is-active{fill:var(--ink);font-weight:700;opacity:1;}
+.dot-badge__dot{fill:var(--aubergine);}
+@media (max-width:560px){.dot-badge{width:220px;height:220px;}}
 h3{font-size:18px;line-height:1.2}
 .mono{font-family:"IBM Plex Mono",monospace}
 .muted{color:var(--slate)}
@@ -6375,12 +6383,15 @@ h3{font-size:18px;line-height:1.2}
   <p style="margin-top:12px;font-size:20px;line-height:1.45">The logo stays stable; <span class="gradient-text">Complexity → Clarity</span> carries the expressive color on the website.</p>
 
   <div class="dot-signature">
-    <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai">
+    <div class="dot-badge" role="img" aria-label="Understand. Structure. Simplify. Clarity. — a small dot can change perspective">
       <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="0 0 360 360" aria-hidden="true">
-        <defs><path id="dotBadgePathBrand" d="M180,180 m-150,0 a150,150 0 1 1 300,0 a150,150 0 1 1 -300,0"/></defs>
-        <text class="dot-badge__text"><textPath href="#dotBadgePathBrand" startOffset="0" textLength="920" lengthAdjust="spacingAndGlyphs">A SMALL DOT CAN CHANGE PERSPECTIVE &#183; SAIKY DESAI &#183; A SMALL DOT CAN CHANGE PERSPECTIVE &#183; SAIKY DESAI &#183; </textPath></text>
+        <circle class="dot-badge__track" cx="180" cy="180" r="150"/>
+        <text class="dot-badge__label" data-step="0" x="180" y="26" text-anchor="middle" dominant-baseline="middle">UNDERSTAND.</text>
+        <text class="dot-badge__label" data-step="1" x="334" y="180" text-anchor="middle" dominant-baseline="middle">STRUCTURE.</text>
+        <text class="dot-badge__label" data-step="2" x="180" y="334" text-anchor="middle" dominant-baseline="middle">SIMPLIFY.</text>
+        <text class="dot-badge__label" data-step="3" x="26" y="180" text-anchor="middle" dominant-baseline="middle">CLARITY.</text>
+        <circle class="dot-badge__dot" id="dotBadgeDotBrand" cx="180" cy="180" r="7"/>
       </svg>
-      <div class="dot-badge__center" id="dotLottieBrand" aria-hidden="true"></div>
     </div>
   </div>
 
@@ -6539,15 +6550,41 @@ h3{font-size:18px;line-height:1.2}
 </html>
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie_light.min.js"></script>
 <script>
 try{
 
-/* dot-signature mark — a hand-authored Lottie: a dot drops in, settles,
-   sends out one ripple, fades, and loops. Fill/stroke are placeholder
-   values, recolored to the live theme's accent after render (see the
-   two lottie.loadAnimation() call sites below). */
-window.DOT_SIGNATURE_LOTTIE = {"v":"5.9.6","fr":30,"ip":0,"op":90,"w":64,"h":64,"nm":"dotSignature","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":4,"nm":"dot","sr":1,"ks":{"o":{"a":1,"k":[{"t":0,"s":[0],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":8,"s":[100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":75,"s":[100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":88,"s":[0]}]},"r":{"a":0,"k":0},"p":{"a":0,"k":[32,32,0]},"a":{"a":0,"k":[0,0,0]},"s":{"a":1,"k":[{"t":0,"s":[40,40,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":8,"s":[112,112,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":14,"s":[100,100,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":75,"s":[100,100,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":88,"s":[88,88,100]}]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"el","p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[16,16]},"nm":"ellipse"},{"ty":"fl","c":{"a":0,"k":[0.357,0.165,0.408,1]},"o":{"a":0,"k":100},"nm":"fill"},{"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}],"nm":"dotGroup"}],"ip":0,"op":90,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":4,"nm":"ring","sr":1,"ks":{"o":{"a":1,"k":[{"t":14,"s":[0],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":19,"s":[45],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":62,"s":[0]}]},"r":{"a":0,"k":0},"p":{"a":0,"k":[32,32,0]},"a":{"a":0,"k":[0,0,0]},"s":{"a":1,"k":[{"t":14,"s":[25,25,100],"i":{"x":1,"y":1},"o":{"x":0,"y":0}},{"t":62,"s":[155,155,100]}]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"el","p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[24,24]},"nm":"ellipse"},{"ty":"st","c":{"a":0,"k":[0.357,0.165,0.408,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":3.2},"nm":"stroke"},{"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}],"nm":"ringGroup"}],"ip":0,"op":90,"st":0,"bm":0}]};
+/* dot-signature travel — shared math for both the Work page and the
+   Brand doc instances: a point on a circle (cx,cy,r) at a given angle
+   in degrees (0=3 o'clock, -90=12 o'clock, going clockwise), and the
+   position along the whole journey (center -> ring -> arc through the
+   four labels) at progress t in [0,1]. */
+const DOT_BADGE_GEOM = {cx:180, cy:180, r:150, angles:[-90,0,90,180]};
+function dotBadgePoint(angleDeg, radius){
+  const rad = angleDeg * Math.PI / 180;
+  return [DOT_BADGE_GEOM.cx + radius*Math.cos(rad), DOT_BADGE_GEOM.cy + radius*Math.sin(rad)];
+}
+function dotBadgeAt(t){
+  t = Math.max(0, Math.min(1, t));
+  const {r, angles} = DOT_BADGE_GEOM;
+  if(t < 0.15){
+    const [x,y] = dotBadgePoint(angles[0], r * (t/0.15));
+    return {x, y, step:0};
+  }
+  const segT = (t - 0.15) / 0.85;
+  const segIndex = Math.min(2, Math.floor(segT * 3));
+  const segLocal = (segT * 3) - segIndex;
+  const angle = angles[segIndex] + (angles[segIndex+1] - angles[segIndex]) * segLocal;
+  const [x,y] = dotBadgePoint(angle, r);
+  return {x, y, step: segIndex + 1};
+}
+/* progress through the badge's own scroll range: 0 as it enters the
+   lower part of the viewport, 1 once it's scrolled up near the top —
+   reversible (scrolling back up rewinds the story), and self-contained
+   so it doesn't matter where on the page the badge actually sits. */
+function dotBadgeProgress(top, vh){
+  const startY = vh * 0.85, endY = vh * 0.15;
+  return (startY - top) / (startY - endY);
+}
 
 /* headline word-stage: size to fit, then loop — COMPLEXITY animates in, holds, animates out, CLARITY animates in, holds, animates out, repeat */
 (function(){
@@ -7143,37 +7180,42 @@ try{
             ro.observe(doc.body);
           }
           frame.contentWindow.addEventListener('resize', resize);
-          /* the signature's dot mark — same Lottie data as the Work page,
-             using the outer page's already-loaded lottie instance so the
-             library isn't fetched twice; aubergine is constant across the
-             brand doc's own light/dark modes, so no recolor pass needed. */
-          const markEl = doc.getElementById('dotLottieBrand');
-          if(markEl && window.lottie){
-            try{
-              const brandReduce = frame.contentWindow.matchMedia && frame.contentWindow.matchMedia('(prefers-reduced-motion: reduce)').matches;
-              const brandAnim = lottie.loadAnimation({
-                container: markEl, renderer: 'svg', loop: true,
-                autoplay: !brandReduce, animationData: DOT_SIGNATURE_LOTTIE
-              });
-              if(brandReduce) brandAnim.addEventListener('DOMLoaded', ()=>brandAnim.goToAndStop(14, true));
-            }catch(e){}
-          }
-          /* badge ring rotation — the iframe never scrolls on its own
-             (scrolling="no"), so this listens to the OUTER window and
-             turns the ring inside the iframe's document from here. */
-          const brandRing = doc.getElementById('dotBadgeRingBrand');
-          if(brandRing && !(frame.contentWindow.matchMedia && frame.contentWindow.matchMedia('(prefers-reduced-motion: reduce)').matches)){
-            let brandTicking = false;
-            const applyBrandRotate = ()=>{
-              brandTicking = false;
-              brandRing.style.transform = 'rotate(' + ((window.scrollY * 0.12) % 360) + 'deg)';
+          /* the dot's journey — the iframe never scrolls on its own
+             (scrolling="no"), so this reads the OUTER window's scroll
+             and the badge's combined position (iframe offset in the
+             outer viewport + the badge's own offset inside the iframe,
+             which never changes on its own since there's no inner
+             scroll) to drive the same center->ring->arc travel as the
+             Work page, from out here. */
+          const brandBadge = doc.getElementById('dotBadgeRingBrand');
+          const brandDot = doc.getElementById('dotBadgeDotBrand');
+          const brandLabels = doc.querySelectorAll('#dotBadgeRingBrand .dot-badge__label');
+          if(brandBadge && brandDot){
+            const brandApplyStep = (t)=>{
+              const {x,y,step} = dotBadgeAt(t);
+              brandDot.setAttribute('cx', x.toFixed(2));
+              brandDot.setAttribute('cy', y.toFixed(2));
+              brandLabels.forEach(l=>l.classList.toggle('is-active', Number(l.dataset.step) === step));
             };
-            window.addEventListener('scroll', ()=>{
-              if(brandTicking) return;
-              brandTicking = true;
-              requestAnimationFrame(applyBrandRotate);
-            }, {passive:true});
-            applyBrandRotate();
+            const brandReduce = frame.contentWindow.matchMedia && frame.contentWindow.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if(brandReduce){
+              brandApplyStep(1);
+            } else {
+              let brandTicking = false;
+              const brandCompute = ()=>{
+                brandTicking = false;
+                const frameRect = frame.getBoundingClientRect();
+                const innerTop = brandBadge.getBoundingClientRect().top;
+                const t = dotBadgeProgress(frameRect.top + innerTop, window.innerHeight);
+                brandApplyStep(t);
+              };
+              window.addEventListener('scroll', ()=>{
+                if(brandTicking) return;
+                brandTicking = true;
+                requestAnimationFrame(brandCompute);
+              }, {passive:true});
+              brandCompute();
+            }
           }
         }catch(e){}
       });
@@ -7353,53 +7395,39 @@ try{
   targets.forEach(el=>io.observe(el));
 })();
 
-/* the dot-signature's mark, as a small looping Lottie: a dot drops in,
-   settles, sends out a ripple, fades, repeats — recolored to the
-   current theme's accent once rendered, since the animation data
-   itself is authored with a placeholder fill/stroke. */
+/* the dot's journey — starts at the badge's center, travels out to the
+   ring and around through Understand -> Structure -> Simplify as the
+   page scrolls, landing beside Clarity. Tied to how far the badge
+   itself has scrolled through the viewport, so it plays out (and
+   rewinds cleanly if you scroll back up) wherever the badge sits on
+   the page. */
 (function(){
-  const el = document.getElementById('dotLottieWork');
-  if(!el || !window.lottie) return;
-  try{
-    const anim = lottie.loadAnimation({
-      container: el, renderer: 'svg', loop: true,
-      autoplay: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-      animationData: DOT_SIGNATURE_LOTTIE
-    });
-    anim.addEventListener('DOMLoaded', ()=>{
-      /* fixed 2-layer structure (ring under, dot on top) — lottie-web
-         paints layers[] back-to-front, so path[0] is always the ring
-         (stroke) and path[1] always the dot (fill). Not read off the
-         rendered attributes, since the ring's stroke isn't populated
-         until its first visible frame and DOMLoaded fires before that. */
-      const paths = el.querySelectorAll('path');
-      if(paths[0]) paths[0].style.stroke = 'var(--accent)';
-      if(paths[1]) paths[1].style.fill = 'var(--accent)';
-      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) anim.goToAndStop(14, true);
-    });
-  }catch(e){ console.error('[dot lottie]', e); }
-})();
-
-/* the badge ring turns with scroll — a plain scroll-position tie, not
-   gated to the badge being in view, so it always reads as "alive" the
-   moment you scroll rather than needing to scroll it exactly into
-   frame first. */
-(function(){
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const ring = document.getElementById('dotBadgeRingWork');
-  if(!ring) return;
+  const badge = document.getElementById('dotBadgeRingWork');
+  const dot = document.getElementById('dotBadgeDotWork');
+  const labels = document.querySelectorAll('#dotBadgeRingWork .dot-badge__label');
+  if(!badge || !dot) return;
+  const applyStep = (t)=>{
+    const {x,y,step} = dotBadgeAt(t);
+    dot.setAttribute('cx', x.toFixed(2));
+    dot.setAttribute('cy', y.toFixed(2));
+    labels.forEach(l=>l.classList.toggle('is-active', Number(l.dataset.step) === step));
+  };
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    applyStep(1);
+    return;
+  }
   let ticking = false;
-  function apply(){
+  function compute(){
     ticking = false;
-    ring.style.transform = 'rotate(' + ((window.scrollY * 0.12) % 360) + 'deg)';
+    applyStep(dotBadgeProgress(badge.getBoundingClientRect().top, window.innerHeight));
   }
   function onScroll(){
     if(ticking) return;
     ticking = true;
-    requestAnimationFrame(apply);
+    requestAnimationFrame(compute);
   }
   window.addEventListener('scroll', onScroll, {passive:true});
-  apply();
+  compute();
 })();
 }catch(e){ console.error('[section error]', e); }
 
