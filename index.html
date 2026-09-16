@@ -402,16 +402,24 @@
      on card hover (never idle-animating, so it reads as an editorial
      detail rather than a gimmick). Position is set by a modifier class;
      each tag carries its own accent color inline via --c. */
-  .work-collab{position:absolute;z-index:14;display:inline-flex;align-items:center;gap:5px;
+  .work-collab{position:absolute;z-index:14;display:inline-flex;align-items:center;gap:4px;
     pointer-events:none;opacity:0;transform:translateY(6px);
     transition:opacity .34s cubic-bezier(.22,1,.36,1), transform .34s cubic-bezier(.22,1,.36,1);}
   .work-card:hover .work-collab{opacity:1;transform:translateY(0);}
   .work-collab--tr{top:-58px;right:30px;}
+  /* the pill is wider than the -16px offset, so most of its body sits
+     inside the outline no matter what — only the small icon should
+     ever reach the border. Left-side already works: icon-then-pill in
+     normal row order puts the icon outermost and the pill safely
+     inside. The right-side badge needs the SAME arrangement mirrored,
+     so its flex order is reversed (pill-then-icon visually) rather
+     than just pushed further out, which would only make the icon
+     clear the line while dragging the pill along with it. */
   .work-collab--l{left:-16px;top:40%;transition-delay:.05s;}
-  .work-collab--r{right:-16px;top:58%;transition-delay:.1s;}
-  .work-collab-cursor{width:17px;height:17px;flex:none;fill:var(--c);
+  .work-collab--r{right:-16px;top:58%;transition-delay:.1s;flex-direction:row-reverse;}
+  .work-collab-cursor{width:14px;height:14px;flex:none;fill:var(--c);
     filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));
-    transform:rotate(-14deg) scale(.65);
+    transform:rotate(-8deg) scale(.8);
     transition:transform .34s cubic-bezier(.22,1,.36,1);}
   .work-card:hover .work-collab-cursor{transform:rotate(0deg) scale(1);}
   .work-collab--l .work-collab-cursor{transition-delay:.05s;}
