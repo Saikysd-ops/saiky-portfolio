@@ -359,15 +359,25 @@
   .work-card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
     border-radius:14px;outline:none;}
   .work-card:focus-visible{outline:3px solid var(--violet);outline-offset:6px;}
-  /* frame that appears around the whole card on hover — an editorial
-     "selected" outline, offset outward from the content rather than
-     hugging it tightly. Sits on the card itself so it isn't clipped by
-     the thumb's own overflow:hidden. */
-  .work-card::after{content:'';position:absolute;inset:-14px;border-radius:20px;
+  /* frame that appears around the whole card on hover — a sharp-cornered
+     "selected" outline (design-tool style, no border-radius) offset
+     outward from the content, with a small square handle at each
+     corner. Sits on the card itself so it isn't clipped by the thumb's
+     own overflow:hidden. */
+  .work-card::after{content:'';position:absolute;inset:-12px;border-radius:0;
     border:1.5px solid var(--accent);opacity:0;pointer-events:none;
     transition:opacity .3s cubic-bezier(.22,1,.36,1);}
   .work-card:hover::after{opacity:1;}
-  @media (max-width:760px){.work-card::after{display:none;}}
+  .work-corner{position:absolute;z-index:15;width:9px;height:9px;
+    background:var(--paper);border:1.5px solid var(--accent);
+    opacity:0;pointer-events:none;
+    transition:opacity .3s cubic-bezier(.22,1,.36,1);}
+  .work-card:hover .work-corner{opacity:1;}
+  .work-corner--tl{top:-16.5px;left:-16.5px;}
+  .work-corner--tr{top:-16.5px;right:-16.5px;}
+  .work-corner--bl{bottom:-16.5px;left:-16.5px;}
+  .work-corner--br{bottom:-16.5px;right:-16.5px;}
+  @media (max-width:760px){.work-card::after, .work-corner{display:none;}}
   /* non-clipping wrapper around .work-thumb, purely so the collaborator
      badges below can bleed outside the thumb's rounded, overflow:hidden
      box without being clipped by it — sized to the thumb itself (not
@@ -390,8 +400,8 @@
     transition:opacity .3s cubic-bezier(.22,1,.36,1), transform .3s cubic-bezier(.22,1,.36,1);}
   .work-card:hover .work-collab{opacity:1;transform:translateY(0) scale(1);}
   .work-collab--tr{top:-14px;right:30px;}
-  .work-collab--l{left:-16px;top:40%;}
-  .work-collab--r{right:-16px;top:58%;}
+  .work-collab--l{left:-16px;top:40%;transition-delay:.05s;}
+  .work-collab--r{right:-16px;top:58%;transition-delay:.1s;}
   .work-collab-cursor{width:17px;height:17px;flex:none;fill:var(--c);
     filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));}
   .work-collab-pill{font-family:var(--font-body);font-size:12.5px;font-weight:700;color:#fff;
@@ -2627,9 +2637,10 @@
 
     <div class="work-grid">
       <a class="work-card" role="link" tabindex="0" data-view="case-supplier">
+        <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
           <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
         <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
           <div class="work-thumb shot-thumb" id="smThumb">
           <div class="monitor">
@@ -2662,9 +2673,10 @@
       </a>
 
       <a class="work-card" role="link" tabindex="0" data-view="case-scintilla">
+        <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
           <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
         <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
           <div class="work-thumb shot-thumb sc-thumb" id="scThumb">
           <div class="monitor">
@@ -2699,9 +2711,10 @@
       </a>
 
       <a class="work-card" role="link" tabindex="0" data-view="case-omni">
+        <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
           <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
         <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
           <div class="work-thumb shot-thumb om-thumb" id="omThumb">
           <div class="monitor">
@@ -2733,9 +2746,10 @@
       </a>
 
       <a class="work-card" role="link" tabindex="0" data-view="case-solv">
+        <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
           <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
         <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
           <div class="work-thumb phone-thumb" id="smeThumb">
           <div class="phone-stage">
@@ -2761,9 +2775,10 @@
         </div>
       </a>
       <a class="work-card is-workonly" role="link" tabindex="0" data-view="case-bawsala">
+        <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
           <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
         <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
           <div class="work-thumb shot-thumb bw-thumb" id="bwThumb">
           <div class="monitor">
@@ -2795,9 +2810,10 @@
         </div>
       </a>
       <a class="work-card is-workonly" role="link" tabindex="0" data-view="case-delivery">
+        <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
           <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
         <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
           <div class="work-thumb shot-thumb md-thumb" id="mdThumb">
           <div class="monitor">
