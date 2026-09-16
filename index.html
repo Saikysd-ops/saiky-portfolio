@@ -432,6 +432,12 @@
   .work-card:hover .work-collab-cursor{transform:rotate(0deg) scale(1);}
   .work-collab--l .work-collab-cursor{transition-delay:.05s;}
   .work-collab--r .work-collab-cursor{transition-delay:.1s;}
+  /* the cursor shape points down-right by default, which reads correctly
+     for Saiky/Joy (pointing in, toward the card) but backwards for
+     Rahul on the right edge — mirror it so it points down-left, into
+     the card, instead of away from it. */
+  .work-collab--r .work-collab-cursor{transform:scaleX(-1) rotate(-8deg) scale(.8);}
+  .work-card:hover .work-collab--r .work-collab-cursor{transform:scaleX(-1) rotate(0deg) scale(1);}
   .work-collab-pill{font-family:var(--font-body);font-size:12.5px;font-weight:700;color:#fff;
     background:var(--c);padding:6px 13px;border-radius:999px;white-space:nowrap;line-height:1.2;
     box-shadow:0 6px 16px -6px rgba(0,0,0,.35);}
