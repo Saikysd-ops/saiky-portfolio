@@ -363,15 +363,13 @@
      "selected" outline (design-tool style, no border-radius) offset
      outward from the content, with a small square handle at each
      corner. Sits on the card itself so it isn't clipped by the thumb's
-     own overflow:hidden.
-     The bottom inset is intentionally smaller than the other three:
-     .work-note reserves min-height:3em so the stats divider lines up
-     row-to-row, which leaves ~11.5px of invisible space below the
-     visible last line before the card's real bottom edge — measured
-     directly, not guessed. Pulling the bottom in by that much makes
-     the VISIBLE gap (thumb-to-line, text-to-line) read as equal on
-     all four sides, which is the actual goal, not equal raw insets. */
-  .work-card::after{content:'';position:absolute;inset:-16px -16px -4.5px -16px;border-radius:0;
+     own overflow:hidden. Equal -16px inset on all four sides — this
+     only reads as visually equal because .work-note (the last piece
+     of content before the bottom edge) has its own margin-bottom
+     zeroed out; it used to carry the browser's default <p> margin
+     (1em, i.e. 11.5px at its own font-size), which made the bottom
+     look looser than the top even though the raw inset was identical. */
+  .work-card::after{content:'';position:absolute;inset:-16px;border-radius:0;
     border:1.5px solid var(--accent);opacity:0;pointer-events:none;
     transition:opacity .3s cubic-bezier(.22,1,.36,1);}
   .work-card:hover::after{opacity:1;}
@@ -382,8 +380,8 @@
   .work-card:hover .work-corner{opacity:1;}
   .work-corner--tl{top:-20.5px;left:-20.5px;}
   .work-corner--tr{top:-20.5px;right:-20.5px;}
-  .work-corner--bl{bottom:-9px;left:-20.5px;}
-  .work-corner--br{bottom:-9px;right:-20.5px;}
+  .work-corner--bl{bottom:-20.5px;left:-20.5px;}
+  .work-corner--br{bottom:-20.5px;right:-20.5px;}
   @media (max-width:760px){.work-card::after, .work-corner{display:none;}}
   /* non-clipping wrapper around .work-thumb, purely so the collaborator
      badges below can bleed outside the thumb's rounded, overflow:hidden
@@ -565,7 +563,7 @@
   /* release / pilot note closing the impact block — reserve two lines so the
      divider above the stats lands on the same row in both cards even when one
      note wraps and the other doesn't */
-  .work-note{margin-top:10px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.02em;
+  .work-note{margin:10px 0 0;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.02em;
     color:var(--ink-soft);opacity:.75;line-height:1.5;min-height:3em;}
   /* accents darkened to meet contrast on the paper background; the figure/arrow
      carries the meaning, so colour is never the only signal */
