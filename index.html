@@ -356,14 +356,35 @@
   .work h2{font-family:var(--font-display);font-weight:500;font-size:clamp(34px,4.4vw,52px);line-height:1.05;margin:0 0 12px;color:var(--ink);letter-spacing:-.01em;}
   .work .sub{font-size:16px;color:var(--ink-soft);margin:0 0 32px;padding-bottom:28px;border-bottom:1px solid var(--line);}
   .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:44px 34px;align-items:stretch;}
-  .work-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
+  .work-card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
     border-radius:14px;outline:none;}
   .work-card:focus-visible{outline:3px solid var(--violet);outline-offset:6px;}
   .work-thumb{position:relative;aspect-ratio:5/4;border-radius:12px;overflow:hidden;margin-bottom:16px;
     display:flex;align-items:center;justify-content:center;
     font-size:14px;color:rgba(255,255,255,.62);
     transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;}
-  .work-card:hover .work-thumb{transform:translateY(-6px);box-shadow:0 14px 26px -14px rgba(20,20,27,.28);}
+  .work-card:hover .work-thumb{transform:translateY(-6px) scale(1.008);box-shadow:0 14px 26px -14px rgba(20,20,27,.28);}
+  .shot-base{transition:transform .4s cubic-bezier(.22,1,.36,1);}
+  .work-card:hover .shot-base{transform:translate(1px,-1px) scale(1.006);}
+
+  /* collaborator presence — quiet, Figma-style cursor tags that reveal
+     on card hover (never idle-animating, so it reads as an editorial
+     detail rather than a gimmick). Position is set by a modifier class;
+     each tag carries its own accent color inline via --c. */
+  .work-collab{position:absolute;z-index:14;display:inline-flex;align-items:center;gap:5px;
+    pointer-events:none;opacity:0;transform:translateY(6px) scale(.94);
+    transition:opacity .3s cubic-bezier(.22,1,.36,1), transform .3s cubic-bezier(.22,1,.36,1);}
+  .work-card:hover .work-collab{opacity:1;transform:translateY(0) scale(1);}
+  .work-collab--tr{top:-14px;right:30px;}
+  .work-collab--l{left:-16px;top:40%;}
+  .work-collab--r{right:-16px;top:58%;}
+  .work-collab-cursor{width:17px;height:17px;flex:none;fill:var(--c);
+    filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));}
+  .work-collab-pill{font-family:var(--font-body);font-size:12.5px;font-weight:700;color:#fff;
+    background:var(--c);padding:6px 13px;border-radius:999px;white-space:nowrap;line-height:1.2;
+    box-shadow:0 6px 16px -6px rgba(0,0,0,.35);}
+  @media (max-width:760px){.work-collab{display:none;}}
+  @media (prefers-reduced-motion:reduce){.work-collab{transition:opacity .2s ease;}}
   /* signature motif: phase flow with outcome arrows, sitting inside the composition */
   .flow-strip{position:absolute;left:0;right:0;bottom:0;z-index:7;pointer-events:none;
     display:flex;align-items:center;justify-content:center;gap:9px;
@@ -2592,6 +2613,9 @@
 
     <div class="work-grid">
       <a class="work-card" role="link" tabindex="0" data-view="case-supplier">
+        <span class="work-collab work-collab--tr" style="--c:#D98A1F" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
+        <span class="work-collab work-collab--l" style="--c:#1F6E4F" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--r" style="--c:#5B2A68" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
         <div class="work-thumb shot-thumb" id="smThumb">
           <div class="monitor">
             <div class="monitor-body">
