@@ -5520,6 +5520,17 @@
         <div class="term-popover-subhead" style="margin-top:12px">Example</div>
         <p class="term-popover-body" style="margin:0">Expected recovery to an acceptable continuity level: 6 weeks.</p>
       </div>
+
+      <div class="term-popover-card" id="popover-auc" role="dialog" aria-label="AUC change definition">
+        <button type="button" class="term-popover-close" aria-label="Close">&times;</button>
+        <div class="term-popover-title">AUC change — Average Unit Cost trend</div>
+        <p class="term-popover-body">How a supplier's average cost per unit is trending — a directional, commercial signal rather than a locked-in price. It's factored in alongside performance, quality and risk, not treated as the deciding number on its own.</p>
+        <div class="term-popover-subhead">Why is it important?</div>
+        <ul class="term-popover-list">
+          <li><b>Adds commercial context:</b> A stronger alternative that also costs meaningfully more changes the trade-off the merchant is weighing.</li>
+          <li><b>Stays directional:</b> Final cost impact and commercial terms still need to be confirmed with the supplier before commitment.</li>
+        </ul>
+      </div>
     </section>
 
     <section class="case-sec" id="si-before-after">
@@ -5587,13 +5598,18 @@
           <div class="case-tag">03 · Compare</div>
           <span class="ai-mark"><svg class="ai-mark-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2c.62 5.06 1.86 7.3 7 8-5.14.7-6.38 2.94-7 8-.62-5.06-1.86-7.3-7-8 5.14-.7 6.38-2.94 7-8Z"/></svg>Surety ranks the alternatives</span>
           <h3 class="case-h3" style="margin-top:10px">From exposure to qualified alternatives</h3>
-          <p class="case-p">Surety evaluates suppliers who could realistically cover the gap — matching capacity, on-time delivery, CPMU, D&amp;B risk, <button type="button" class="term-trigger" data-popover="tts">time to shift</button> and <button type="button" class="term-trigger" data-popover="ttr">time to recover</button> — and ranks them, rather than leaving the merchant to build the comparison from scratch.</p>
+          <p class="case-p">Surety evaluates suppliers who could realistically cover the gap — matching capacity, on-time delivery, performance score, <button type="button" class="term-trigger" data-popover="cpmu">CPMU</button>, D&amp;B risk, <button type="button" class="term-trigger" data-popover="auc">AUC change</button>, <button type="button" class="term-trigger" data-popover="tts">time to shift</button> and <button type="button" class="term-trigger" data-popover="ttr">time to recover</button> — and ranks them, rather than leaving the merchant to build the comparison from scratch.</p>
           <p class="case-p" style="margin-top:14px"><i>Design question: How might AI explain why one option is recommended instead of just presenting a ranked list?</i></p>
         </div>
         <div>
           <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-03-compare-suppliers.jpg" alt="Step 3, Compare alternative suppliers — Northwind Textiles vs Supplier B (recommended, full 25% capacity) vs Supplier C, across on-time delivery, performance score, CPMU, D&amp;B risk, time to shift and time to recover"></div></div></div>
           <div class="case-caption case-caption--ai"><svg class="ai-mark-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2c.62 5.06 1.86 7.3 7 8-5.14.7-6.38 2.94-7 8-.62-5.06-1.86-7.3-7-8 5.14-.7 6.38-2.94 7-8Z"/></svg>Surety recommends: Supplier B covers the full gap in 6 weeks at a 3.8% cost premium.</div>
         </div>
+      </div>
+
+      <div class="case-bridge" style="margin-top:1px">
+        <div class="case-bridge-lbl">Why Supplier B</div>
+        <p class="case-p" style="margin:0">Supplier B can cover the full 17% supply gap and has stronger delivery performance. Surety also surfaces <button type="button" class="term-trigger" data-popover="cpmu">CPMU</button> to flag potential quality implications, alongside D&amp;B risk and transition/recovery timing. Together, these factors help Sourcing determine whether Supplier B is a viable continuity option — not simply an available one. <b>Commercial impact:</b> AUC change is considered as a directional, commercial trend; final cost impact and terms still need to be confirmed before commitment.</p>
       </div>
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid" style="margin-top:1px">
@@ -5606,6 +5622,7 @@
           <span class="ai-mark"><svg class="ai-mark-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2c.62 5.06 1.86 7.3 7 8-5.14.7-6.38 2.94-7 8-.62-5.06-1.86-7.3-7-8 5.14-.7 6.38-2.94 7-8Z"/></svg>Surety drafts the path forward</span>
           <h3 class="case-h3" style="margin-top:10px">From recommendation to a reviewable plan</h3>
           <p class="case-p">The concept turns the evidence into two concrete options — <b>A, mitigate with Northwind</b> (create a recovery plan, address the root cause, target OTD ≥95%, review in 4 weeks) or <b>B, use Supplier B for continuity</b> (recommended — reallocate the recommended volume, expected recovery in 6 weeks, covers the full supply gap) — each with clear targets, so the merchant chooses between two well-defined outcomes instead of starting from a blank page.</p>
+          <p class="case-p" style="margin-top:12px"><b>Outcome sought, A:</b> restore Northwind's delivery performance without immediately reallocating supply. <b>Outcome sought, B:</b> maintain continuity while Northwind's performance issue is addressed.</p>
           <p class="case-p" style="margin-top:14px"><i>Design question: How might AI shorten the distance between a recommendation and a decision the merchant is ready to commit to?</i></p>
         </div>
       </div>
@@ -5707,6 +5724,24 @@
         <div class="case-card"><div class="case-card-lbl">05</div><h3>Monitor</h3><p>Track supplier recovery or outcome — did the response actually work?</p></div>
       </div>
       <div class="case-caption" style="text-align:center;max-width:56ch;margin:18px auto 0"><b>↺ Continuous feedback</b> — new signals loop back into step 1, updating the strategy as performance changes.</div>
+
+      <h3 class="case-h3" style="margin-top:44px">Monitor both sides of the decision</h3>
+      <div class="case-compare" style="margin-top:16px">
+        <div class="case-compare-col">
+          <div class="case-tag">If mitigating Northwind</div>
+          <div class="case-row"><b>On-time delivery</b><span>78% → target ≥95%.</span></div>
+          <div class="case-row"><b>Recovery milestones</b><span>Is the plan on track against the 4-week review?</span></div>
+          <div class="case-row"><b>Supplier performance &amp; quality</b><span>Performance score and CPMU trending the right way.</span></div>
+          <div class="case-row"><b>New continuity signals</b><span>Any fresh signs the risk is resurfacing.</span></div>
+        </div>
+        <div class="case-compare-col case-compare-col--accent">
+          <div class="case-tag">If reallocating to Supplier B</div>
+          <div class="case-row"><b>In-stock &amp; supply continuity</b><span>Is the supply gap actually closing?</span></div>
+          <div class="case-row"><b>Supplier B delivery performance</b><span>Holding at the 98% OTD it was recommended on.</span></div>
+          <div class="case-row"><b>Quality</b><span>CPMU stays in line with what was evaluated.</span></div>
+          <div class="case-row"><b>Business impact &amp; PO execution</b><span>The moved purchase orders are landing as planned.</span></div>
+        </div>
+      </div>
 
       <div class="case-cardgrid case-cardgrid--4" style="margin-top:36px">
         <div class="case-card"><div class="case-card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="case-card-eyebrow">Reduced disruption</div><p>Protect in-stock and the customer experience.</p></div>
