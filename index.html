@@ -363,8 +363,15 @@
      "selected" outline (design-tool style, no border-radius) offset
      outward from the content, with a small square handle at each
      corner. Sits on the card itself so it isn't clipped by the thumb's
-     own overflow:hidden. */
-  .work-card::after{content:'';position:absolute;inset:-16px;border-radius:0;
+     own overflow:hidden.
+     The bottom inset is intentionally smaller than the other three:
+     .work-note reserves min-height:3em so the stats divider lines up
+     row-to-row, which leaves ~11.5px of invisible space below the
+     visible last line before the card's real bottom edge — measured
+     directly, not guessed. Pulling the bottom in by that much makes
+     the VISIBLE gap (thumb-to-line, text-to-line) read as equal on
+     all four sides, which is the actual goal, not equal raw insets. */
+  .work-card::after{content:'';position:absolute;inset:-16px -16px -4.5px -16px;border-radius:0;
     border:1.5px solid var(--accent);opacity:0;pointer-events:none;
     transition:opacity .3s cubic-bezier(.22,1,.36,1);}
   .work-card:hover::after{opacity:1;}
@@ -375,8 +382,8 @@
   .work-card:hover .work-corner{opacity:1;}
   .work-corner--tl{top:-20.5px;left:-20.5px;}
   .work-corner--tr{top:-20.5px;right:-20.5px;}
-  .work-corner--bl{bottom:-20.5px;left:-20.5px;}
-  .work-corner--br{bottom:-20.5px;right:-20.5px;}
+  .work-corner--bl{bottom:-9px;left:-20.5px;}
+  .work-corner--br{bottom:-9px;right:-20.5px;}
   @media (max-width:760px){.work-card::after, .work-corner{display:none;}}
   /* non-clipping wrapper around .work-thumb, purely so the collaborator
      badges below can bleed outside the thumb's rounded, overflow:hidden
