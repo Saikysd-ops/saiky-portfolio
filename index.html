@@ -359,6 +359,20 @@
   .work-card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
     border-radius:14px;outline:none;}
   .work-card:focus-visible{outline:3px solid var(--violet);outline-offset:6px;}
+  /* frame that appears around the whole card on hover — an editorial
+     "selected" outline, offset outward from the content rather than
+     hugging it tightly. Sits on the card itself so it isn't clipped by
+     the thumb's own overflow:hidden. */
+  .work-card::after{content:'';position:absolute;inset:-14px;border-radius:20px;
+    border:1.5px solid var(--accent);opacity:0;pointer-events:none;
+    transition:opacity .3s cubic-bezier(.22,1,.36,1);}
+  .work-card:hover::after{opacity:1;}
+  @media (max-width:760px){.work-card::after{display:none;}}
+  /* non-clipping wrapper around .work-thumb, purely so the collaborator
+     badges below can bleed outside the thumb's rounded, overflow:hidden
+     box without being clipped by it — sized to the thumb itself (not
+     the whole card), so badges never drift into the text below. */
+  .work-thumb-wrap{position:relative;}
   .work-thumb{position:relative;aspect-ratio:5/4;border-radius:12px;overflow:hidden;margin-bottom:16px;
     display:flex;align-items:center;justify-content:center;
     font-size:14px;color:rgba(255,255,255,.62);
@@ -2613,10 +2627,11 @@
 
     <div class="work-grid">
       <a class="work-card" role="link" tabindex="0" data-view="case-supplier">
-        <span class="work-collab work-collab--tr" style="--c:#D98A1F" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#1F6E4F" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
-        <span class="work-collab work-collab--r" style="--c:#5B2A68" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
-        <div class="work-thumb shot-thumb" id="smThumb">
+        <div class="work-thumb-wrap">
+          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
+        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <div class="work-thumb shot-thumb" id="smThumb">
           <div class="monitor">
             <div class="monitor-body">
               <div class="browser-bar"><i></i><i></i><i></i></div>
@@ -2632,6 +2647,7 @@
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Discover <i>→</i> Evaluate <i>→</i> Monitor</div>
         </div>
+        </div>
                 <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart"><span>· Enterprise AI</span></span><span class="yr">2025–Now</span></div>
         <h3>Supplier Matrix</h3>
         <div class="work-body"><p class="desc">Performance, risk, and capability signals lived across fragmented systems. Supplier Matrix unified them into one trusted decision layer for supplier discovery, evaluation, and monitoring.</p>
@@ -2646,7 +2662,11 @@
       </a>
 
       <a class="work-card" role="link" tabindex="0" data-view="case-scintilla">
-        <div class="work-thumb shot-thumb sc-thumb" id="scThumb">
+        <div class="work-thumb-wrap">
+          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
+        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <div class="work-thumb shot-thumb sc-thumb" id="scThumb">
           <div class="monitor">
             <div class="monitor-body">
               <div class="browser-bar"><i></i><i></i><i></i></div>
@@ -2663,6 +2683,7 @@
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Gap <i>→</i> Diagnose <i>→</i> Act</div>
         </div>
+        </div>
         <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart"><span>· Enterprise AI</span></span><span class="yr">2026–Now</span></div>
         <h3>Scintilla × Supplier One</h3>
         <div class="work-body"><p class="desc">Turned inventory gaps into explainable recommendations suppliers can act on inside Supplier One.</p>
@@ -2678,7 +2699,11 @@
       </a>
 
       <a class="work-card" role="link" tabindex="0" data-view="case-omni">
-        <div class="work-thumb shot-thumb om-thumb" id="omThumb">
+        <div class="work-thumb-wrap">
+          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
+        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <div class="work-thumb shot-thumb om-thumb" id="omThumb">
           <div class="monitor">
             <div class="monitor-body">
               <div class="browser-bar"><i></i><i></i><i></i></div>
@@ -2692,6 +2717,7 @@
           <img class="om-float f-trail" src="assets/images/image-017-cd5a2c1c37cd.jpg" alt="Trail summary showing a shipment moving from fulfilment centre to distribution centre to delivery station to customer">
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Plan <i>→</i> Optimize <i>→</i> Deliver</div>
+        </div>
         </div>
         <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart"><span>· Ops</span></span><span class="yr">2022–23</span></div>
         <h3>Omni Routes</h3>
@@ -2707,7 +2733,11 @@
       </a>
 
       <a class="work-card" role="link" tabindex="0" data-view="case-solv">
-        <div class="work-thumb phone-thumb" id="smeThumb">
+        <div class="work-thumb-wrap">
+          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
+        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <div class="work-thumb phone-thumb" id="smeThumb">
           <div class="phone-stage">
             <img class="ph-rest ph-a" src="assets/images/image-002-f041ebeedcf3.png" alt="Invoice finance screen showing available credit limit, utilised limit and credit statements">
             <img class="ph-rest ph-b" src="assets/images/image-003-15723ba5b9f4.png" alt="Prepaid card screen showing available balance, card details and product features">
@@ -2716,6 +2746,7 @@
           </div>
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Access <i>→</i> Pay <i>→</i> Manage</div>
+        </div>
         </div>
         <div class="work-meta"><span class="co"><svg class="brand-mark solv-mark" viewBox="0 0 34 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <defs> <polygon id="path-1" points="0.329007494 0.0357485714 18.6442101 0.0357485714 18.6442101 6.66115329 0.329007494 6.66115329"></polygon> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Group-16" transform="translate(-22, -27)"> <g id="brand/logo-mark" transform="translate(22, 27)"> <g id="Group-37" transform="translate(3.4, 0.68)"> <g id="Group-6" transform="translate(3.4, 0)"> <mask id="mask-2" fill="white"> <use xlink:href="#path-1"></use> </mask> <g id="Clip-5"></g> <path d="M16.2045534,6.66115329 C15.8735504,6.66166857 15.537177,6.59068952 15.2144734,6.43992381 C13.3119381,5.5493181 11.3888981,5.19545905 9.28473395,5.22136381 C7.35437087,5.24001524 5.48356882,5.64982857 3.72407754,6.43940571 C2.48110728,6.99687619 1.04822523,6.37982476 0.522428308,5.06127238 C-0.00288041026,3.7422019 0.578571897,2.22107429 1.82154215,1.66360381 C4.17224985,0.608761905 6.66795446,0.0611352381 9.23981908,0.0362666667 C12.0318642,0.0113980952 14.6447381,0.506179048 17.1863339,1.69624381 C18.4210047,2.27392 18.9804878,3.80385524 18.4356509,5.1141181 C18.0333698,6.08192 17.1409309,6.6590781 16.2045534,6.66115329" id="Fill-4" fill="#FF6600" mask="url(#mask-2)"></path> </g> <path d="M13.2575474,36.04 C9.75092171,36.04 6.44875114,34.6657276 3.94969199,32.1635662 C1.42758874,29.6390064 0.0253307149,26.268281 0.00032541435,22.6725751 C-0.0344858863,17.563726 2.72590317,12.9381869 7.20430346,10.6012767 C8.40897058,9.9721277 9.88820571,10.4544421 10.5079449,11.6774002 C11.1271938,12.900856 10.6525834,14.402551 9.447426,15.0312023 C6.62476885,16.5040281 4.88518441,19.4188196 4.90724791,22.637733 C4.92293751,24.9029679 5.80645813,27.0263458 7.39503016,28.6166393 C8.96938349,30.1924982 11.0497264,31.0585736 13.258528,31.0585736 L13.3183446,31.0585736 C17.9242229,31.0262202 21.6446193,27.1955789 21.6127498,22.5197675 C21.5906863,19.2899038 19.8025622,16.3955198 16.9455841,14.9664955 L16.8769421,14.9326489 C15.6580562,14.3323691 15.1486345,12.8426199 15.739446,11.6047295 C16.3312381,10.366839 17.7982158,9.84968257 19.0180822,10.4504601 L19.1117295,10.4972481 C23.6470046,12.7654696 26.4843707,17.3586553 26.5196723,22.4854232 C26.5706635,29.9072906 20.663529,35.9882346 13.3521753,36.04 L13.2575474,36.04" id="Fill-7" fill="#003399"></path> </g> </g> </g> </g> </svg><span>Fintech</span></span><span class="yr">2020–22</span></div>
         <h3>SME Pay Later</h3>
@@ -2730,7 +2761,11 @@
         </div>
       </a>
       <a class="work-card is-workonly" role="link" tabindex="0" data-view="case-bawsala">
-        <div class="work-thumb shot-thumb bw-thumb" id="bwThumb">
+        <div class="work-thumb-wrap">
+          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
+        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <div class="work-thumb shot-thumb bw-thumb" id="bwThumb">
           <div class="monitor">
             <div class="monitor-body">
               <div class="browser-bar"><i></i><i></i><i></i></div>
@@ -2746,6 +2781,7 @@
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Search <i>→</i> Locate <i>→</i> Share</div>
         </div>
+        </div>
         <div class="work-meta"><span class="co"><svg class="brand-mark bw-mark" viewBox="0 0 399 399" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Artboard" transform="translate(-313, -313)" fill="#ED1C24"> <path d="M368.550335,497.163218 L609.461989,417.081648 L529.316808,659.248316 C522.392504,680.256535 533.654547,702.951951 554.471286,709.939948 C575.288025,716.927945 597.776584,705.56231 604.700889,684.554092 L709.921197,365.829443 C714.728505,351.433726 711.04953,335.532328 700.422431,324.773537 C689.795332,314.014747 674.05057,310.251709 659.770945,315.057728 L343.951319,421.406053 C329.244687,424.752143 317.68776,436.2207 314.125117,451.004189 C310.562473,465.787678 315.609719,481.331593 327.151085,491.120038 C338.692451,500.908483 354.733652,503.250068 368.550335,497.163218 L368.550335,497.163218 Z" id="Path"></path> </g> </g> </svg><span>Bawsala · Navigation</span></span><span class="yr">2018</span></div>
         <h3>Bawsala</h3>
         <div class="work-body"><p class="desc">Helping people find the right building entrance — not just the right address — with a unique code for every entrance, searchable and shareable in seconds.</p>
@@ -2759,7 +2795,11 @@
         </div>
       </a>
       <a class="work-card is-workonly" role="link" tabindex="0" data-view="case-delivery">
-        <div class="work-thumb shot-thumb md-thumb" id="mdThumb">
+        <div class="work-thumb-wrap">
+          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
+        <span class="work-collab work-collab--l" style="--c:#7546D8" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
+        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <div class="work-thumb shot-thumb md-thumb" id="mdThumb">
           <div class="monitor">
             <div class="monitor-body">
               <div class="browser-bar"><i></i><i></i><i></i></div>
@@ -2773,6 +2813,7 @@
           <img class="md-float f-filter" src="assets/images/image-011-6e7e8023699a.png" alt="Demurrage &amp; detention filter panel with charge checkboxes">
           <span class="shot-lens"><span>View case study ↗</span></span>
           <div class="flow-strip">Plan <i>→</i> Track <i>→</i> Resolve</div>
+        </div>
         </div>
         <div class="work-meta"><span class="co"><img class="wm-mark" src="assets/images/image-012-5da437191d59.png" alt="Maersk"><span>· Logistics</span></span><span class="yr">2020–22</span></div>
         <h3>Delivery Planning</h3>
