@@ -196,6 +196,8 @@
   @keyframes ctaBob{0%,100%{transform:translateY(-2px);}50%{transform:translateY(3px);}}
   @media (prefers-reduced-motion:reduce){ .cta-arrow{animation:none;} }
   .btn-small{padding:12px 22px;font-size:13px;}
+  /* ~8% smaller than .btn-small — reads as editorial, not a SaaS CTA */
+  .impact-cta{padding:11px 20px;font-size:12px;}
 
   .foot-socials{display:flex;align-items:center;gap:14px;margin-top:20px;}
   .foot-socials a{display:inline-flex;color:var(--ink-soft);opacity:.7;transition:opacity .2s ease, color .2s ease;}
@@ -332,7 +334,9 @@
   .impact p{font-size:14.5px;line-height:1.6;color:var(--ink-soft);max-width:60ch;margin-bottom:18px;}
 
   /* PHILOSOPHY */
-  .philosophy{border-top:1px solid var(--line);}
+  /* a touch more room than the generic section padding-top (70px), so
+     the headline doesn't sit right on top of the divider above it */
+  .philosophy{border-top:1px solid var(--line);padding-top:80px;}
   .phil-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:50px;align-items:start;}
   .phil-headline{font-family:var(--font-display);font-style:italic;font-size:clamp(28px,3vw,38px);line-height:1.15;color:var(--ink);}
   .phil-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
@@ -2647,7 +2651,7 @@
       <div class="stat"><div class="num">&gt;90%</div><div class="lbl">Assessments initiated directly in Matrix</div></div>
     </div>
     <p class="highlight">From fragmented supplier data to one sourcing decision model.</p>
-    <button class="btn btn-outline btn-small" data-view="case-supplier">Explore the case study →</button>
+    <button class="btn btn-outline btn-small impact-cta" data-view="case-supplier">Explore the case study →</button>
   </section>
 
   <section class="philosophy">
