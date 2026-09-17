@@ -360,7 +360,7 @@
      into the row above it once there's more than one row (verified:
      was overlapping by ~8px at the plain 44px gap). */
   .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:68px 34px;align-items:stretch;}
-  .work-card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
+  .work-card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;
     border-radius:14px;outline:none;}
   .work-card:focus-visible{outline:3px solid var(--violet);outline-offset:6px;}
   /* frame that appears around the whole card on hover — a sharp-cornered
@@ -7268,7 +7268,6 @@ try{
     }, 2000);
   }
   document.querySelectorAll('[data-view]').forEach(el=>{
-    el.style.cursor='pointer';
     el.addEventListener('click', (ev)=>{ ev.preventDefault(); go(el.getAttribute('data-view')); });
   });
 
@@ -7298,7 +7297,6 @@ try{
     } else { run(); }
   }
   document.querySelectorAll('[data-goto]').forEach(el=>{
-    el.style.cursor='pointer';
     el.addEventListener('click', (ev)=>{ ev.preventDefault(); gotoSection(el.getAttribute('data-goto')); });
   });
   const fromHash = ()=> location.hash === '#about' ? 'about' : location.hash === '#work' ? 'work' : location.hash === '#brand' ? 'brand' : location.hash === '#case-supplier-matrix' ? 'case-supplier' : location.hash === '#case-delivery-dnd' ? 'case-delivery' : location.hash === '#case-bawsala' ? 'case-bawsala' : location.hash === '#case-solv-paylater' ? 'case-solv' : location.hash === '#case-omni-routes' ? 'case-omni' : location.hash === '#case-scintilla' ? 'case-scintilla' : location.hash === '#case-supplier-insights' ? 'case-supplier-insights' : location.hash === '#case-code-puppy' ? 'case-code-puppy' : location.hash === '#case-one-paw-away' ? 'case-onepaw' : 'home';
