@@ -161,7 +161,8 @@
   /* short three-beat close, set apart from the value-line above it —
      bolder and full ink, so it reads as the punchline, not more prose */
   .value-tagline{font-family:var(--font-display);font-weight:600;font-size:17px;
-    color:var(--ink);line-height:1.5;letter-spacing:.001em;max-width:39ch;margin-bottom:24px;}
+    color:var(--ink);line-height:1.5;letter-spacing:.001em;max-width:none;margin-bottom:24px;
+    white-space:nowrap;}
   .hl{color:var(--accent);font-weight:700;}
   p.bio{font-size:17px;font-weight:400;line-height:1.65;color:var(--ink-soft);max-width:46ch;margin:0 0 24px;}
   p.bio:last-of-type{margin-bottom:32px;}
@@ -2303,6 +2304,7 @@
     .wrap{padding:0 20px;}
     h1.headline{font-size:clamp(40px,13vw,64px);}
     .value-line{font-size:15px;}
+    .value-tagline{font-size:15px;white-space:normal;}
     p.bio{font-size:15px;}
     .bio.statement{font-size:17px;line-height:1.26;}
     .hero-stats .num{font-size:22px;}
