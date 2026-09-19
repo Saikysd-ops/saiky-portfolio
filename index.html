@@ -1158,21 +1158,12 @@
   @media (max-width:560px){.dot-badge{width:400px;height:400px;}}
 
   /* IN THEIR WORDS — full-screen testimonial carousel, a quiet brand
-     moment before the closing CTA. Signature gradient sits as a soft
-     wash behind the content (kept low-opacity so the quote itself
-     stays the thing you actually read) and comes back stronger as the
-     avatar's frame. Built for 1-5 slides; nav/dots hide themselves
+     moment before the closing CTA. Signature gradient comes back as
+     the avatar's frame. Built for 1-5 slides; nav/dots hide themselves
      automatically when there's only one. */
   .testimonials-sec{position:relative;min-height:100vh;display:flex;flex-direction:column;
     align-items:center;justify-content:center;padding:80px 32px;overflow:hidden;
     text-align:center;border-top:1px solid var(--line);}
-  .testimonials-sec::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-    background:linear-gradient(120deg,
-      color-mix(in srgb, #3157D5 13%, transparent) 0%,
-      color-mix(in srgb, #7546D8 13%, transparent) 35%,
-      color-mix(in srgb, #C54879 13%, transparent) 68%,
-      color-mix(in srgb, #E46B5D 13%, transparent) 100%);}
-  :root[data-theme="dark"] .testimonials-sec::before{opacity:.55;}
   .testimonials-sec > *{position:relative;z-index:1;}
   .testimonials-sec .eyebrow-lbl{margin-bottom:40px;}
   .testi-track{position:relative;width:100%;max-width:880px;}
