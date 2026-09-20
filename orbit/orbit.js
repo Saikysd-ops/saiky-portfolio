@@ -99,6 +99,13 @@
     ['pointerenter', 'focus', 'touchstart'].forEach(function (ev) {
       btn.addEventListener(ev, function () { ready().catch(function () {}); }, { once: true, passive: true });
     });
+    /* ORBIT.open() opens the guide; ORBIT.open({ q, intent }) also asks a curated question */
+    ORBIT.open = function (spec) {
+      return ready().then(function () {
+        window.ORBIT.ui.open();
+        if (spec) window.ORBIT.ui.ask(spec);
+      }).catch(function (e) { if (window.console) console.warn(e.message); });
+    };
     btn.addEventListener('click', function () {
       if (mounted && window.ORBIT.ui.isOpen()) { window.ORBIT.ui.close(); return; }
       ready().then(function () { window.ORBIT.ui.open(); }).catch(function (e) { if (window.console) console.warn(e.message); });

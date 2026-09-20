@@ -405,6 +405,8 @@
     },
     open: open,
     close: close,
-    isOpen: function () { return state.open; }
+    isOpen: function () { return state.open; },
+    /* start a turn from outside the panel (used by the Brand page) with one of the curated prompts */
+    ask: function (spec) { if (spec && spec.intent) askDirect(spec.q || '', { intent: spec.intent }); }
   };
 })(typeof window !== 'undefined' ? window : globalThis);
