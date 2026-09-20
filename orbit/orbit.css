@@ -52,7 +52,7 @@
 .orbit-panel.is-busy .orbit-mark__orb{animation-play-state:running;}
 
 /* body */
-.orbit-body{position:relative;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:24px 20px 10px;
+.orbit-body{position:relative;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:24px 20px 32px;
   scrollbar-width:thin;scrollbar-color:var(--line) transparent;}
 .orbit-eyebrow{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;color:var(--orbit-violet);}
 .orbit-wave{font-size:16px;letter-spacing:0;line-height:1;}

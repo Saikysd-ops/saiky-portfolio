@@ -295,6 +295,12 @@
       moreList.hidden = !openNow;
       more.setAttribute('aria-expanded', String(openNow));
       more.textContent = openNow ? 'Fewer' : 'More ways in';
+      if (openNow) {
+        /* bring the last question fully clear of the input area */
+        var last = moreList.lastElementChild;
+        var need = last.offsetTop + last.offsetHeight + 32 - refs.body.clientHeight;
+        if (need > refs.body.scrollTop) refs.body.scrollTo({ top: need, behavior: reduced() ? 'auto' : 'smooth' });
+      }
     });
     intro.appendChild(more); intro.appendChild(moreList);
     var turns = el('div', 'orbit-turns');
