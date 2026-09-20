@@ -1,40 +1,48 @@
-/* ORBIT · launcher (loaded immediately, ~1 KB). Reuses saiky.in tokens; adds nothing else to the page. */
+/* ORBIT · launcher + shared icon (loaded immediately, ~2 KB). Reuses saiky.in tokens; adds nothing else to the page. */
 .orbit-launcher{
   --orbit-ease:cubic-bezier(.22,1,.36,1);
   position:fixed;z-index:900;
   right:calc(16px + env(safe-area-inset-right,0px));
   bottom:calc(16px + env(safe-area-inset-bottom,0px));
-  display:inline-flex;flex-direction:row-reverse;align-items:center;
-  height:44px;min-width:44px;margin:0;padding:0 0 0 0;
-  justify-content:center;
+  display:inline-flex;flex-direction:row-reverse;align-items:center;justify-content:center;
+  height:48px;min-width:48px;margin:0;padding:0;
   border:1px solid transparent;border-radius:999px;background:transparent;color:var(--ink);
   font:inherit;-webkit-tap-highlight-color:transparent;
   transition:background-color .28s var(--orbit-ease),border-color .28s var(--orbit-ease),padding .32s var(--orbit-ease),
              opacity .2s ease,visibility 0s;
 }
 .orbit-launcher[hidden]{display:none;}
-.orbit-launcher__dot{
-  display:block;width:12px;height:12px;border-radius:50%;flex:none;background:var(--violet);
-  box-shadow:0 0 0 6px color-mix(in srgb, var(--paper) 82%, transparent);
-  transition:transform .32s var(--orbit-ease),box-shadow .32s var(--orbit-ease);
+.orbit-launcher__mark{
+  display:block;width:40px;height:40px;flex:none;border-radius:50%;
+  background:color-mix(in srgb, var(--paper) 78%, transparent);
+  transition:transform .32s var(--orbit-ease);
 }
-:root[data-theme="dark"] .orbit-launcher__dot{background:var(--accent);}
 .orbit-launcher__label{
   max-width:0;opacity:0;overflow:hidden;white-space:nowrap;margin-right:0;
   font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
   transition:max-width .34s var(--orbit-ease),opacity .22s ease,margin .34s var(--orbit-ease);
 }
 .orbit-launcher:hover,
-.orbit-launcher:focus-visible{
-  padding:0 16px 0 18px;background:var(--paper-raised);border-color:var(--line);
-}
+.orbit-launcher:focus-visible{padding:0 16px 0 20px;background:var(--paper-raised);border-color:var(--line);}
 .orbit-launcher:hover .orbit-launcher__label,
 .orbit-launcher:focus-visible .orbit-launcher__label{max-width:72px;opacity:1;margin-right:12px;}
-.orbit-launcher:hover .orbit-launcher__dot,
-.orbit-launcher:focus-visible .orbit-launcher__dot{transform:scale(1.15);box-shadow:0 0 0 0 transparent;}
+.orbit-launcher:hover .orbit-launcher__mark,
+.orbit-launcher:focus-visible .orbit-launcher__mark{transform:scale(1.05);}
 .orbit-launcher:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 .orbit-launcher[aria-expanded="true"]{opacity:0;visibility:hidden;pointer-events:none;}
+
+/* the icon: static ring, and an orb that revolves around it while hovered, focused, or while ORBIT is answering */
+.orbit-mark{display:block;width:100%;height:100%;overflow:visible;}
+.orbit-mark__orb{
+  transform-box:view-box;transform-origin:50% 50%;
+  animation:orbitRevolve 2.8s linear infinite;animation-play-state:paused;
+}
+.orbit-launcher:hover .orbit-mark__orb,
+.orbit-launcher:focus-visible .orbit-mark__orb{animation-play-state:running;}
+@keyframes orbitRevolve{to{transform:rotate(360deg);}}
+
 @media (prefers-reduced-motion:reduce){
-  .orbit-launcher,.orbit-launcher__dot,.orbit-launcher__label{transition:none;}
+  .orbit-launcher,.orbit-launcher__mark,.orbit-launcher__label{transition:none;}
+  .orbit-mark__orb{animation:none;}
 }
 @media print{.orbit-launcher{display:none;}}

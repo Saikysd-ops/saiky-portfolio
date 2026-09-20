@@ -31,6 +31,7 @@
     return s;
   }
   function arrow() { return el('span', 'orbit-arrow', '→'); }
+
   function reduced() { return !!mqReduce.matches; }
 
   /* ---------- navigation into the existing site ---------- */
@@ -177,7 +178,7 @@
   /* ---------- conversation ---------- */
   function scrollToTurn(turn) {
     /* skip the turn's own hairline + padding so it never doubles up with the header rule */
-    var top = Math.max(0, turn.offsetTop + 7);
+    var top = Math.max(0, turn.offsetTop + (turn.previousElementSibling ? 7 : -10));
     if (refs.body.scrollTo) refs.body.scrollTo({ top: top, behavior: reduced() ? 'auto' : 'smooth' });
     else refs.body.scrollTop = top;
   }
@@ -187,6 +188,7 @@
   function show(q, produce) {
     if (state.busy) return;
     state.busy = true;
+    refs.panel.classList.add('is-busy');
     refs.send.disabled = true;
     refs.reset.hidden = false;
 
@@ -211,6 +213,7 @@
       scrollToTurn(turn);
       announce(out.blocks.map(function (b) { return b.text || ''; }).join(' ').trim() || 'Answer ready');
       state.busy = false;
+      refs.panel.classList.remove('is-busy');
       refs.send.disabled = !refs.input.value.trim();
     }, reduced() ? 0 : 380);
   }
@@ -259,13 +262,13 @@
     panel.setAttribute('inert', '');
 
     var head = el('div', 'orbit-head');
-    var left = el('div');
-    var brand = el('div', 'orbit-brand');
-    brand.appendChild(el('span', 'orbit-dot'));
+    var left = el('div', 'orbit-lead');
+    var markWrap = el('span', 'orbit-headmark'); markWrap.appendChild(ORBIT.mark('orbit-h'));
+    var headText = el('div', 'orbit-headtext');
     var title = el('span', 'orbit-title', 'ORBIT'); title.id = 'orbit-title';
-    brand.appendChild(title);
-    left.appendChild(brand);
-    left.appendChild(el('span', 'orbit-label', 'PORTFOLIO GUIDE'));
+    headText.appendChild(title);
+    headText.appendChild(el('span', 'orbit-label', 'PORTFOLIO GUIDE'));
+    left.appendChild(markWrap); left.appendChild(headText);
     var tools = el('div', 'orbit-tools');
     var reset = el('button', 'orbit-reset', 'Start over'); reset.type = 'button'; reset.hidden = true;
     var close_ = el('button', 'orbit-close'); close_.type = 'button'; close_.setAttribute('aria-label', 'Close ORBIT');
@@ -275,6 +278,11 @@
 
     var body = el('div', 'orbit-body');
     var intro = el('div', 'orbit-intro');
+    var eyebrow = el('div', 'orbit-eyebrow');
+    eyebrow.appendChild(el('span', null, 'HI THERE'));
+    var wave = el('span', 'orbit-wave', '\uD83D\uDC4B'); wave.setAttribute('aria-hidden', 'true');
+    eyebrow.appendChild(wave); eyebrow.appendChild(el('span', 'orbit-eyebrow-line'));
+    intro.appendChild(eyebrow);
     intro.appendChild(el('p', 'orbit-tagline', 'A different way to navigate my work.'));
     intro.appendChild(el('p', 'orbit-ask', 'Curious about my work?'));
     intro.appendChild(promptList(I.PROMPTS.primary));
@@ -300,7 +308,9 @@
     input.setAttribute('enterkeyhint', 'send'); input.setAttribute('autocapitalize', 'sentences'); input.setAttribute('spellcheck', 'true');
     var send = el('button', 'orbit-send'); send.type = 'submit'; send.setAttribute('aria-label', 'Send'); send.disabled = true;
     send.appendChild(svg('M5 12h14M13 6l6 6-6 6'));
-    form.appendChild(input); form.appendChild(send);
+    var field = el('div', 'orbit-field');
+    field.appendChild(input); field.appendChild(send);
+    form.appendChild(field);
     var foot = el('p', 'orbit-foot', "Answers come from Saiky's published portfolio.");
 
     panel.appendChild(head); panel.appendChild(body); panel.appendChild(form); panel.appendChild(foot);
