@@ -52,7 +52,7 @@
 .orbit-panel.is-busy .orbit-mark__orb{animation-play-state:running;}
 
 /* body */
-.orbit-body{position:relative;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:24px 20px 32px;
+.orbit-body{position:relative;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:24px 20px 48px;scroll-padding-bottom:48px;
   scrollbar-width:thin;scrollbar-color:var(--line) transparent;}
 .orbit-eyebrow{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;color:var(--orbit-violet);}
 .orbit-wave{font-size:16px;letter-spacing:0;line-height:1;}
@@ -105,16 +105,16 @@
 .orbit-li-btn .orbit-li-t{transition:color .2s ease;}
 .orbit-li-btn:hover .orbit-li-t{color:var(--orbit-violet);}
 
-.orbit-cards{display:grid;gap:10px;}
-.orbit-card{display:block;padding:14px 14px 12px;background:var(--paper);border:1px solid var(--line);border-radius:14px;
+.orbit-cards{display:grid;gap:8px;}
+.orbit-card{display:block;padding:13px 14px 11px;background:var(--paper);border:1px solid color-mix(in srgb,var(--line) 55%,transparent);border-radius:14px;
   transition:border-color .25s ease;}
 .orbit-card:hover{border-color:rgba(117,70,216,.35);}
 .orbit-card-t{font-family:var(--font-display);font-weight:600;font-size:18px;line-height:1.25;color:var(--ink);}
 .orbit-card-m{display:block;margin-top:5px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;line-height:1.5;color:var(--ink-soft);}
 .orbit-card-d{margin-top:9px;font-size:14px;line-height:1.6;color:var(--ink-soft);}
 .orbit-card-tags{margin-top:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
-.orbit-pdi{margin-top:12px;border-top:1px solid var(--line);}
-.orbit-pdi > div{padding:9px 0;border-bottom:1px solid var(--line);}
+.orbit-pdi{margin-top:12px;border-top:1px solid color-mix(in srgb,var(--line) 55%,transparent);}
+.orbit-pdi > div{padding:9px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 55%,transparent);}
 .orbit-pdi b{display:block;font-family:var(--font-mono);font-weight:500;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
 .orbit-pdi span{display:block;margin-top:3px;font-size:14px;line-height:1.6;color:var(--ink);}
 .orbit-nda{display:block;margin-top:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}

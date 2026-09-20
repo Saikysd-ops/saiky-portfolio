@@ -298,7 +298,7 @@
       if (openNow) {
         /* bring the last question fully clear of the input area */
         var last = moreList.lastElementChild;
-        var need = last.offsetTop + last.offsetHeight + 32 - refs.body.clientHeight;
+        var need = last.offsetTop + last.offsetHeight + 48 - refs.body.clientHeight;
         if (need > refs.body.scrollTop) refs.body.scrollTo({ top: need, behavior: reduced() ? 'auto' : 'smooth' });
       }
     });
