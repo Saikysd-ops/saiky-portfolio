@@ -1,0 +1,180 @@
+/* ORBIT · panel (loaded on first interaction). Every rule is scoped to .orbit-*.
+   Reuses saiky.in tokens (--paper, --ink, --line, --violet, --accent, --font-*) so it inherits light and dark. */
+.orbit-panel{
+  --orbit-ease:cubic-bezier(.22,1,.36,1);
+  position:fixed;z-index:900;
+  right:calc(16px + env(safe-area-inset-right,0px));
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  width:min(408px,calc(100vw - 32px));
+  max-height:min(640px,calc(100dvh - 32px));
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--paper-raised);color:var(--ink);
+  border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 26px 60px -30px rgba(20,20,27,.42);
+  font-family:var(--font-body);font-size:14px;line-height:1.6;
+  opacity:0;transform:translateY(10px);visibility:hidden;
+  transition:opacity .24s ease,transform .32s var(--orbit-ease),visibility 0s linear .32s;
+}
+.orbit-panel.is-open{opacity:1;transform:none;visibility:visible;transition-delay:0s;}
+/* resets use :where() so they carry zero specificity and never beat the component rules below */
+:where(.orbit-panel) *{box-sizing:border-box;}
+:where(.orbit-panel) :is(p,ul,li,blockquote){margin:0;padding:0;}
+:where(.orbit-panel) ul{list-style:none;}
+:where(.orbit-panel) button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;text-align:left;}
+:where(.orbit-panel) a{color:inherit;text-decoration:none;}
+.orbit-panel :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+.orbit-panel input:focus-visible{outline:0;}
+.orbit-panel [tabindex="-1"]:focus{outline:0;}
+
+/* header */
+.orbit-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:16px 14px 14px 20px;border-bottom:1px solid var(--line);}
+.orbit-brand{display:flex;align-items:center;gap:10px;}
+.orbit-dot{display:block;width:10px;height:10px;border-radius:50%;background:var(--violet);flex:none;}
+:root[data-theme="dark"] .orbit-dot{background:var(--accent);}
+.orbit-title{font-family:var(--font-display);font-weight:600;font-size:18px;letter-spacing:.01em;line-height:1;}
+.orbit-label{display:block;margin-top:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;color:var(--ink-soft);}
+.orbit-tools{display:flex;align-items:center;gap:4px;margin-top:-4px;}
+.orbit-reset{padding:8px 10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+  transition:color .2s ease;}
+.orbit-reset:hover{color:var(--accent);}
+.orbit-reset[hidden]{display:none;}
+.orbit-close{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;color:var(--ink-soft);
+  transition:color .2s ease,background-color .2s ease;}
+.orbit-close:hover{color:var(--ink);background:var(--paper);}
+.orbit-close svg{width:14px;height:14px;display:block;}
+
+/* body */
+.orbit-body{position:relative;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:22px 20px 8px;}
+.orbit-tagline{text-wrap:balance;font-family:var(--font-display);font-style:italic;font-weight:500;font-size:24px;line-height:1.24;letter-spacing:-.005em;color:var(--ink);}
+.orbit-ask{margin-top:18px;font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;color:var(--ink-soft);}
+.orbit-prompts{margin-top:8px;border-top:1px solid var(--line);}
+.orbit-prompts li{border-bottom:1px solid var(--line);}
+.orbit-prompt{display:flex;width:100%;align-items:center;justify-content:space-between;gap:16px;padding:13px 2px;font-size:14px;line-height:1.4;
+  color:var(--ink);transition:color .2s ease;}
+.orbit-prompt .orbit-arrow{flex:none;color:var(--ink-soft);transition:transform .28s var(--orbit-ease),color .2s ease;}
+.orbit-prompt:hover{color:var(--accent);}
+.orbit-prompt:hover .orbit-arrow{color:var(--accent);transform:translateX(4px);}
+.orbit-more{margin-top:8px;padding:10px 0;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+  transition:color .2s ease;}
+.orbit-more:hover{color:var(--accent);}
+.orbit-morelist{margin-top:2px;border-top:1px solid var(--line);}
+.orbit-morelist[hidden]{display:none;}
+.orbit-morelist li{border-bottom:1px solid var(--line);}
+
+/* conversation */
+.orbit-turns{margin-top:0;}
+.orbit-turn{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);animation:orbitIn .42s var(--orbit-ease) both;}
+.orbit-turn:first-child{margin-top:24px;}
+.orbit-q{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:16px;line-height:1.4;color:var(--ink);}
+.orbit-a{display:grid;grid-template-columns:10px 1fr;column-gap:12px;margin-top:14px;}
+.orbit-a::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--violet);margin:9px 0 0 2px;}
+:root[data-theme="dark"] .orbit-a::before{background:var(--accent);}
+.orbit-a-body{min-width:0;}
+.orbit-a-body > * + *{margin-top:12px;}
+@keyframes orbitIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.orbit-a.is-thinking::before{display:none;}
+.orbit-a.is-thinking .orbit-thinking{grid-column:1 / -1;}
+.orbit-thinking{display:block;width:6px;height:6px;border-radius:50%;background:var(--violet);margin:9px 0 9px 2px;animation:orbitPulse 1s ease-in-out infinite;}
+:root[data-theme="dark"] .orbit-thinking{background:var(--accent);}
+@keyframes orbitPulse{0%,100%{opacity:.25;transform:scale(.8);}50%{opacity:1;transform:scale(1.25);}}
+
+/* answer blocks */
+.orbit-kicker{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
+.orbit-p{text-wrap:pretty;font-size:14px;line-height:1.62;color:var(--ink);}
+.orbit-quote{padding-left:14px;border-left:2px solid var(--accent);}
+.orbit-quote p{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:16px;line-height:1.5;color:var(--ink);}
+.orbit-cite{display:block;margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+.orbit-note{padding-top:12px;border-top:1px solid var(--line);font-size:12px;line-height:1.6;color:var(--ink-soft);}
+
+.orbit-list{border-top:1px solid var(--line);}
+.orbit-list > li{padding:12px 0;border-bottom:1px solid var(--line);}
+.orbit-li-t{font-weight:700;font-size:14px;line-height:1.4;}
+.orbit-li-m{display:block;margin-top:3px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--ink-soft);}
+.orbit-li-d{margin-top:4px;font-size:14px;line-height:1.6;color:var(--ink-soft);}
+.orbit-li-btn{display:block;width:100%;}
+.orbit-li-btn .orbit-li-t{transition:color .2s ease;}
+.orbit-li-btn:hover .orbit-li-t{color:var(--accent);}
+
+.orbit-cards{display:grid;gap:10px;}
+.orbit-card{display:block;padding:14px 14px 12px;background:var(--paper);border:1px solid var(--line);border-radius:10px;
+  transition:border-color .25s ease;}
+.orbit-card:hover{border-color:var(--accent);}
+.orbit-card-t{font-family:var(--font-display);font-weight:600;font-size:18px;line-height:1.25;color:var(--ink);}
+.orbit-card-m{display:block;margin-top:5px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;line-height:1.5;color:var(--ink-soft);}
+.orbit-card-d{margin-top:9px;font-size:14px;line-height:1.6;color:var(--ink-soft);}
+.orbit-card-tags{margin-top:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.orbit-pdi{margin-top:12px;border-top:1px solid var(--line);}
+.orbit-pdi > div{padding:9px 0;border-bottom:1px solid var(--line);}
+.orbit-pdi b{display:block;font-family:var(--font-mono);font-weight:500;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
+.orbit-pdi span{display:block;margin-top:3px;font-size:14px;line-height:1.6;color:var(--ink);}
+.orbit-nda{display:block;margin-top:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
+.orbit-cta{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 0;font-weight:700;font-size:14px;color:var(--accent);
+  border-bottom:1px solid transparent;transition:border-color .2s ease;}
+.orbit-cta:hover{border-bottom-color:currentColor;}
+.orbit-cta .orbit-arrow{transition:transform .28s var(--orbit-ease);}
+.orbit-cta:hover .orbit-arrow{transform:translateX(3px);}
+
+.orbit-rows{border-top:1px solid var(--line);}
+.orbit-rows li{border-bottom:1px solid var(--line);}
+.orbit-row{display:flex;width:100%;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 0;}
+.orbit-row-t{font-weight:700;font-size:14px;line-height:1.4;transition:color .2s ease;}
+.orbit-row-m{display:block;margin-top:2px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.orbit-row .orbit-arrow{flex:none;color:var(--ink-soft);transition:transform .28s var(--orbit-ease),color .2s ease;}
+.orbit-row:hover .orbit-row-t{color:var(--accent);}
+.orbit-row:hover .orbit-arrow{color:var(--accent);transform:translateX(3px);}
+
+.orbit-links{display:flex;flex-wrap:wrap;gap:4px 18px;}
+.orbit-link{display:inline-flex;align-items:center;gap:6px;padding:8px 0;font-weight:700;font-size:14px;color:var(--accent);
+  border-bottom:1px solid transparent;transition:border-color .2s ease;}
+.orbit-link:hover{border-bottom-color:currentColor;}
+.orbit-link small{font-weight:400;font-size:12px;color:var(--ink-soft);}
+
+/* follow-ups: navigation, not chatbot buttons */
+.orbit-next{margin-top:16px;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 18px;}
+.orbit-next .orbit-kicker{flex:none;margin-right:2px;}
+.orbit-next button,.orbit-next a{display:inline-flex;gap:6px;align-items:baseline;padding:8px 0;font-size:14px;line-height:1.4;color:var(--accent);
+  border-bottom:1px solid transparent;transition:border-color .2s ease;}
+.orbit-next button:hover,.orbit-next a:hover{border-bottom-color:currentColor;}
+
+/* input */
+.orbit-foot{flex:none;padding:0 20px 14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-soft);}
+.orbit-form{flex:none;display:flex;align-items:center;gap:8px;margin:0;padding:6px 14px 6px 20px;border-top:1px solid var(--line);}
+.orbit-input{flex:1 1 auto;min-width:0;height:48px;margin:0;padding:0;border:0;border-radius:0;background:transparent;
+  font:inherit;font-size:14px;color:var(--ink);cursor:text;-webkit-appearance:none;appearance:none;}
+.orbit-input::placeholder{color:var(--ink-soft);opacity:1;}
+.orbit-send{flex:none;display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line);border-radius:50%;color:var(--ink);
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease;}
+.orbit-send:hover:not(:disabled){background:var(--violet);color:#fff;border-color:var(--violet);}
+.orbit-send:disabled{color:var(--ink-soft);opacity:.55;}
+.orbit-send svg{width:14px;height:14px;display:block;}
+.orbit-form:focus-within{border-top-color:var(--accent);}
+.orbit-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+/* touch: larger targets */
+@media (pointer:coarse){
+  .orbit-prompt{padding:15px 2px;}
+  .orbit-next button,.orbit-next a,.orbit-link,.orbit-row{min-height:44px;align-items:center;}
+  .orbit-close{width:44px;height:44px;}
+}
+
+/* mobile: near-full-screen sheet; the page underneath is untouched */
+@media (max-width:640px){
+  .orbit-panel{
+    top:var(--orbit-top,0px);left:0;right:0;bottom:auto;width:100%;
+    height:var(--orbit-vh,100dvh);max-height:none;
+    border:0;border-radius:0;box-shadow:none;transform:translateY(16px);
+  }
+  .orbit-panel.is-open{transform:none;}
+  .orbit-head{padding-top:calc(16px + env(safe-area-inset-top,0px));}
+  .orbit-form{padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));}
+  .orbit-input{font-size:16px;}
+  .orbit-foot{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));}
+  .orbit-tagline{font-size:22px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .orbit-panel,.orbit-panel *{transition:none !important;animation:none !important;}
+  .orbit-thinking{opacity:.7;}
+}
+@media print{.orbit-panel{display:none;}}

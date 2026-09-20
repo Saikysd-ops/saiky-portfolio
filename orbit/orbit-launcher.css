@@ -1,0 +1,40 @@
+/* ORBIT · launcher (loaded immediately, ~1 KB). Reuses saiky.in tokens; adds nothing else to the page. */
+.orbit-launcher{
+  --orbit-ease:cubic-bezier(.22,1,.36,1);
+  position:fixed;z-index:900;
+  right:calc(16px + env(safe-area-inset-right,0px));
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  display:inline-flex;flex-direction:row-reverse;align-items:center;
+  height:44px;min-width:44px;margin:0;padding:0 0 0 0;
+  justify-content:center;
+  border:1px solid transparent;border-radius:999px;background:transparent;color:var(--ink);
+  font:inherit;-webkit-tap-highlight-color:transparent;
+  transition:background-color .28s var(--orbit-ease),border-color .28s var(--orbit-ease),padding .32s var(--orbit-ease),
+             opacity .2s ease,visibility 0s;
+}
+.orbit-launcher[hidden]{display:none;}
+.orbit-launcher__dot{
+  display:block;width:12px;height:12px;border-radius:50%;flex:none;background:var(--violet);
+  box-shadow:0 0 0 6px color-mix(in srgb, var(--paper) 82%, transparent);
+  transition:transform .32s var(--orbit-ease),box-shadow .32s var(--orbit-ease);
+}
+:root[data-theme="dark"] .orbit-launcher__dot{background:var(--accent);}
+.orbit-launcher__label{
+  max-width:0;opacity:0;overflow:hidden;white-space:nowrap;margin-right:0;
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+  transition:max-width .34s var(--orbit-ease),opacity .22s ease,margin .34s var(--orbit-ease);
+}
+.orbit-launcher:hover,
+.orbit-launcher:focus-visible{
+  padding:0 16px 0 18px;background:var(--paper-raised);border-color:var(--line);
+}
+.orbit-launcher:hover .orbit-launcher__label,
+.orbit-launcher:focus-visible .orbit-launcher__label{max-width:72px;opacity:1;margin-right:12px;}
+.orbit-launcher:hover .orbit-launcher__dot,
+.orbit-launcher:focus-visible .orbit-launcher__dot{transform:scale(1.15);box-shadow:0 0 0 0 transparent;}
+.orbit-launcher:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+.orbit-launcher[aria-expanded="true"]{opacity:0;visibility:hidden;pointer-events:none;}
+@media (prefers-reduced-motion:reduce){
+  .orbit-launcher,.orbit-launcher__dot,.orbit-launcher__label{transition:none;}
+}
+@media print{.orbit-launcher{display:none;}}
