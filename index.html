@@ -1165,20 +1165,22 @@
     align-items:center;justify-content:center;padding:80px 32px;overflow:hidden;
     text-align:center;border-top:1px solid var(--line);}
   .testimonials-sec > *{position:relative;z-index:1;}
-  .testimonials-sec .eyebrow-lbl{margin-bottom:40px;}
-  .testi-track{position:relative;width:100%;max-width:880px;}
+  .testi-inner{display:flex;flex-direction:column;align-items:center;transform:translateY(-70px);}
+  .testimonials-sec .eyebrow-lbl{margin-bottom:36px;}
+  .testi-track{position:relative;width:100%;max-width:800px;}
   .testi-slide{display:none;flex-direction:column;align-items:center;}
   .testi-slide.is-active{display:flex;animation:testiIn .6s cubic-bezier(.22,1,.36,1);}
   @keyframes testiIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
   @media (prefers-reduced-motion:reduce){.testi-slide.is-active{animation:none;}}
   .testi-quote{font-family:var(--font-display);font-style:italic;font-weight:400;
-    font-size:clamp(22px,3vw,36px);line-height:1.42;color:var(--ink);
-    max-width:38ch;margin:0 0 40px;}
-  .testi-avatar-wrap{width:88px;height:88px;margin-bottom:18px;border-radius:14px;padding:3px;
+    font-size:clamp(21px,2.6vw,32px);line-height:1.48;color:var(--ink);
+    max-width:780px;margin:0 0 40px;}
+  .testi-avatar-wrap{width:82px;height:82px;margin-bottom:20px;border-radius:15px;padding:3px;
     background:linear-gradient(135deg,#3157D5,#7546D8,#C54879,#E46B5D);}
-  .testi-avatar{display:block;width:100%;height:100%;border-radius:11px;object-fit:cover;
+  .testi-avatar{display:block;width:100%;height:100%;border-radius:12px;object-fit:cover;
     background:var(--paper);}
-  .testi-name{font-family:var(--font-body);font-weight:700;font-size:17px;color:var(--ink);}
+  .testi-name{font-family:var(--font-body);font-weight:800;font-size:18px;
+    letter-spacing:-.005em;color:var(--ink);}
   .testi-title{font-family:var(--font-body);font-size:14px;color:var(--ink-soft);margin-top:3px;}
   .testi-dots{display:flex;gap:9px;margin-top:44px;}
   .testi-dot{width:7px;height:7px;border-radius:50%;background:var(--line);
@@ -1197,6 +1199,12 @@
   @media (max-width:760px){
     .testi-nav{display:none;}
     .testimonials-sec{min-height:auto;padding:64px 24px;}
+    .testi-inner{transform:translateY(-32px);}
+    .testi-avatar-wrap{width:72px;height:72px;}
+    .testi-name{font-size:16.5px;}
+  }
+  @media (max-width:480px){
+    .testi-inner{transform:translateY(-18px);}
   }
 
   /* closing */
@@ -3383,6 +3391,7 @@
   </section>
 
   <section class="testimonials-sec" id="testimonials" data-count="1">
+   <div class="testi-inner">
     <div class="eyebrow-lbl">In their words</div>
     <div class="testi-track" id="testiTrack">
       <div class="testi-slide is-active" data-i="0">
@@ -3395,6 +3404,7 @@
     <div class="testi-dots" id="testiDots">
       <button type="button" class="testi-dot is-active" data-i="0" aria-label="Testimonial 1"></button>
     </div>
+   </div>
     <button type="button" class="testi-nav testi-nav--prev" id="testiPrev" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <button type="button" class="testi-nav testi-nav--next" id="testiNext" aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   </section>
