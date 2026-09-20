@@ -6315,31 +6315,20 @@ h3{font-size:18px;line-height:1.2}
 }
 
 /* ORBIT — brand extension (page 05). Additive; nothing above is changed. */
-.orbit-page{min-height:720px}
-.orbit-hero{margin-top:34px;display:flex;align-items:center;gap:36px;flex-wrap:wrap}
-.orbit-icon{flex:none;width:156px;height:156px}
+.orbit-page{min-height:0}
+.orbit-hero{margin-top:30px;display:flex;align-items:center;gap:20px 24px;flex-wrap:wrap}
+.orbit-icon{flex:none;width:88px;height:88px}
 .orbit-icon svg{display:block;width:100%;height:100%;overflow:visible}
 .orbit-icon .orb{transform-box:view-box;transform-origin:50% 50%;animation:orbitRevolve 9s linear infinite}
 @keyframes orbitRevolve{to{transform:rotate(360deg)}}
-.orbit-title{font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(34px,5.2vw,56px);line-height:1.04;letter-spacing:-.03em;max-width:620px}
-.orbit-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0 40px;margin-top:52px;border-top:1px solid var(--line)}
-.orbit-fact{padding-top:22px}
-.orbit-fact p{margin-top:2px;font-size:16px;line-height:1.55;color:var(--ink)}
-.orbit-actions{margin-top:48px}
-.orbit-open{cursor:pointer;transition:background .2s ease,transform .2s ease}
-.orbit-open:hover{transform:translateY(-1px)}
-.orbit-try{margin-top:28px}
-.orbit-asks{display:flex;flex-wrap:wrap;gap:10px;margin-top:2px}
-.orbit-ask{border:0;cursor:pointer;font:500 12px "IBM Plex Mono",monospace;letter-spacing:.06em;transition:background .2s ease,color .2s ease}
-.orbit-ask:hover{background:var(--aubergine);color:#fff}
-.orbit-open:focus-visible,.orbit-ask:focus-visible{outline:2px solid var(--aubergine);outline-offset:3px}
-:root[data-theme="dark"] .orbit-open:focus-visible,:root[data-theme="dark"] .orbit-ask:focus-visible{outline-color:#BC80CC}
-:root[data-theme="dark"] .orbit-ask:hover{background:#BC80CC;color:#101014}
-@media (prefers-reduced-motion:reduce){.orbit-icon .orb{animation:none}.orbit-open{transition:none}}
+.orbit-title{font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(16px,4vw,34px);line-height:1.15;letter-spacing:-.02em;white-space:nowrap}
+.orbit-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0 40px;margin-top:40px;border-top:1px solid var(--line)}
+.orbit-fact{padding-top:20px}
+.orbit-fact p{margin-top:2px;font-size:14px;line-height:1.55;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.orbit-icon .orb{animation:none}}
 @media(max-width:850px){
-  .orbit-hero{gap:24px}
-  .orbit-icon{width:120px;height:120px}
-  .orbit-facts{grid-template-columns:1fr;margin-top:36px}
+  .orbit-icon{width:72px;height:72px}
+  .orbit-facts{grid-template-columns:1fr;margin-top:32px}
 }
 </style>
 </head>
@@ -6684,20 +6673,6 @@ h3{font-size:18px;line-height:1.2}
     <div class="orbit-fact">
       <div class="type-label">Usage</div>
       <p>Used as the interactive navigation layer across the portfolio.</p>
-    </div>
-  </div>
-
-  <div class="orbit-actions" onclick="var b=event.target.closest('button[data-orbit]'),o=window.parent&amp;&amp;window.parent.ORBIT;if(b&amp;&amp;o&amp;&amp;o.open){o.open(b.dataset.orbit?{q:b.textContent.trim(),intent:b.dataset.orbit}:undefined)}">
-    <button class="btn btn-primary orbit-open" type="button" data-orbit="">Open ORBIT →</button>
-    <div class="orbit-try">
-      <div class="type-label">Or start with</div>
-      <div class="orbit-asks">
-        <button class="tag orbit-ask" type="button" data-orbit="ABOUT">What does Saiky do?</button>
-        <button class="tag orbit-ask" type="button" data-orbit="CASE_STUDIES">Explore his case studies</button>
-        <button class="tag orbit-ask" type="button" data-orbit="ENTERPRISE_AI">What Enterprise AI work has he done?</button>
-        <button class="tag orbit-ask" type="button" data-orbit="DESIGN_APPROACH">How does he approach complex problems?</button>
-        <button class="tag orbit-ask" type="button" data-orbit="IMPACT">What impact has his work had?</button>
-      </div>
     </div>
   </div>
 
