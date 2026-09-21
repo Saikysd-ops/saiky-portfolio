@@ -381,12 +381,9 @@
   }
   @keyframes philDrift{from{transform:translate3d(-1.5%,0,0);}to{transform:translate3d(1.5%,1%,0);}}
   .phil-card .phil-glow{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .5s ease;
-    background:radial-gradient(340px circle at var(--mx,50%) var(--my,42%), rgba(255,255,255,.085) 0%, rgba(255,214,246,.04) 40%, rgba(255,255,255,0) 66%);
+    background:radial-gradient(340px circle at var(--mx,50%) var(--my,42%), rgba(255,255,255,.03) 0%, rgba(255,214,246,.013) 40%, rgba(255,255,255,0) 66%);
     mix-blend-mode:screen;}
   .flow .arrow{display:inline-block;}
-  .phil-cols{position:relative;isolation:isolate;}
-  .phil-cols::before{content:'';position:absolute;z-index:-1;inset:-22px -22px -22px -6px;border-radius:20px;pointer-events:none;
-    background:rgba(46,4,74,0);box-shadow:inset 0 0 0 1px rgba(255,255,255,0);transition:background-color .5s ease,box-shadow .5s ease;}
   @keyframes philPing{
     0%{box-shadow:0 0 14px rgba(227,184,255,.75),0 0 0 0 rgba(227,184,255,.5);}
     100%{box-shadow:0 0 14px rgba(227,184,255,.75),0 0 0 13px rgba(227,184,255,0);}
@@ -394,17 +391,15 @@
   @media (hover:hover) and (pointer:fine){
     .phil-card{transition:transform .7s cubic-bezier(.22,1,.36,1),box-shadow .7s cubic-bezier(.22,1,.36,1);}
     .phil-card::before{transition:filter .7s ease;}
-    .phil-col{border-radius:0 14px 14px 0;transition:background-color .4s ease,border-color .4s ease;}
+    .phil-col{transition:border-color .4s ease;}
     .phil-col .ic{transition:transform .5s cubic-bezier(.22,1,.36,1),color .3s ease,filter .3s ease;}
     .flow .arrow{transition:transform .5s cubic-bezier(.22,1,.36,1);}
     .phil-card:hover{transform:translateY(-4px);
       box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 46px 84px -40px rgba(117,70,216,.7);}
-    .phil-card:hover::before{filter:brightness(1.12) saturate(1.1);}
     .phil-card:hover .phil-glow{opacity:1;}
-    .phil-card:hover .phil-cols::before{background:rgba(46,4,74,.24);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);}
     .phil-card:hover .flow .arrow{transform:translateX(6px);}
     .phil-card:hover .flow .end-dot{animation:philPing 1.8s ease-out infinite;}
-    .phil-col:hover{background:linear-gradient(180deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 70%);border-left-color:rgba(255,255,255,.7);}
+    .phil-col:hover{border-left-color:rgba(255,255,255,.75);}
     .phil-col:hover .ic{transform:translateY(-4px);color:#fff;filter:drop-shadow(0 5px 12px rgba(255,255,255,.4));}
   }
   @media (max-width:1040px){
