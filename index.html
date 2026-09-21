@@ -380,6 +380,38 @@
     .phil-card::before{animation:philDrift 26s ease-in-out infinite alternate;will-change:transform;}
   }
   @keyframes philDrift{from{transform:translate3d(-1.5%,0,0);}to{transform:translate3d(1.5%,1%,0);}}
+  .phil-card .phil-glow{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .5s ease;
+    background:radial-gradient(340px circle at var(--mx,50%) var(--my,42%), rgba(255,255,255,.085) 0%, rgba(255,214,246,.04) 40%, rgba(255,255,255,0) 66%);
+    mix-blend-mode:screen;}
+  .flow .arrow{display:inline-block;}
+  .phil-cols{position:relative;isolation:isolate;}
+  .phil-cols::before{content:'';position:absolute;z-index:-1;inset:-22px -22px -22px -6px;border-radius:20px;pointer-events:none;
+    background:rgba(46,4,74,0);box-shadow:inset 0 0 0 1px rgba(255,255,255,0);transition:background-color .5s ease,box-shadow .5s ease;}
+  @keyframes philPing{
+    0%{box-shadow:0 0 14px rgba(227,184,255,.75),0 0 0 0 rgba(227,184,255,.5);}
+    100%{box-shadow:0 0 14px rgba(227,184,255,.75),0 0 0 13px rgba(227,184,255,0);}
+  }
+  @media (hover:hover) and (pointer:fine){
+    .phil-card{transition:transform .7s cubic-bezier(.22,1,.36,1),box-shadow .7s cubic-bezier(.22,1,.36,1);}
+    .phil-card::before{transition:filter .7s ease;}
+    .phil-col{border-radius:0 14px 14px 0;transition:background-color .4s ease,border-color .4s ease;}
+    .phil-col .ic{transition:transform .5s cubic-bezier(.22,1,.36,1),color .3s ease,filter .3s ease;}
+    .flow .arrow{transition:transform .5s cubic-bezier(.22,1,.36,1);}
+    .phil-card:hover{transform:translateY(-4px);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 46px 84px -40px rgba(117,70,216,.7);}
+    .phil-card:hover::before{filter:brightness(1.12) saturate(1.1);}
+    .phil-card:hover .phil-glow{opacity:1;}
+    .phil-card:hover .phil-cols::before{background:rgba(46,4,74,.24);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);}
+    .phil-card:hover .flow .arrow{transform:translateX(6px);}
+    .phil-card:hover .flow .end-dot{animation:philPing 1.8s ease-out infinite;}
+    .phil-col:hover{background:linear-gradient(180deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 70%);border-left-color:rgba(255,255,255,.7);}
+    .phil-col:hover .ic{transform:translateY(-4px);color:#fff;filter:drop-shadow(0 5px 12px rgba(255,255,255,.4));}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .phil-card,.phil-card:hover{transform:none;}
+    .phil-card:hover .flow .arrow,.phil-col:hover .ic{transform:none;}
+    .phil-card:hover .flow .end-dot{animation:none;}
+  }
 
   /* SELECTED WORK */
   .work{border-top:1px solid var(--line);scroll-margin-top:88px;}
@@ -2747,6 +2779,7 @@
 
   <section class="philosophy">
     <div class="phil-card">
+      <span class="phil-glow" aria-hidden="true"></span>
       <div class="phil-eyebrow">Systems · Data · Products</div>
       <div class="phil-grid">
         <div class="phil-left">
@@ -7181,7 +7214,7 @@ try{
     // project thumbs carry their own cursor
     document.body.classList.toggle('cursor-hide', !!e.target.closest('.shot-thumb, .phone-thumb'));
     // flip to white on violet / dark surfaces so it never disappears
-    const dark = e.target.closest('.btn-primary, .work-thumb, .clock-tile, .lab-thumb, #loader');
+    const dark = e.target.closest('.btn-primary, .work-thumb, .clock-tile, .lab-thumb, .phil-card, #loader');
     document.body.classList.toggle('cursor-invert', !!dark);
   });
   document.addEventListener('mouseleave', ()=>{ shown=false; document.body.classList.remove('cursor-on'); });
@@ -8306,6 +8339,26 @@ setActive(0); startRotation();
   }catch(e){ console.error('[resume blob]', e); }
 })();
 </script>
+<script>try{
+/* "Complexity" card: a soft light follows the pointer. Fine pointers only, skipped for reduced motion. */
+(function(){
+  const card = document.querySelector('.phil-card');
+  if(!card) return;
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  let raf = 0, x = 0, y = 0;
+  card.addEventListener('pointermove', (e)=>{
+    const r = card.getBoundingClientRect();
+    x = e.clientX - r.left; y = e.clientY - r.top;
+    if(raf) return;
+    raf = requestAnimationFrame(()=>{
+      raf = 0;
+      card.style.setProperty('--mx', x.toFixed(1) + 'px');
+      card.style.setProperty('--my', y.toFixed(1) + 'px');
+    });
+  }, {passive:true});
+})();
+}catch(e){ console.error('[phil card]', e); }</script>
 <script src="orbit/orbit.js" defer></script>
 </body>
 </html>
