@@ -338,20 +338,48 @@
   .hero-stakeholders{font-size:15px;line-height:1.6;color:var(--ink-soft);margin:0 0 30px;}
   .impact p{font-size:14.5px;line-height:1.6;color:var(--ink-soft);max-width:60ch;margin-bottom:18px;}
 
-  /* PHILOSOPHY */
-  /* a touch more room than the generic section padding-top (70px), so
-     the headline doesn't sit right on top of the divider above it */
+  /* PHILOSOPHY — the "Complexity" statement as one premium card: brand gradient
+     (blue → purple → magenta → coral) with layered glows, silk-line streaks and film grain.
+     All texture is inline SVG/CSS, so there are no extra image files to load. */
   .philosophy{border-top:1px solid var(--line);padding-top:68px;}
-  .phil-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:58px;align-items:start;}
-  .phil-headline{font-family:var(--font-display);font-style:italic;font-size:clamp(28px,3vw,38px);line-height:1.15;color:var(--ink);}
-  .phil-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .phil-col .k{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;color:var(--accent);margin-bottom:8px;}
-  .phil-col p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;}
-  .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:40px;font-family:var(--font-mono);font-size:16px;letter-spacing:.04em;color:var(--ink-soft);}
-  .flow span.step{color:var(--ink);}
-  .flow .arrow{color:var(--ink-soft);}
-  .flow .end-dot{width:8px;height:8px;border-radius:50%;background:var(--violet);display:inline-block;}
-  :root[data-theme="dark"] .flow .end-dot{background:var(--accent);}
+  .phil-card{
+    --phil-waves:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1600 520%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cdefs%3E%3Cfilter id=%22b%22 x=%22-20%25%22 y=%22-20%25%22 width=%22140%25%22 height=%22140%25%22%3E%3CfeGaussianBlur stdDeviation=%2218%22/%3E%3C/filter%3E%3C/defs%3E%3Cg filter=%22url(%23b)%22 fill=%22none%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M700,-30 C900,110 1150,240 1560,570%22 stroke=%22%23D9A6FF%22 stroke-opacity=%22.20%22 stroke-width=%2234%22/%3E%3Cpath d=%22M960,-30 C1120,90 1300,200 1600,420%22 stroke=%22%23F2B6FF%22 stroke-opacity=%22.11%22 stroke-width=%2220%22/%3E%3Cpath d=%22M1340,-30 C1250,150 1310,360 1500,570%22 stroke=%22%23FFC0E6%22 stroke-opacity=%22.22%22 stroke-width=%2228%22/%3E%3C/g%3E%3Cg fill=%22none%22%3E%3Cpath d=%22M600.0,-30 C710.0,60.0 960.0,200.0 1010.0,580%22 stroke=%22%23fff%22 stroke-opacity=%220.030%22 stroke-width=%221%22/%3E%3Cpath d=%22M617.6,-30 C744.3,62.9 1001.0,202.4 1040.6,580%22 stroke=%22%23fff%22 stroke-opacity=%220.039%22 stroke-width=%221%22/%3E%3Cpath d=%22M635.3,-30 C777.6,65.9 1040.6,204.7 1071.2,580%22 stroke=%22%23fff%22 stroke-opacity=%220.054%22 stroke-width=%221%22/%3E%3Cpath d=%22M652.9,-30 C809.1,68.8 1077.6,207.1 1101.8,580%22 stroke=%22%23fff%22 stroke-opacity=%220.072%22 stroke-width=%221%22/%3E%3Cpath d=%22M670.6,-30 C838.0,71.8 1110.9,209.4 1132.4,580%22 stroke=%22%23fff%22 stroke-opacity=%220.091%22 stroke-width=%221%22/%3E%3Cpath d=%22M688.2,-30 C863.5,74.7 1139.6,211.8 1162.9,580%22 stroke=%22%23fff%22 stroke-opacity=%220.108%22 stroke-width=%221%22/%3E%3Cpath d=%22M705.9,-30 C885.3,77.6 1163.1,214.1 1193.5,580%22 stroke=%22%23fff%22 stroke-opacity=%220.123%22 stroke-width=%221%22/%3E%3Cpath d=%22M723.5,-30 C903.1,80.6 1180.9,216.5 1224.1,580%22 stroke=%22%23fff%22 stroke-opacity=%220.134%22 stroke-width=%221%22/%3E%3Cpath d=%22M741.2,-30 C916.9,83.5 1193.2,218.8 1254.7,580%22 stroke=%22%23fff%22 stroke-opacity=%220.139%22 stroke-width=%221%22/%3E%3Cpath d=%22M758.8,-30 C926.9,86.5 1200.2,221.2 1285.3,580%22 stroke=%22%23fff%22 stroke-opacity=%220.139%22 stroke-width=%221%22/%3E%3Cpath d=%22M776.5,-30 C933.6,89.4 1202.5,223.5 1315.9,580%22 stroke=%22%23fff%22 stroke-opacity=%220.134%22 stroke-width=%221%22/%3E%3Cpath d=%22M794.1,-30 C937.6,92.4 1201.0,225.9 1346.5,580%22 stroke=%22%23fff%22 stroke-opacity=%220.123%22 stroke-width=%221%22/%3E%3Cpath d=%22M811.8,-30 C939.7,95.3 1196.8,228.2 1377.1,580%22 stroke=%22%23fff%22 stroke-opacity=%220.108%22 stroke-width=%221%22/%3E%3Cpath d=%22M829.4,-30 C940.7,98.2 1191.2,230.6 1407.6,580%22 stroke=%22%23fff%22 stroke-opacity=%220.091%22 stroke-width=%221%22/%3E%3Cpath d=%22M847.1,-30 C941.7,101.2 1185.5,232.9 1438.2,580%22 stroke=%22%23fff%22 stroke-opacity=%220.072%22 stroke-width=%221%22/%3E%3Cpath d=%22M864.7,-30 C943.5,104.1 1181.0,235.3 1468.8,580%22 stroke=%22%23fff%22 stroke-opacity=%220.054%22 stroke-width=%221%22/%3E%3Cpath d=%22M882.4,-30 C947.1,107.1 1179.1,237.6 1499.4,580%22 stroke=%22%23fff%22 stroke-opacity=%220.039%22 stroke-width=%221%22/%3E%3Cpath d=%22M900.0,-30 C953.4,110.0 1180.7,240.0 1530.0,580%22 stroke=%22%23fff%22 stroke-opacity=%220.030%22 stroke-width=%221%22/%3E%3Cpath d=%22M1300.0,-30 C1200.0,120 1270.0,350 1490.0,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.040%22 stroke-width=%221%22/%3E%3Cpath d=%22M1311.7,-30 C1215.0,120 1287.5,350 1498.3,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.062%22 stroke-width=%221%22/%3E%3Cpath d=%22M1323.3,-30 C1230.0,120 1305.0,350 1506.7,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.093%22 stroke-width=%221%22/%3E%3Cpath d=%22M1335.0,-30 C1245.0,120 1322.5,350 1515.0,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.123%22 stroke-width=%221%22/%3E%3Cpath d=%22M1346.7,-30 C1260.0,120 1340.0,350 1523.3,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.148%22 stroke-width=%221%22/%3E%3Cpath d=%22M1358.3,-30 C1275.0,120 1357.5,350 1531.7,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.164%22 stroke-width=%221%22/%3E%3Cpath d=%22M1370.0,-30 C1290.0,120 1375.0,350 1540.0,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.170%22 stroke-width=%221%22/%3E%3Cpath d=%22M1381.7,-30 C1305.0,120 1392.5,350 1548.3,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.164%22 stroke-width=%221%22/%3E%3Cpath d=%22M1393.3,-30 C1320.0,120 1410.0,350 1556.7,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.148%22 stroke-width=%221%22/%3E%3Cpath d=%22M1405.0,-30 C1335.0,120 1427.5,350 1565.0,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.123%22 stroke-width=%221%22/%3E%3Cpath d=%22M1416.7,-30 C1350.0,120 1445.0,350 1573.3,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.093%22 stroke-width=%221%22/%3E%3Cpath d=%22M1428.3,-30 C1365.0,120 1462.5,350 1581.7,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.062%22 stroke-width=%221%22/%3E%3Cpath d=%22M1440.0,-30 C1380.0,120 1480.0,350 1590.0,580%22 stroke=%22%23FFE0F4%22 stroke-opacity=%220.040%22 stroke-width=%221%22/%3E%3C/g%3E%3C/svg%3E");
+    --phil-grain:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22240%22%3E%3Cfilter id=%22n%22 x=%220%22 y=%220%22 width=%22100%25%22 height=%22100%25%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix values=%220 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E");
+    position:relative;isolation:isolate;overflow:hidden;border-radius:28px;
+    padding:48px 56px 50px;color:#fff;
+    background:
+      radial-gradient(68% 125% at 0% 0%, rgba(14,16,96,.88) 0%, rgba(14,16,96,0) 62%),
+      radial-gradient(46% 95% at 6% 112%, rgba(30,92,214,.78) 0%, rgba(30,92,214,0) 62%),
+      radial-gradient(38% 82% at 54% 6%, rgba(178,96,255,.72) 0%, rgba(178,96,255,0) 70%),
+      radial-gradient(44% 74% at 76% 108%, rgba(190,50,132,.70) 0%, rgba(190,50,132,0) 70%),
+      radial-gradient(36% 92% at 100% 0%, rgba(255,138,72,.95) 0%, rgba(255,138,72,0) 62%),
+      linear-gradient(90deg, rgba(58,8,84,0) 38%, rgba(58,8,84,.50) 100%),
+      linear-gradient(180deg, rgba(58,8,84,0) 30%, rgba(58,8,84,.16) 100%),
+      linear-gradient(104deg,#1E2A9A 0%,#3157D5 24%,#7546D8 50%,#C54879 76%,#E46B5D 100%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 34px 70px -42px rgba(117,70,216,.55);
+  }
+  .phil-card::before,.phil-card::after{content:'';position:absolute;pointer-events:none;z-index:0;}
+  .phil-card::before{inset:-6% -4%;background:var(--phil-waves) center/cover no-repeat;opacity:.95;}
+  .phil-card::after{inset:0;background:var(--phil-grain);background-size:240px 240px;mix-blend-mode:overlay;opacity:.5;}
+  .phil-card > *{position:relative;z-index:1;}
+  .phil-eyebrow{font-family:var(--font-mono);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.9);}
+  .phil-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.2fr);gap:36px 48px;align-items:center;margin-top:24px;}
+  .phil-headline{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:clamp(30px,4vw,52px);line-height:1.08;letter-spacing:-.02em;color:#fff;}
+  .phil-support{margin-top:18px;max-width:29em;font-size:16px;line-height:1.55;color:rgba(255,255,255,.94);}
+  .phil-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+  .phil-col{padding:4px 20px 4px 22px;border-left:1px solid rgba(255,255,255,.3);}
+  .phil-col .ic{display:block;width:30px;height:30px;margin-bottom:22px;color:#F3D2FF;}
+  .phil-col .k{font-family:var(--font-mono);font-size:14px;font-weight:500;letter-spacing:.1em;color:#fff;margin-bottom:8px;text-shadow:0 1px 14px rgba(40,8,70,.28);}
+  .phil-col p{font-size:16px;line-height:1.55;color:rgba(255,255,255,.96);text-shadow:0 1px 14px rgba(40,8,70,.28);}
+  .flow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:28px;font-family:var(--font-mono);font-size:18px;letter-spacing:.04em;color:#fff;}
+  .flow span.step{color:#fff;}
+  .flow .arrow{color:rgba(255,255,255,.85);}
+  .flow .end-dot{width:11px;height:11px;border-radius:50%;background:#E3B8FF;display:inline-block;box-shadow:0 0 14px rgba(227,184,255,.75);}
+  :root[data-theme="dark"] .flow .end-dot{background:#E3B8FF;}
+  @media (prefers-reduced-motion:no-preference){
+    .phil-card::before{animation:philDrift 26s ease-in-out infinite alternate;will-change:transform;}
+  }
+  @keyframes philDrift{from{transform:translate3d(-1.5%,0,0);}to{transform:translate3d(1.5%,1%,0);}}
 
   /* SELECTED WORK */
   .work{border-top:1px solid var(--line);scroll-margin-top:88px;}
@@ -2376,8 +2404,14 @@
     .stat-grid{grid-template-columns:1fr;}
     .impact-stats .stat{border-left:0;padding-left:0;border-top:1px solid color-mix(in srgb, var(--line) 65%, transparent);padding-top:22px;}
     .impact-stats .stat:first-child{border-top:0;padding-top:0;}
-    .phil-grid{grid-template-columns:1fr;}
+    .phil-card{padding:36px 26px 34px;border-radius:22px;}
+    .phil-grid{grid-template-columns:1fr;gap:34px;margin-top:22px;}
     .phil-cols{grid-template-columns:1fr;}
+    .phil-col{border-left:0;border-top:1px solid rgba(255,255,255,.3);padding:22px 0 4px;}
+    .phil-col:first-child{border-top:0;padding-top:0;}
+    .phil-col .ic{margin-bottom:16px;}
+    .phil-support,.phil-col p{font-size:15px;}
+    .phil-col .ic{width:28px;height:28px;}
     /* still above the 760px badge cutoff at this breakpoint's upper
        end, so the same Saiky-badge clearance applies here too — needs
        more than the 2-column desktop gap since single-column cards
@@ -2712,17 +2746,23 @@
   </section>
 
   <section class="philosophy">
-    <div class="phil-grid">
-      <div class="phil-headline">Complexity is where I do my best work.</div>
-      <div class="phil-cols">
-        <div class="phil-col"><div class="k">SYSTEMS</div><p>Untangle workflows and dependencies.</p></div>
-        <div class="phil-col"><div class="k">DATA</div><p>Turn complex data into signals.</p></div>
-        <div class="phil-col"><div class="k">PRODUCTS</div><p>Build clarity without losing depth.</p></div>
+    <div class="phil-card">
+      <div class="phil-eyebrow">Systems · Data · Products</div>
+      <div class="phil-grid">
+        <div class="phil-left">
+          <div class="phil-headline">Complexity is where I&nbsp;do my best work.</div>
+          <p class="phil-support">I untangle workflows, turn complex data into signals, and build products that create clarity without losing depth.</p>
+          <div class="flow">
+            <span class="step">Complex</span><span class="arrow">→</span>
+            <span class="step">Clear</span><span class="end-dot"></span>
+          </div>
+        </div>
+        <div class="phil-cols">
+          <div class="phil-col"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4 L28 10 L16 16 L4 10 Z"/><path d="M4 15.5 L16 21.5 L28 15.5"/><path d="M4 21 L16 27 L28 21"/></svg><div class="k">SYSTEMS</div><p>Untangle workflows and dependencies.</p></div>
+          <div class="phil-col"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 27 H27"/><path d="M7 27 V14"/><path d="M13 27 V8"/><path d="M19 27 V17"/><path d="M25 27 V11"/></svg><div class="k">DATA</div><p>Turn complex data into signals.</p></div>
+          <div class="phil-col"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5 L27 9.5 V22.5 L16 28.5 L5 22.5 V9.5 Z"/><path d="M5 9.5 L16 15.5 L27 9.5"/><path d="M16 15.5 V28.5"/></svg><div class="k">PRODUCTS</div><p>Build clarity without losing depth.</p></div>
+        </div>
       </div>
-    </div>
-    <div class="flow">
-      <span class="step">Complex</span><span class="arrow">→</span>
-      <span class="step">Clear</span><span class="end-dot"></span>
     </div>
   </section>
 
