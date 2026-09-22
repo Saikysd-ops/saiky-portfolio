@@ -2068,11 +2068,15 @@
 
   /* first-visit preloader — see the inline script beside its markup for the
      0→100 logic; this is just the look. */
-  #introLoader{position:fixed;inset:0;z-index:2000;background:#3157D5;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
-    clip-path:circle(150% at 50% 50%);
-    transition:clip-path .9s cubic-bezier(.65,0,.35,1);}
-  #introLoader.il-out{clip-path:circle(0% at 50% 50%);pointer-events:none;}
+  #introLoader{position:fixed;inset:0;z-index:2000;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
+  #introLoader::before{content:'';position:absolute;top:50%;left:50%;width:300vmax;height:300vmax;
+    background:#3157D5;border-radius:50%;will-change:transform;
+    transform:translate(-50%,-50%) scale(1);
+    transition:transform .9s cubic-bezier(.22,1,.36,1);}
+  #introLoader > *{position:relative;z-index:1;}
+  #introLoader.il-out{pointer-events:none;}
+  #introLoader.il-out::before{transform:translate(-50%,-50%) scale(0);}
   .il-cairn{width:56px;height:64px;overflow:visible;}
   .il-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
   .il-cairn .s1{fill:#FFFFFF;} .il-cairn .s2{fill:#C9D6FF;} .il-cairn .s3{fill:#12153A;}
@@ -2088,7 +2092,7 @@
     font-variant-numeric:tabular-nums;opacity:0;animation:ilFadeIn .5s ease 200ms forwards;}
   @keyframes ilFadeIn{to{opacity:1;}}
   @media (prefers-reduced-motion:reduce){
-    #introLoader{transition:none;}
+    #introLoader::before{transition:none;}
     .il-cairn .stone{animation:none!important;opacity:1;transform:none;}
     .il-pct{animation:none!important;opacity:1;}
   }
