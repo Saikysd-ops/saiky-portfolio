@@ -2073,12 +2073,14 @@
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
   #introLoader::before{content:'';position:absolute;inset:0;background:#3157D5;
     --il-hole:0%;
-    -webkit-mask-image:radial-gradient(circle at 50% 50%, transparent var(--il-hole), #000 var(--il-hole));
-    mask-image:radial-gradient(circle at 50% 50%, transparent var(--il-hole), #000 var(--il-hole));
+    /* a soft feathered edge (not a hard geometric line) reads as an organic ripple
+       opening outward rather than a mechanical circular cutout */
+    -webkit-mask-image:radial-gradient(circle at 50% 50%, transparent calc(var(--il-hole) - 7%), #000 var(--il-hole));
+    mask-image:radial-gradient(circle at 50% 50%, transparent calc(var(--il-hole) - 7%), #000 var(--il-hole));
     transition:--il-hole .9s cubic-bezier(.22,1,.36,1);}
   #introLoader > *{position:relative;z-index:1;}
   #introLoader.il-out{pointer-events:none;}
-  #introLoader.il-out::before{will-change:mask-image;--il-hole:100%;}
+  #introLoader.il-out::before{will-change:mask-image;--il-hole:108%;}
   .il-cairn{width:56px;height:64px;overflow:visible;transition:opacity .3s ease;}
   #introLoader.il-logo-out .il-cairn{opacity:0;}
   .il-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
