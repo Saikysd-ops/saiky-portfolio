@@ -2590,19 +2590,21 @@
       setTimeout(function(){
         loader.classList.add('il-content-out');   // 1) logo + % fade out first
 
-        // 2) wait for that fade to actually finish (not just "probably by now") before the
-        //    circle starts closing, so the 100% never overlaps the close — a fixed delay here
-        //    previously matched the transition's own duration on paper, but the real DOM event
-        //    is what guarantees it, with a safety-net timeout in case it never fires.
+        // 2) wait for that fade to actually finish (a real transitionend, not a guessed
+        //    delay — a safety-net timeout covers the rare case it never fires), THEN a
+        //    short, deliberate 50ms beat, THEN the circle closes — so 100% is always
+        //    fully gone from the screen before any part of the close animation starts.
         var startedClose = false;
         function startClose(){
           if(startedClose) return;
           startedClose = true;
           loader.removeEventListener('transitionend', onFadeEnd);
-          loader.classList.add('il-out');
-          root.style.overflow = prevOverflow;
-          if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
-          setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); }, reduce ? 60 : 950);
+          setTimeout(function(){
+            loader.classList.add('il-out');        // 3) only then does the circle close
+            root.style.overflow = prevOverflow;
+            if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
+            setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); }, reduce ? 60 : 950);
+          }, reduce ? 0 : 50);
         }
         function onFadeEnd(e){ if(e.propertyName === 'opacity') startClose(); }
 
@@ -2618,9 +2620,12 @@
     var ticker = setInterval(function(){
       if(done) return;
       var readyForHundred = fontsReady && assetsReady && (Date.now() - startedAt) > MIN_MS;
-      var ceiling = readyForHundred ? 100 : 92;
+      var ceiling = readyForHundred ? 100 : 98;
       if(pct < ceiling){
-        pct = Math.min(ceiling, pct + Math.max(0.6, (ceiling - pct) / 10));
+        /* a decaying step (percentage of the remaining gap, not a fixed minimum) — this
+           keeps crawling forward however long the wait is, instead of hitting a hard
+           number like 92 and visibly freezing there while real fonts/images finish. */
+        pct = Math.min(ceiling, pct + Math.max(0.35, (ceiling - pct) * 0.4));
         paint();
       }
       if(pct >= 100) finish();
@@ -2650,7 +2655,7 @@
     } else { checkHeroImages(); }
 
     /* hard safety cap — a preloader must never be able to trap a visitor */
-    setTimeout(finish, 5000);
+    setTimeout(finish, 2500);
   }catch(e){
     var l = document.getElementById('introLoader');
     if(l && l.parentNode) l.parentNode.removeChild(l);
