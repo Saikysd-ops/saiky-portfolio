@@ -2066,17 +2066,19 @@
     html,body{overflow-x:hidden;max-width:100%;}
   }
 
+  @property --il-hole{syntax:'<percentage>';inherits:false;initial-value:0%;}
   /* first-visit preloader — see the inline script beside its markup for the
      0→100 logic; this is just the look. */
   #introLoader{position:fixed;inset:0;z-index:2000;overflow:hidden;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
-  #introLoader::before{content:'';position:absolute;top:50%;left:50%;width:200vmax;height:200vmax;
-    background:#3157D5;border-radius:50%;backface-visibility:hidden;
-    transform:translate3d(-50%,-50%,0) scale3d(1,1,1);
-    transition:transform .9s cubic-bezier(.22,1,.36,1);}
+  #introLoader::before{content:'';position:absolute;inset:0;background:#3157D5;
+    --il-hole:0%;
+    -webkit-mask-image:radial-gradient(circle at 50% 50%, transparent var(--il-hole), #000 var(--il-hole));
+    mask-image:radial-gradient(circle at 50% 50%, transparent var(--il-hole), #000 var(--il-hole));
+    transition:--il-hole .9s cubic-bezier(.22,1,.36,1);}
   #introLoader > *{position:relative;z-index:1;}
   #introLoader.il-out{pointer-events:none;}
-  #introLoader.il-out::before{will-change:transform;transform:translate3d(-50%,-50%,0) scale3d(0,0,1);}
+  #introLoader.il-out::before{will-change:mask-image;--il-hole:100%;}
   .il-cairn{width:56px;height:64px;overflow:visible;transition:opacity .3s ease;}
   #introLoader.il-logo-out .il-cairn{opacity:0;}
   .il-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
