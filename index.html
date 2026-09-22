@@ -2074,11 +2074,11 @@
     background:#3157D5;border-radius:50%;backface-visibility:hidden;
     transform:translate3d(-50%,-50%,0) scale3d(1,1,1);
     transition:transform .9s cubic-bezier(.22,1,.36,1);}
-  #introLoader > *{position:relative;z-index:1;transition:opacity .3s ease;}
-  #introLoader.il-content-out > *{opacity:0;}
+  #introLoader > *{position:relative;z-index:1;}
   #introLoader.il-out{pointer-events:none;}
   #introLoader.il-out::before{will-change:transform;transform:translate3d(-50%,-50%,0) scale3d(0,0,1);}
-  .il-cairn{width:56px;height:64px;overflow:visible;}
+  .il-cairn{width:56px;height:64px;overflow:visible;transition:opacity .3s ease;}
+  #introLoader.il-logo-out .il-cairn{opacity:0;}
   .il-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
   .il-cairn .s1{fill:#FFFFFF;} .il-cairn .s2{fill:#C9D6FF;} .il-cairn .s3{fill:#12153A;}
   .il-cairn .s3{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 0ms both;}
@@ -2091,10 +2091,12 @@
   }
   .il-pct{font-family:var(--font-mono);font-size:14px;letter-spacing:.06em;color:rgba(255,255,255,.72);
     font-variant-numeric:tabular-nums;opacity:0;animation:ilFadeIn .5s ease 200ms forwards;}
+  /* no transition here on purpose — once the logo has fully faded, the number hides instantly */
+  #introLoader.il-pct-out .il-pct{opacity:0;}
   @keyframes ilFadeIn{to{opacity:1;}}
   @media (prefers-reduced-motion:reduce){
     #introLoader::before{transition:none;}
-    #introLoader > *{transition:none;}
+    .il-cairn{transition:none;}
     .il-cairn .stone{animation:none!important;opacity:1;transform:none;}
     .il-pct{animation:none!important;opacity:1;}
   }
@@ -2588,31 +2590,30 @@
       clearInterval(ticker);
       pct = 100; paint();
       setTimeout(function(){
-        loader.classList.add('il-content-out');   // 1) logo + % fade out first
+        loader.classList.add('il-logo-out');   // 1) the logo animates out first, on its own
 
         // 2) wait for that fade to actually finish (a real transitionend, not a guessed
-        //    delay — a safety-net timeout covers the rare case it never fires), THEN a
-        //    short, deliberate 50ms beat, THEN the circle closes — so 100% is always
-        //    fully gone from the screen before any part of the close animation starts.
-        var startedClose = false;
-        function startClose(){
-          if(startedClose) return;
-          startedClose = true;
-          loader.removeEventListener('transitionend', onFadeEnd);
-          setTimeout(function(){
-            loader.classList.add('il-out');        // 3) only then does the circle close
+        //    delay — a safety-net timeout covers the rare case it never fires).
+        var loggedOut = false;
+        function afterLogoGone(){
+          if(loggedOut) return;
+          loggedOut = true;
+          loader.removeEventListener('transitionend', onLogoFade);
+          loader.classList.add('il-pct-out');    // 3) then the number hides immediately (no fade)
+          setTimeout(function(){                 // 4) a short, deliberate 50ms beat
+            loader.classList.add('il-out');      // 5) only then does the circle close
             root.style.overflow = prevOverflow;
             if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
             setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); }, reduce ? 60 : 950);
           }, reduce ? 0 : 50);
         }
-        function onFadeEnd(e){ if(e.propertyName === 'opacity') startClose(); }
+        function onLogoFade(e){ if(e.propertyName === 'opacity') afterLogoGone(); }
 
         if(reduce){
-          startClose();
+          afterLogoGone();
         } else {
-          loader.addEventListener('transitionend', onFadeEnd);
-          setTimeout(startClose, 500);
+          loader.addEventListener('transitionend', onLogoFade);
+          setTimeout(afterLogoGone, 500);
         }
       }, reduce ? 60 : 300);
     }
