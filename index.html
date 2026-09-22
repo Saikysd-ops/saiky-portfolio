@@ -2070,14 +2070,14 @@
      0→100 logic; this is just the look. */
   #introLoader{position:fixed;inset:0;z-index:2000;overflow:hidden;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
-  #introLoader::before{content:'';position:absolute;top:50%;left:50%;width:300vmax;height:300vmax;
-    background:#3157D5;border-radius:50%;will-change:transform;
-    transform:translate(-50%,-50%) scale(1);
+  #introLoader::before{content:'';position:absolute;top:50%;left:50%;width:200vmax;height:200vmax;
+    background:#3157D5;border-radius:50%;backface-visibility:hidden;
+    transform:translate3d(-50%,-50%,0) scale3d(1,1,1);
     transition:transform .9s cubic-bezier(.22,1,.36,1);}
   #introLoader > *{position:relative;z-index:1;transition:opacity .3s ease;}
   #introLoader.il-content-out > *{opacity:0;}
   #introLoader.il-out{pointer-events:none;}
-  #introLoader.il-out::before{transform:translate(-50%,-50%) scale(0);}
+  #introLoader.il-out::before{will-change:transform;transform:translate3d(-50%,-50%,0) scale3d(0,0,1);}
   .il-cairn{width:56px;height:64px;overflow:visible;}
   .il-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
   .il-cairn .s1{fill:#FFFFFF;} .il-cairn .s2{fill:#C9D6FF;} .il-cairn .s3{fill:#12153A;}
