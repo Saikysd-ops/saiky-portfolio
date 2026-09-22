@@ -2074,7 +2074,8 @@
     background:#3157D5;border-radius:50%;will-change:transform;
     transform:translate(-50%,-50%) scale(1);
     transition:transform .9s cubic-bezier(.22,1,.36,1);}
-  #introLoader > *{position:relative;z-index:1;}
+  #introLoader > *{position:relative;z-index:1;transition:opacity .3s ease;}
+  #introLoader.il-content-out > *{opacity:0;}
   #introLoader.il-out{pointer-events:none;}
   #introLoader.il-out::before{transform:translate(-50%,-50%) scale(0);}
   .il-cairn{width:56px;height:64px;overflow:visible;}
@@ -2093,6 +2094,7 @@
   @keyframes ilFadeIn{to{opacity:1;}}
   @media (prefers-reduced-motion:reduce){
     #introLoader::before{transition:none;}
+    #introLoader > *{transition:none;}
     .il-cairn .stone{animation:none!important;opacity:1;transform:none;}
     .il-pct{animation:none!important;opacity:1;}
   }
@@ -2586,10 +2588,13 @@
       clearInterval(ticker);
       pct = 100; paint();
       setTimeout(function(){
-        loader.classList.add('il-out');
-        root.style.overflow = prevOverflow;
-        if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
-        setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); }, reduce ? 60 : 950);
+        loader.classList.add('il-content-out');   // 1) logo + % fade out first
+        setTimeout(function(){
+          loader.classList.add('il-out');          // 2) only then does the circle close
+          root.style.overflow = prevOverflow;
+          if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
+          setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); }, reduce ? 60 : 950);
+        }, reduce ? 0 : 300);
       }, reduce ? 60 : 300);
     }
 
