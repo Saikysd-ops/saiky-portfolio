@@ -2589,12 +2589,29 @@
       pct = 100; paint();
       setTimeout(function(){
         loader.classList.add('il-content-out');   // 1) logo + % fade out first
-        setTimeout(function(){
-          loader.classList.add('il-out');          // 2) only then does the circle close
+
+        // 2) wait for that fade to actually finish (not just "probably by now") before the
+        //    circle starts closing, so the 100% never overlaps the close — a fixed delay here
+        //    previously matched the transition's own duration on paper, but the real DOM event
+        //    is what guarantees it, with a safety-net timeout in case it never fires.
+        var startedClose = false;
+        function startClose(){
+          if(startedClose) return;
+          startedClose = true;
+          loader.removeEventListener('transitionend', onFadeEnd);
+          loader.classList.add('il-out');
           root.style.overflow = prevOverflow;
           if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
           setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); }, reduce ? 60 : 950);
-        }, reduce ? 0 : 300);
+        }
+        function onFadeEnd(e){ if(e.propertyName === 'opacity') startClose(); }
+
+        if(reduce){
+          startClose();
+        } else {
+          loader.addEventListener('transitionend', onFadeEnd);
+          setTimeout(startClose, 500);
+        }
       }, reduce ? 60 : 300);
     }
 
