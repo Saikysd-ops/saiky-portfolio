@@ -2066,21 +2066,17 @@
     html,body{overflow-x:hidden;max-width:100%;}
   }
 
-  @property --il-hole{syntax:'<percentage>';inherits:false;initial-value:0%;}
   /* first-visit preloader — see the inline script beside its markup for the
      0→100 logic; this is just the look. */
   #introLoader{position:fixed;inset:0;z-index:2000;overflow:hidden;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
-  #introLoader::before{content:'';position:absolute;inset:0;background:#3157D5;
-    --il-hole:0%;
-    /* a soft feathered edge (not a hard geometric line) reads as an organic ripple
-       opening outward rather than a mechanical circular cutout */
-    -webkit-mask-image:radial-gradient(circle at 50% 50%, transparent calc(var(--il-hole) - 7%), #000 var(--il-hole));
-    mask-image:radial-gradient(circle at 50% 50%, transparent calc(var(--il-hole) - 7%), #000 var(--il-hole));
-    transition:--il-hole .9s cubic-bezier(.22,1,.36,1);}
+  #introLoader::before{content:'';position:absolute;top:50%;left:50%;width:200vmax;height:200vmax;
+    background:#3157D5;border-radius:50%;backface-visibility:hidden;
+    transform:translate3d(-50%,-50%,0) scale3d(1,1,1);
+    transition:transform .9s cubic-bezier(.22,1,.36,1);}
   #introLoader > *{position:relative;z-index:1;}
   #introLoader.il-out{pointer-events:none;}
-  #introLoader.il-out::before{will-change:mask-image;--il-hole:108%;}
+  #introLoader.il-out::before{will-change:transform;transform:translate3d(-50%,-50%,0) scale3d(0,0,1);}
   .il-cairn{width:56px;height:64px;overflow:visible;transition:opacity .3s ease;}
   #introLoader.il-logo-out .il-cairn{opacity:0;}
   .il-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
@@ -2573,13 +2569,42 @@
 <noscript><style>#introLoader{display:none!important}</style></noscript>
 <script>
 (function(){
+  var loader = document.getElementById('introLoader');
+  var root = document.documentElement;
+  var prevOverflow = root.style.overflow;
+  var killed = false;
+
+  /* the one thing that must ALWAYS work, no matter what else goes wrong above it:
+     get the loader off the screen and give scrolling back. Safe to call more than
+     once, safe to call before setup below has even run. */
+  function hardKill(){
+    if(killed) return;
+    killed = true;
+    try{ if(loader && loader.parentNode) loader.parentNode.removeChild(loader); }catch(e){}
+    try{ root.style.overflow = prevOverflow; }catch(e){}
+  }
+
+  /* wraps a callback so a thrown error inside it can't silently strand the loader
+     on screen forever — a plain try/catch around this whole IIFE does NOT cover
+     exceptions thrown later inside a setInterval/setTimeout/event callback, since
+     those run as their own separate top-level tasks. */
+  function safe(fn){
+    return function(){
+      try{ fn.apply(this, arguments); }
+      catch(e){ console.error('[intro loader]', e); hardKill(); }
+    };
+  }
+
+  /* the browser can restore this exact page (DOM, JS state) from the back/forward
+     cache instead of re-running this script — if that happens while the loader was
+     ever showing, the page behind it is by definition already fully ready, so there
+     is nothing left to wait for. */
+  window.addEventListener('pageshow', function(e){ if(e.persisted) hardKill(); });
+
   try{
-    var loader = document.getElementById('introLoader');
     var numEl = document.getElementById('ilPctNum');
     if(!loader || !numEl) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var root = document.documentElement;
-    var prevOverflow = root.style.overflow;
     root.style.overflow = 'hidden';
 
     var pct = 0, done = false, fontsReady = false, assetsReady = false;
@@ -2588,29 +2613,29 @@
 
     function paint(){ numEl.textContent = Math.round(pct); }
 
-    function finish(){
+    var finish = safe(function(){
       if(done) return;
       done = true;
       clearInterval(ticker);
       pct = 100; paint();
-      setTimeout(function(){
+      setTimeout(safe(function(){
         loader.classList.add('il-logo-out');   // 1) the logo animates out first, on its own
 
         // 2) wait for that fade to actually finish (a real transitionend, not a guessed
         //    delay — a safety-net timeout covers the rare case it never fires).
         var loggedOut = false;
-        function afterLogoGone(){
+        var afterLogoGone = safe(function(){
           if(loggedOut) return;
           loggedOut = true;
           loader.removeEventListener('transitionend', onLogoFade);
           loader.classList.add('il-pct-out');    // 3) then the number hides immediately (no fade)
-          setTimeout(function(){                 // 4) a short, deliberate 50ms beat
+          setTimeout(safe(function(){             // 4) a short, deliberate 50ms beat
             loader.classList.add('il-out');      // 5) only then does the circle close
             root.style.overflow = prevOverflow;
             if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
-            setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); }, reduce ? 60 : 950);
-          }, reduce ? 0 : 50);
-        }
+            setTimeout(function(){ hardKill(); }, reduce ? 60 : 950);
+          }), reduce ? 0 : 50);
+        });
         function onLogoFade(e){ if(e.propertyName === 'opacity') afterLogoGone(); }
 
         if(reduce){
@@ -2619,10 +2644,10 @@
           loader.addEventListener('transitionend', onLogoFade);
           setTimeout(afterLogoGone, 500);
         }
-      }, reduce ? 60 : 300);
-    }
+      }), reduce ? 60 : 300);
+    });
 
-    var ticker = setInterval(function(){
+    var ticker = setInterval(safe(function(){
       if(done) return;
       var readyForHundred = fontsReady && assetsReady && (Date.now() - startedAt) > MIN_MS;
       var ceiling = readyForHundred ? 100 : 98;
@@ -2634,7 +2659,7 @@
         paint();
       }
       if(pct >= 100) finish();
-    }, reduce ? 20 : 40);
+    }), reduce ? 20 : 40);
 
     /* real signal 1: the webfonts the hero headline needs */
     if(document.fonts && document.fonts.ready){
@@ -2656,16 +2681,16 @@
       });
     }
     if(document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', checkHeroImages);
+      document.addEventListener('DOMContentLoaded', safe(checkHeroImages));
     } else { checkHeroImages(); }
 
     /* hard safety cap — a preloader must never be able to trap a visitor */
     setTimeout(finish, 2500);
+    /* and an unconditional outer bound in case ANYTHING above still went wrong */
+    setTimeout(hardKill, 6000);
   }catch(e){
-    var l = document.getElementById('introLoader');
-    if(l && l.parentNode) l.parentNode.removeChild(l);
-    try{ document.documentElement.style.overflow=''; }catch(e2){}
     console.error('[intro loader]', e);
+    hardKill();
   }
 })();
 </script>
