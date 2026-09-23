@@ -2612,9 +2612,12 @@
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     root.style.overflow = 'hidden';
 
-    var pct = 0, done = false, fontsReady = false, assetsReady = false;
+    var pct = 0, done = false, fontsReady = false, assetsReady = false, swept = false;
     var startedAt = Date.now();
-    var MIN_MS = reduce ? 150 : 650;
+    var COUNT_MS = reduce ? 150 : 900; /* fixed schedule for the visible 0->100 sweep —
+      it always completes on this clock, so the number can never stall mid-count waiting
+      on real fonts/images; that wait (usually near-instant anyway) happens quietly after
+      it already reads 100, which is a far smaller-feeling pause than a frozen 98. */
 
     function paint(){ numEl.textContent = Math.round(pct); }
 
@@ -2654,21 +2657,23 @@
 
     var ticker = setInterval(safe(function(){
       if(done) return;
-      var readyForHundred = fontsReady && assetsReady && (Date.now() - startedAt) > MIN_MS;
-      var ceiling = readyForHundred ? 100 : 98;
-      if(pct < ceiling){
-        /* a decaying step (percentage of the remaining gap, not a fixed minimum) — this
-           keeps crawling forward however long the wait is, instead of hitting a hard
-           number like 92 and visibly freezing there while real fonts/images finish. */
-        pct = Math.min(ceiling, pct + Math.max(0.35, (ceiling - pct) * 0.4));
-        paint();
+      var t = Math.min(1, (Date.now() - startedAt) / COUNT_MS);
+      pct = (1 - Math.pow(1 - t, 3)) * 100; /* cubic ease-out: quick start, gentle settle */
+      paint();
+      if(t >= 1){
+        swept = true;
+        if(fontsReady && assetsReady) finish();
+        /* else the number is already sitting at 100, quietly waiting on the real page —
+           nothing left to animate, so there is nothing left to look stuck */
       }
-      if(pct >= 100) finish();
     }), reduce ? 20 : 40);
 
-    /* real signal 1: the webfonts the hero headline needs */
+    /* real signal 1: the webfonts the hero headline needs. Only relevant once the visible
+       sweep has already finished — if it resolves before that, the ticker's own check above
+       picks it up right on schedule. */
     if(document.fonts && document.fonts.ready){
-      document.fonts.ready.then(function(){ fontsReady = true; }, function(){ fontsReady = true; });
+      document.fonts.ready.then(function(){ fontsReady = true; if(swept && assetsReady) finish(); },
+                                 function(){ fontsReady = true; if(swept && assetsReady) finish(); });
     } else { fontsReady = true; }
 
     /* real signal 2: only the hero's own images — not every asset on the
@@ -2680,7 +2685,7 @@
       if(!pending.length){ assetsReady = true; return; }
       var remaining = pending.length;
       pending.forEach(function(img){
-        function mark(){ remaining--; if(remaining <= 0) assetsReady = true; }
+        function mark(){ remaining--; if(remaining <= 0){ assetsReady = true; if(swept && fontsReady) finish(); } }
         img.addEventListener('load', mark, {once:true});
         img.addEventListener('error', mark, {once:true});
       });
