@@ -1684,9 +1684,12 @@
     font-size:15px;display:flex;align-items:center;justify-content:center;}
   .ia-columns{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
     border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .ia-columns--3{grid-template-columns:repeat(3,1fr);}
   .ia-col{background:var(--paper-raised);padding:18px 16px;}
   .ia-col-title{font-family:var(--font-mono);font-size:10px;font-weight:600;
     letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .ia-col-status{color:var(--ink-soft);opacity:.6;font-weight:600;margin-left:2px;}
+  .case-sec--dark .ia-col-status{color:rgba(255,255,255,.5);}
   .ia-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
   .ia-list li{border-top:1px solid var(--line);padding-top:10px;}
   .ia-list li:first-child{border-top:none;padding-top:0;}
@@ -1887,6 +1890,17 @@
     .info-modal{padding:30px 22px 24px;border-radius:16px;}
     .info-modal-compare{grid-template-columns:1fr;}
     .info-modal-tag-lbl{flex:0 0 auto;}
+  }
+
+  /* image-viewer variant — same card/backdrop, sized for a tall reference
+     diagram instead of prose: the card caps at 92vh and only the image
+     strip scrolls, so the close button and caption stay put. */
+  .info-modal--image{max-width:min(94vw,900px);max-height:92vh;display:flex;flex-direction:column;}
+  .info-modal-imgwrap{overflow:auto;border:1px solid var(--line);border-radius:10px;
+    background:#0B0B10;margin-top:4px;flex:1;min-height:0;}
+  .info-modal-imgwrap img{display:block;width:100%;height:auto;}
+  @media (max-width:560px){
+    .info-modal--image{max-width:94vw;}
   }
 
   /* Bawsala hero: the campaign artwork is a full-width background element,
@@ -3755,7 +3769,59 @@
         <div class="case-card"><div class="case-card-eyebrow">Design</div><h3>Core workflows</h3><p>Discovery, profile, score details, comparison, category context, monitoring and insights.</p></div>
         <div class="case-card"><div class="case-card-eyebrow">Validate</div><h3>Evidence → iteration</h3><p>Partner with research and product to test assumptions and turn findings into design decisions.</p></div>
       </div>
+
+      <h3 class="case-h3" style="margin-top:36px">Information architecture</h3>
+      <p class="case-p">A companion IA kept the team aligned on how the three pieces connect — from portfolio-level triage in the Dashboard, through the Management listing, to one Unified Profile record.</p>
+      <div class="ia-diagram">
+        <div class="ia-flow">
+          <div class="ia-flow-node">Matrix Dashboard</div>
+          <div class="ia-flow-arrow">&#8594;</div>
+          <div class="ia-flow-node">Management MFE</div>
+          <div class="ia-flow-arrow">&#8594;</div>
+          <div class="ia-flow-node">Unified Profile</div>
+        </div>
+        <div class="ia-columns ia-columns--3">
+          <div class="ia-col">
+            <div class="ia-col-title">Matrix Dashboard <span class="ia-col-status">WIP &middot; POC</span></div>
+            <ul class="ia-list">
+              <li><b>Portfolio intelligence</b><span>Summary KPIs, health-distribution matrix, supplier risk bands.</span></li>
+              <li><b>Recommended actions</b><span>Automatic signals on risk-posture change, continuity-planning triggers.</span></li>
+              <li><b>Discovery &amp; search</b><span>By SBU, category or D&amp;B rating, with Quick View into the full record.</span></li>
+            </ul>
+          </div>
+          <div class="ia-col">
+            <div class="ia-col-title">Management MFE <span class="ia-col-status">Shipped</span></div>
+            <ul class="ia-list">
+              <li><b>Intake &amp; listing</b><span>Card and table views, dense comparison table, quick-filters.</span></li>
+              <li><b>Watchlists</b><span>Bulk add/remove, tag, compare and export across selected rows.</span></li>
+              <li><b>Supplier card</b><span>Performance score, D&amp;B rating and key facts at a glance.</span></li>
+            </ul>
+          </div>
+          <div class="ia-col">
+            <div class="ia-col-title">Unified Profile <span class="ia-col-status">WIP</span></div>
+            <ul class="ia-list">
+              <li><b>Header &amp; identity</b><span>Vendor number, category, country of origin, registration.</span></li>
+              <li><b>Score trends</b><span>Interactive quarterly/yearly performance, risk and capability tracking.</span></li>
+              <li><b>Similar suppliers</b><span>Ranked matches by product, sourcing and operational fit.</span></li>
+              <li><b>Operational detail</b><span>Contacts, location, factory, documents and agreements — in progress.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:14px"><button type="button" class="text-link case-info-link" id="smIaTrigger">View the detailed IA <span class="cta-arrow">&#8594;</span></button></div>
     </section>
+
+    <div class="info-modal-backdrop" id="smIaBackdrop">
+      <div class="info-modal info-modal--image" role="dialog" aria-modal="true" aria-labelledby="smIaTitle">
+        <button type="button" class="info-modal-close" id="smIaClose" aria-label="Close">&times;</button>
+        <div class="info-modal-eyebrow">Full detail</div>
+        <h3 class="info-modal-title" id="smIaTitle">Supplier Matrix — information architecture</h3>
+        <p class="info-modal-p">The complete component-level tree — dashboard triage down to Unified Profile fields — used to keep engineering, product and design aligned on scope.</p>
+        <div class="info-modal-imgwrap">
+          <img src="assets/images/image-091-6b598b1c3c10.png" alt="Full Supplier Matrix information architecture tree, covering the Dashboard, Supplier Management and Supplier Profile sections down to individual fields and actions" loading="lazy">
+        </div>
+      </div>
+    </div>
 
     <section class="case-sec" id="cs-discovery">
       <div class="case-num">04 / Workshop discovery</div>
@@ -8303,6 +8369,31 @@ setActive(0); startRotation();
   var trigger = document.getElementById('omInfoTrigger');
   var backdrop = document.getElementById('omInfoBackdrop');
   var closeBtn = document.getElementById('omInfoClose');
+  if(!trigger || !backdrop || !closeBtn) return;
+
+  function open(){
+    backdrop.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    backdrop.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  trigger.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  backdrop.addEventListener('click', function(e){ if(e.target === backdrop) close(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && backdrop.classList.contains('is-open')) close();
+  });
+})();
+</script>
+
+<script>
+/* ---------- Detailed IA modal (Supplier Matrix) — same reusable pattern as above ---------- */
+(function(){
+  var trigger = document.getElementById('smIaTrigger');
+  var backdrop = document.getElementById('smIaBackdrop');
+  var closeBtn = document.getElementById('smIaClose');
   if(!trigger || !backdrop || !closeBtn) return;
 
   function open(){
