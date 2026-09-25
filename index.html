@@ -1673,9 +1673,10 @@
   /* IA hero figure — a polished, ready-made reference diagram (unlike the
      native .ia-diagram below) shown as-is in a clean bordered frame, so it
      reads as a premium artifact rather than a raw pasted screenshot. */
-  .ia-hero-figure{margin:24px 0 8px;border-radius:16px;overflow:hidden;
-    border:1px solid var(--line);}
-  .ia-hero-figure img{display:block;width:100%;height:auto;}
+  .ia-hero-figure{margin:24px 0 8px;background:var(--paper-raised);
+    border:1px solid var(--line);border-radius:16px;padding:16px;}
+  .ia-hero-figure img{display:block;width:100%;height:auto;border-radius:9px;}
+  .case-sec--dark .ia-hero-figure{background:#1A1A21;border-color:rgba(255,255,255,.1);}
 
   /* Information-architecture diagram — built natively from the site's own
      card language (violet stage chips + bordered-cell columns) instead of
