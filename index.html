@@ -1212,7 +1212,7 @@
   .dot-badge-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 8px;
     text-align:center;}
   .dot-badge{position:relative;display:inline-block;width:100%;max-width:840px;
-    aspect-ratio:920/610;margin:0 auto;}
+    aspect-ratio:920/630;margin:0 auto;}
   .dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
   /* dashed, brand-gradient connector arcs — replace the old plain thin ring */
   .dot-badge__arc{fill:none;stroke-width:1.4;stroke-dasharray:.5 9;
@@ -3267,7 +3267,7 @@
       <p class="dot-signature-sub">I turn ambiguous problems into clear, usable systems that help people make better decisions.</p>
       <div class="dot-badge-scroll">
       <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai. Understand. Structure. Simplify. Clarity.">
-        <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="-160 -10 920 610" aria-hidden="true">
+        <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="-160 -10 920 630" aria-hidden="true">
           <defs>
             <filter id="dbGlowWork" x="-80%" y="-80%" width="260%" height="260%">
               <feGaussianBlur stdDeviation="5"/>
@@ -3334,10 +3334,10 @@
             <g transform="translate(300,475)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
               <path d="M-6,-5.2 L6,-5.2 L1.5,1.5 L1.5,6 L-1.5,6 L-1.5,1.5 Z"/>
             </g>
-            <text class="dot-badge__num" x="300" y="514" text-anchor="middle" fill="currentColor">03</text>
-            <text class="dot-badge__label" data-step="2" x="300" y="534" text-anchor="middle">Simplify</text>
-            <text class="dot-badge__desc" x="300" y="558" text-anchor="middle">Remove what doesn&#8217;t create value.</text>
-            <text class="dot-badge__sub" x="300" y="582" text-anchor="middle">Signal &#183; cognitive load</text>
+            <text class="dot-badge__num" x="300" y="540" text-anchor="middle" fill="currentColor">03</text>
+            <text class="dot-badge__label" data-step="2" x="300" y="560" text-anchor="middle">Simplify</text>
+            <text class="dot-badge__desc" x="300" y="584" text-anchor="middle">Remove what doesn&#8217;t create value.</text>
+            <text class="dot-badge__sub" x="300" y="600" text-anchor="middle">Signal &#183; cognitive load</text>
           </g>
 
           <!-- 04 Clarity — left -->
@@ -6465,7 +6465,7 @@ h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
 .dot-badge-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 8px;
   text-align:center;}
 .dot-badge{position:relative;display:inline-block;width:100%;max-width:760px;
-  aspect-ratio:920/610;margin:0 auto;}
+  aspect-ratio:920/630;margin:0 auto;}
 .dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
 .dot-badge__arc{fill:none;stroke-width:1.4;stroke-dasharray:.5 9;
   stroke-linecap:round;opacity:.6;}
@@ -6780,7 +6780,7 @@ h3{font-size:18px;line-height:1.2}
     <h2 class="dot-signature-title">From complexity to <span class="gradient-text">clarity</span></h2>
     <div class="dot-badge-scroll">
     <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai. Understand. Structure. Simplify. Clarity.">
-      <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="-160 -10 920 610" aria-hidden="true">
+      <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="-160 -10 920 630" aria-hidden="true">
         <defs>
           <filter id="dbGlowBrand" x="-80%" y="-80%" width="260%" height="260%">
             <feGaussianBlur stdDeviation="5"/>
@@ -6847,10 +6847,10 @@ h3{font-size:18px;line-height:1.2}
           <g transform="translate(300,475)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
             <path d="M-6,-5.2 L6,-5.2 L1.5,1.5 L1.5,6 L-1.5,6 L-1.5,1.5 Z"/>
           </g>
-          <text class="dot-badge__num" x="300" y="514" text-anchor="middle" fill="currentColor">03</text>
-          <text class="dot-badge__label" data-step="2" x="300" y="534" text-anchor="middle">Simplify</text>
-          <text class="dot-badge__desc" x="300" y="558" text-anchor="middle">Remove what doesn&#8217;t create value.</text>
-          <text class="dot-badge__sub" x="300" y="582" text-anchor="middle">Signal &#183; cognitive load</text>
+          <text class="dot-badge__num" x="300" y="540" text-anchor="middle" fill="currentColor">03</text>
+          <text class="dot-badge__label" data-step="2" x="300" y="560" text-anchor="middle">Simplify</text>
+          <text class="dot-badge__desc" x="300" y="584" text-anchor="middle">Remove what doesn&#8217;t create value.</text>
+          <text class="dot-badge__sub" x="300" y="600" text-anchor="middle">Signal &#183; cognitive load</text>
         </g>
 
         <!-- 04 Clarity — left -->
@@ -7127,13 +7127,18 @@ function dotBadgeAt(t){
   for(let i=0;i<DOT_BADGE_ARRIVAL.length;i++){ if(t >= DOT_BADGE_ARRIVAL[i] - 1e-6) active = i; }
   return {x, y, active};
 }
-/* progress through the badge's own scroll range: 0 as it enters the
-   lower part of the viewport, 1 once it's scrolled up near the top —
-   reversible (scrolling back up rewinds the story), and self-contained
-   so it doesn't matter where on the page the badge actually sits. */
-function dotBadgeProgress(top, vh){
-  const startY = vh * 0.85, endY = vh * 0.15;
-  return (startY - top) / (startY - endY);
+/* progress through the badge's own scroll range — held at 0 (dot
+   parked at the center, not yet moving) until the whole circle has
+   scrolled fully into view, only then counting up to 1 as it
+   continues toward the top — reversible (scrolling back up rewinds
+   the story and re-parks it at center once it's no longer fully
+   visible), and self-contained so it doesn't matter where on the
+   page the badge actually sits. */
+function dotBadgeProgress(top, height, vh){
+  const startTop = vh - height; // top position the instant the badge is fully on screen
+  if(top > startTop) return 0;
+  const endTop = vh * 0.15;
+  return Math.max(0, Math.min(1, (startTop - top) / (startTop - endTop)));
 }
 function dotBadgeApplyLabels(labels, activeIndex){
   labels.forEach(l=>{
@@ -7784,8 +7789,8 @@ try{
               const brandCompute = ()=>{
                 brandTicking = false;
                 const frameRect = frame.getBoundingClientRect();
-                const innerTop = brandBadge.getBoundingClientRect().top;
-                const t = dotBadgeProgress(frameRect.top + innerTop, window.innerHeight);
+                const innerRect = brandBadge.getBoundingClientRect();
+                const t = dotBadgeProgress(frameRect.top + innerRect.top, innerRect.height, window.innerHeight);
                 brandApplyStep(t);
               };
               window.addEventListener('scroll', ()=>{
@@ -8014,7 +8019,8 @@ try{
   let ticking = false;
   function compute(){
     ticking = false;
-    applyStep(dotBadgeProgress(badge.getBoundingClientRect().top, window.innerHeight));
+    const r = badge.getBoundingClientRect();
+    applyStep(dotBadgeProgress(r.top, r.height, window.innerHeight));
   }
   function onScroll(){
     if(ticking) return;
