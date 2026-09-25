@@ -1196,41 +1196,43 @@
      each word in accent as it passes. */
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
     overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-  .dot-signature{text-align:center;padding:0;}
+  .dot-signature{text-align:left;padding:0;}
   .dot-signature + .lab{border-top:none;}
   @media (max-width:760px){.dot-signature{padding:0;}}
+  .dot-signature .eyebrow-lbl{margin-bottom:14px;}
   .dot-signature-title{font-family:var(--font-display);font-weight:600;
-    font-size:clamp(24px,3.6vw,44px);letter-spacing:.03em;text-transform:uppercase;
-    text-align:center;margin:0 0 10px;}
+    font-size:clamp(24px,3.6vw,40px);letter-spacing:-.005em;
+    text-align:left;margin:0 0 10px;}
   .dot-signature-sub{font-size:15.5px;color:var(--ink-soft);max-width:46ch;
-    margin:0 auto 28px;text-align:center;line-height:1.6;}
+    margin:0 0 28px;text-align:left;line-height:1.6;}
   /* the diagram is text-dense, so below the width it needs to stay legible it
      scrolls horizontally instead of shrinking its SVG-unit text into
      illegibility — the title/subtitle/tagline sit outside this wrapper so
      they stay put while only the diagram itself pans. */
-  .dot-badge-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 8px;}
-  .dot-badge{position:relative;width:1060px;max-width:none;aspect-ratio:1320/1000;
-    margin:0 auto;}
+  .dot-badge-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 8px;
+    text-align:center;}
+  .dot-badge{position:relative;display:inline-block;width:100%;max-width:840px;
+    aspect-ratio:920/610;margin:0 auto;}
   .dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
   /* dashed, brand-gradient connector arcs — replace the old plain thin ring */
-  .dot-badge__arc{fill:none;stroke-width:1.6;stroke-dasharray:.5 11;
+  .dot-badge__arc{fill:none;stroke-width:1.4;stroke-dasharray:.5 9;
     stroke-linecap:round;opacity:.6;}
   .dot-badge__stage-bg{fill:var(--paper);}
   .case-sec--dark .dot-badge__stage-bg{fill:#161616;}
   .dot-badge__center-dot{fill:var(--line);}
-  .dot-badge__num{font-family:var(--font-mono);font-size:14px;font-weight:700;
+  .dot-badge__num{font-family:var(--font-mono);font-size:12px;font-weight:700;
     letter-spacing:.06em;}
-  .dot-badge__label{font-family:var(--font-body);font-size:17px;font-weight:800;
-    letter-spacing:.03em;fill:var(--ink-soft);opacity:.4;
+  .dot-badge__label{font-family:var(--font-body);font-size:15px;font-weight:800;
+    letter-spacing:.01em;text-transform:uppercase;fill:var(--ink-soft);opacity:.4;
     transition:opacity .4s ease,fill .3s ease;}
   .dot-badge__label.is-seen{fill:var(--ink);opacity:1;}
-  .dot-badge__desc{font-family:var(--font-body);font-size:15px;font-weight:600;
+  .dot-badge__desc{font-family:var(--font-body);font-size:13px;font-weight:600;
     fill:var(--ink);}
-  .dot-badge__sub{font-family:var(--font-mono);font-size:10.5px;font-weight:600;
-    letter-spacing:.06em;fill:var(--ink-soft);opacity:.7;}
-  .dot-badge__dot{filter:drop-shadow(0 0 5px rgba(49,87,213,.5));}
-  .dot-signature-tagline{font-family:var(--font-mono);font-size:11.5px;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);opacity:.6;
+  .dot-badge__sub{font-family:var(--font-mono);font-size:9.5px;font-weight:600;
+    letter-spacing:.05em;text-transform:uppercase;fill:var(--ink-soft);opacity:.7;}
+  .dot-badge__dot{filter:drop-shadow(0 0 4px rgba(49,87,213,.5));}
+  .dot-signature-tagline{font-family:var(--font-mono);font-size:12.5px;
+    letter-spacing:.02em;color:var(--ink-soft);opacity:.6;
     text-align:center;margin:8px 0 0;}
   .dot-signature-tagline__dot{display:inline-block;width:5px;height:5px;
     border-radius:50%;background:linear-gradient(135deg,#3157D5,#E46B5D);
@@ -3260,25 +3262,26 @@
     <section class="work all-work"><div id="workMount"></div></section>
 
     <div class="dot-signature">
-      <h2 class="dot-signature-title">From Complexity to <span class="case-gradient">Clarity</span></h2>
+      <div class="eyebrow-lbl">My design approach</div>
+      <h2 class="dot-signature-title">From complexity to <span class="case-gradient">clarity</span></h2>
       <p class="dot-signature-sub">I turn ambiguous problems into clear, usable systems that help people make better decisions.</p>
       <div class="dot-badge-scroll">
       <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai. Understand. Structure. Simplify. Clarity.">
-        <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="-260 -90 1320 1000" aria-hidden="true">
+        <svg class="dot-badge__ring" id="dotBadgeRingWork" viewBox="-160 -10 920 610" aria-hidden="true">
           <defs>
             <filter id="dbGlowWork" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="6"/>
+              <feGaussianBlur stdDeviation="5"/>
             </filter>
-            <linearGradient id="dbArcWork1" gradientUnits="userSpaceOnUse" x1="440" y1="175" x2="705" y2="440">
+            <linearGradient id="dbArcWork1" gradientUnits="userSpaceOnUse" x1="300" y1="125" x2="475" y2="300">
               <stop offset="0%" stop-color="#3157D5"/><stop offset="100%" stop-color="#7546D8"/>
             </linearGradient>
-            <linearGradient id="dbArcWork2" gradientUnits="userSpaceOnUse" x1="705" y1="440" x2="440" y2="705">
+            <linearGradient id="dbArcWork2" gradientUnits="userSpaceOnUse" x1="475" y1="300" x2="300" y2="475">
               <stop offset="0%" stop-color="#7546D8"/><stop offset="100%" stop-color="#C54879"/>
             </linearGradient>
-            <linearGradient id="dbArcWork3" gradientUnits="userSpaceOnUse" x1="440" y1="705" x2="175" y2="440">
+            <linearGradient id="dbArcWork3" gradientUnits="userSpaceOnUse" x1="300" y1="475" x2="125" y2="300">
               <stop offset="0%" stop-color="#C54879"/><stop offset="100%" stop-color="#E46B5D"/>
             </linearGradient>
-            <linearGradient id="dbArcWork4" gradientUnits="userSpaceOnUse" x1="175" y1="440" x2="440" y2="175">
+            <linearGradient id="dbArcWork4" gradientUnits="userSpaceOnUse" x1="125" y1="300" x2="300" y2="125">
               <stop offset="0%" stop-color="#E46B5D"/><stop offset="100%" stop-color="#3157D5"/>
             </linearGradient>
             <radialGradient id="dbDotWork" cx="35%" cy="30%" r="75%">
@@ -3286,75 +3289,75 @@
             </radialGradient>
           </defs>
 
-          <path class="dot-badge__arc" d="M 440 175 A 265 265 0 0 1 705 440" stroke="url(#dbArcWork1)"/>
-          <path class="dot-badge__arc" d="M 705 440 A 265 265 0 0 1 440 705" stroke="url(#dbArcWork2)"/>
-          <path class="dot-badge__arc" d="M 440 705 A 265 265 0 0 1 175 440" stroke="url(#dbArcWork3)"/>
-          <path class="dot-badge__arc" d="M 175 440 A 265 265 0 0 1 440 175" stroke="url(#dbArcWork4)"/>
+          <path class="dot-badge__arc" d="M 300 125 A 175 175 0 0 1 475 300" stroke="url(#dbArcWork1)"/>
+          <path class="dot-badge__arc" d="M 475 300 A 175 175 0 0 1 300 475" stroke="url(#dbArcWork2)"/>
+          <path class="dot-badge__arc" d="M 300 475 A 175 175 0 0 1 125 300" stroke="url(#dbArcWork3)"/>
+          <path class="dot-badge__arc" d="M 125 300 A 175 175 0 0 1 300 125" stroke="url(#dbArcWork4)"/>
 
           <!-- 01 Understand — top -->
           <g class="dot-badge__stage" style="color:#3157D5">
-            <circle cx="440" cy="175" r="33" fill="currentColor" opacity=".13" filter="url(#dbGlowWork)"/>
-            <circle class="dot-badge__stage-bg" cx="440" cy="175" r="27"/>
-            <circle cx="440" cy="175" r="27" fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <g transform="translate(440,175)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="-3" cy="-3" r="7"/>
-              <line x1="2" y1="2" x2="8" y2="8"/>
+            <circle cx="300" cy="125" r="26" fill="currentColor" opacity=".13" filter="url(#dbGlowWork)"/>
+            <circle class="dot-badge__stage-bg" cx="300" cy="125" r="20"/>
+            <circle cx="300" cy="125" r="20" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <g transform="translate(300,125)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="-2.2" cy="-2.2" r="5.2"/>
+              <line x1="1.6" y1="1.6" x2="6" y2="6"/>
             </g>
-            <text class="dot-badge__num" x="440" y="18" text-anchor="middle" fill="currentColor">01</text>
-            <text class="dot-badge__label" data-step="0" x="440" y="48" text-anchor="middle">UNDERSTAND</text>
-            <text class="dot-badge__desc" x="440" y="88" text-anchor="middle">Find the signal inside the noise.</text>
-            <text class="dot-badge__sub" x="440" y="112" text-anchor="middle">USERS &#183; BUSINESS &#183; CONTEXT</text>
+            <text class="dot-badge__num" x="300" y="6" text-anchor="middle" fill="currentColor">01</text>
+            <text class="dot-badge__label" data-step="0" x="300" y="26" text-anchor="middle">Understand</text>
+            <text class="dot-badge__desc" x="300" y="50" text-anchor="middle">Find the signal inside the noise.</text>
+            <text class="dot-badge__sub" x="300" y="66" text-anchor="middle">Users &#183; business &#183; context</text>
           </g>
 
           <!-- 02 Structure — right -->
           <g class="dot-badge__stage" style="color:#7546D8">
-            <circle cx="705" cy="440" r="33" fill="currentColor" opacity=".13" filter="url(#dbGlowWork)"/>
-            <circle class="dot-badge__stage-bg" cx="705" cy="440" r="27"/>
-            <circle cx="705" cy="440" r="27" fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <g transform="translate(705,440)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
-              <rect x="-9" y="-9" width="6" height="6" rx="1.2"/>
-              <rect x="3" y="-9" width="6" height="6" rx="1.2"/>
-              <rect x="-9" y="3" width="6" height="6" rx="1.2"/>
-              <rect x="3" y="3" width="6" height="6" rx="1.2"/>
+            <circle cx="475" cy="300" r="26" fill="currentColor" opacity=".13" filter="url(#dbGlowWork)"/>
+            <circle class="dot-badge__stage-bg" cx="475" cy="300" r="20"/>
+            <circle cx="475" cy="300" r="20" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <g transform="translate(475,300)" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+              <rect x="-6.5" y="-6.5" width="4.4" height="4.4" rx="1"/>
+              <rect x="2.1" y="-6.5" width="4.4" height="4.4" rx="1"/>
+              <rect x="-6.5" y="2.1" width="4.4" height="4.4" rx="1"/>
+              <rect x="2.1" y="2.1" width="4.4" height="4.4" rx="1"/>
             </g>
-            <text class="dot-badge__num" x="748" y="398" text-anchor="start" fill="currentColor">02</text>
-            <text class="dot-badge__label" data-step="1" x="748" y="428" text-anchor="start">STRUCTURE</text>
-            <text class="dot-badge__desc" x="748" y="462" text-anchor="start">Turn complexity into a system.</text>
-            <text class="dot-badge__sub" x="748" y="487" text-anchor="start">ARCHITECTURE &#183; WORKFLOWS</text>
+            <text class="dot-badge__num" x="535" y="268" text-anchor="start" fill="currentColor">02</text>
+            <text class="dot-badge__label" data-step="1" x="535" y="288" text-anchor="start">Structure</text>
+            <text class="dot-badge__desc" x="535" y="312" text-anchor="start">Turn complexity into a system.</text>
+            <text class="dot-badge__sub" x="535" y="332" text-anchor="start">Architecture &#183; workflows</text>
           </g>
 
           <!-- 03 Simplify — bottom -->
           <g class="dot-badge__stage" style="color:#C54879">
-            <circle cx="440" cy="705" r="33" fill="currentColor" opacity=".13" filter="url(#dbGlowWork)"/>
-            <circle class="dot-badge__stage-bg" cx="440" cy="705" r="27"/>
-            <circle cx="440" cy="705" r="27" fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <g transform="translate(440,705)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round">
-              <path d="M-8,-7 L8,-7 L2,2 L2,8 L-2,8 L-2,2 Z"/>
+            <circle cx="300" cy="475" r="26" fill="currentColor" opacity=".13" filter="url(#dbGlowWork)"/>
+            <circle class="dot-badge__stage-bg" cx="300" cy="475" r="20"/>
+            <circle cx="300" cy="475" r="20" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <g transform="translate(300,475)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+              <path d="M-6,-5.2 L6,-5.2 L1.5,1.5 L1.5,6 L-1.5,6 L-1.5,1.5 Z"/>
             </g>
-            <text class="dot-badge__sub" x="440" y="768" text-anchor="middle">SIGNAL &#183; COGNITIVE LOAD</text>
-            <text class="dot-badge__desc" x="440" y="792" text-anchor="middle">Remove what doesn&#8217;t create value.</text>
-            <text class="dot-badge__label" data-step="2" x="440" y="832" text-anchor="middle">SIMPLIFY</text>
-            <text class="dot-badge__num" x="440" y="862" text-anchor="middle" fill="currentColor">03</text>
+            <text class="dot-badge__sub" x="300" y="514" text-anchor="middle">Signal &#183; cognitive load</text>
+            <text class="dot-badge__desc" x="300" y="530" text-anchor="middle">Remove what doesn&#8217;t create value.</text>
+            <text class="dot-badge__label" data-step="2" x="300" y="554" text-anchor="middle">Simplify</text>
+            <text class="dot-badge__num" x="300" y="574" text-anchor="middle" fill="currentColor">03</text>
           </g>
 
           <!-- 04 Clarity — left -->
           <g class="dot-badge__stage" style="color:#E46B5D">
-            <circle cx="175" cy="440" r="33" fill="currentColor" opacity=".13" filter="url(#dbGlowWork)"/>
-            <circle class="dot-badge__stage-bg" cx="175" cy="440" r="27"/>
-            <circle cx="175" cy="440" r="27" fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <g transform="translate(175,440)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round">
-              <circle cx="0" cy="0" r="8"/>
-              <circle cx="0" cy="0" r="4"/>
-              <circle cx="0" cy="0" r="1.2" fill="currentColor" stroke="none"/>
+            <circle cx="125" cy="300" r="26" fill="currentColor" opacity=".13" filter="url(#dbGlowWork)"/>
+            <circle class="dot-badge__stage-bg" cx="125" cy="300" r="20"/>
+            <circle cx="125" cy="300" r="20" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <g transform="translate(125,300)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+              <circle cx="0" cy="0" r="6"/>
+              <circle cx="0" cy="0" r="3"/>
+              <circle cx="0" cy="0" r="1" fill="currentColor" stroke="none"/>
             </g>
-            <text class="dot-badge__num" x="132" y="398" text-anchor="end" fill="currentColor">04</text>
-            <text class="dot-badge__label" data-step="3" x="132" y="428" text-anchor="end">CLARITY</text>
-            <text class="dot-badge__desc" x="132" y="462" text-anchor="end">Make the next decision obvious.</text>
-            <text class="dot-badge__sub" x="132" y="487" text-anchor="end">USABLE &#183; MEASURABLE</text>
+            <text class="dot-badge__num" x="65" y="268" text-anchor="end" fill="currentColor">04</text>
+            <text class="dot-badge__label" data-step="3" x="65" y="288" text-anchor="end">Clarity</text>
+            <text class="dot-badge__desc" x="65" y="312" text-anchor="end">Make the next decision obvious.</text>
+            <text class="dot-badge__sub" x="65" y="332" text-anchor="end">Usable &#183; measurable</text>
           </g>
 
-          <circle class="dot-badge__center-dot" cx="440" cy="440" r="5" fill="url(#dbDotWork)" opacity=".5"/>
-          <circle class="dot-badge__dot" id="dotBadgeDotWork" cx="440" cy="440" r="9" fill="url(#dbDotWork)"/>
+          <circle class="dot-badge__center-dot" cx="300" cy="300" r="4" fill="url(#dbDotWork)" opacity=".5"/>
+          <circle class="dot-badge__dot" id="dotBadgeDotWork" cx="300" cy="300" r="7" fill="url(#dbDotWork)"/>
         </svg>
       </div>
       </div>
@@ -6453,23 +6456,38 @@ h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
    (scrolling="no"). */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-.dot-signature{text-align:center;padding:0;}
+.dot-signature{text-align:left;padding:0;margin-top:48px;}
 .dot-signature-title{font-family:"Fraunces",Georgia,serif;font-weight:600;
-  font-size:clamp(22px,3.6vw,40px);letter-spacing:.03em;text-transform:uppercase;
-  text-align:center;margin:56px 0 8px;}
-.dot-badge{position:relative;width:540px;height:540px;margin:0 auto;}
+  font-size:clamp(22px,3.6vw,36px);letter-spacing:-.005em;
+  text-align:left;margin:0 0 10px;}
+.dot-signature-sub{font-size:14.5px;color:var(--slate);max-width:46ch;
+  margin:0 0 24px;text-align:left;line-height:1.6;}
+.dot-badge-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 8px;
+  text-align:center;}
+.dot-badge{position:relative;display:inline-block;width:100%;max-width:760px;
+  aspect-ratio:920/610;margin:0 auto;}
 .dot-badge__ring{display:block;width:100%;height:100%;overflow:visible;}
-.dot-badge__track{fill:none;stroke:var(--line);stroke-width:1;}
-.dot-badge__tick{stroke:var(--line);stroke-width:1;}
+.dot-badge__arc{fill:none;stroke-width:1.4;stroke-dasharray:.5 9;
+  stroke-linecap:round;opacity:.6;}
+.dot-badge__stage-bg{fill:var(--paper);}
 .dot-badge__center-dot{fill:var(--line);}
-.dot-badge__text{font-family:"Fraunces",Georgia,serif;font-size:21px;font-weight:700;
-  letter-spacing:.02em;text-transform:uppercase;}
-.dot-badge__word{fill:var(--ink);}
-.dot-badge__label{font-family:"Satoshi",sans-serif;font-size:22px;font-weight:700;
-  fill:var(--slate);opacity:.35;transition:opacity .4s ease,fill .3s ease;}
+.dot-badge__num{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:700;
+  letter-spacing:.06em;}
+.dot-badge__label{font-family:"Satoshi",sans-serif;font-size:15px;font-weight:800;
+  letter-spacing:.01em;text-transform:uppercase;fill:var(--slate);opacity:.4;
+  transition:opacity .4s ease,fill .3s ease;}
 .dot-badge__label.is-seen{fill:var(--ink);opacity:1;}
-.dot-badge__dot{fill:var(--aubergine);}
-@media (max-width:560px){.dot-badge{width:360px;height:360px;}}
+.dot-badge__desc{font-family:"Satoshi",sans-serif;font-size:13px;font-weight:600;
+  fill:var(--ink);}
+.dot-badge__sub{font-family:"IBM Plex Mono",monospace;font-size:9.5px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;fill:var(--slate);opacity:.7;}
+.dot-badge__dot{filter:drop-shadow(0 0 4px rgba(49,87,213,.5));}
+.dot-signature-tagline{font-family:"IBM Plex Mono",monospace;font-size:12.5px;
+  letter-spacing:.02em;color:var(--slate);opacity:.6;
+  text-align:center;margin:8px 0 0;}
+.dot-signature-tagline__dot{display:inline-block;width:5px;height:5px;
+  border-radius:50%;background:linear-gradient(135deg,#3157D5,#E46B5D);
+  margin:0 2px;vertical-align:middle;}
 h3{font-size:18px;line-height:1.2}
 .mono{font-family:"IBM Plex Mono",monospace}
 .muted{color:var(--slate)}
@@ -6759,26 +6777,104 @@ h3{font-size:18px;line-height:1.2}
   <p style="margin-top:12px;font-size:20px;line-height:1.45">The logo stays stable; <span class="gradient-text">Complexity → Clarity</span> carries the expressive color on the website.</p>
 
   <div class="dot-signature">
-    <h2 class="dot-signature-title">From Complexity to <span class="gradient-text">Clarity</span></h2>
+    <h2 class="dot-signature-title">From complexity to <span class="gradient-text">clarity</span></h2>
+    <div class="dot-badge-scroll">
     <div class="dot-badge" role="img" aria-label="A small dot can change perspective. — Saiky Desai. Understand. Structure. Simplify. Clarity.">
-      <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="0 0 880 880" aria-hidden="true">
-        <defs><path id="dotBadgePathBrand" d="M440,440 m-220,0 a220,220 0 1 1 440,0 a220,220 0 1 1 -440,0"/></defs>
-        <circle class="dot-badge__track" cx="440" cy="440" r="220"/>
-        <line class="dot-badge__tick" x1="440" y1="195" x2="440" y2="160"/>
-        <line class="dot-badge__tick" x1="685" y1="440" x2="720" y2="440"/>
-        <line class="dot-badge__tick" x1="440" y1="685" x2="440" y2="720"/>
-        <line class="dot-badge__tick" x1="195" y1="440" x2="160" y2="440"/>
-        <text class="dot-badge__label" data-step="0" x="440" y="130" text-anchor="middle" dominant-baseline="middle">Understand</text>
-        <text class="dot-badge__label" data-step="1" x="750" y="440" text-anchor="start" dominant-baseline="middle">Structure</text>
-        <text class="dot-badge__label" data-step="2" x="440" y="750" text-anchor="middle" dominant-baseline="middle">Simplify</text>
-        <text class="dot-badge__label" data-step="3" x="130" y="440" text-anchor="end" dominant-baseline="middle">Clarity</text>
-        <g id="dotBadgeQuoteGroupBrand">
-          <text class="dot-badge__text"><textPath href="#dotBadgePathBrand" startOffset="0" textLength="1378" lengthAdjust="spacingAndGlyphs"><tspan class="dot-badge__word">A SMALL DOT CAN CHANGE PERSPECTIVE &#8212; SAIKY DESAI &#183; A SMALL DOT CAN CHANGE PERSPECTIVE &#8212; SAIKY DESAI &#183; </tspan></textPath></text>
+      <svg class="dot-badge__ring" id="dotBadgeRingBrand" viewBox="-160 -10 920 610" aria-hidden="true">
+        <defs>
+          <filter id="dbGlowBrand" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="5"/>
+          </filter>
+          <linearGradient id="dbArcBrand1" gradientUnits="userSpaceOnUse" x1="300" y1="125" x2="475" y2="300">
+            <stop offset="0%" stop-color="#3157D5"/><stop offset="100%" stop-color="#7546D8"/>
+          </linearGradient>
+          <linearGradient id="dbArcBrand2" gradientUnits="userSpaceOnUse" x1="475" y1="300" x2="300" y2="475">
+            <stop offset="0%" stop-color="#7546D8"/><stop offset="100%" stop-color="#C54879"/>
+          </linearGradient>
+          <linearGradient id="dbArcBrand3" gradientUnits="userSpaceOnUse" x1="300" y1="475" x2="125" y2="300">
+            <stop offset="0%" stop-color="#C54879"/><stop offset="100%" stop-color="#E46B5D"/>
+          </linearGradient>
+          <linearGradient id="dbArcBrand4" gradientUnits="userSpaceOnUse" x1="125" y1="300" x2="300" y2="125">
+            <stop offset="0%" stop-color="#E46B5D"/><stop offset="100%" stop-color="#3157D5"/>
+          </linearGradient>
+          <radialGradient id="dbDotBrand" cx="35%" cy="30%" r="75%">
+            <stop offset="0%" stop-color="#8C6CE0"/><stop offset="100%" stop-color="#3157D5"/>
+          </radialGradient>
+        </defs>
+
+        <path class="dot-badge__arc" d="M 300 125 A 175 175 0 0 1 475 300" stroke="url(#dbArcBrand1)"/>
+        <path class="dot-badge__arc" d="M 475 300 A 175 175 0 0 1 300 475" stroke="url(#dbArcBrand2)"/>
+        <path class="dot-badge__arc" d="M 300 475 A 175 175 0 0 1 125 300" stroke="url(#dbArcBrand3)"/>
+        <path class="dot-badge__arc" d="M 125 300 A 175 175 0 0 1 300 125" stroke="url(#dbArcBrand4)"/>
+
+        <!-- 01 Understand — top -->
+        <g class="dot-badge__stage" style="color:#3157D5">
+          <circle cx="300" cy="125" r="26" fill="currentColor" opacity=".13" filter="url(#dbGlowBrand)"/>
+          <circle class="dot-badge__stage-bg" cx="300" cy="125" r="20"/>
+          <circle cx="300" cy="125" r="20" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <g transform="translate(300,125)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="-2.2" cy="-2.2" r="5.2"/>
+            <line x1="1.6" y1="1.6" x2="6" y2="6"/>
+          </g>
+          <text class="dot-badge__num" x="300" y="6" text-anchor="middle" fill="currentColor">01</text>
+          <text class="dot-badge__label" data-step="0" x="300" y="26" text-anchor="middle">Understand</text>
+          <text class="dot-badge__desc" x="300" y="50" text-anchor="middle">Find the signal inside the noise.</text>
+          <text class="dot-badge__sub" x="300" y="66" text-anchor="middle">Users &#183; business &#183; context</text>
         </g>
-        <circle class="dot-badge__center-dot" cx="440" cy="440" r="6"/>
-        <circle class="dot-badge__dot" id="dotBadgeDotBrand" cx="440" cy="440" r="9"/>
+
+        <!-- 02 Structure — right -->
+        <g class="dot-badge__stage" style="color:#7546D8">
+          <circle cx="475" cy="300" r="26" fill="currentColor" opacity=".13" filter="url(#dbGlowBrand)"/>
+          <circle class="dot-badge__stage-bg" cx="475" cy="300" r="20"/>
+          <circle cx="475" cy="300" r="20" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <g transform="translate(475,300)" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+            <rect x="-6.5" y="-6.5" width="4.4" height="4.4" rx="1"/>
+            <rect x="2.1" y="-6.5" width="4.4" height="4.4" rx="1"/>
+            <rect x="-6.5" y="2.1" width="4.4" height="4.4" rx="1"/>
+            <rect x="2.1" y="2.1" width="4.4" height="4.4" rx="1"/>
+          </g>
+          <text class="dot-badge__num" x="535" y="268" text-anchor="start" fill="currentColor">02</text>
+          <text class="dot-badge__label" data-step="1" x="535" y="288" text-anchor="start">Structure</text>
+          <text class="dot-badge__desc" x="535" y="312" text-anchor="start">Turn complexity into a system.</text>
+          <text class="dot-badge__sub" x="535" y="332" text-anchor="start">Architecture &#183; workflows</text>
+        </g>
+
+        <!-- 03 Simplify — bottom -->
+        <g class="dot-badge__stage" style="color:#C54879">
+          <circle cx="300" cy="475" r="26" fill="currentColor" opacity=".13" filter="url(#dbGlowBrand)"/>
+          <circle class="dot-badge__stage-bg" cx="300" cy="475" r="20"/>
+          <circle cx="300" cy="475" r="20" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <g transform="translate(300,475)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+            <path d="M-6,-5.2 L6,-5.2 L1.5,1.5 L1.5,6 L-1.5,6 L-1.5,1.5 Z"/>
+          </g>
+          <text class="dot-badge__sub" x="300" y="514" text-anchor="middle">Signal &#183; cognitive load</text>
+          <text class="dot-badge__desc" x="300" y="530" text-anchor="middle">Remove what doesn&#8217;t create value.</text>
+          <text class="dot-badge__label" data-step="2" x="300" y="554" text-anchor="middle">Simplify</text>
+          <text class="dot-badge__num" x="300" y="574" text-anchor="middle" fill="currentColor">03</text>
+        </g>
+
+        <!-- 04 Clarity — left -->
+        <g class="dot-badge__stage" style="color:#E46B5D">
+          <circle cx="125" cy="300" r="26" fill="currentColor" opacity=".13" filter="url(#dbGlowBrand)"/>
+          <circle class="dot-badge__stage-bg" cx="125" cy="300" r="20"/>
+          <circle cx="125" cy="300" r="20" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <g transform="translate(125,300)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+            <circle cx="0" cy="0" r="6"/>
+            <circle cx="0" cy="0" r="3"/>
+            <circle cx="0" cy="0" r="1" fill="currentColor" stroke="none"/>
+          </g>
+          <text class="dot-badge__num" x="65" y="268" text-anchor="end" fill="currentColor">04</text>
+          <text class="dot-badge__label" data-step="3" x="65" y="288" text-anchor="end">Clarity</text>
+          <text class="dot-badge__desc" x="65" y="312" text-anchor="end">Make the next decision obvious.</text>
+          <text class="dot-badge__sub" x="65" y="332" text-anchor="end">Usable &#183; measurable</text>
+        </g>
+
+        <circle class="dot-badge__center-dot" cx="300" cy="300" r="4" fill="url(#dbDotBrand)" opacity=".5"/>
+        <circle class="dot-badge__dot" id="dotBadgeDotBrand" cx="300" cy="300" r="7" fill="url(#dbDotBrand)"/>
       </svg>
     </div>
+    </div>
+    <p class="dot-signature-tagline">A small dot can change perspective <span class="dot-signature-tagline__dot"></span> Saiky Desai</p>
   </div>
 
   <div class="footer"><span>SAIKY DESAI · LOGO USAGE</span><span>© 2026 Saiky Desai</span></div>
@@ -6997,7 +7093,10 @@ try{
    the dot's sweep passes their position, so a word fading to black
    always lines up with the dot actually being there. The quote's own
    color never changes; only these four outside words animate. */
-const DOT_BADGE_GEOM = {cx:440, cy:440, r:265, startAngle:-90};
+/* r is the DOT's own orbit — deliberately larger than the icons' own
+   r:175 ring (see the SVG) so it travels just outside them, never
+   overlapping, rather than landing exactly on each icon's center. */
+const DOT_BADGE_GEOM = {cx:300, cy:300, r:215, startAngle:-90};
 const DOT_BADGE_ARRIVAL = [0, 0.15 + 0.85*0.25, 0.15 + 0.85*0.5, 0.15 + 0.85*0.75];
 function dotBadgePoint(angleDeg, radius){
   const rad = angleDeg * Math.PI / 180;
