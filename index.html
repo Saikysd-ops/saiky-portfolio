@@ -7086,18 +7086,26 @@ try{
 /* dot-signature travel — shared math for both the Work page and the
    Brand doc instances: a point on a circle (cx,cy,r) at a given angle
    in degrees (0=3 o'clock, -90=12 o'clock, going clockwise), and the
-   position along the journey (center -> ring, then one full sweep
-   around it) at progress t in [0,1]. ARRIVAL holds the t-value at
-   which the dot reaches each of the four compass words — Understand
-   is "reached" from the very start (t=0), the other three exactly as
-   the dot's sweep passes their position, so a word fading to black
-   always lines up with the dot actually being there. The quote's own
-   color never changes; only these four outside words animate. */
+   position along the journey — center -> ring, one full sweep around
+   it, then back to center — at progress t in [0,1]. ARRIVAL holds the
+   t-value at which the dot reaches each of the four compass words —
+   Understand is "reached" as the dot first lands on the ring, the
+   other three exactly as the dot's sweep passes their position, so a
+   word fading to black always lines up with the dot actually being
+   there. The quote's own color never changes; only these four outside
+   words animate. */
 /* r is the DOT's own orbit — deliberately larger than the icons' own
    r:175 ring (see the SVG) so it travels just outside them, never
    overlapping, rather than landing exactly on each icon's center. */
 const DOT_BADGE_GEOM = {cx:300, cy:300, r:215, startAngle:-90};
-const DOT_BADGE_ARRIVAL = [0, 0.15 + 0.85*0.25, 0.15 + 0.85*0.5, 0.15 + 0.85*0.75];
+const DOT_BADGE_OUT_END = 0.12;   // center -> ring
+const DOT_BADGE_SWEEP_END = 0.88; // ring sweep ends back at Understand; return-to-center after
+const DOT_BADGE_ARRIVAL = [
+  DOT_BADGE_OUT_END,
+  DOT_BADGE_OUT_END + (DOT_BADGE_SWEEP_END - DOT_BADGE_OUT_END) * 0.25,
+  DOT_BADGE_OUT_END + (DOT_BADGE_SWEEP_END - DOT_BADGE_OUT_END) * 0.5,
+  DOT_BADGE_OUT_END + (DOT_BADGE_SWEEP_END - DOT_BADGE_OUT_END) * 0.75
+];
 function dotBadgePoint(angleDeg, radius){
   const rad = angleDeg * Math.PI / 180;
   return [DOT_BADGE_GEOM.cx + radius*Math.cos(rad), DOT_BADGE_GEOM.cy + radius*Math.sin(rad)];
@@ -7106,11 +7114,14 @@ function dotBadgeAt(t){
   t = Math.max(0, Math.min(1, t));
   const {r, startAngle} = DOT_BADGE_GEOM;
   let x, y;
-  if(t < 0.15){
-    [x, y] = dotBadgePoint(startAngle, r * (t/0.15));
-  } else {
-    const sweep = (t - 0.15) / 0.85; // 0..1 once around the full circle
+  if(t < DOT_BADGE_OUT_END){
+    [x, y] = dotBadgePoint(startAngle, r * (t / DOT_BADGE_OUT_END));
+  } else if(t < DOT_BADGE_SWEEP_END){
+    const sweep = (t - DOT_BADGE_OUT_END) / (DOT_BADGE_SWEEP_END - DOT_BADGE_OUT_END); // 0..1 once around the full circle
     [x, y] = dotBadgePoint(startAngle + 360*sweep, r);
+  } else {
+    const back = (t - DOT_BADGE_SWEEP_END) / (1 - DOT_BADGE_SWEEP_END); // ring -> center
+    [x, y] = dotBadgePoint(startAngle, r * (1 - back));
   }
   let active = 0;
   for(let i=0;i<DOT_BADGE_ARRIVAL.length;i++){ if(t >= DOT_BADGE_ARRIVAL[i] - 1e-6) active = i; }
