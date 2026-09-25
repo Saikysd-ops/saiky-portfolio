@@ -1670,6 +1670,15 @@
   .case-figure img{display:block;width:100%;height:auto;border-radius:8px;}
   .case-sec--dark .case-figure{background:#1A1A21;border-color:rgba(255,255,255,.1);}
 
+  /* IA hero figure — a polished, ready-made reference diagram (unlike the
+     native .ia-diagram below) shown as-is in a clean elevated frame, using
+     the same soft shadow language as .shotbox-desktop so it reads as a
+     premium artifact rather than a raw pasted screenshot. */
+  .ia-hero-figure{margin:24px 0 8px;border-radius:16px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -20px rgba(12,10,30,.32);}
+  .ia-hero-figure img{display:block;width:100%;height:auto;}
+  .case-sec--dark .ia-hero-figure{box-shadow:0 20px 44px -20px rgba(0,0,0,.55);}
+
   /* Information-architecture diagram — built natively from the site's own
      card language (violet stage chips + bordered-cell columns) instead of
      embedding an external whiteboard export, so it carries no background of
@@ -3772,41 +3781,8 @@
 
       <h3 class="case-h3" style="margin-top:36px">Information architecture</h3>
       <p class="case-p">A companion IA kept the team aligned on how the three pieces connect — from portfolio-level triage in the Dashboard, through the Management listing, to one Unified Profile record.</p>
-      <div class="ia-diagram">
-        <div class="ia-flow">
-          <div class="ia-flow-node">Matrix Dashboard</div>
-          <div class="ia-flow-arrow">&#8594;</div>
-          <div class="ia-flow-node">Management MFE</div>
-          <div class="ia-flow-arrow">&#8594;</div>
-          <div class="ia-flow-node">Unified Profile</div>
-        </div>
-        <div class="ia-columns ia-columns--3">
-          <div class="ia-col">
-            <div class="ia-col-title">Matrix Dashboard <span class="ia-col-status">WIP &middot; POC</span></div>
-            <ul class="ia-list">
-              <li><b>Portfolio intelligence</b><span>Summary KPIs, health-distribution matrix, supplier risk bands.</span></li>
-              <li><b>Recommended actions</b><span>Automatic signals on risk-posture change, continuity-planning triggers.</span></li>
-              <li><b>Discovery &amp; search</b><span>By SBU, category or D&amp;B rating, with Quick View into the full record.</span></li>
-            </ul>
-          </div>
-          <div class="ia-col">
-            <div class="ia-col-title">Management MFE <span class="ia-col-status">Shipped</span></div>
-            <ul class="ia-list">
-              <li><b>Intake &amp; listing</b><span>Card and table views, dense comparison table, quick-filters.</span></li>
-              <li><b>Watchlists</b><span>Bulk add/remove, tag, compare and export across selected rows.</span></li>
-              <li><b>Supplier card</b><span>Performance score, D&amp;B rating and key facts at a glance.</span></li>
-            </ul>
-          </div>
-          <div class="ia-col">
-            <div class="ia-col-title">Unified Profile <span class="ia-col-status">WIP</span></div>
-            <ul class="ia-list">
-              <li><b>Header &amp; identity</b><span>Vendor number, category, country of origin, registration.</span></li>
-              <li><b>Score trends</b><span>Interactive quarterly/yearly performance, risk and capability tracking.</span></li>
-              <li><b>Similar suppliers</b><span>Ranked matches by product, sourcing and operational fit.</span></li>
-              <li><b>Operational detail</b><span>Contacts, location, factory, documents and agreements — in progress.</span></li>
-            </ul>
-          </div>
-        </div>
+      <div class="ia-hero-figure">
+        <img src="assets/images/image-092-0679466adaf3.png" alt="Supplier Matrix IA companion overview — a left-to-right journey across three stages: Matrix Dashboard (WIP · POC) with portfolio intelligence, recommended actions and discovery &amp; search; Management MFE (shipped) with intake &amp; listing results and a supplier card preview; and Unified Profile (WIP) with header &amp; identity, score trends, similar suppliers and tabbed operational intelligence" loading="lazy">
       </div>
       <div style="text-align:center;margin-top:14px"><button type="button" class="text-link case-info-link" id="smIaTrigger">View the detailed IA <span class="cta-arrow">&#8594;</span></button></div>
     </section>
