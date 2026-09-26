@@ -217,11 +217,10 @@
     transition:--mr .35s cubic-bezier(.22,1,.36,1);}
   .img-stack{position:relative;display:grid;transition:transform .12s ease-out;transform-style:preserve-3d;will-change:transform;}
   .img-stack img{grid-area:1/1;width:100%;display:block;border-radius:10px;position:relative;z-index:1;transition:filter .3s ease, opacity .3s ease;}
+  /* same base image and same hover-reveal effect in both themes — no
+     theme-specific image swap. */
   .img-stack .light-img{mix-blend-mode:multiply;opacity:.92;}
   .img-stack .dark-img{opacity:0;pointer-events:none;}
-  :root[data-theme="dark"] .img-stack .light-img{opacity:0;pointer-events:none;}
-  :root[data-theme="dark"] .img-stack .dark-img{opacity:.9;pointer-events:auto;}
-  .img-stack .bw-img{opacity:0;pointer-events:none;}
 
   /* circular cursor reveal: the "other" image shows through a soft circle */
   .portrait-frame .reveal-img{
@@ -241,11 +240,6 @@
     transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);}
   .reveal-io.in-view{opacity:1;transform:translateY(0);}
   @media (prefers-reduced-motion:reduce){ .reveal-io{opacity:1;transform:none;transition:none;} }
-
-  /* dark mode: the circle reveals a true black & white version of the illustration */
-  :root[data-theme="dark"] .portrait-frame .bw-img.reveal-img{
-    filter:grayscale(1) contrast(1.06);
-  }
 
   .portrait-frame:hover .light-img{filter:contrast(1.06) brightness(1.03);}
   .portrait-frame:hover .dark-img{filter:brightness(1.06) saturate(1.1);}
@@ -2859,7 +2853,6 @@
       <div class="portrait-frame" id="portraitFrame">
         <div class="img-stack"><img class="light-img" src="assets/images/image-001-913a25f86ea9.jpg" alt="Dotted stipple portrait">
         <img class="dark-img" src="assets/images/image-002-d195dc1ee442.jpg" alt="Full-colour illustration portrait">
-        <img class="bw-img" src="assets/images/image-002-d195dc1ee442.jpg" alt="">
         </div>
         <div class="shine"></div>
         <div class="figma-cursor" id="figmaCursor">
@@ -8255,18 +8248,16 @@ try{
   const img = frame.querySelector('.img-stack');
   const lightImg = frame.querySelector('.light-img');
   const darkImg = frame.querySelector('.dark-img');
-  const bwImg = frame.querySelector('.bw-img');
   const cursor = document.getElementById('figmaCursor');
   const MAX_TILT = 9;
   const REVEAL_R = 110; // px — the reveal circle, a bit bigger than the Figma cursor
 
+  // same dotted base image and the same colour reveal on hover in both themes
   function revealTarget(){
-    // light mode: dotted base -> reveal colour. dark mode: colour base -> reveal black & white.
-    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    return dark ? bwImg : darkImg;
+    return darkImg;
   }
   function clearReveal(){
-    [lightImg, darkImg, bwImg].forEach(el=>el && el.classList.remove('reveal-img'));
+    [lightImg, darkImg].forEach(el=>el && el.classList.remove('reveal-img'));
     frame.style.setProperty('--mr', '0px');
   }
 
