@@ -111,34 +111,58 @@
 
   .hero{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;padding:32px 0 20px;align-items:start;}
   /* subtle designer's canvas — a quiet, decorative signal of an underlying layout system.
-     Home hero only (scrolls away with it, not fixed to the page); purely visual, never intercepts pointer events. */
+     Home hero only (scrolls away with it, not fixed to the page); purely visual, never intercepts pointer events.
+     Light/dark are two stacked, fixed-colour layers crossfaded by opacity (rather than one layer whose
+     colour swaps instantly) so the theme toggle never shows a hard "patch" where this pattern snaps
+     while the rest of the page is still fading. */
   .design-canvas{position:absolute;top:0;bottom:0;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;z-index:0;pointer-events:none;
-    border-bottom:1px solid var(--line);
-    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 35%, transparent) 1px, transparent 1px),
-                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 35%, transparent) 1px, transparent 1px);
-    background-size:40px 40px, 40px 40px;}
-  :root[data-theme="dark"] .design-canvas{
-    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 25%, transparent) 1px, transparent 1px),
-                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 25%, transparent) 1px, transparent 1px);}
+    background-size:40px 40px, 40px 40px;transition:opacity .3s ease;}
+  .design-canvas--light{
+    border-bottom:1px solid #E7E5DF;
+    background-image:linear-gradient(to right, rgba(231,229,223,.35) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(231,229,223,.35) 1px, transparent 1px);
+    opacity:1;}
+  .design-canvas--dark{
+    border-bottom:1px solid #2A2A33;
+    background-image:linear-gradient(to right, rgba(42,42,51,.25) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(42,42,51,.25) 1px, transparent 1px);
+    opacity:0;}
+  :root[data-theme="dark"] .design-canvas--light{opacity:0;}
+  :root[data-theme="dark"] .design-canvas--dark{opacity:1;}
   .hero > *:not(.design-canvas){position:relative;z-index:1;}
   #view-home{position:relative;}
   .design-ruler{position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
-    height:24px;pointer-events:none;border-top:1px solid var(--line);
-    background-image:repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 28%, transparent) 0 1px, transparent 1px 10px),
-                      repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 28%, transparent) 0 1px, transparent 1px 50px);
-    background-size:100% 5px, 100% 9px;
-    background-position:left top, left top;
-    background-repeat:repeat-x;}
+    height:24px;pointer-events:none;border-top:1px solid var(--line);transition:border-color .3s ease;}
+  .design-ruler::before, .design-ruler::after{content:'';position:absolute;inset:0;pointer-events:none;transition:opacity .3s ease;
+    background-size:100% 5px, 100% 9px;background-position:left top, left top;background-repeat:repeat-x;}
+  .design-ruler::before{
+    background-image:repeating-linear-gradient(to right, rgba(102,102,110,.28) 0 1px, transparent 1px 10px),
+                      repeating-linear-gradient(to right, rgba(102,102,110,.28) 0 1px, transparent 1px 50px);
+    opacity:1;}
+  .design-ruler::after{
+    background-image:repeating-linear-gradient(to right, rgba(156,155,162,.28) 0 1px, transparent 1px 10px),
+                      repeating-linear-gradient(to right, rgba(156,155,162,.28) 0 1px, transparent 1px 50px);
+    opacity:0;}
+  :root[data-theme="dark"] .design-ruler::before{opacity:0;}
+  :root[data-theme="dark"] .design-ruler::after{opacity:1;}
   .design-ruler__nums{position:absolute;inset:0;overflow:hidden;}
   .design-ruler__nums span{position:absolute;top:10px;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.02em;color:var(--ink-soft);opacity:.32;transform:translateX(-50%);white-space:nowrap;}
   .design-ruler__cursor{position:absolute;top:0;bottom:0;width:1px;background:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none;}
   .design-ruler.is-live .design-ruler__cursor{opacity:1;}
-  .design-ruler__cursor-tag{position:absolute;top:2px;left:0;transform:translateX(-50%);font-family:var(--font-mono);font-size:8px;font-weight:700;color:var(--paper);white-space:nowrap;background:var(--ink);padding:2px 5px;border-radius:3px;}
+  .design-ruler__cursor-tag{position:absolute;top:26px;left:0;transform:translateX(-50%);font-family:var(--font-mono);font-size:7.5px;font-weight:700;color:var(--paper);white-space:nowrap;background:var(--ink);padding:2px 4px;border-radius:3px;}
   @media (max-width:880px){.design-canvas, .design-ruler{display:none;}}
   .hero-left{position:relative;max-width:540px;}
-  /* dims (not erases) the grid under the text column specifically — stays crisp elsewhere (image side, edges) */
-  .hero-left::before{content:'';position:absolute;top:-24px;left:-28px;right:-28px;bottom:-24px;z-index:0;pointer-events:none;
-    background:linear-gradient(to right, color-mix(in srgb, var(--paper) 55%, transparent) 0%, color-mix(in srgb, var(--paper) 55%, transparent) 62%, transparent 100%);}
+  /* dims (not erases) the grid under the text column specifically — stays crisp elsewhere (image side, edges);
+     same fixed-colour crossfade approach as the grid/ruler above. */
+  .hero-left::before, .hero-left::after{content:'';position:absolute;top:-24px;left:-28px;right:-28px;bottom:-24px;z-index:0;pointer-events:none;transition:opacity .3s ease;}
+  .hero-left::before{
+    background:linear-gradient(to right, rgba(248,247,244,.55) 0%, rgba(248,247,244,.55) 62%, transparent 100%);
+    opacity:1;}
+  .hero-left::after{
+    background:linear-gradient(to right, rgba(16,16,20,.55) 0%, rgba(16,16,20,.55) 62%, transparent 100%);
+    opacity:0;}
+  :root[data-theme="dark"] .hero-left::before{opacity:0;}
+  :root[data-theme="dark"] .hero-left::after{opacity:1;}
   .hero-left > *{position:relative;z-index:1;}
   .eyebrow{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:15px;opacity:.75;}
   .eyebrow-word{position:relative;display:inline-block;}
@@ -2857,7 +2881,8 @@
   <div id="view-home">
   <div class="design-ruler" aria-hidden="true"><div class="design-ruler__nums"><span style="left:0px">0</span><span style="left:100px">100</span><span style="left:200px">200</span><span style="left:300px">300</span><span style="left:400px">400</span><span style="left:500px">500</span><span style="left:600px">600</span><span style="left:700px">700</span><span style="left:800px">800</span><span style="left:900px">900</span><span style="left:1000px">1000</span><span style="left:1100px">1100</span><span style="left:1200px">1200</span><span style="left:1300px">1300</span><span style="left:1400px">1400</span><span style="left:1500px">1500</span><span style="left:1600px">1600</span><span style="left:1700px">1700</span><span style="left:1800px">1800</span><span style="left:1900px">1900</span><span style="left:2000px">2000</span><span style="left:2100px">2100</span><span style="left:2200px">2200</span><span style="left:2300px">2300</span><span style="left:2400px">2400</span><span style="left:2500px">2500</span><span style="left:2600px">2600</span><span style="left:2700px">2700</span><span style="left:2800px">2800</span><span style="left:2900px">2900</span><span style="left:3000px">3000</span></div></div>
   <section class="hero">
-    <div class="design-canvas" aria-hidden="true"></div>
+    <div class="design-canvas design-canvas--light" aria-hidden="true"></div>
+    <div class="design-canvas design-canvas--dark" aria-hidden="true"></div>
     <div class="hero-left">
       <div class="eyebrow" id="eyebrowText">I DESIGN <span class="eyebrow-word" id="eyebrowWord"><span class="ew-live">THROUGH</span></span></div>
       <h1 class="headline"><span class="word-stage" id="wordStage"><span class="word" data-word="COMPLEXITY" id="wComplexity">COMPLEXITY<span class="dot"></span></span><span class="word" data-word="CLARITY" id="wClarity">CLARITY<span class="dot"></span></span></span><div class="mask-cursor" id="maskCursor"><div class="grad"></div></div></h1>
