@@ -116,7 +116,11 @@
      colour swaps instantly) so the theme toggle never shows a hard "patch" where this pattern snaps
      while the rest of the page is still fading. */
   .design-canvas{position:absolute;top:0;bottom:0;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;z-index:0;pointer-events:none;
-    background-size:40px 40px, 40px 40px;transition:opacity .3s ease;}
+    background-size:40px 40px, 40px 40px;transition:opacity .3s ease;
+    /* dims the grid's own opacity under the text column (roughly where hero-left sits) rather than
+       painting a translucent wash on top of it — no haze, just fainter lines there, crisp elsewhere. */
+    mask-image:linear-gradient(to right, rgba(0,0,0,.6) 0%, rgba(0,0,0,.6) 46%, black 58%);
+    -webkit-mask-image:linear-gradient(to right, rgba(0,0,0,.6) 0%, rgba(0,0,0,.6) 46%, black 58%);}
   .design-canvas--light{
     border-bottom:1px solid #E7E5DF;
     background-image:linear-gradient(to right, rgba(231,229,223,.35) 1px, transparent 1px),
@@ -149,21 +153,9 @@
   .design-ruler__nums span{position:absolute;top:10px;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.02em;color:var(--ink-soft);opacity:.32;transform:translateX(-50%);white-space:nowrap;}
   .design-ruler__cursor{position:absolute;top:0;bottom:0;width:1px;background:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none;}
   .design-ruler.is-live .design-ruler__cursor{opacity:1;}
-  .design-ruler__cursor-tag{position:absolute;top:26px;left:0;transform:translateX(-50%);font-family:var(--font-mono);font-size:7.5px;font-weight:700;color:var(--paper);white-space:nowrap;background:var(--ink);padding:2px 4px;border-radius:3px;}
+  .design-ruler__cursor-tag{position:absolute;top:22px;left:0;transform:translateX(-50%);font-family:var(--font-mono);font-size:7.5px;font-weight:700;color:var(--paper);white-space:nowrap;background:var(--ink);padding:2px 4px;border-radius:3px;}
   @media (max-width:880px){.design-canvas, .design-ruler{display:none;}}
   .hero-left{position:relative;max-width:540px;}
-  /* dims (not erases) the grid under the text column specifically — stays crisp elsewhere (image side, edges);
-     same fixed-colour crossfade approach as the grid/ruler above. */
-  .hero-left::before, .hero-left::after{content:'';position:absolute;top:-24px;left:-28px;right:-28px;bottom:-24px;z-index:0;pointer-events:none;transition:opacity .3s ease;}
-  .hero-left::before{
-    background:linear-gradient(to right, rgba(248,247,244,.55) 0%, rgba(248,247,244,.55) 62%, transparent 100%);
-    opacity:1;}
-  .hero-left::after{
-    background:linear-gradient(to right, rgba(16,16,20,.55) 0%, rgba(16,16,20,.55) 62%, transparent 100%);
-    opacity:0;}
-  :root[data-theme="dark"] .hero-left::before{opacity:0;}
-  :root[data-theme="dark"] .hero-left::after{opacity:1;}
-  .hero-left > *{position:relative;z-index:1;}
   .eyebrow{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:15px;opacity:.75;}
   .eyebrow-word{position:relative;display:inline-block;}
   .ew-live{display:inline-block;}
