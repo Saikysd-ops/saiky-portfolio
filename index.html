@@ -108,6 +108,12 @@
   body:not(.on-work):not(.on-about):not(.on-brand):not(.on-case-supplier):not(.on-case-delivery):not(.on-case-bawsala):not(.on-case-solv):not(.on-case-omni):not(.on-case-scintilla):not(.on-case-supplier-insights):not(.on-case-code-puppy):not(.on-case-onepaw) .tags{border-bottom:none;}
   .tags span{opacity:.55;color:var(--ink-soft);}
   .tags .tag-secondary{opacity:.4;}
+  @media (max-width:760px){
+    .tags{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+      scrollbar-width:none;-ms-overflow-style:none;}
+    .tags::-webkit-scrollbar{display:none;}
+    .tags span{white-space:nowrap;}
+  }
 
   .hero{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;padding:32px 0 20px;align-items:start;}
   /* subtle designer's canvas — a quiet, decorative signal of an underlying layout system.
@@ -154,7 +160,6 @@
   .design-ruler__cursor{position:absolute;top:0;bottom:0;width:1px;background:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none;}
   .design-ruler.is-live .design-ruler__cursor{opacity:1;}
   .design-ruler__cursor-tag{position:absolute;top:22px;left:0;transform:translateX(-50%);font-family:var(--font-mono);font-size:7.5px;font-weight:700;color:var(--paper);white-space:nowrap;background:var(--ink);padding:2px 4px;border-radius:3px;}
-  @media (max-width:880px){.design-canvas, .design-ruler{display:none;}}
   .hero-left{position:relative;max-width:540px;}
   .eyebrow{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:15px;opacity:.75;}
   .eyebrow-word{position:relative;display:inline-block;}
@@ -777,7 +782,7 @@
   .foot2-up:hover .stb-label{opacity:0;transform:scale(.5);}
   .foot2-up:hover .stb-arrow{opacity:1;transform:scale(1);}
   @media (max-width:760px){
-    .foot2-up{justify-self:center;margin-top:8px;}
+    .foot2-up{justify-self:start;margin-top:8px;}
   }
 
   /* THE LAB */
