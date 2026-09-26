@@ -922,17 +922,17 @@
     background:var(--violet);vertical-align:middle;margin:0 2px;}
   .foot2-lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;
     text-transform:uppercase;color:var(--ink-soft);opacity:.75;margin-bottom:14px;}
-  /* explore + social links share this class: a hairline border by default that
-     swaps to the brand gradient on hover, like a thin animated frame. */
-  .foot2-link{display:flex;align-items:center;gap:10px;font-size:14.5px;
-    color:var(--ink);text-decoration:none;margin:3px 0;padding:7px 11px;
-    border-radius:9px;border:.5px solid transparent;
-    background:linear-gradient(var(--paper), var(--paper)) padding-box,
-               linear-gradient(var(--line), var(--line)) border-box;
-    transition:color .2s ease, transform .2s ease;}
-  .foot2-link:hover{color:var(--accent);transform:translateX(2px);
-    background:linear-gradient(var(--paper), var(--paper)) padding-box,
-               linear-gradient(90deg, #3157D5, #7546D8, #C54879, #E46B5D) border-box;}
+  /* explore + social links share this class: a plain hairline underline by default
+     that animates into the brand gradient on hover, rather than a bordered frame. */
+  .foot2-link{position:relative;display:inline-flex;align-items:center;gap:10px;
+    align-self:flex-start;font-size:14.5px;color:var(--ink);text-decoration:none;
+    margin:3px 0;padding:6px 1px;}
+  .foot2-link::after{content:'';position:absolute;left:1px;right:1px;bottom:2px;
+    height:1px;background:var(--line);
+    transition:background .3s ease, height .2s ease;}
+  .foot2-link:hover{color:var(--accent);}
+  .foot2-link:hover::after{height:2px;
+    background:linear-gradient(90deg, #3157D5, #7546D8, #C54879, #E46B5D);}
   .foot2-link svg{width:15px;height:15px;flex-shrink:0;color:var(--ink-soft);
     transition:color .2s ease;}
   .foot2-link:hover svg{color:var(--accent);}
