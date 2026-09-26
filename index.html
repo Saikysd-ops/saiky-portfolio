@@ -107,21 +107,23 @@
   .tags .tag-secondary{opacity:.4;}
 
   .hero{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;padding:32px 0 20px;align-items:start;}
-  /* subtle designer's grid — a quiet, decorative signal of an underlying layout system.
-     Home hero only; purely visual, never intercepts pointer events. */
-  .design-grid{position:absolute;inset:-16px -32px auto -32px;height:calc(100% + 16px);z-index:0;pointer-events:none;overflow:hidden;}
-  .design-grid__cols{position:absolute;inset:0;background-image:linear-gradient(to right, var(--line) 1px, transparent 1px);background-size:calc(100%/12) 100%;opacity:.5;}
-  .design-grid__corner{position:absolute;width:15px;height:15px;opacity:.4;}
-  .design-grid__corner::before,.design-grid__corner::after{content:'';position:absolute;background:var(--ink-soft);}
-  .design-grid__corner::before{width:100%;height:1px;top:0;left:0;}
-  .design-grid__corner::after{width:1px;height:100%;top:0;left:0;}
-  .design-grid__corner--tl{top:16px;left:32px;}
-  .design-grid__corner--tr{top:16px;right:32px;transform:scaleX(-1);}
-  .design-grid__corner--bl{bottom:0;left:32px;transform:scaleY(-1);}
-  .design-grid__corner--br{bottom:0;right:32px;transform:scale(-1,-1);}
-  .design-grid__tag{position:absolute;top:20px;right:36px;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);opacity:.38;}
-  .hero > *:not(.design-grid){position:relative;z-index:1;}
-  @media (max-width:880px){.design-grid{display:none;}}
+  /* subtle designer's canvas — a quiet, decorative signal of an underlying layout system.
+     Home page only; purely visual, fixed full-viewport, never intercepts pointer events. */
+  .design-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(to right, var(--line) 1px, transparent 1px),
+                      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size:40px 40px, 40px 40px;
+    opacity:.5;}
+  #view-home{position:relative;}
+  #view-home > *:not(.design-canvas){position:relative;z-index:1;}
+  .design-ruler{position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
+    height:20px;pointer-events:none;opacity:.55;border-bottom:1px solid var(--line);
+    background-image:repeating-linear-gradient(to right, var(--ink-soft) 0 1px, transparent 1px 10px),
+                      repeating-linear-gradient(to right, var(--ink-soft) 0 1px, transparent 1px 50px);
+    background-size:100% 6px, 100% 11px;
+    background-position:left bottom, left bottom;
+    background-repeat:repeat-x;}
+  @media (max-width:880px){.design-canvas, .design-ruler{display:none;}}
   .hero-left{max-width:540px;}
   .eyebrow{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:15px;opacity:.75;}
   .eyebrow-word{position:relative;display:inline-block;}
@@ -2838,15 +2840,9 @@
   </div>
 
   <div id="view-home">
+  <div class="design-canvas" aria-hidden="true"></div>
+  <div class="design-ruler" aria-hidden="true"></div>
   <section class="hero">
-    <div class="design-grid" aria-hidden="true">
-      <div class="design-grid__cols"></div>
-      <span class="design-grid__corner design-grid__corner--tl"></span>
-      <span class="design-grid__corner design-grid__corner--tr"></span>
-      <span class="design-grid__corner design-grid__corner--bl"></span>
-      <span class="design-grid__corner design-grid__corner--br"></span>
-      <span class="design-grid__tag">Grid · 12col</span>
-    </div>
     <div class="hero-left">
       <div class="eyebrow" id="eyebrowText">I DESIGN <span class="eyebrow-word" id="eyebrowWord"><span class="ew-live">THROUGH</span></span></div>
       <h1 class="headline"><span class="word-stage" id="wordStage"><span class="word" data-word="COMPLEXITY" id="wComplexity">COMPLEXITY<span class="dot"></span></span><span class="word" data-word="CLARITY" id="wClarity">CLARITY<span class="dot"></span></span></span><div class="mask-cursor" id="maskCursor"><div class="grad"></div></div></h1>
