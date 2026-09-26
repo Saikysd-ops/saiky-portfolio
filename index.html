@@ -133,12 +133,12 @@
   .design-ruler__nums span{position:absolute;top:10px;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.02em;color:var(--ink-soft);opacity:.32;transform:translateX(-50%);white-space:nowrap;}
   .design-ruler__cursor{position:absolute;top:0;bottom:0;width:1px;background:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none;}
   .design-ruler.is-live .design-ruler__cursor{opacity:1;}
-  .design-ruler__cursor-tag{position:absolute;top:30px;left:0;transform:translateX(-50%);font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--paper);white-space:nowrap;background:var(--ink);padding:4px 8px;border-radius:5px;box-shadow:0 4px 14px rgba(0,0,0,.18);}
+  .design-ruler__cursor-tag{position:absolute;top:2px;left:0;transform:translateX(-50%);font-family:var(--font-mono);font-size:8px;font-weight:700;color:var(--paper);white-space:nowrap;background:var(--ink);padding:2px 5px;border-radius:3px;}
   @media (max-width:880px){.design-canvas, .design-ruler{display:none;}}
   .hero-left{position:relative;max-width:540px;}
-  /* washes the grid down under the text column specifically — stays crisp elsewhere (image side, edges) */
+  /* dims (not erases) the grid under the text column specifically — stays crisp elsewhere (image side, edges) */
   .hero-left::before{content:'';position:absolute;top:-24px;left:-28px;right:-28px;bottom:-24px;z-index:0;pointer-events:none;
-    background:linear-gradient(to right, var(--paper) 0%, var(--paper) 62%, transparent 100%);}
+    background:linear-gradient(to right, color-mix(in srgb, var(--paper) 55%, transparent) 0%, color-mix(in srgb, var(--paper) 55%, transparent) 62%, transparent 100%);}
   .hero-left > *{position:relative;z-index:1;}
   .eyebrow{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:15px;opacity:.75;}
   .eyebrow-word{position:relative;display:inline-block;}
