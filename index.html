@@ -2469,20 +2469,35 @@
   .contact-label{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--ink-soft);margin-bottom:12px;}
   .contact-links{display:flex;flex-direction:column;gap:12px;align-items:flex-start;}
-  .c-link{color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:8px;
-    border-bottom:1px solid var(--line);padding-bottom:3px;background:none;font-family:var(--font-body);
-    transition:color .2s ease, border-color .2s ease;}
+  /* same hairline + gradient-sweep-on-hover treatment as the footer's Explore/Social
+     links: a static line by default, with a gradient bar that grows in from the left
+     on hover and retreats back out to the right on mouse-leave. */
+  .c-link{position:relative;color:var(--ink);text-decoration:none;display:inline-flex;
+    align-items:center;gap:8px;padding-bottom:3px;background:none;font-family:var(--font-body);
+    transition:color .2s ease;}
+  .c-link::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line);}
+  .c-link::before{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;
+    background:linear-gradient(90deg, #3157D5, #7546D8, #C54879, #E46B5D);
+    transform:scaleX(0);transform-origin:right;
+    transition:transform .45s cubic-bezier(.4,0,.2,1);}
+  .c-link:hover::before{transform:scaleX(1);transform-origin:left;}
   .c-link i{font-style:normal;font-size:15px;display:inline-block;transition:transform .25s ease;}
   .c-arrow{width:.62em;height:.62em;flex-shrink:0;display:inline-block;transition:transform .25s ease;}
   .c-link:hover .c-arrow, .work-all:hover .c-arrow{transform:translate(2px,-2px);}
-  .c-link:hover{color:var(--accent);border-color:var(--accent);}
+  .c-link:hover{color:var(--accent);}
   .c-link:hover i{transform:translate(2px,-2px);}
-  /* email leads; LinkedIn sits quieter beneath it */
+  /* email leads; LinkedIn sits quieter beneath it. The email's own underline lives
+     on .c-text (so it excludes the "Click to copy" hint) — disable .c-link's own. */
   .c-mail{font-size:18px;font-weight:500;cursor:pointer;padding:0;position:relative;
     border:none;color:var(--ink);align-items:baseline;}
-  .c-mail .c-text{border-bottom:1.5px solid var(--line);padding-bottom:4px;
-    transition:border-color .2s ease;}
-  .c-mail:hover .c-text{border-bottom-color:var(--accent);}
+  .c-mail::after, .c-mail::before{content:none;}
+  .c-mail .c-text{position:relative;display:inline-block;padding-bottom:4px;}
+  .c-mail .c-text::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--line);}
+  .c-mail .c-text::before{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;
+    background:linear-gradient(90deg, #3157D5, #7546D8, #C54879, #E46B5D);
+    transform:scaleX(0);transform-origin:right;
+    transition:transform .45s cubic-bezier(.4,0,.2,1);}
+  .c-mail:hover .c-text::before{transform:scaleX(1);transform-origin:left;}
   .c-secondary{font-size:15px;font-weight:400;color:var(--ink-soft);}
   .c-secondary:hover{color:var(--accent);}
   .c-hint{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
