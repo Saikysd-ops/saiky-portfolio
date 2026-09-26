@@ -398,7 +398,7 @@
       linear-gradient(90deg, rgba(58,8,84,0) 34%, rgba(58,8,84,.56) 100%),
       linear-gradient(180deg, rgba(58,8,84,0) 30%, rgba(58,8,84,.16) 100%),
       linear-gradient(104deg,#1E2A9A 0%,#3157D5 22%,#7546D8 46%,#C54879 82%,#D9735F 100%);
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 34px 70px -42px rgba(117,70,216,.55);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 24px 54px -34px rgba(0,0,0,.4);
   }
   .phil-card::before,.phil-card::after{content:'';position:absolute;pointer-events:none;z-index:0;}
   .phil-card::before{inset:-6% -4%;background:var(--phil-waves) center/cover no-repeat;opacity:.95;}
@@ -440,7 +440,7 @@
     .phil-col .ic{transition:transform .5s cubic-bezier(.22,1,.36,1),color .3s ease,filter .3s ease;}
     .flow .arrow{transition:transform .5s cubic-bezier(.22,1,.36,1);}
     .phil-card:hover{transform:translateY(-4px);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 46px 84px -40px rgba(117,70,216,.7);}
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 32px 64px -32px rgba(0,0,0,.46);}
     .phil-card:hover .phil-glow{opacity:1;}
     .phil-card:hover .flow .arrow{transform:translateX(6px);}
     .phil-card:hover .flow .end-dot{animation:philPing 1.8s ease-out infinite;}
@@ -928,11 +928,16 @@
     align-self:flex-start;font-size:14.5px;color:var(--ink);text-decoration:none;
     margin:3px 0;padding:6px 1px;}
   .foot2-link::after{content:'';position:absolute;left:1px;right:1px;bottom:2px;
-    height:1px;background:var(--line);
-    transition:background .3s ease, height .2s ease;}
+    height:1px;background:var(--line);}
+  /* the gradient sweep sits on top of the hairline: grows in from the left on
+     hover, and on mouse-leave retreats back out toward the right rather than
+     just mirroring the same motion in reverse. */
+  .foot2-link::before{content:'';position:absolute;left:1px;right:1px;bottom:2px;
+    height:2px;background:linear-gradient(90deg, #3157D5, #7546D8, #C54879, #E46B5D);
+    transform:scaleX(0);transform-origin:right;
+    transition:transform .45s cubic-bezier(.4,0,.2,1);}
   .foot2-link:hover{color:var(--accent);}
-  .foot2-link:hover::after{height:2px;
-    background:linear-gradient(90deg, #3157D5, #7546D8, #C54879, #E46B5D);}
+  .foot2-link:hover::before{transform:scaleX(1);transform-origin:left;}
   .foot2-link svg{width:15px;height:15px;flex-shrink:0;color:var(--ink-soft);
     transition:color .2s ease;}
   .foot2-link:hover svg{color:var(--accent);}
