@@ -103,6 +103,9 @@
   @keyframes wave{0%,100%{transform:rotate(0deg);}20%{transform:rotate(16deg);}40%{transform:rotate(-10deg);}60%{transform:rotate(14deg);}80%{transform:rotate(-6deg);}}
 
   .tags{display:flex;gap:18px;flex-wrap:wrap;padding:18px 0 6px;border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:12px;color:var(--accent);}
+  /* on the home page the design-ruler sits right below and supplies its own top border,
+     so the plain hashtag divider would just double it up — every other page keeps it. */
+  body:not(.on-work):not(.on-about):not(.on-brand):not(.on-case-supplier):not(.on-case-delivery):not(.on-case-bawsala):not(.on-case-solv):not(.on-case-omni):not(.on-case-scintilla):not(.on-case-supplier-insights):not(.on-case-code-puppy):not(.on-case-onepaw) .tags{border-bottom:none;}
   .tags span{opacity:.55;color:var(--ink-soft);}
   .tags .tag-secondary{opacity:.4;}
 
@@ -111,25 +114,25 @@
      Home hero only (scrolls away with it, not fixed to the page); purely visual, never intercepts pointer events. */
   .design-canvas{position:absolute;top:0;bottom:0;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;z-index:0;pointer-events:none;
     border-bottom:1px solid var(--line);
-    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 70%, transparent) 1px, transparent 1px),
-                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 70%, transparent) 1px, transparent 1px);
+    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 50%, transparent) 1px, transparent 1px),
+                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 50%, transparent) 1px, transparent 1px);
     background-size:40px 40px, 40px 40px;}
   :root[data-theme="dark"] .design-canvas{
-    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 50%, transparent) 1px, transparent 1px),
-                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 50%, transparent) 1px, transparent 1px);}
+    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 35%, transparent) 1px, transparent 1px),
+                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 35%, transparent) 1px, transparent 1px);}
   .hero > *:not(.design-canvas){position:relative;z-index:1;}
   #view-home{position:relative;}
   .design-ruler{position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
-    height:24px;pointer-events:auto;cursor:crosshair;border-top:1px solid var(--line);overflow:hidden;
-    background-image:repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 55%, transparent) 0 1px, transparent 1px 10px),
-                      repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 55%, transparent) 0 1px, transparent 1px 50px);
+    height:24px;pointer-events:none;border-top:1px solid var(--line);overflow:hidden;
+    background-image:repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 38%, transparent) 0 1px, transparent 1px 10px),
+                      repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 38%, transparent) 0 1px, transparent 1px 50px);
     background-size:100% 5px, 100% 9px;
     background-position:left top, left top;
     background-repeat:repeat-x;}
   .design-ruler__nums{position:absolute;inset:0;}
-  .design-ruler__nums span{position:absolute;top:10px;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.02em;color:var(--ink-soft);opacity:.55;transform:translateX(-50%);white-space:nowrap;}
+  .design-ruler__nums span{position:absolute;top:10px;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.02em;color:var(--ink-soft);opacity:.42;transform:translateX(-50%);white-space:nowrap;}
   .design-ruler__cursor{position:absolute;top:0;bottom:0;width:1px;background:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none;}
-  .design-ruler:hover .design-ruler__cursor{opacity:1;}
+  .design-ruler.is-live .design-ruler__cursor{opacity:1;}
   .design-ruler__cursor-tag{position:absolute;top:3px;left:5px;font-family:var(--font-mono);font-size:9px;font-weight:600;color:var(--accent);white-space:nowrap;background:var(--paper);padding:1px 4px;border-radius:2px;border:1px solid var(--line);}
   @media (max-width:880px){.design-canvas, .design-ruler{display:none;}}
   .hero-left{max-width:540px;}
@@ -8255,21 +8258,25 @@ try{
 
 try{
 (function(){
-  /* design ruler — hover shows the scale value under the cursor */
+  /* design ruler — tracks the cursor across the whole hero, not just the ruler strip itself,
+     so the scale readout stays live wherever in the layout you're hovering. */
   const ruler = document.querySelector('.design-ruler');
-  if(!ruler) return;
+  const hero = document.querySelector('.hero');
+  if(!ruler || !hero) return;
   const cursor = document.createElement('div');
   cursor.className = 'design-ruler__cursor';
   const tag = document.createElement('span');
   tag.className = 'design-ruler__cursor-tag';
   cursor.appendChild(tag);
   ruler.appendChild(cursor);
-  ruler.addEventListener('mousemove', (e)=>{
+  hero.addEventListener('mousemove', (e)=>{
     const rect = ruler.getBoundingClientRect();
     const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
     cursor.style.left = x + 'px';
     tag.textContent = Math.round(x) + 'px';
+    ruler.classList.add('is-live');
   });
+  hero.addEventListener('mouseleave', ()=>{ ruler.classList.remove('is-live'); });
 })();
 }catch(e){ console.error('[section error]', e); }
 
