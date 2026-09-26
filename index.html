@@ -114,24 +114,26 @@
      Home hero only (scrolls away with it, not fixed to the page); purely visual, never intercepts pointer events. */
   .design-canvas{position:absolute;top:0;bottom:0;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;z-index:0;pointer-events:none;
     border-bottom:1px solid var(--line);
-    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 32%, transparent) 1px, transparent 1px);
-    background-size:40px 40px;}
+    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 35%, transparent) 1px, transparent 1px),
+                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 35%, transparent) 1px, transparent 1px);
+    background-size:40px 40px, 40px 40px;}
   :root[data-theme="dark"] .design-canvas{
-    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 22%, transparent) 1px, transparent 1px);}
+    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 25%, transparent) 1px, transparent 1px),
+                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 25%, transparent) 1px, transparent 1px);}
   .hero > *:not(.design-canvas){position:relative;z-index:1;}
   #view-home{position:relative;}
   .design-ruler{position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
-    height:24px;pointer-events:none;border-top:1px solid var(--line);overflow:hidden;
+    height:24px;pointer-events:none;border-top:1px solid var(--line);
     background-image:repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 28%, transparent) 0 1px, transparent 1px 10px),
                       repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 28%, transparent) 0 1px, transparent 1px 50px);
     background-size:100% 5px, 100% 9px;
     background-position:left top, left top;
     background-repeat:repeat-x;}
-  .design-ruler__nums{position:absolute;inset:0;}
+  .design-ruler__nums{position:absolute;inset:0;overflow:hidden;}
   .design-ruler__nums span{position:absolute;top:10px;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.02em;color:var(--ink-soft);opacity:.32;transform:translateX(-50%);white-space:nowrap;}
   .design-ruler__cursor{position:absolute;top:0;bottom:0;width:1px;background:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none;}
   .design-ruler.is-live .design-ruler__cursor{opacity:1;}
-  .design-ruler__cursor-tag{position:absolute;top:3px;left:5px;font-family:var(--font-mono);font-size:9px;font-weight:600;color:var(--accent);white-space:nowrap;background:var(--paper);padding:1px 4px;border-radius:2px;border:1px solid var(--line);}
+  .design-ruler__cursor-tag{position:absolute;top:30px;left:0;transform:translateX(-50%);font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--paper);white-space:nowrap;background:var(--ink);padding:4px 8px;border-radius:5px;box-shadow:0 4px 14px rgba(0,0,0,.18);}
   @media (max-width:880px){.design-canvas, .design-ruler{display:none;}}
   .hero-left{max-width:540px;}
   .eyebrow{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:15px;opacity:.75;}
@@ -8256,8 +8258,9 @@ try{
 
 try{
 (function(){
-  /* design ruler — tracks the cursor across the whole hero, not just the ruler strip itself,
-     so the scale readout stays live wherever in the layout you're hovering. */
+  /* design ruler — tracks the cursor across the full width of the page (matching the
+     grid/ruler's own full-bleed span), gated to the hero's vertical range, so the scale
+     readout stays live wherever in the layout you're hovering, not just over the strip. */
   const ruler = document.querySelector('.design-ruler');
   const hero = document.querySelector('.hero');
   if(!ruler || !hero) return;
@@ -8267,14 +8270,18 @@ try{
   tag.className = 'design-ruler__cursor-tag';
   cursor.appendChild(tag);
   ruler.appendChild(cursor);
-  hero.addEventListener('mousemove', (e)=>{
+  document.addEventListener('mousemove', (e)=>{
+    const heroRect = hero.getBoundingClientRect();
+    if(e.clientY < heroRect.top || e.clientY > heroRect.bottom){
+      ruler.classList.remove('is-live');
+      return;
+    }
     const rect = ruler.getBoundingClientRect();
     const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
     cursor.style.left = x + 'px';
     tag.textContent = Math.round(x) + 'px';
     ruler.classList.add('is-live');
   });
-  hero.addEventListener('mouseleave', ()=>{ ruler.classList.remove('is-live'); });
 })();
 }catch(e){ console.error('[section error]', e); }
 
