@@ -728,7 +728,11 @@
 
   /* brand cursor — solid dot with a trailing ring */
   @media (hover:hover) and (pointer:fine){
-    html, body, a, button, .work-card, [data-view], [data-scroll]{cursor:none;}
+    html, body{cursor:none;}
+    /* links/buttons keep the native pointer/hand cursor — the custom ring gets
+       out of the way (see .cursor-active below) rather than swelling over it.
+       Matches the same element list the cursor-active JS hit-tests below. */
+    a, button, .work-card, [data-view], [data-scroll], input, .c-mail, .oc, .pill-tag{cursor:pointer;}
     .cursor-dot, .cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
       border-radius:50%;opacity:0;transition:opacity .25s ease;}
     .cursor-dot{width:12px;height:12px;background:var(--violet);
@@ -745,11 +749,10 @@
     /* over dark or violet surfaces the cursor flips to white */
     body.cursor-invert .cursor-dot{background:#fff;}
     body.cursor-invert .cursor-ring{border-color:rgba(255,255,255,.85);}
-    body.cursor-invert.cursor-active .cursor-ring{border-color:#fff;background:rgba(255,255,255,.18);}
-    /* over anything interactive the ring swells and softens */
-    body.cursor-active .cursor-dot{width:8px;height:8px;}
-    body.cursor-active .cursor-ring{width:64px;height:64px;
-      border-color:var(--accent);background:color-mix(in srgb, var(--violet) 12%, transparent);}
+    /* over anything interactive: shrink to a small dot and drop the ring
+       entirely, since the native pointer/hand cursor takes over here. */
+    body.cursor-active .cursor-dot{width:6px;height:6px;}
+    body.cursor-active .cursor-ring{opacity:0;}
     /* pressed */
     body.cursor-down .cursor-ring{width:34px;height:34px;}
     :root[data-theme="dark"] .cursor-dot{background:#FAF9F6;}
