@@ -110,21 +110,27 @@
   /* subtle designer's canvas — a quiet, decorative signal of an underlying layout system.
      Home hero only (scrolls away with it, not fixed to the page); purely visual, never intercepts pointer events. */
   .design-canvas{position:absolute;top:0;bottom:0;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;z-index:0;pointer-events:none;
-    background-image:linear-gradient(to right, var(--line) 1px, transparent 1px),
-                      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-    background-size:40px 40px, 40px 40px;
-    opacity:.28;}
+    border-bottom:1px solid var(--line);
+    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 70%, transparent) 1px, transparent 1px),
+                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 70%, transparent) 1px, transparent 1px);
+    background-size:40px 40px, 40px 40px;}
+  :root[data-theme="dark"] .design-canvas{
+    background-image:linear-gradient(to right, color-mix(in srgb, var(--line) 50%, transparent) 1px, transparent 1px),
+                      linear-gradient(to bottom, color-mix(in srgb, var(--line) 50%, transparent) 1px, transparent 1px);}
   .hero > *:not(.design-canvas){position:relative;z-index:1;}
   #view-home{position:relative;}
   .design-ruler{position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
-    height:24px;pointer-events:none;opacity:.5;border-top:1px solid var(--line);overflow:hidden;
-    background-image:repeating-linear-gradient(to right, var(--ink-soft) 0 1px, transparent 1px 10px),
-                      repeating-linear-gradient(to right, var(--ink-soft) 0 1px, transparent 1px 50px);
+    height:24px;pointer-events:auto;cursor:crosshair;border-top:1px solid var(--line);overflow:hidden;
+    background-image:repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 55%, transparent) 0 1px, transparent 1px 10px),
+                      repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) 55%, transparent) 0 1px, transparent 1px 50px);
     background-size:100% 5px, 100% 9px;
     background-position:left top, left top;
     background-repeat:repeat-x;}
   .design-ruler__nums{position:absolute;inset:0;}
-  .design-ruler__nums span{position:absolute;top:10px;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.02em;color:var(--ink-soft);transform:translateX(-50%);white-space:nowrap;}
+  .design-ruler__nums span{position:absolute;top:10px;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.02em;color:var(--ink-soft);opacity:.55;transform:translateX(-50%);white-space:nowrap;}
+  .design-ruler__cursor{position:absolute;top:0;bottom:0;width:1px;background:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none;}
+  .design-ruler:hover .design-ruler__cursor{opacity:1;}
+  .design-ruler__cursor-tag{position:absolute;top:3px;left:5px;font-family:var(--font-mono);font-size:9px;font-weight:600;color:var(--accent);white-space:nowrap;background:var(--paper);padding:1px 4px;border-radius:2px;border:1px solid var(--line);}
   @media (max-width:880px){.design-canvas, .design-ruler{display:none;}}
   .hero-left{max-width:540px;}
   .eyebrow{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:15px;opacity:.75;}
@@ -317,7 +323,7 @@
   .quote-panel .desc{font-size:13px;color:var(--ink-soft);line-height:1.6;display:block;}
 
   /* IMPACT */
-  .impact{border-top:1px solid var(--line);padding-bottom:53px;}
+  .impact{padding-bottom:53px;}
   .impact .head{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;opacity:.75;margin-bottom:22px;line-height:1.6;}
   .impact .head b{color:var(--accent);font-weight:500;}
   .impact .lead{font-family:var(--font-display);font-size:clamp(20px,2.4vw,26px);color:var(--ink);margin:0 0 8px;}
@@ -8244,6 +8250,26 @@ try{
   }
   show(0);
   setInterval(()=>{ i = (i+1) % GREETINGS.length; show(i); }, 5000);
+})();
+}catch(e){ console.error('[section error]', e); }
+
+try{
+(function(){
+  /* design ruler — hover shows the scale value under the cursor */
+  const ruler = document.querySelector('.design-ruler');
+  if(!ruler) return;
+  const cursor = document.createElement('div');
+  cursor.className = 'design-ruler__cursor';
+  const tag = document.createElement('span');
+  tag.className = 'design-ruler__cursor-tag';
+  cursor.appendChild(tag);
+  ruler.appendChild(cursor);
+  ruler.addEventListener('mousemove', (e)=>{
+    const rect = ruler.getBoundingClientRect();
+    const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+    cursor.style.left = x + 'px';
+    tag.textContent = Math.round(x) + 'px';
+  });
 })();
 }catch(e){ console.error('[section error]', e); }
 
