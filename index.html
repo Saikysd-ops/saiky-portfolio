@@ -1238,6 +1238,30 @@
     border-radius:50%;background:linear-gradient(135deg,#3157D5,#E46B5D);
     margin:0 2px;vertical-align:middle;}
 
+  /* mobile-only stepper fallback (see the HTML comment beside it for why) —
+     a plain numbered vertical timeline, hidden on desktop where the circular
+     diagram already shows the same four steps. */
+  .dot-steps{display:none;}
+  @media (max-width:760px){
+    .dot-badge-scroll{display:none;}
+    .dot-steps{display:block;margin:4px 0 0;padding:0;list-style:none;}
+  }
+  .dot-step{display:flex;gap:16px;position:relative;padding-bottom:28px;}
+  .dot-step:last-child{padding-bottom:0;}
+  .dot-step::before{content:'';position:absolute;left:15px;top:32px;bottom:0;
+    width:1px;background:var(--line);}
+  .dot-step:last-child::before{display:none;}
+  .dot-step-marker{flex:0 0 32px;width:32px;height:32px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;position:relative;z-index:1;
+    border:1.6px solid currentColor;background:var(--paper);}
+  .dot-step-num{font-family:var(--font-mono);font-size:12px;font-weight:700;color:currentColor;}
+  .dot-step-body{flex:1;padding-top:3px;}
+  .dot-step-label{font-family:var(--font-body);font-weight:800;font-size:14.5px;
+    letter-spacing:.01em;text-transform:uppercase;color:var(--ink);margin-bottom:5px;}
+  .dot-step-desc{font-size:14px;font-weight:600;color:var(--ink);margin:0 0 5px;line-height:1.45;}
+  .dot-step-sub{font-family:var(--font-mono);font-size:10px;font-weight:600;
+    letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);opacity:.7;}
+
   /* IN THEIR WORDS — full-screen testimonial carousel, a quiet brand
      moment before the closing CTA. Signature gradient comes back as
      the avatar's frame. Built for 1-5 slides; nav/dots hide themselves
@@ -3361,6 +3385,44 @@
         </svg>
       </div>
       </div>
+
+      <!-- mobile-only fallback: the circular diagram's text in SVG user-units
+           can't shrink to phone width and stay legible, so under 760px this
+           plain vertical stepper replaces it entirely (see the CSS toggle). -->
+      <ol class="dot-steps">
+        <li class="dot-step" style="color:#3157D5">
+          <div class="dot-step-marker"><span class="dot-step-num">01</span></div>
+          <div class="dot-step-body">
+            <div class="dot-step-label">Understand</div>
+            <p class="dot-step-desc">Find the signal inside the noise.</p>
+            <div class="dot-step-sub">Users &#183; business &#183; context</div>
+          </div>
+        </li>
+        <li class="dot-step" style="color:#7546D8">
+          <div class="dot-step-marker"><span class="dot-step-num">02</span></div>
+          <div class="dot-step-body">
+            <div class="dot-step-label">Structure</div>
+            <p class="dot-step-desc">Turn complexity into a system.</p>
+            <div class="dot-step-sub">Architecture &#183; workflows</div>
+          </div>
+        </li>
+        <li class="dot-step" style="color:#C54879">
+          <div class="dot-step-marker"><span class="dot-step-num">03</span></div>
+          <div class="dot-step-body">
+            <div class="dot-step-label">Simplify</div>
+            <p class="dot-step-desc">Remove what doesn&#8217;t create value.</p>
+            <div class="dot-step-sub">Signal &#183; cognitive load</div>
+          </div>
+        </li>
+        <li class="dot-step" style="color:#E46B5D">
+          <div class="dot-step-marker"><span class="dot-step-num">04</span></div>
+          <div class="dot-step-body">
+            <div class="dot-step-label">Clarity</div>
+            <p class="dot-step-desc">Make the next decision obvious.</p>
+            <div class="dot-step-sub">Usable &#183; measurable</div>
+          </div>
+        </li>
+      </ol>
       <p class="dot-signature-tagline">A small dot can change perspective <span class="dot-signature-tagline__dot"></span> Saiky Desai</p>
     </div>
 
@@ -6488,6 +6550,29 @@ h2{font-size:46px;line-height:1;font-weight:500;letter-spacing:-.03em}
 .dot-signature-tagline__dot{display:inline-block;width:5px;height:5px;
   border-radius:50%;background:linear-gradient(135deg,#3157D5,#E46B5D);
   margin:0 2px;vertical-align:middle;}
+
+/* mobile-only stepper fallback — see the matching comment on the Work page */
+.dot-steps{display:none;}
+@media (max-width:760px){
+  .dot-badge-scroll{display:none;}
+  .dot-steps{display:block;margin:4px 0 0;padding:0;list-style:none;}
+}
+.dot-step{display:flex;gap:16px;position:relative;padding-bottom:28px;}
+.dot-step:last-child{padding-bottom:0;}
+.dot-step::before{content:'';position:absolute;left:15px;top:32px;bottom:0;
+  width:1px;background:var(--line);}
+.dot-step:last-child::before{display:none;}
+.dot-step-marker{flex:0 0 32px;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;position:relative;z-index:1;
+  border:1.6px solid currentColor;background:var(--paper);}
+.dot-step-num{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:700;color:currentColor;}
+.dot-step-body{flex:1;padding-top:3px;}
+.dot-step-label{font-family:"Satoshi",sans-serif;font-weight:800;font-size:14.5px;
+  letter-spacing:.01em;text-transform:uppercase;color:var(--ink);margin-bottom:5px;}
+.dot-step-desc{font-size:14px;font-weight:600;color:var(--ink);margin:0 0 5px;line-height:1.45;}
+.dot-step-sub{font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--slate);opacity:.7;}
+
 h3{font-size:18px;line-height:1.2}
 .mono{font-family:"IBM Plex Mono",monospace}
 .muted{color:var(--slate)}
@@ -6874,6 +6959,42 @@ h3{font-size:18px;line-height:1.2}
       </svg>
     </div>
     </div>
+
+    <!-- mobile-only fallback: see the matching comment on the Work page -->
+    <ol class="dot-steps">
+      <li class="dot-step" style="color:#3157D5">
+        <div class="dot-step-marker"><span class="dot-step-num">01</span></div>
+        <div class="dot-step-body">
+          <div class="dot-step-label">Understand</div>
+          <p class="dot-step-desc">Find the signal inside the noise.</p>
+          <div class="dot-step-sub">Users &#183; business &#183; context</div>
+        </div>
+      </li>
+      <li class="dot-step" style="color:#7546D8">
+        <div class="dot-step-marker"><span class="dot-step-num">02</span></div>
+        <div class="dot-step-body">
+          <div class="dot-step-label">Structure</div>
+          <p class="dot-step-desc">Turn complexity into a system.</p>
+          <div class="dot-step-sub">Architecture &#183; workflows</div>
+        </div>
+      </li>
+      <li class="dot-step" style="color:#C54879">
+        <div class="dot-step-marker"><span class="dot-step-num">03</span></div>
+        <div class="dot-step-body">
+          <div class="dot-step-label">Simplify</div>
+          <p class="dot-step-desc">Remove what doesn&#8217;t create value.</p>
+          <div class="dot-step-sub">Signal &#183; cognitive load</div>
+        </div>
+      </li>
+      <li class="dot-step" style="color:#E46B5D">
+        <div class="dot-step-marker"><span class="dot-step-num">04</span></div>
+        <div class="dot-step-body">
+          <div class="dot-step-label">Clarity</div>
+          <p class="dot-step-desc">Make the next decision obvious.</p>
+          <div class="dot-step-sub">Usable &#183; measurable</div>
+        </div>
+      </li>
+    </ol>
     <p class="dot-signature-tagline">A small dot can change perspective <span class="dot-signature-tagline__dot"></span> Saiky Desai</p>
   </div>
 
