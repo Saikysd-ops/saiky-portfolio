@@ -7824,10 +7824,22 @@ try{
       const setActive = (id)=>{
         items.forEach(a=>a.classList.toggle('is-active', a.getAttribute('href') === id));
       };
+      /* Reacting to whichever entry the observer happens to report last in a
+         batch is unreliable — that order isn't guaranteed to match the page's
+         top-to-bottom order, so a section could flash active out of turn right
+         as the next one's edge enters the band. Instead, track every
+         section's own visibility persistently and always resolve to the
+         last (i.e. furthest-scrolled-into) one still inside the band — that
+         stays correctly pinned to the section actually being read until it's
+         genuinely scrolled past. */
+      const visible = new Set();
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(en=>{
-          if(en.isIntersecting) setActive('#'+en.target.id);
+          if(en.isIntersecting) visible.add(en.target); else visible.delete(en.target);
         });
+        let current = null;
+        sections.forEach(s=>{ if(visible.has(s)) current = s; });
+        if(current) setActive('#'+current.id);
       }, {rootMargin:'-15% 0px -55% 0px', threshold:0});
       sections.forEach(s=>io.observe(s));
     }catch(e){ console.error('[case jumpnav]', e); }
