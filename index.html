@@ -116,6 +116,11 @@
   }
 
   .hero{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;padding:32px 0 20px;align-items:start;}
+  /* hero (and its design-canvas grid) fills the rest of the first screen, so the grid runs all the way
+     down to where the next section begins. --hero-top is the hero's page offset, set in JS. */
+  #view-home .hero{min-height:calc(100svh - var(--hero-top, 190px) + 170px);}
+  /* the impact section's top padding would leave a grid-less gap under the hero — keep it tight so the grid meets the next heading */
+  #view-home .hero + .impact{padding-top:24px;}
   /* subtle designer's canvas — a quiet, decorative signal of an underlying layout system.
      Home hero only (scrolls away with it, not fixed to the page); purely visual, never intercepts pointer events.
      Light/dark are two stacked, fixed-colour layers crossfaded by opacity (rather than one layer whose
@@ -8999,5 +9004,20 @@ setActive(0); startRotation();
 })();
 }catch(e){ console.error('[phil card]', e); }</script>
 <script src="orbit/orbit.js" defer></script>
+<script>
+  (function(){
+    function fit(){
+      var h=document.querySelector('#view-home .hero');
+      if(!h||!h.offsetParent) return;
+      var top=h.getBoundingClientRect().top+window.scrollY;
+      document.documentElement.style.setProperty('--hero-top', Math.round(top)+'px');
+    }
+    window.addEventListener('load', fit);
+    window.addEventListener('resize', fit);
+    document.addEventListener('DOMContentLoaded', fit);
+    // home can start hidden (deep link to another view) — re-measure after in-page navigation
+    document.addEventListener('click', function(){ setTimeout(fit, 60); });
+  })();
+</script>
 </body>
 </html>
