@@ -119,6 +119,8 @@
   /* hero (and its design-canvas grid) fills the rest of the first screen, so the grid runs all the way
      down to where the next section begins. --hero-top is the hero's page offset, set in JS. */
   #view-home .hero{min-height:calc(100svh - var(--hero-top, 190px) + 10px);}
+  /* laptop screens (e.g. MacBook Pro): hero content is taller than the screen, so give the CTAs room above the grid's bottom edge */
+  @media (min-width:861px){ #view-home .hero{padding-bottom:64px;} }
   /* 70px gap between the bottom of the grid and the Latest Impact heading */
   #view-home .hero + .impact{padding-top:70px;}
   /* subtle designer's canvas — a quiet, decorative signal of an underlying layout system.
