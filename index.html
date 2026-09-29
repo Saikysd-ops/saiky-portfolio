@@ -247,8 +247,11 @@
     .hero-left .bio.statement{margin-bottom:22px;}
     /* ~36px between the CTA row and the hero's bottom edge (with the hero's 20px bottom padding) */
     .hero-left .cta-row{margin-bottom:16px;}
-    /* space above the rotating quote on the right (unchanged) */
-    .hero-right .quote-panel{margin-top:86px;}
+    /* illustration +8% (416 → 449px), right edge flush with the "Let's talk" button;
+       caption and rotating quote centred under it, quote nudged up to make room */
+    .hero-right .portrait-frame{max-width:449px;margin:0 0 26px auto;}
+    .hero-right .portrait-caption{max-width:449px;margin-left:auto;}
+    .hero-right .quote-panel{max-width:449px;margin:26px 0 0 auto;}
   }
   .btn{font-family:var(--font-body);font-size:15px;font-weight:700;padding:18px 36px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease;background:var(--paper-raised);color:var(--ink);text-decoration:none;}
   .btn-primary{background:var(--violet);color:#fff;border-color:var(--violet);
