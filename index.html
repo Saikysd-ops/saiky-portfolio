@@ -119,6 +119,8 @@
   /* hero (and its design-canvas grid) fills the rest of the first screen, so the grid runs all the way
      down to where the next section begins. --hero-top is the hero's page offset, set in JS. */
   #view-home .hero{min-height:calc(100svh - var(--hero-top, 190px) + 10px);}
+  /* MacBook Pro viewports: end the grid two rows (80px) earlier. min-height only — content still sets the height when taller, so the CTA is never cut off */
+  @media (min-width:861px) and (max-width:1800px) and (max-height:1120px){ #view-home .hero{min-height:calc(100svh - var(--hero-top, 190px) - 70px);} }
   /* 70px gap between the bottom of the grid and the Latest Impact heading */
   #view-home .hero + .impact{padding-top:70px;}
   /* subtle designer's canvas — a quiet, decorative signal of an underlying layout system.
