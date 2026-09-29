@@ -237,14 +237,17 @@
   .text-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
   .hero-left .cta-row{margin-bottom:30px;}
   /* two-column hero: one spacing rhythm for the lower half — 28px around each divider, a tight label/text pair,
-     then 36px before the statement and 28px before the CTAs (vertical margins collapse, so each value is the real gap) */
+     then ~26px before the statement and ~22px before the CTAs (vertical margins collapse, so each value is the real gap) */
   @media (min-width:861px){
     .hero-left .hero-rule{margin:28px 0;}
     .hero-left .hero-stats{margin-bottom:28px;}
     .hero-left .hero-label{margin-bottom:10px;}
-    .hero-left .hero-stakeholders{margin-bottom:36px;}
-    .hero-left .bio.statement{margin-bottom:28px;}
-    /* keep the rotating quote's bottom level with the CTA row */
+    .hero-left .hero-stats + .hero-rule{margin-bottom:22px;}
+    .hero-left .hero-stakeholders{margin-bottom:26px;}
+    .hero-left .bio.statement{margin-bottom:22px;}
+    /* ~36px between the CTA row and the hero's bottom edge (with the hero's 20px bottom padding) */
+    .hero-left .cta-row{margin-bottom:16px;}
+    /* space above the rotating quote on the right (unchanged) */
     .hero-right .quote-panel{margin-top:86px;}
   }
   .btn{font-family:var(--font-body);font-size:15px;font-weight:700;padding:18px 36px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease;background:var(--paper-raised);color:var(--ink);text-decoration:none;}
