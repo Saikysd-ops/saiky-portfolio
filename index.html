@@ -236,8 +236,17 @@
   .text-link .cta-arrow{transition:transform .2s ease;}
   .text-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
   .hero-left .cta-row{margin-bottom:30px;}
-  /* two-column hero: tighten the gaps above the CTAs so the button row's bottom lines up with the rotating quote on the right */
-  @media (min-width:861px){ .hero-left .hero-stakeholders{margin-bottom:18px;} .hero-left .bio.statement{margin-bottom:20px;} }
+  /* two-column hero: one spacing rhythm for the lower half — 28px around each divider, a tight label/text pair,
+     then 36px before the statement and 28px before the CTAs (vertical margins collapse, so each value is the real gap) */
+  @media (min-width:861px){
+    .hero-left .hero-rule{margin:28px 0;}
+    .hero-left .hero-stats{margin-bottom:28px;}
+    .hero-left .hero-label{margin-bottom:10px;}
+    .hero-left .hero-stakeholders{margin-bottom:36px;}
+    .hero-left .bio.statement{margin-bottom:28px;}
+    /* keep the rotating quote's bottom level with the CTA row */
+    .hero-right .quote-panel{margin-top:86px;}
+  }
   .btn{font-family:var(--font-body);font-size:15px;font-weight:700;padding:18px 36px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease;background:var(--paper-raised);color:var(--ink);text-decoration:none;}
   .btn-primary{background:var(--violet);color:#fff;border-color:var(--violet);
     box-shadow:0 0 0 transparent;transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, background .2s ease;}
