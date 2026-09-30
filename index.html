@@ -1378,37 +1378,36 @@
     letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);opacity:.7;}
 
   /* IN THEIR WORDS — full-screen testimonial carousel, a quiet brand
-     moment before the closing CTA. Signature gradient comes back as
-     the avatar's frame. Built for 1-5 slides; nav/dots hide themselves
+     moment before the closing CTA, set as an editorial spread (no card,
+     no avatar frame). Built for 1-5 slides; nav/dots hide themselves
      automatically when there's only one. */
   .testimonials-sec{position:relative;min-height:100vh;display:flex;flex-direction:column;
     align-items:center;justify-content:center;padding:80px 32px;overflow:hidden;
     text-align:center;border-top:1px solid var(--line);}
   .testimonials-sec > *{position:relative;z-index:1;}
-  .testi-inner{display:flex;flex-direction:column;align-items:center;transform:translateY(-70px);}
-  .testimonials-sec .eyebrow-lbl{margin-bottom:36px;}
-  .testi-track{position:relative;width:100%;max-width:800px;}
+  .testi-inner{display:flex;flex-direction:column;align-items:center;}
+  .testimonials-sec .eyebrow-lbl{margin-bottom:48px;}
+  .testi-track{position:relative;width:100%;max-width:920px;}
   .testi-slide{display:none;flex-direction:column;align-items:center;}
   .testi-slide.is-active{display:flex;animation:testiIn .6s cubic-bezier(.22,1,.36,1);}
   @keyframes testiIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
   @media (prefers-reduced-motion:reduce){.testi-slide.is-active{animation:none;}}
   .testi-quote{font-family:var(--font-display);font-style:italic;font-weight:400;
     font-size:clamp(21px,2.6vw,32px);line-height:1.48;color:var(--ink);
-    max-width:780px;margin:0 0 12px;}
-  .testi-avatar-wrap{width:88px;height:88px;margin-bottom:20px;border-radius:16px;padding:2px;
-    background:linear-gradient(135deg,#3157D5,#7546D8,#C54879,#E46B5D);}
-  .testi-avatar{display:block;width:100%;height:100%;border-radius:14px;object-fit:cover;
-    background:var(--paper);}
+    max-width:900px;margin:0 0 36px;}
+  /* editorial attribution: small plain portrait, name and role directly beneath — no frame */
+  .testi-avatar-wrap{width:64px;height:64px;margin-bottom:12px;border-radius:50%;overflow:hidden;}
+  .testi-avatar{display:block;width:100%;height:100%;object-fit:cover;background:var(--paper);}
   .testi-name{font-family:var(--font-body);font-weight:800;font-size:18px;
     letter-spacing:-.005em;color:var(--ink);}
   .testi-title{font-family:var(--font-body);font-size:14px;color:var(--ink-soft);margin-top:3px;}
-  .testi-dots{display:flex;gap:9px;margin-top:44px;}
+  .testi-dots{display:flex;gap:9px;margin-top:56px;}
   .testi-dot{width:7px;height:7px;border-radius:50%;background:var(--line);
     border:none;padding:0;cursor:pointer;transition:background .25s ease,transform .25s ease;}
   .testi-dot.is-active{background:var(--accent);transform:scale(1.3);}
   .testimonials-sec[data-count="1"] .testi-dots,
   .testimonials-sec[data-count="1"] .testi-nav{display:none;}
-  .testi-nav{position:absolute;top:calc(50% - 70px);transform:translateY(-50%);
+  .testi-nav{position:absolute;top:50%;transform:translateY(-50%);
     width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     background:var(--paper-raised);border:1px solid var(--line);color:var(--ink);
     cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;z-index:2;}
@@ -1419,8 +1418,7 @@
   @media (max-width:760px){
     .testi-nav{display:none;}
     .testimonials-sec{min-height:auto;padding:64px 24px;}
-    .testi-inner{transform:translateY(-32px);}
-    .testi-avatar-wrap{width:76px;height:76px;}
+    .testi-avatar-wrap{width:56px;height:56px;}
     .testi-name{font-size:16.5px;}
   }
   @media (max-width:480px){
