@@ -817,15 +817,15 @@
   /* footer "up" button — a plain static round button sitting inline with the
      Identity/Explore/Social columns (not fixed, no scroll-progress ring). Hover
      swaps the "Up" label for an arrow. */
-  /* matches the site's buttons: 62px, 1.5px ink stroke, bold body label; on hover it fills solid ink
-     with a paper-coloured arrow — the same dot→circle language as the .btn-orb CTAs */
+  /* matches the site's buttons: 62px, 1.5px ink stroke, bold body label; on hover it fills with the brand
+     purple and shows a white arrow, like the primary CTAs */
   .foot2-up{width:62px;height:62px;border-radius:50%;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;position:relative;
     align-self:center;justify-self:end;
     background:var(--paper-raised);border:1.5px solid var(--ink);padding:0;cursor:pointer;
     font-family:var(--font-body);font-size:15px;font-weight:700;color:var(--ink);
     transition:background .25s ease, color .25s ease, border-color .25s ease;}
-  .foot2-up:hover, .foot2-up:focus-visible{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+  .foot2-up:hover, .foot2-up:focus-visible{background:var(--violet);border-color:var(--violet);color:#fff;}
   .foot2-up:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
   .foot2-up .stb-label, .foot2-up .stb-arrow{transition:opacity .2s ease, transform .2s ease;}
   .foot2-up .stb-arrow{position:absolute;width:16px;height:16px;opacity:0;transform:scale(.5);}
