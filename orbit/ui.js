@@ -194,15 +194,32 @@
 
     var turn = el('div', 'orbit-turn');
     turn.appendChild(el('p', 'orbit-q', q));
+    /* "ORBIT is thinking" micro-interaction: the three-stone mark turns slowly, then settles into a
+       solid orb ("Found something"), then the answer. The answer is computed immediately — this
+       is only a ~0.85s beat (skipped entirely with reduced motion), never a fake wait. */
     var a = el('div', 'orbit-a is-thinking');
-    a.appendChild(el('span', 'orbit-thinking'));
+    var status = el('div', 'orbit-status');
+    status.appendChild(thinkingMark());
+    var label = el('span', 'orbit-status__txt', 'Orbit is thinking');
+    status.appendChild(label);
+    a.appendChild(status);
     turn.appendChild(a);
     refs.turns.appendChild(turn);
+    refs.send.classList.add('is-thinking');
     scrollToTurn(turn);
 
+    var out;
+    try { out = produce(); } catch (e) { out = { blocks: [{ t: 'p', text: K.ERROR_LINE }], followups: [] }; }
+    var THINK = reduced() ? 0 : 560, FOUND = reduced() ? 0 : 300;
+
     root.setTimeout(function () {
-      var out;
-      try { out = produce(); } catch (e) { out = { blocks: [{ t: 'p', text: K.ERROR_LINE }], followups: [] }; }
+      status.classList.add('is-found'); label.textContent = 'Found something';
+      refs.send.classList.add('is-found');
+      root.setTimeout(render, FOUND);
+    }, THINK);
+
+    function render() {
+      refs.send.classList.remove('is-thinking', 'is-found');
       var ans = el('div', 'orbit-a');
       var body = el('div', 'orbit-a-body');
       out.blocks.forEach(function (b) { body.appendChild(renderBlock(b)); });
@@ -215,7 +232,21 @@
       state.busy = false;
       refs.panel.classList.remove('is-busy');
       refs.send.disabled = !refs.input.value.trim();
-    }, reduced() ? 0 : 380);
+    }
+  }
+
+  /* the three-stone brand mark (same ellipses as the site logo) used by the thinking state */
+  function thinkingMark() {
+    var NS = 'http://www.w3.org/2000/svg';
+    var s = doc.createElementNS(NS, 'svg');
+    s.setAttribute('viewBox', '0 0 40 46'); s.setAttribute('class', 'orbit-stones'); s.setAttribute('aria-hidden', 'true');
+    [[20, 6.25, 8.75, 4.17], [20, 18.75, 12.92, 6.25], [20, 35, 17.92, 8.33]].forEach(function (e, i) {
+      var n = doc.createElementNS(NS, 'ellipse');
+      n.setAttribute('cx', e[0]); n.setAttribute('cy', e[1]); n.setAttribute('rx', e[2]); n.setAttribute('ry', e[3]);
+      n.setAttribute('class', 'orbit-stone orbit-stone--' + (i + 1));
+      s.appendChild(n);
+    });
+    return s;
   }
 
   function askText(text) {
@@ -314,6 +345,8 @@
     input.setAttribute('enterkeyhint', 'send'); input.setAttribute('autocapitalize', 'sentences'); input.setAttribute('spellcheck', 'true');
     var send = el('button', 'orbit-send'); send.type = 'submit'; send.setAttribute('aria-label', 'Send'); send.disabled = true;
     send.appendChild(svg('M5 12h14M13 6l6 6-6 6'));
+    var sendMark = thinkingMark(); sendMark.classList.add('orbit-send__stones'); send.appendChild(sendMark);
+    send.appendChild(el('span', 'orbit-send__dot'));
     var field = el('div', 'orbit-field');
     field.appendChild(input); field.appendChild(send);
     form.appendChild(field);
