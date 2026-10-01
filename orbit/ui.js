@@ -121,15 +121,22 @@
         return renderCard(b.id, { detail: true, more: b.more });
       case 'rows':
         ul = el('ul', 'orbit-rows');
-        b.ids.forEach(function (id) {
+        b.ids.forEach(function (id, idx) {
           var c = K.CASES[id];
           li = el('li');
           var a = el('a', 'orbit-row');
           a.setAttribute('href', caseHref(c));
-          var left = el('span');
+          a.appendChild(el('span', 'orbit-row-n', (idx < 9 ? '0' : '') + (idx + 1)));
+          var left = el('span', 'orbit-row-main');
           left.appendChild(el('span', 'orbit-row-t', c.title));
           left.appendChild(el('span', 'orbit-row-m', c.meta + (c.nda ? ' · NDA' : '')));
-          a.appendChild(left); a.appendChild(arrow());
+          a.appendChild(left);
+          /* the ORBIT dot drifts toward the project on hover, then the arrow appears */
+          var end = el('span', 'orbit-row-end'); end.setAttribute('aria-hidden', 'true');
+          end.appendChild(el('span', 'orbit-row-dot')); end.appendChild(el('span', 'orbit-arrow', '↗'));
+          a.appendChild(end);
+          a.addEventListener('pointerenter', function () { mood('curious'); });
+          a.addEventListener('pointerleave', function () { mood(refs.input === doc.activeElement ? 'curious' : 'idle'); });
           a.setAttribute('aria-label', c.title + (c.nda ? ' (public overview)' : ''));
           bindNav(a, { view: c.view, hash: c.hash });
           li.appendChild(a); ul.appendChild(li);
@@ -159,8 +166,8 @@
   function renderFollowups(list) {
     if (!list || !list.length) return null;
     var wrap = el('div', 'orbit-next');
-    wrap.appendChild(el('span', 'orbit-kicker', 'Next'));
-    list.forEach(function (f) {
+    wrap.appendChild(el('span', 'orbit-kicker', 'You might also want to know'));
+    list.slice(0, 3).forEach(function (f) {
       var b;
       if (f.nav) {
         b = el('a'); b.setAttribute('href', f.nav.hash || '#'); bindNav(b, f.nav);
@@ -168,8 +175,8 @@
         b = el('button'); b.type = 'button';
         b.addEventListener('click', function () { askDirect(f.label, f); });
       }
-      b.appendChild(el('span', null, f.label));
       b.appendChild(arrow());
+      b.appendChild(el('span', null, f.label));
       wrap.appendChild(b);
     });
     return wrap;
@@ -199,13 +206,15 @@
        is only a ~0.85s beat (skipped entirely with reduced motion), never a fake wait. */
     var a = el('div', 'orbit-a is-thinking');
     var status = el('div', 'orbit-status');
-    status.appendChild(thinkingMark());
+    var big = thinkingMark(); mood('thinking', big);
+    status.appendChild(big);
     var label = el('span', 'orbit-status__txt', 'Orbit is thinking');
     status.appendChild(label);
+    status.appendChild(el('span', 'orbit-status__sub', 'Looking through published work'));
     a.appendChild(status);
     turn.appendChild(a);
     refs.turns.appendChild(turn);
-    refs.send.classList.add('is-thinking');
+    mood('thinking');
     scrollToTurn(turn);
 
     var out;
@@ -214,19 +223,31 @@
 
     root.setTimeout(function () {
       status.classList.add('is-found'); label.textContent = 'Found something';
-      refs.send.classList.add('is-found');
+      mood('confident', big); mood('confident');
       root.setTimeout(render, FOUND);
     }, THINK);
 
     function render() {
-      refs.send.classList.remove('is-thinking', 'is-found');
       var ans = el('div', 'orbit-a');
       var body = el('div', 'orbit-a-body');
-      out.blocks.forEach(function (b) { body.appendChild(renderBlock(b)); });
+      /* subtle reveal: heading → answer → quote → the rest, never all at once */
+      var STEPS = [80, 150, 250, 350];
+      out.blocks.forEach(function (b, i) {
+        var n = renderBlock(b);
+        n.classList.add('orbit-reveal'); n.style.setProperty('--d', (STEPS[i] != null ? STEPS[i] : 350 + (i - 3) * 60) + 'ms');
+        body.appendChild(n);
+      });
       ans.appendChild(body);
       turn.replaceChild(ans, a);
       var next = renderFollowups(out.followups);
-      if (next) turn.appendChild(next);
+      if (next) {
+        next.classList.add('orbit-reveal');
+        next.style.setProperty('--d', Math.max(350, 350 + (out.blocks.length - 3) * 60) + 60 + 'ms');
+        turn.appendChild(next);
+      }
+      /* a tiny celebratory orbit, then back to rest */
+      mood('celebrating');
+      root.setTimeout(function () { if (!state.busy) mood(refs.input === doc.activeElement ? 'curious' : 'idle'); }, reduced() ? 0 : 700);
       scrollToTurn(turn);
       announce(out.blocks.map(function (b) { return b.text || ''; }).join(' ').trim() || 'Answer ready');
       state.busy = false;
@@ -235,7 +256,14 @@
     }
   }
 
-  /* the three-stone brand mark (same ellipses as the site logo) used by the thinking state */
+  /* ORBIT's character: one three-stone mark, many moods (idle · curious · thinking · confident ·
+     exploring · celebrating). Same shapes everywhere — only the motion changes (see orbit.css). */
+  function mood(name, node) {
+    var n = node || (refs && refs.character);
+    if (n) n.setAttribute('data-mood', name);
+  }
+
+  /* the three-stone brand mark (same ellipses as the site logo) */
   function thinkingMark() {
     var NS = 'http://www.w3.org/2000/svg';
     var s = doc.createElementNS(NS, 'svg');
@@ -345,21 +373,32 @@
     input.setAttribute('enterkeyhint', 'send'); input.setAttribute('autocapitalize', 'sentences'); input.setAttribute('spellcheck', 'true');
     var send = el('button', 'orbit-send'); send.type = 'submit'; send.setAttribute('aria-label', 'Send'); send.disabled = true;
     send.appendChild(svg('M5 12h14M13 6l6 6-6 6'));
-    var sendMark = thinkingMark(); sendMark.classList.add('orbit-send__stones'); send.appendChild(sendMark);
-    send.appendChild(el('span', 'orbit-send__dot'));
+    var character = thinkingMark(); character.classList.add('orbit-character'); mood('idle', character);
     var field = el('div', 'orbit-field');
-    field.appendChild(input); field.appendChild(send);
+    field.appendChild(character); field.appendChild(input); field.appendChild(send);
     form.appendChild(field);
     var foot = el('p', 'orbit-foot', "Answers come from Saiky's published portfolio.");
 
     panel.appendChild(head); panel.appendChild(body); panel.appendChild(form); panel.appendChild(foot);
     doc.body.appendChild(panel);
 
-    refs = { panel: panel, body: body, turns: turns, status: status, input: input, send: send, reset: reset, close: close_ };
+    refs = { panel: panel, body: body, turns: turns, status: status, input: input, send: send, reset: reset, close: close_, character: character };
 
     close_.addEventListener('click', function () { close(); });
     reset.addEventListener('click', resetConversation);
-    input.addEventListener('input', function () { send.disabled = state.busy || !input.value.trim(); });
+    input.addEventListener('input', function () {
+      send.disabled = state.busy || !input.value.trim();
+      if (!state.busy) mood(input.value.trim() ? 'exploring' : 'curious');
+    });
+    /* the input answers the cursor: a warmer prompt on focus, the character leans in */
+    input.addEventListener('focus', function () {
+      input.placeholder = 'What would you like to know about Saiky?';
+      if (!state.busy) mood(input.value.trim() ? 'exploring' : 'curious');
+    });
+    input.addEventListener('blur', function () {
+      input.placeholder = 'Ask Orbit anything...';
+      if (!state.busy) mood('idle');
+    });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var v = input.value;

@@ -82,32 +82,52 @@
 .orbit-a-body > * + *{margin-top:12px;}
 @keyframes orbitIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 .orbit-a.is-thinking::before{display:none;}
-.orbit-a.is-thinking .orbit-thinking{grid-column:1 / -1;}
-.orbit-thinking{display:block;width:7px;height:7px;border-radius:50%;background:var(--orbit-orb);margin:8px 0 8px 1px;animation:orbitPulse 1s ease-in-out infinite;}
-@keyframes orbitPulse{0%,100%{opacity:.3;transform:scale(.8);}50%{opacity:1;transform:scale(1.25);}}
-/* "ORBIT is thinking" → "Found something" (see show() in ui.js) */
-.orbit-status{grid-column:1 / -1;display:flex;align-items:center;gap:10px;min-height:24px;
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--orbit-violet);}
-.orbit-stones{width:18px;height:20px;flex:none;overflow:visible;animation:orbitTurn 4.8s linear infinite;transform-origin:50% 55%;}
-.orbit-stone{fill:none;stroke:currentColor;stroke-width:2.6;transition:fill .25s ease,opacity .25s ease,transform .3s var(--orbit-ease);transform-origin:20px 23px;}
-.orbit-stone--2{opacity:.75;} .orbit-stone--3{opacity:.55;}
-@keyframes orbitTurn{to{transform:rotate(360deg);}}
-.orbit-status.is-found .orbit-stones{animation:none;}
-.orbit-status.is-found .orbit-stone{opacity:0;transform:scale(.4);}
-.orbit-status.is-found .orbit-stone--2{opacity:1;fill:currentColor;transform:scale(1.15);}
-.orbit-status__txt{transition:opacity .2s ease;}
+/* ===== ORBIT's character — one three-stone mark, six moods (set via data-mood in ui.js) =====
+   stone 1 = the top dot (brand accent) · stones 2–3 = the base. Only motion changes between moods. */
+.orbit-stones{flex:none;overflow:visible;}
+.orbit-stone{transform-box:view-box;transition:transform .45s var(--orbit-ease),opacity .3s ease;}
+.orbit-stone--1{fill:var(--orbit-violet);}
+.orbit-stone--2{fill:var(--ink);opacity:.86;}
+.orbit-stone--3{fill:var(--ink);opacity:.72;}
+/* idle / sleeping — the top dot slowly rises and falls */
+[data-mood="idle"] .orbit-stone--1{animation:stoneBreathe 3.2s ease-in-out infinite;}
+@keyframes stoneBreathe{0%,100%{transform:translateY(0);}50%{transform:translateY(-2.5px);}}
+/* curious — the top dot leans toward something */
+[data-mood="curious"] .orbit-stone--1{transform:translate(4px,-1.5px);}
+[data-mood="curious"] .orbit-stone--2{transform:translateX(1.2px);}
+/* thinking — the top dot circles the middle stone */
+[data-mood="thinking"] .orbit-stone--1{transform-origin:20px 18.75px;animation:stoneCircle 1.5s linear infinite;}
+@keyframes stoneCircle{to{transform:rotate(360deg);}}
+/* confident — all three align perfectly */
+[data-mood="confident"] .orbit-stone{transform:none;animation:none;}
+[data-mood="confident"] .orbit-stone--1{animation:stoneSettle .35s var(--orbit-ease);}
+@keyframes stoneSettle{from{transform:scale(1.35);}to{transform:scale(1);}}
+/* exploring — the stones drift apart horizontally */
+[data-mood="exploring"] .orbit-stone--1{animation:stoneDriftA 2.4s ease-in-out infinite alternate;}
+[data-mood="exploring"] .orbit-stone--2{animation:stoneDriftB 2.4s ease-in-out infinite alternate;}
+[data-mood="exploring"] .orbit-stone--3{animation:stoneDriftC 2.4s ease-in-out infinite alternate;}
+@keyframes stoneDriftA{to{transform:translateX(-4px);}}
+@keyframes stoneDriftB{to{transform:translateX(3px);}}
+@keyframes stoneDriftC{to{transform:translateX(-1.5px);}}
+/* celebrating — the top dot makes one tiny orbit and snaps back */
+[data-mood="celebrating"] .orbit-stone--1{transform-origin:20px 10.5px;animation:stoneCelebrate .6s var(--orbit-ease) 1;}
+@keyframes stoneCelebrate{0%{transform:rotate(0);}80%{transform:rotate(360deg);}100%{transform:rotate(360deg);}}
 
-/* the send button mirrors the same beat: arrow → turning stones → solid dot → arrow */
-.orbit-send{position:relative;}
-.orbit-send.is-thinking{opacity:1;}
-.orbit-send__stones,.orbit-send__dot{position:absolute;opacity:0;transition:opacity .2s ease;}
-.orbit-send__stones{width:16px;height:18px;color:#fff;}
-.orbit-send__dot{width:9px;height:9px;border-radius:50%;background:#fff;transform:scale(.4);transition:opacity .2s ease,transform .3s var(--orbit-ease);}
-.orbit-send.is-thinking > svg:first-child{opacity:0;}
-.orbit-send.is-thinking .orbit-send__stones{opacity:1;animation:orbitTurn 4.8s linear infinite;}
-.orbit-send.is-found .orbit-send__stones{opacity:0;}
-.orbit-send.is-found .orbit-send__dot{opacity:1;transform:scale(1);}
-.orbit-send > svg:first-child{transition:opacity .2s ease;}
+/* thinking state in the conversation: centred character + two quiet lines */
+.orbit-a.is-thinking{display:block;}
+.orbit-status{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:18px 0 10px;}
+.orbit-status .orbit-stones{width:30px;height:34px;margin-bottom:6px;}
+.orbit-status__txt{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);}
+.orbit-status__sub{font-size:12.5px;color:var(--ink-soft);transition:opacity .2s ease;}
+.orbit-status.is-found .orbit-status__sub{opacity:0;}
+
+/* the composer's character sits at the start of the input */
+.orbit-field{gap:10px;padding-left:14px;}
+.orbit-character{width:15px;height:17px;}
+
+/* subtle response reveal (delays set per block in ui.js: 80 / 150 / 250 / 350ms) */
+.orbit-reveal{animation:orbitRise .45s var(--orbit-ease) both;animation-delay:var(--d,0ms);}
+@keyframes orbitRise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
 /* answer blocks */
 .orbit-kicker{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
@@ -146,11 +166,17 @@
 
 .orbit-rows{border-top:1px solid var(--line);}
 .orbit-rows li{border-bottom:1px solid var(--line);}
-.orbit-row{display:flex;width:100%;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 0;}
-.orbit-row-t{font-weight:700;font-size:14px;line-height:1.4;transition:color .2s ease;}
-.orbit-row-m{display:block;margin-top:2px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
-.orbit-row .orbit-arrow{flex:none;color:var(--ink);opacity:0;transform:translateX(-4px);transition:transform .28s var(--orbit-ease),opacity .2s ease;}
-.orbit-row:hover .orbit-row-t{text-decoration:underline;text-decoration-color:var(--orbit-violet);text-underline-offset:3px;}
+.orbit-row{display:grid;grid-template-columns:26px 1fr auto;align-items:start;gap:10px;width:100%;padding:12px 0;}
+.orbit-row-n{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-soft);padding-top:3px;}
+.orbit-row-main{min-width:0;}
+.orbit-row-t{display:block;font-family:var(--font-display);font-weight:600;font-size:16px;line-height:1.3;color:var(--ink);transition:color .2s ease;}
+.orbit-row-m{display:block;margin-top:3px;font-size:12.5px;line-height:1.45;color:var(--ink-soft);}
+.orbit-row-end{position:relative;display:flex;align-items:center;justify-content:flex-end;width:34px;height:20px;padding-top:2px;}
+.orbit-row-dot{position:absolute;right:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--orbit-orb);opacity:0;
+  transition:transform .4s var(--orbit-ease),opacity .25s ease;}
+.orbit-row .orbit-arrow{color:var(--ink);opacity:0;transform:translate(-3px,3px);transition:transform .3s var(--orbit-ease) .08s,opacity .2s ease .08s;}
+.orbit-row:hover .orbit-row-dot,.orbit-row:focus-visible .orbit-row-dot{opacity:1;transform:translateX(-24px);}
+.orbit-row:hover .orbit-row-t,.orbit-row:focus-visible .orbit-row-t{color:var(--ink);text-decoration:underline;text-decoration-color:var(--orbit-violet);text-decoration-thickness:1px;text-underline-offset:4px;}
 .orbit-row:hover .orbit-arrow,.orbit-row:focus-visible .orbit-arrow{opacity:1;transform:none;}
 
 .orbit-links{display:flex;flex-wrap:wrap;gap:4px 18px;}
@@ -165,8 +191,8 @@
 .orbit-next button,.orbit-next a{display:inline-flex;gap:6px;align-items:baseline;padding:6px 0;font-size:14px;line-height:1.4;color:var(--ink);
   border-bottom:1px solid transparent;transition:border-color .2s ease;}
 .orbit-next button:hover,.orbit-next a:hover{border-bottom-color:var(--orbit-violet);}
-.orbit-next .orbit-arrow{opacity:0;transition:opacity .2s ease;}
-.orbit-next button:hover .orbit-arrow,.orbit-next a:hover .orbit-arrow,.orbit-next :focus-visible .orbit-arrow{opacity:1;}
+.orbit-next .orbit-arrow{color:var(--ink-soft);transition:transform .28s var(--orbit-ease),color .2s ease;}
+.orbit-next button:hover .orbit-arrow,.orbit-next a:hover .orbit-arrow,.orbit-next :focus-visible .orbit-arrow{color:var(--orbit-violet);transform:translateX(2px);}
 
 /* input: gradient divider, pill field, gradient send */
 .orbit-form{position:relative;flex:none;margin:0;padding:18px 20px 6px;}
@@ -187,7 +213,7 @@
 .orbit-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
 
 /* touch screens can't hover — keep the row arrows faintly visible as a tap affordance */
-@media (hover:none){ .orbit-prompt .orbit-arrow,.orbit-row .orbit-arrow,.orbit-next .orbit-arrow{opacity:.45;transform:none;} }
+@media (hover:none){ .orbit-prompt .orbit-arrow,.orbit-row .orbit-arrow{opacity:.45;transform:none;} }
 
 /* touch: larger targets */
 @media (pointer:coarse){
@@ -214,6 +240,5 @@
 
 @media (prefers-reduced-motion:reduce){
   .orbit-panel,.orbit-panel *{transition:none !important;animation:none !important;}
-  .orbit-thinking{opacity:.8;}
 }
 @media print{.orbit-panel{display:none;}}
