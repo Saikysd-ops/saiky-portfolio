@@ -53,9 +53,11 @@
   /* ---------- block renderers ---------- */
   function renderCard(id, opts) {
     var c = K.CASES[id];
-    var card = el('div', 'orbit-card');
+    var detail = !!(opts && opts.detail);
+    var card = el('div', 'orbit-card' + (detail ? ' is-detail' : ''));
     card.appendChild(el('div', 'orbit-card-t', c.title));
-    card.appendChild(el('span', 'orbit-card-m', c.meta));
+    /* sentence-case meta; NDA folds into it so it doesn't need its own line */
+    card.appendChild(el('span', 'orbit-card-m', c.meta + (c.nda ? ' · NDA' : '')));
     if (opts && opts.detail) {
       card.appendChild(el('p', 'orbit-card-d', c.desc));
       var pdi = el('div', 'orbit-pdi');
@@ -79,11 +81,15 @@
     } else {
       card.appendChild(el('p', 'orbit-card-d', c.desc));
     }
-    card.appendChild(el('div', 'orbit-card-tags', c.tags.join(' · ')));
-    if (c.nda) card.appendChild(el('span', 'orbit-nda', 'NDA · public overview'));
+    /* list cards stay light: title · meta · two-line summary · one link. Tags + NDA detail only in the full case view */
+    if (detail) {
+      card.appendChild(el('div', 'orbit-card-tags', c.tags.join(' · ')));
+      if (c.nda) card.appendChild(el('span', 'orbit-nda', 'Public overview — full case under NDA'));
+    }
     var a = el('a', 'orbit-cta');
     a.setAttribute('href', caseHref(c));
-    a.appendChild(document.createTextNode('→ Explore case study'));
+    a.appendChild(document.createTextNode('Explore case study'));
+    a.appendChild(el('span', 'orbit-arrow', '↗'));
     a.setAttribute('aria-label', 'Explore case study: ' + c.title);
     bindNav(a, { view: c.view, hash: c.hash });
     card.appendChild(a);
@@ -97,7 +103,7 @@
       case 'p': return el('p', 'orbit-p', b.text);
       case 'note': return el('p', 'orbit-note', b.text);
       case 'quote':
-        n = el('blockquote', 'orbit-quote'); n.style.margin = '0';
+        n = el('blockquote', 'orbit-quote');
         n.appendChild(el('p', null, '“' + b.text + '”'));
         if (b.cite) n.appendChild(el('span', 'orbit-cite', b.cite));
         return n;
