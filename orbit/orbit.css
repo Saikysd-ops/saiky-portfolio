@@ -135,10 +135,10 @@
 .orbit-quote{padding-left:14px;border-left:2px solid var(--orbit-violet);}
 .orbit-quote p{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:16px;line-height:1.5;color:var(--ink);}
 .orbit-cite{display:block;margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
-.orbit-note{padding-top:12px;border-top:1px solid var(--line);font-size:12px;line-height:1.6;color:var(--ink-soft);}
+.orbit-note{font-size:12px;line-height:1.6;color:var(--ink-soft);}
 
-.orbit-list{border-top:1px solid var(--line);}
-.orbit-list > li{padding:12px 0;border-bottom:1px solid var(--line);}
+.orbit-list{display:grid;gap:14px;}
+.orbit-list > li{padding:0;}
 .orbit-li-t{font-weight:700;font-size:14px;line-height:1.4;}
 .orbit-li-m{display:block;margin-top:3px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--ink-soft);}
 .orbit-li-d{margin-top:4px;font-size:14px;line-height:1.6;color:var(--ink-soft);}
@@ -146,8 +146,8 @@
 .orbit-li-btn .orbit-li-t{transition:color .2s ease;}
 .orbit-li-btn:hover .orbit-li-t{text-decoration:underline;text-decoration-color:var(--orbit-violet);text-underline-offset:3px;}
 
-.orbit-cards{display:grid;gap:0;border-top:1px solid var(--line);}
-.orbit-card{display:block;padding:14px 0 13px;background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;}
+.orbit-cards{display:grid;gap:22px;}
+.orbit-card{display:block;padding:0;background:none;border:0;border-radius:0;}
 .orbit-card:hover .orbit-card-t{text-decoration:underline;text-decoration-color:var(--orbit-violet);text-decoration-thickness:1px;text-underline-offset:4px;}
 .orbit-card-t{font-family:var(--font-display);font-weight:600;font-size:18px;line-height:1.25;color:var(--ink);}
 .orbit-card-m{display:block;margin-top:5px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;line-height:1.5;color:var(--ink-soft);}
@@ -159,7 +159,7 @@
 .orbit-pdi span{display:block;margin-top:3px;font-size:14px;line-height:1.6;color:var(--ink);}
 .orbit-nda{display:block;margin-top:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
 .orbit-cta{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 0;font-weight:700;font-size:14px;color:var(--ink);
-  border-bottom:1px solid var(--line);transition:border-color .2s ease;}
+  border-bottom:1px solid transparent;transition:border-color .2s ease;}
 .orbit-cta:hover{border-bottom-color:var(--orbit-violet);}
 .orbit-cta .orbit-arrow{transition:transform .28s var(--orbit-ease);}
 .orbit-cta:hover .orbit-arrow{transform:translateX(3px);}
@@ -188,7 +188,7 @@
 
 .orbit-links{display:flex;flex-wrap:wrap;gap:4px 18px;}
 .orbit-link{display:inline-flex;align-items:center;gap:6px;padding:8px 0;font-weight:700;font-size:14px;color:var(--ink);
-  border-bottom:1px solid var(--line);transition:border-color .2s ease;}
+  border-bottom:1px solid transparent;transition:border-color .2s ease;}
 .orbit-link:hover{border-bottom-color:var(--orbit-violet);}
 .orbit-link small{font-weight:400;font-size:12px;color:var(--ink-soft);}
 
