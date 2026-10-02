@@ -96,9 +96,8 @@
 /* idle / sleeping — the top dot slowly rises and falls */
 [data-mood="idle"] .orbit-stone--1{animation:stoneBreathe 3.2s ease-in-out infinite;}
 @keyframes stoneBreathe{0%,100%{transform:translateY(0);}50%{transform:translateY(-2.5px);}}
-/* curious — the top dot leans toward something */
-[data-mood="curious"] .orbit-stone--1{transform:translate(4px,-1.5px);}
-[data-mood="curious"] .orbit-stone--2{transform:translateX(1.2px);}
+/* curious — the top dot lifts a touch, attentive; the stack stays perfectly centred */
+[data-mood="curious"] .orbit-stone--1{transform:translateY(-2px);}
 /* thinking — the top dot circles the middle stone */
 [data-mood="thinking"] .orbit-stone--1{transform-origin:20px 18.75px;animation:stoneCircle 1.5s linear infinite;}
 @keyframes stoneCircle{to{transform:rotate(360deg);}}
@@ -106,13 +105,10 @@
 [data-mood="confident"] .orbit-stone{transform:none;animation:none;}
 [data-mood="confident"] .orbit-stone--1{animation:stoneSettle .35s var(--orbit-ease);}
 @keyframes stoneSettle{from{transform:scale(1.35);}to{transform:scale(1);}}
-/* exploring — the stones drift apart horizontally */
-[data-mood="exploring"] .orbit-stone--1{animation:stoneDriftA 2.4s ease-in-out infinite alternate;}
-[data-mood="exploring"] .orbit-stone--2{animation:stoneDriftB 2.4s ease-in-out infinite alternate;}
-[data-mood="exploring"] .orbit-stone--3{animation:stoneDriftC 2.4s ease-in-out infinite alternate;}
-@keyframes stoneDriftA{to{transform:translateX(-4px);}}
-@keyframes stoneDriftB{to{transform:translateX(3px);}}
-@keyframes stoneDriftC{to{transform:translateX(-1.5px);}}
+/* exploring (typing) — a calm vertical ripple down the stack; nothing moves sideways, so it never looks tilted */
+[data-mood="exploring"] .orbit-stone--1{animation:stoneRipple 1.8s ease-in-out infinite;}
+[data-mood="exploring"] .orbit-stone--2{animation:stoneRipple 1.8s ease-in-out .15s infinite;}
+@keyframes stoneRipple{0%,100%{transform:translateY(0);}50%{transform:translateY(-1.6px);}}
 /* celebrating — the top dot makes one tiny orbit and snaps back */
 [data-mood="celebrating"] .orbit-stone--1{transform-origin:20px 10.5px;animation:stoneCelebrate .6s var(--orbit-ease) 1;}
 @keyframes stoneCelebrate{0%{transform:rotate(0);}80%{transform:rotate(360deg);}100%{transform:rotate(360deg);}}
