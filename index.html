@@ -9118,8 +9118,9 @@ setActive(0); startRotation();
     /* a ring of fine ticks inside the circle — it rolls with the marker so the circle reads as a wheel */
     function dial(){
       var t='';
-      for(var k=0;k<60;k++){ var a=k*6*Math.PI/180, long=k%5===0, r1=long?42:44.5, r2=47.5;
-        t+='<line x1="'+(50+r1*Math.sin(a)).toFixed(2)+'" y1="'+(50-r1*Math.cos(a)).toFixed(2)+'" x2="'+(50+r2*Math.sin(a)).toFixed(2)+'" y2="'+(50-r2*Math.cos(a)).toFixed(2)+'" stroke="#fff" stroke-opacity="'+(long?.55:.28)+'" stroke-width="'+(long?.7:.45)+'" stroke-linecap="round"/>'; }
+      /* fine, watch-like dial: 12 hairline majors, 48 tiny minors, inset slightly from the edge */
+      for(var k=0;k<60;k++){ var a=k*6*Math.PI/180, long=k%5===0, r2=46.2, r1=long?43.2:45;
+        t+='<line x1="'+(50+r1*Math.sin(a)).toFixed(2)+'" y1="'+(50-r1*Math.cos(a)).toFixed(2)+'" x2="'+(50+r2*Math.sin(a)).toFixed(2)+'" y2="'+(50-r2*Math.cos(a)).toFixed(2)+'" stroke="#fff" stroke-opacity="'+(long?.5:.22)+'" stroke-width="'+(long?.42:.3)+'" stroke-linecap="round"/>'; }
       return '<svg class="uxr-dial" viewBox="0 0 100 100" aria-hidden="true">'+t+'</svg>';
     }
     function build(foot){
