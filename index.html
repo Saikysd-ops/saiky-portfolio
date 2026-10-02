@@ -9172,7 +9172,14 @@ setActive(0); startRotation();
         if(!raf) raf=requestAnimationFrame(tick);
       }
       function local(e){ var r=track.getBoundingClientRect(); return e.clientX-r.left; }
-      track.addEventListener('pointermove',function(e){ if(e.pointerType==='mouse'||e.buttons) moveTo(local(e)); });
+      /* touch/pen: drag on the ruler itself */
+      track.addEventListener('pointermove',function(e){ if(e.pointerType!=='mouse'&&e.buttons) moveTo(local(e)); });
+      /* mouse: while the ruler is on screen, the cursor anywhere across the viewport drives (and rolls) the circle */
+      window.addEventListener('pointermove',function(e){
+        if(e.pointerType!=='mouse'||root.offsetParent===null) return;          /* hidden view → ignore */
+        var b=root.getBoundingClientRect(); if(b.bottom<0||b.top>window.innerHeight) return;   /* off screen → ignore */
+        moveTo(e.clientX-b.left);
+      },{passive:true});
       track.addEventListener('pointerdown',function(e){ moveTo(local(e),true); });
       btns.forEach(function(b){
         b.addEventListener('focus',function(){ var i=+b.dataset.i; moveTo(zoneCenter(i),true); });
