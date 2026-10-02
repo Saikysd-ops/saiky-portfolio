@@ -349,7 +349,7 @@
     eyebrow.appendChild(wave); eyebrow.appendChild(el('span', 'orbit-eyebrow-line'));
     intro.appendChild(eyebrow);
     intro.appendChild(el('p', 'orbit-tagline', 'A different way to navigate my work.'));
-    intro.appendChild(el('p', 'orbit-ask', 'Curious about my work?'));
+    intro.appendChild(el('p', 'orbit-ask', 'What would you like to understand?'));
     intro.appendChild(promptList(I.PROMPTS.primary));
     var more = el('button', 'orbit-more', 'More ways in'); more.type = 'button';
     more.setAttribute('aria-expanded', 'false'); more.setAttribute('aria-controls', 'orbit-morelist');
