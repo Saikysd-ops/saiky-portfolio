@@ -278,7 +278,7 @@
   @media (prefers-reduced-motion:reduce){ .cta-arrow{animation:none;} }
   /* UX PSYCHOLOGY RULER — a signature detail after the footer's copyright bar. A blue marker rides a dashed
      ruler and follows the cursor across five zones, one UX principle per zone. Added by JS (see uxRuler). */
-  .uxr{--uxr-blue:#3157D5;--uxr-d:206px;position:relative;left:50%;right:50%;margin:52px -50vw 56px;width:100vw;padding:20px 0 0;overflow:hidden;user-select:none;-webkit-user-select:none;}
+  .uxr{--uxr-blue:#3157D5;--uxr-d:206px;position:relative;left:50%;right:50%;margin:0 -50vw 56px;width:100vw;padding:0;overflow:hidden;user-select:none;-webkit-user-select:none;}
   .uxr-track{position:relative;height:calc(var(--uxr-d) + 40px);touch-action:pan-y;}
   .uxr-line{position:absolute;left:0;right:0;top:calc(var(--uxr-d) / 2);border-top:1.5px dashed rgba(49,87,213,.5);pointer-events:none;}
   .uxr-tick{position:absolute;top:calc(var(--uxr-d) / 2 - 5px);width:1px;height:10px;background:rgba(49,87,213,.3);pointer-events:none;}
@@ -301,7 +301,7 @@
   .uxr-quote{font-family:var(--font-display);font-weight:400;font-size:15.5px;line-height:1.24;letter-spacing:-.005em;max-width:148px;}
   .uxr-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
   @media (max-width:1024px){ .uxr{--uxr-d:180px;} .uxr-quote{font-size:14px;max-width:132px;} }
-  @media (max-width:640px){ .uxr{--uxr-d:152px;margin:40px -50vw 40px;} .uxr-orb{padding:0 14px;} .uxr-copy{gap:5px;}
+  @media (max-width:640px){ .uxr{--uxr-d:152px;margin:8px -50vw 40px;} .uxr-orb{padding:0 14px;} .uxr-copy{gap:5px;}
     .uxr-quote{font-size:12px;max-width:110px;} .uxr-name{font-size:8.5px;letter-spacing:.12em;} .uxr-count{font-size:8px;} }
   @media (prefers-reduced-motion:reduce){ .uxr-copy,.uxr-num{transition:none;} }
   /* ORB CTA — arrow buttons show a small dot at rest; on hover/focus the dot expands into a
