@@ -17,6 +17,8 @@
     --violet:#5B2A68; --violet-ink:#452064; --lilac:#F1EAF7;
     --accent:var(--violet);
     --pine:#1F6E4F; --ember:#E8482E; --cobalt:#2C4BD4; --teal:#1B8A82; --gold:#D98A1F;
+    /* buttons carry the brand blue: fill, pressed/hover fill, hard offset shadow, focus ring */
+    --btn:var(--cobalt); --btn-ink:#2240B8; --btn-shadow:#16288A; --btn-ring:#2C4BD4;
     --font-display:'Fraunces', serif; --font-body:'Satoshi','General Sans',sans-serif; --font-mono:'IBM Plex Mono', monospace;
   }
   :root[data-theme="dark"]{
@@ -28,6 +30,7 @@
        Solid fills (buttons, dots) keep using --violet itself, since white text
        on Aubergine already passes at 10.6:1 regardless of theme. */
     --accent:#BC80CC;
+    --btn-shadow:#8EA2F2; --btn-ring:#8EA2F2;   /* light blue so offsets and rings read on near-black */
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -97,7 +100,7 @@
     display:inline-flex;align-items:center;gap:7px;
     transition:background .25s ease, border-color .25s ease, color .25s ease, transform .25s ease;}
   .say-hi span{display:inline-block;transform-origin:70% 70%;}
-  .say-hi:hover{background:var(--violet);border-color:var(--violet);color:#fff;transform:translateY(-1px);}
+  .say-hi:hover{background:var(--btn);border-color:var(--btn);color:#fff;transform:translateY(-1px);}
   .say-hi:hover span{animation:wave .9s ease-in-out;}
   .say-hi:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
   @keyframes wave{0%,100%{transform:rotate(0deg);}20%{transform:rotate(16deg);}40%{transform:rotate(-10deg);}60%{transform:rotate(14deg);}80%{transform:rotate(-6deg);}}
@@ -255,21 +258,20 @@
     .hero-right .quote-panel{max-width:449px;margin:14px 0 0 auto;}
   }
   .btn{font-family:var(--font-body);font-size:15px;font-weight:700;padding:18px 36px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease;background:var(--paper-raised);color:var(--ink);text-decoration:none;}
-  .btn-primary{background:var(--violet);color:#fff;border-color:var(--violet);
+  .btn-primary{background:var(--btn);color:#fff;border-color:var(--btn);
     box-shadow:0 0 0 transparent;transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, background .2s ease;}
-  .btn-primary:hover{background:var(--violet-ink);transform:translate(-4px,-4px);box-shadow:6px 6px 0 #36184D;}
-  :root[data-theme="dark"] .btn-primary:hover{box-shadow:6px 6px 0 var(--accent);}
-  .btn-primary:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  .btn-primary:hover{background:var(--btn-ink);border-color:var(--btn-ink);transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--btn-shadow);}
+  .btn-primary:focus-visible{outline:3px solid var(--btn-ring);outline-offset:3px;}
   /* secondary CTA — the original white/black neubrutalist look stays the
      resting state in both themes (var(--ink)/var(--paper-raised) already
      flip correctly light<->dark); the brand color only appears as the
      hard-offset hover shadow, lightened in dark mode so it's actually
      visible against a near-black page rather than a dark-on-dark shadow. */
   .btn-ghost, .btn-outline{background:var(--paper-raised);color:var(--ink);border-color:var(--ink);}
-  .btn-ghost:hover, .btn-outline:hover{transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--violet);
+  .btn-ghost:hover, .btn-outline:hover{transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--btn);
     background:var(--paper-raised);color:var(--ink);border-color:var(--ink);}
-  :root[data-theme="dark"] .btn-ghost:hover, :root[data-theme="dark"] .btn-outline:hover{box-shadow:6px 6px 0 var(--accent);}
-  .btn-ghost:focus-visible, .btn-outline:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  :root[data-theme="dark"] .btn-ghost:hover, :root[data-theme="dark"] .btn-outline:hover{box-shadow:6px 6px 0 var(--btn-shadow);}
+  .btn-ghost:focus-visible, .btn-outline:focus-visible{outline:3px solid var(--btn-ring);outline-offset:3px;}
   .btn:active{transform:translate(0,0);box-shadow:none;}
   .cta-arrow{display:inline-block;line-height:1;will-change:transform;
     animation:ctaBob 1.8s cubic-bezier(.45,0,.55,1) infinite;}
@@ -322,8 +324,8 @@
   .lab-card:hover .btn-orb .btn-orb__dot::before{transform:scale(1);}
   .btn-orb:hover .btn-orb__dot svg, .btn-orb:focus-visible .btn-orb__dot svg,
   .lab-card:hover .btn-orb .btn-orb__dot svg{opacity:1;transform:none;}
-  .btn-primary.btn-orb .btn-orb__dot{--orb-bg:#fff;--orb-ink:var(--violet);}
-  .btn-primary.btn-orb:hover .btn-orb__dot{--orb-ink:var(--violet-ink);}
+  .btn-primary.btn-orb .btn-orb__dot{--orb-bg:#fff;--orb-ink:var(--btn);}
+  .btn-primary.btn-orb:hover .btn-orb__dot{--orb-ink:var(--btn-ink);}
   .about-hero-content .btn-ghost.btn-orb .btn-orb__dot{--orb-ink:#14141B;}
   /* touch screens have no hover — show the expanded circle so the arrow stays visible */
   @media (hover:none){ .btn-orb__dot::before{transform:scale(1);} .btn-orb__dot svg{opacity:1;transform:none;} }
@@ -866,8 +868,8 @@
     background:var(--paper-raised);border:1.5px solid var(--ink);padding:0;cursor:pointer;
     font-family:var(--font-body);font-size:15px;font-weight:700;color:var(--ink);
     transition:background .25s ease, color .25s ease, border-color .25s ease;}
-  .foot2-up:hover, .foot2-up:focus-visible{background:var(--violet);border-color:var(--violet);color:#fff;}
-  .foot2-up:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  .foot2-up:hover, .foot2-up:focus-visible{background:var(--btn);border-color:var(--btn);color:#fff;}
+  .foot2-up:focus-visible{outline:3px solid var(--btn-ring);outline-offset:3px;}
   .foot2-up .stb-label, .foot2-up .stb-arrow{transition:opacity .2s ease, transform .2s ease;}
   .foot2-up .stb-arrow{position:absolute;width:16px;height:16px;opacity:0;transform:scale(.5);}
   .foot2-up:hover .stb-label, .foot2-up:focus-visible .stb-label{opacity:0;transform:scale(.5);}
@@ -914,7 +916,7 @@
     justify-content:center;cursor:pointer;z-index:5;color:var(--ink);padding:0;
     box-shadow:0 10px 24px -12px rgba(12,10,30,.3);transition:background .2s ease,color .2s ease,border-color .2s ease;}
   .lab-nav svg{width:16px;height:16px;}
-  .lab-nav:hover{background:var(--violet);color:#fff;border-color:var(--violet);}
+  .lab-nav:hover{background:var(--btn);color:#fff;border-color:var(--btn);}
   .lab-nav--prev{left:-21px;}
   .lab-nav--next{right:-21px;}
   @media (max-width:1180px){
@@ -1480,7 +1482,7 @@
     background:var(--paper-raised);border:1px solid var(--line);color:var(--ink);
     cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;z-index:2;}
   .testi-nav svg{width:17px;height:17px;}
-  .testi-nav:hover{background:var(--violet);color:#fff;border-color:var(--violet);}
+  .testi-nav:hover{background:var(--btn);color:#fff;border-color:var(--btn);}
   .testi-nav--prev{left:24px;}
   .testi-nav--next{right:24px;}
   @media (max-width:760px){
