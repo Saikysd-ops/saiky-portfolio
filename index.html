@@ -278,7 +278,7 @@
   @media (prefers-reduced-motion:reduce){ .cta-arrow{animation:none;} }
   /* UX PSYCHOLOGY RULER — a signature detail after the footer's copyright bar. A blue marker rides a dashed
      ruler and follows the cursor across five zones, one UX principle per zone. Added by JS (see uxRuler). */
-  .uxr{--uxr-blue:#3157D5;--uxr-d:168px;position:relative;margin:72px 0 56px;user-select:none;-webkit-user-select:none;}
+  .uxr{--uxr-blue:#3157D5;--uxr-d:196px;position:relative;left:50%;right:50%;margin:72px -50vw 56px;width:100vw;overflow:hidden;user-select:none;-webkit-user-select:none;}
   .uxr-track{position:relative;height:calc(var(--uxr-d) + 40px);touch-action:pan-y;}
   .uxr-line{position:absolute;left:0;right:0;top:calc(var(--uxr-d) / 2);border-top:1.5px dashed rgba(49,87,213,.5);pointer-events:none;}
   .uxr-tick{position:absolute;top:calc(var(--uxr-d) / 2 - 5px);width:1px;height:10px;background:rgba(49,87,213,.5);pointer-events:none;}
@@ -291,15 +291,17 @@
   .uxr-zone:focus-visible{box-shadow:inset 0 -2px 0 var(--uxr-blue);}
   .uxr-orb{position:absolute;left:0;top:0;width:var(--uxr-d);height:var(--uxr-d);margin-left:calc(var(--uxr-d) / -2);border-radius:50%;
     background:var(--uxr-blue);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-    padding:0 20px;pointer-events:none;will-change:transform;}
+    padding:0 22px;pointer-events:none;will-change:transform;}
+  .uxr-dial{position:absolute;inset:0;width:100%;height:100%;will-change:transform;}
+  .uxr-copy{position:relative;}
   .uxr-copy{display:flex;flex-direction:column;align-items:center;gap:7px;transition:opacity .18s ease,transform .24s cubic-bezier(.22,1,.36,1);}
   .uxr-copy.is-out{opacity:0;transform:translateY(5px);}
-  .uxr-count{font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;opacity:.7;}
-  .uxr-name{font-family:var(--font-mono);font-size:9.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;}
-  .uxr-quote{font-family:var(--font-display);font-weight:400;font-size:13.5px;line-height:1.24;letter-spacing:-.005em;max-width:128px;}
+  .uxr-count{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;opacity:.7;}
+  .uxr-name{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;}
+  .uxr-quote{font-family:var(--font-display);font-weight:400;font-size:15px;line-height:1.24;letter-spacing:-.005em;max-width:140px;}
   .uxr-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
-  @media (max-width:1024px){ .uxr{--uxr-d:150px;} .uxr-quote{font-size:12.5px;max-width:116px;} }
-  @media (max-width:640px){ .uxr{--uxr-d:132px;margin:56px 0 40px;} .uxr-orb{padding:0 14px;} .uxr-copy{gap:5px;}
+  @media (max-width:1024px){ .uxr{--uxr-d:172px;} .uxr-quote{font-size:13.5px;max-width:124px;} }
+  @media (max-width:640px){ .uxr{--uxr-d:148px;margin:56px -50vw 40px;} .uxr-orb{padding:0 14px;} .uxr-copy{gap:5px;}
     .uxr-quote{font-size:11.5px;max-width:102px;} .uxr-name{font-size:8.5px;letter-spacing:.12em;} .uxr-count{font-size:8px;} }
   @media (prefers-reduced-motion:reduce){ .uxr-copy,.uxr-num{transition:none;} }
   /* ORB CTA — arrow buttons show a small dot at rest; on hover/focus the dot expands into a
@@ -9113,6 +9115,13 @@ setActive(0); startRotation();
     ];
     var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)');
     function pad(n){return (n<10?'0':'')+n;}
+    /* a ring of fine ticks inside the circle — it rolls with the marker so the circle reads as a wheel */
+    function dial(){
+      var t='';
+      for(var k=0;k<60;k++){ var a=k*6*Math.PI/180, long=k%5===0, r1=long?42:44.5, r2=47.5;
+        t+='<line x1="'+(50+r1*Math.sin(a)).toFixed(2)+'" y1="'+(50-r1*Math.cos(a)).toFixed(2)+'" x2="'+(50+r2*Math.sin(a)).toFixed(2)+'" y2="'+(50-r2*Math.cos(a)).toFixed(2)+'" stroke="#fff" stroke-opacity="'+(long?.55:.28)+'" stroke-width="'+(long?.7:.45)+'" stroke-linecap="round"/>'; }
+      return '<svg class="uxr-dial" viewBox="0 0 100 100" aria-hidden="true">'+t+'</svg>';
+    }
     function build(foot){
       var root=document.createElement('section'); root.className='uxr'; root.setAttribute('aria-label','UX psychology ruler: five principles');
       var list='<ol class="uxr-sr">'+P.map(function(p){return '<li>'+p[0]+': '+p[1]+'</li>';}).join('')+'</ol>';
@@ -9123,7 +9132,7 @@ setActive(0); startRotation();
         zones+='<button type="button" class="uxr-zone" data-i="'+i+'" aria-label="'+pad(i+1)+' of 05, '+p[0]+': '+p[1]+'"></button>';
       });
       root.innerHTML=list+'<div class="uxr-track"><span class="uxr-line"></span>'+ticks+
-        '<div class="uxr-orb" aria-hidden="true"><div class="uxr-copy"><span class="uxr-count"></span><span class="uxr-name"></span><span class="uxr-quote"></span></div></div>'+
+        '<div class="uxr-orb" aria-hidden="true">'+dial()+'<div class="uxr-copy"><span class="uxr-count"></span><span class="uxr-name"></span><span class="uxr-quote"></span></div></div>'+
         '<div class="uxr-zones" role="group" aria-label="Choose a principle">'+zones+'</div></div><p class="uxr-sr" aria-live="polite"></p>';
       foot.appendChild(root);
       var track=root.querySelector('.uxr-track'), orb=root.querySelector('.uxr-orb'), copy=root.querySelector('.uxr-copy'),
@@ -9141,7 +9150,13 @@ setActive(0); startRotation();
         if(announce) live.textContent=pad(i+1)+' of 05. '+P[i][0]+'. '+P[i][1];
       }
       function clamp(v){ var r=orb.offsetWidth/2; return Math.max(r,Math.min(W-r,v)); }
-      function paint(){ orb.style.transform='translate3d('+x.toFixed(2)+'px,0,0) scale('+scale.toFixed(3)+')'; }
+      var dialEl=null;
+      /* rolling without slipping: rotation (deg) = distance / radius — the text layer never turns */
+      function paint(){
+        orb.style.transform='translate3d('+x.toFixed(2)+'px,0,0) scale('+scale.toFixed(3)+')';
+        if(!dialEl) dialEl=orb.querySelector('.uxr-dial');
+        if(dialEl) dialEl.style.transform='rotate('+(x/(orb.offsetWidth/2)*57.2958).toFixed(2)+'deg)';
+      }
       function tick(){
         var dx=target-x; vx=dx*0.14; x+=vx;
         scale+=((1+Math.min(Math.abs(vx)*0.006,0.06))-scale)*0.2;   /* stretches a touch when moving fast */
