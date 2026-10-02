@@ -276,6 +276,32 @@
   .btn-primary:hover .cta-arrow{animation-duration:1.1s;}
   @keyframes ctaBob{0%,100%{transform:translateY(-2px);}50%{transform:translateY(3px);}}
   @media (prefers-reduced-motion:reduce){ .cta-arrow{animation:none;} }
+  /* UX PSYCHOLOGY RULER — a signature detail after the footer's copyright bar. A blue marker rides a dashed
+     ruler and follows the cursor across five zones, one UX principle per zone. Added by JS (see uxRuler). */
+  .uxr{--uxr-blue:#3157D5;--uxr-d:168px;position:relative;margin:72px 0 56px;user-select:none;-webkit-user-select:none;}
+  .uxr-track{position:relative;height:calc(var(--uxr-d) + 40px);touch-action:pan-y;}
+  .uxr-line{position:absolute;left:0;right:0;top:calc(var(--uxr-d) / 2);border-top:1.5px dashed rgba(49,87,213,.5);pointer-events:none;}
+  .uxr-tick{position:absolute;top:calc(var(--uxr-d) / 2 - 5px);width:1px;height:10px;background:rgba(49,87,213,.5);pointer-events:none;}
+  .uxr-num{position:absolute;top:calc(var(--uxr-d) / 2 + 12px);transform:translateX(-50%);font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;
+    color:var(--ink-soft);opacity:.6;pointer-events:none;transition:opacity .3s ease,color .3s ease;}
+  .uxr-num.is-on{opacity:1;color:var(--uxr-blue);}
+  .uxr-zones{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);}
+  .uxr-zone{appearance:none;background:none;border:0;padding:0;margin:0;cursor:inherit;}
+  .uxr-zone:focus{outline:none;}
+  .uxr-zone:focus-visible{box-shadow:inset 0 -2px 0 var(--uxr-blue);}
+  .uxr-orb{position:absolute;left:0;top:0;width:var(--uxr-d);height:var(--uxr-d);margin-left:calc(var(--uxr-d) / -2);border-radius:50%;
+    background:var(--uxr-blue);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    padding:0 20px;pointer-events:none;will-change:transform;}
+  .uxr-copy{display:flex;flex-direction:column;align-items:center;gap:7px;transition:opacity .18s ease,transform .24s cubic-bezier(.22,1,.36,1);}
+  .uxr-copy.is-out{opacity:0;transform:translateY(5px);}
+  .uxr-count{font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;opacity:.7;}
+  .uxr-name{font-family:var(--font-mono);font-size:9.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;}
+  .uxr-quote{font-family:var(--font-display);font-weight:400;font-size:13.5px;line-height:1.24;letter-spacing:-.005em;max-width:128px;}
+  .uxr-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+  @media (max-width:1024px){ .uxr{--uxr-d:150px;} .uxr-quote{font-size:12.5px;max-width:116px;} }
+  @media (max-width:640px){ .uxr{--uxr-d:132px;margin:56px 0 40px;} .uxr-orb{padding:0 14px;} .uxr-copy{gap:5px;}
+    .uxr-quote{font-size:11.5px;max-width:102px;} .uxr-name{font-size:8.5px;letter-spacing:.12em;} .uxr-count{font-size:8px;} }
+  @media (prefers-reduced-motion:reduce){ .uxr-copy,.uxr-num{transition:none;} }
   /* ORB CTA — arrow buttons show a small dot at rest; on hover/focus the dot expands into a
      solid circle carrying the arrow. JS below converts every .btn that has an arrow into this. */
   /* one button height site-wide: full-size buttons are 62px tall, with or without the orb (NDA unlock excluded — it's a form control) */
@@ -9074,6 +9100,82 @@ setActive(0); startRotation();
 })();
 }catch(e){ console.error('[phil card]', e); }</script>
 <script src="orbit/orbit.js" defer></script>
+<script>
+  /* UX PSYCHOLOGY RULER — appended after each footer's copyright bar. Cursor (or drag/tap/keys) drives a
+     blue marker along a dashed ruler; five equal zones = five principles. rAF loop runs only while moving. */
+  (function(){
+    var P=[
+      ['Hick’s Law','Reduce choices. Make decisions easier.'],
+      ['Miller’s Law','Group complexity into things people can understand.'],
+      ['Fitts’s Law','Make important actions easier to reach.'],
+      ['Progressive Disclosure','Reveal complexity only when it becomes useful.'],
+      ['Peak-End Rule','People remember how an experience ends.']
+    ];
+    var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)');
+    function pad(n){return (n<10?'0':'')+n;}
+    function build(foot){
+      var root=document.createElement('section'); root.className='uxr'; root.setAttribute('aria-label','UX psychology ruler: five principles');
+      var list='<ol class="uxr-sr">'+P.map(function(p){return '<li>'+p[0]+': '+p[1]+'</li>';}).join('')+'</ol>';
+      var ticks='', zones='';
+      P.forEach(function(p,i){
+        var c=(i+.5)/P.length*100;
+        ticks+='<span class="uxr-tick" style="left:'+c+'%"></span><span class="uxr-num" style="left:'+c+'%">'+pad(i+1)+'</span>';
+        zones+='<button type="button" class="uxr-zone" data-i="'+i+'" aria-label="'+pad(i+1)+' of 05, '+p[0]+': '+p[1]+'"></button>';
+      });
+      root.innerHTML=list+'<div class="uxr-track"><span class="uxr-line"></span>'+ticks+
+        '<div class="uxr-orb" aria-hidden="true"><div class="uxr-copy"><span class="uxr-count"></span><span class="uxr-name"></span><span class="uxr-quote"></span></div></div>'+
+        '<div class="uxr-zones" role="group" aria-label="Choose a principle">'+zones+'</div></div><p class="uxr-sr" aria-live="polite"></p>';
+      foot.appendChild(root);
+      var track=root.querySelector('.uxr-track'), orb=root.querySelector('.uxr-orb'), copy=root.querySelector('.uxr-copy'),
+          live=root.querySelector('p.uxr-sr'), nums=root.querySelectorAll('.uxr-num'), btns=root.querySelectorAll('.uxr-zone');
+      var W=0, x=0, target=0, vx=0, scale=1, zone=-1, raf=0, swapT=0;
+      function measure(){ W=track.clientWidth; }
+      function zoneCenter(i){ return (i+.5)/P.length*W; }
+      function show(i,announce){
+        if(i===zone) return; zone=i;
+        nums.forEach(function(n,k){ n.classList.toggle('is-on',k===i); });
+        var fill=function(){ copy.children[0].textContent=pad(i+1)+' / 0'+P.length; copy.children[1].textContent=P[i][0]; copy.children[2].textContent=P[i][1]; };
+        clearTimeout(swapT);
+        if(reduce&&reduce.matches){ fill(); }
+        else { copy.classList.add('is-out'); swapT=setTimeout(function(){ fill(); copy.classList.remove('is-out'); },150); }
+        if(announce) live.textContent=pad(i+1)+' of 05. '+P[i][0]+'. '+P[i][1];
+      }
+      function clamp(v){ var r=orb.offsetWidth/2; return Math.max(r,Math.min(W-r,v)); }
+      function paint(){ orb.style.transform='translate3d('+x.toFixed(2)+'px,0,0) scale('+scale.toFixed(3)+')'; }
+      function tick(){
+        var dx=target-x; vx=dx*0.14; x+=vx;
+        scale+=((1+Math.min(Math.abs(vx)*0.006,0.06))-scale)*0.2;   /* stretches a touch when moving fast */
+        paint();
+        if(Math.abs(dx)>0.3||Math.abs(scale-1)>0.002){ raf=requestAnimationFrame(tick); } else { x=target; scale=1; paint(); raf=0; }
+      }
+      function moveTo(px,announce){
+        var i=Math.max(0,Math.min(P.length-1,Math.floor(px/W*P.length)));
+        /* gentle magnet: the marker is pulled ~22% toward the zone centre */
+        target=clamp(px+(zoneCenter(i)-px)*0.22);
+        show(i,announce);
+        if(reduce&&reduce.matches){ x=target; scale=1; paint(); return; }
+        if(!raf) raf=requestAnimationFrame(tick);
+      }
+      function local(e){ var r=track.getBoundingClientRect(); return e.clientX-r.left; }
+      track.addEventListener('pointermove',function(e){ if(e.pointerType==='mouse'||e.buttons) moveTo(local(e)); });
+      track.addEventListener('pointerdown',function(e){ moveTo(local(e),true); });
+      btns.forEach(function(b){
+        b.addEventListener('focus',function(){ var i=+b.dataset.i; moveTo(zoneCenter(i),true); });
+        b.addEventListener('click',function(e){ if(e.detail===0){ moveTo(zoneCenter(+b.dataset.i),true); } });
+        b.addEventListener('keydown',function(e){
+          var i=+b.dataset.i, n=e.key==='ArrowRight'?i+1:e.key==='ArrowLeft'?i-1:null;
+          if(n===null||n<0||n>=P.length) return; e.preventDefault(); btns[n].focus();
+        });
+      });
+      /* leaving the ruler keeps the marker where it was — no snapping away */
+      function layout(){ measure(); var c=zone<0?2:zone; target=x=clamp(zoneCenter(c)); show(c,false); paint(); }
+      if(window.ResizeObserver){ new ResizeObserver(function(){ var keep=zone<0?2:zone; measure(); target=x=clamp(zoneCenter(keep)); paint(); }).observe(track); }
+      layout();
+    }
+    function init(){ document.querySelectorAll('footer.site-foot--v2').forEach(function(f){ if(!f.querySelector('.uxr')) build(f); }); }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+  })();
+</script>
 <script>
   /* ORB CTA: swap the inline arrow in every arrow .btn for the dot → circle orb (see .btn-orb CSS) */
   (function(){
