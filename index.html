@@ -684,6 +684,19 @@
   .shot-lens.on{opacity:1;transform:translate(-50%,-50%) scale(1);}
   .shot-lens span{font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
     color:#fff;line-height:1;}
+  /* VIEW CASE STUDY badge — JS turns each pill into a brand-blue disc: circular text that slowly turns, arrow in the middle */
+  .shot-lens.lens-badge{width:124px;height:124px;padding:0;border-radius:50%;background:#2C4BD4;color:#fff;
+    transform:translate(-50%,-50%) scale(.35);
+    box-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 14px 34px -10px rgba(44,75,212,.65);
+    transition:opacity .3s ease, transform .5s cubic-bezier(.2,.9,.25,1.15);}
+  .shot-lens.lens-badge.on{transform:translate(-50%,-50%) scale(1);}
+  .shot-thumb:active .shot-lens.lens-badge.on,.phone-thumb:active .shot-lens.lens-badge.on{transform:translate(-50%,-50%) scale(.92);}
+  .lens-ring{position:absolute;inset:0;width:100%;height:100%;animation:lensSpin 12s linear infinite;}
+  .lens-ring text{font-family:var(--font-mono);font-size:9.6px;font-weight:600;letter-spacing:.06em;fill:#fff;}
+  .lens-arrow{position:relative;width:30px;height:30px;transform:rotate(-45deg) scale(.6);transition:transform .5s cubic-bezier(.2,.9,.25,1.15) .05s;}
+  .shot-lens.lens-badge.on .lens-arrow{transform:rotate(0) scale(1);}
+  @keyframes lensSpin{to{transform:rotate(360deg);}}
+  @media (prefers-reduced-motion:reduce){ .lens-ring{animation:none;} .shot-lens.lens-badge,.lens-arrow{transition:opacity .2s ease;} }
 
   .sc-thumb{background:linear-gradient(150deg, #637DE3 0%, #4B63C3 100%);}
   .sc-thumb .monitor{position:relative;z-index:2;}
@@ -7700,22 +7713,38 @@ document.querySelectorAll('.work-card').forEach((card)=>{
   });
 });
 
-/* screenshot thumbs: cursor-following labelled lens */
-document.querySelectorAll('.shot-thumb, .phone-thumb').forEach((thumb)=>{
+/* screenshot thumbs: cursor-following VIEW CASE STUDY badge — circular text around an arrow,
+   eased toward the cursor so it trails slightly instead of sticking to it */
+const LENS_TEXT = 'VIEW CASE STUDY \u00B7 VIEW CASE STUDY \u00B7 ';
+const lensReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+document.querySelectorAll('.shot-thumb, .phone-thumb').forEach((thumb, n)=>{
   const lens = thumb.querySelector('.shot-lens');
   if(!lens) return;
+  const id = 'lensPath' + n;
+  lens.classList.add('lens-badge');
+  lens.setAttribute('aria-hidden', 'true');
+  lens.innerHTML =
+    '<svg class="lens-ring" viewBox="0 0 100 100"><defs><path id="'+id+'" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>' +
+    '<text><textPath href="#'+id+'" textLength="232" lengthAdjust="spacing">'+LENS_TEXT+'</textPath></text></svg>' +
+    '<svg class="lens-arrow" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M8.5 7H17v8.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  let tx = 0, ty = 0, x = 0, y = 0, raf = 0, fresh = true;
+  const paint = ()=>{ lens.style.left = x.toFixed(1)+'px'; lens.style.top = y.toFixed(1)+'px'; };
+  const step = ()=>{
+    x += (tx - x) * 0.22; y += (ty - y) * 0.22; paint();
+    raf = (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) ? requestAnimationFrame(step) : 0;
+  };
   thumb.addEventListener('mousemove', (ev)=>{
     const r = thumb.getBoundingClientRect();
     const lw = lens.offsetWidth, lh = lens.offsetHeight;
     const pad = 6;
-    let x = ev.clientX - r.left, y = ev.clientY - r.top;
-    // keep the whole pill inside the card
-    x = Math.min(Math.max(x, lw/2 + pad), r.width  - lw/2 - pad);
-    y = Math.min(Math.max(y, lh/2 + pad), r.height - lh/2 - pad);
-    lens.style.left = x+'px';
-    lens.style.top  = y+'px';
+    tx = ev.clientX - r.left; ty = ev.clientY - r.top;
+    // keep the whole badge inside the card
+    tx = Math.min(Math.max(tx, lw/2 + pad), r.width  - lw/2 - pad);
+    ty = Math.min(Math.max(ty, lh/2 + pad), r.height - lh/2 - pad);
+    if(fresh || lensReduce.matches){ fresh = false; x = tx; y = ty; paint(); return; }   // appear right under the cursor
+    if(!raf) raf = requestAnimationFrame(step);
   });
-  thumb.addEventListener('mouseenter', ()=>{ lens.classList.add('on'); });
+  thumb.addEventListener('mouseenter', ()=>{ fresh = true; lens.classList.add('on'); });
   thumb.addEventListener('mouseleave', ()=>{ lens.classList.remove('on'); });
 });
 })();
