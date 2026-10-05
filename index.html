@@ -2348,12 +2348,18 @@
   /* 250vmax comfortably exceeds any viewport's half-diagonal (max ~71vmax) at any aspect ratio */
   #introLoader.il-out .il-hole{width:250vmax;height:250vmax;}
   /* the eye — brand lilac lines on the plum ground, white for what's alive (progress, pupil, number) */
-  .il-eye{width:clamp(132px,16vw,168px);height:auto;overflow:visible;transition:opacity .45s ease,transform .6s cubic-bezier(.65,0,.35,1);}
-  .il-lid{fill:none;stroke:#BC80CC;stroke-width:1.4;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;
-    animation:ilDraw 1s cubic-bezier(.65,0,.35,1) 80ms forwards;}
+  .il-eye{width:clamp(132px,16vw,168px);height:auto;overflow:visible;transition:opacity .45s ease;}
+  .il-lid{fill:none;stroke:#BC80CC;stroke-width:1.4;stroke-linejoin:round;vector-effect:non-scaling-stroke;}
+  .il-lidshape{transform-origin:80px 40px;transform:scaleY(.04);animation:ilBlink 2.4s cubic-bezier(.45,0,.25,1) 120ms forwards;}
+  @keyframes ilBlink{
+    0%{transform:scaleY(.04);}
+    22%{transform:scaleY(1.04);}  28%{transform:scaleY(1);}      /* opens, settling */
+    62%{transform:scaleY(1);}     67%{transform:scaleY(.04);}    /* a natural blink */
+    74%{transform:scaleY(1);}     100%{transform:scaleY(1);}
+  }
+  @keyframes ilClose{from{transform:scaleY(1);}to{transform:scaleY(.04);}}
   .il-iris-track{fill:none;stroke:rgba(255,255,255,.14);stroke-width:1.4;}
   .il-iris{fill:none;stroke:#FFFFFF;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;}
-  @keyframes ilDraw{to{stroke-dashoffset:0;}}
   .il-pupil{fill:#FFFFFF;transform-box:fill-box;transform-origin:50% 50%;opacity:0;animation:ilPupil 600ms cubic-bezier(.22,.61,.36,1) 450ms both;}
   @keyframes ilPupil{0%{opacity:0;transform:scale(.4);}70%{opacity:1;transform:scale(1.08);}100%{opacity:1;transform:scale(1);}}
   /* the number: large editorial figures, a small lilac % set beside them */
@@ -2365,7 +2371,9 @@
   .il-quote{max-width:30ch;margin:6px 0 0;text-align:center;font-family:var(--font-display);font-style:italic;font-weight:400;
     font-size:clamp(14px,1.25vw,16px);line-height:1.5;color:rgba(255,255,255,.78);opacity:0;animation:ilFadeIn .8s ease 650ms forwards;}
   /* exit: everything quietly leaves together, then the circle opens */
-  #introLoader.il-logo-out .il-eye{opacity:0;transform:scale(.96);}
+  /* at 100%: the eye closes, then fades — and the circle opens like the eye opening onto the page */
+  #introLoader.il-logo-out .il-lidshape{animation:ilClose .3s cubic-bezier(.55,0,.75,.2) forwards;}
+  #introLoader.il-logo-out .il-eye{opacity:0;transition:opacity .3s ease .26s;}
   #introLoader.il-logo-out .il-pct, #introLoader.il-logo-out .il-quote{animation:ilFadeOut .45s ease forwards;}
   @keyframes ilFadeOut{from{opacity:1;}to{opacity:0;}}
   /* no transition here on purpose — once the logo has fully faded, the number hides instantly */
@@ -2374,7 +2382,7 @@
   @media (prefers-reduced-motion:reduce){
     .il-hole{transition:none;}
     .il-eye{transition:none;}
-    .il-lid{animation:none!important;stroke-dashoffset:0;}
+    .il-lidshape{animation:none!important;transform:none;}
     .il-pupil{animation:none!important;opacity:1;transform:none;}
     .il-pct,.il-quote{animation:none!important;opacity:1;}
   }
@@ -2853,13 +2861,16 @@
      page that then pops the animation in a few seconds late. -->
 <div id="introLoader">
   <i class="il-hole" aria-hidden="true"></i>
-  <!-- the eye: an almond outline that draws in, an iris ring that fills with progress, a white pupil.
-       At 100% it fades and the circle opens — the eye opening onto the page. -->
+  <!-- the eye: it opens, blinks once while loading, and closes at 100% — then the circle opens onto the page.
+       The lids (and the clip that hides the iris behind them) scale together, so the iris stays round. -->
   <svg class="il-eye" viewBox="0 0 160 80" aria-hidden="true">
-    <path class="il-lid" pathLength="1" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/>
-    <circle class="il-iris-track" cx="80" cy="40" r="25"/>
-    <circle class="il-iris" id="ilIris" cx="80" cy="40" r="25" pathLength="1" transform="rotate(-90 80 40)"/>
-    <circle class="il-pupil" cx="80" cy="40" r="8"/>
+    <defs><clipPath id="ilEyeClip"><path class="il-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></clipPath></defs>
+    <g clip-path="url(#ilEyeClip)">
+      <circle class="il-iris-track" cx="80" cy="40" r="25"/>
+      <circle class="il-iris" id="ilIris" cx="80" cy="40" r="25" pathLength="1" transform="rotate(-90 80 40)"/>
+      <circle class="il-pupil" cx="80" cy="40" r="8"/>
+    </g>
+    <path class="il-lid il-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/>
   </svg>
   <div class="il-pct" role="status" aria-live="polite"><span class="il-num" id="ilPctNum">0</span><span class="il-sym">%</span></div>
   <p class="il-quote">“I believe humane design starts with understanding people.”</p>
@@ -2944,7 +2955,7 @@
           afterLogoGone();
         } else {
           loader.addEventListener('transitionend', onLogoFade);
-          setTimeout(afterLogoGone, 700);
+          setTimeout(afterLogoGone, 900);
         }
       }), reduce ? 60 : 700);   /* hold on 100% for a beat before anything moves */
     });
