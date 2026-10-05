@@ -329,6 +329,23 @@
   @media (hover:none){ .btn-orb__dot::before{transform:scale(1);} .btn-orb__dot svg{opacity:1;transform:none;} }
   @media (prefers-reduced-motion:reduce){ .btn-orb__dot::before, .btn-orb__dot svg{transition:none;} }
   .btn-small{padding:12px 22px;font-size:13px;}
+  /* SECONDARY CTA (outline) — same mechanics as the primary: a small dot that grows into a circle carrying the
+     arrow, and the hard offset lift on hover. Rest: aubergine outline + text; hover: lilac fill, plum shadow.
+     Dark: lilac outline + text, deep aubergine-grey fill on hover, lilac shadow. */
+  .btn-ghost, .btn-outline{background:transparent;color:var(--violet);border-color:var(--violet);}
+  .btn-ghost:hover, .btn-outline:hover{background:var(--lilac);color:var(--violet-ink);border-color:var(--violet);
+    transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--violet-ink);}
+  .btn-ghost.btn-orb .btn-orb__dot, .btn-outline.btn-orb .btn-orb__dot{--orb-bg:var(--violet);--orb-ink:#fff;}
+  .btn-ghost.btn-orb:hover .btn-orb__dot, .btn-outline.btn-orb:hover .btn-orb__dot,
+  .lab-card:hover .btn-outline.btn-orb .btn-orb__dot{--orb-bg:var(--violet-ink);}
+  :root[data-theme="dark"] .btn-ghost, :root[data-theme="dark"] .btn-outline{color:#C79BD6;border-color:var(--accent);}
+  :root[data-theme="dark"] .btn-ghost:hover, :root[data-theme="dark"] .btn-outline:hover{background:#241E30;color:#E4CDEC;border-color:var(--accent);box-shadow:6px 6px 0 var(--accent);}
+  :root[data-theme="dark"] .btn-ghost.btn-orb .btn-orb__dot, :root[data-theme="dark"] .btn-outline.btn-orb .btn-orb__dot,
+  :root[data-theme="dark"] .lab-card:hover .btn-outline.btn-orb .btn-orb__dot{--orb-bg:var(--accent);--orb-ink:#241E30;}
+  /* the About hero sits on a dark photo panel: keep its secondary white */
+  .about-hero-content .btn-ghost, .about-hero-content .btn-ghost:hover{color:#fff;}
+  .about-hero-content .btn-ghost:hover{background:rgba(255,255,255,.08);box-shadow:6px 6px 0 var(--accent);}
+  .about-hero-content .btn-ghost.btn-orb .btn-orb__dot, :root[data-theme="dark"] .about-hero-content .btn-ghost.btn-orb .btn-orb__dot{--orb-bg:#fff;--orb-ink:#14141B;}
   /* ~8% smaller than .btn-small — reads as editorial, not a SaaS CTA */
   .impact-cta{padding:11px 20px;font-size:12px;}
 
@@ -3733,7 +3750,7 @@
         </div>
         <div class="cta-row about-cta">
           <button class="btn btn-primary" data-scroll="closing">Get in touch <span class="cta-arrow">↓</span></button>
-          <a class="btn btn-ghost" data-resume-download href="#" download="Saikiran Desai Resume_Walmart_2026 updated.pdf">Download resume</a>
+          <a class="btn btn-ghost" data-resume-download href="#" download="Saikiran Desai Resume_Walmart_2026 updated.pdf">Download resume <span class="cta-arrow">↓</span></a>
         </div>
       </div>
     </div>
@@ -3967,7 +3984,7 @@
     <h2>Let's make something good — <em class="case-gradient" style="font-style:italic">together.</em></h2>
     <div class="cta-row">
       <button class="btn btn-primary" data-goto="contact">Let's talk <svg class="c-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9 L9 3 M4.4 3 H9 V7.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <a class="btn btn-ghost" href="https://calendly.com/saikirandesai7/30min" target="_blank" rel="noopener">Book a call</a>
+      <a class="btn btn-ghost" href="https://calendly.com/saikirandesai7/30min" target="_blank" rel="noopener">Book a call <span class="cta-arrow">→</span></a>
     </div>
     <div><a class="back-link" data-view="home">← Back to work</a></div>
   </section>
