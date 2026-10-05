@@ -2343,14 +2343,14 @@
      visible "hole" at its exact center; the shadow always fills whatever is left outside it.
      Pure geometry, no mask-image/@property, so the corner math is trivial and exact. */
   #introLoader .il-hole{position:absolute;top:50%;left:50%;width:0;height:0;margin:0;
-    border-radius:50%;box-shadow:0 0 0 100vmax #3157D5;transform:translate(-50%,-50%);z-index:0;
-    transition:width 1.05s cubic-bezier(.16,1,.3,1),height 1.05s cubic-bezier(.16,1,.3,1);}
+    border-radius:50%;box-shadow:0 0 0 100vmax #452064;transform:translate(-50%,-50%);z-index:0;will-change:width,height;
+    transition:width 1.6s cubic-bezier(.65,0,.35,1),height 1.6s cubic-bezier(.65,0,.35,1);}
   /* 250vmax comfortably exceeds any viewport's half-diagonal (max ~71vmax) at any aspect ratio */
   #introLoader.il-out .il-hole{width:250vmax;height:250vmax;}
-  .il-cairn{width:56px;height:64px;overflow:visible;transition:opacity .3s ease;}
+  .il-cairn{width:56px;height:64px;overflow:visible;transition:opacity .45s ease;}
   #introLoader.il-logo-out .il-cairn{opacity:0;}
   .il-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
-  .il-cairn .s1{fill:#FFFFFF;} .il-cairn .s2{fill:#C9D6FF;} .il-cairn .s3{fill:#12153A;}
+  .il-cairn .s1{fill:#BC80CC;} .il-cairn .s2{fill:#E4CDEC;} .il-cairn .s3{fill:#FFFFFF;}
   .il-cairn .s3{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 0ms both;}
   .il-cairn .s2{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 140ms both;}
   .il-cairn .s1{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 280ms both;}
@@ -2922,8 +2922,8 @@
             loader.classList.add('il-out');      // 5) only then does the circle open
             root.style.overflow = prevOverflow;
             if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
-            setTimeout(function(){ hardKill(); }, reduce ? 60 : 1100);
-          }), reduce ? 0 : 50);
+            setTimeout(function(){ hardKill(); }, reduce ? 60 : 1700);
+          }), reduce ? 0 : 160);
         });
         function onLogoFade(e){ if(e.propertyName === 'opacity') afterLogoGone(); }
 
@@ -2931,9 +2931,9 @@
           afterLogoGone();
         } else {
           loader.addEventListener('transitionend', onLogoFade);
-          setTimeout(afterLogoGone, 500);
+          setTimeout(afterLogoGone, 700);
         }
-      }), reduce ? 60 : 300);
+      }), reduce ? 60 : 700);   /* hold on 100% for a beat before anything moves */
     });
 
     var ticker = setInterval(safe(function(){
@@ -2978,7 +2978,7 @@
     /* hard safety cap — a preloader must never be able to trap a visitor */
     setTimeout(finish, 2500);
     /* and an unconditional outer bound in case ANYTHING above still went wrong */
-    setTimeout(hardKill, 6000);
+    setTimeout(hardKill, 7500);
   }catch(e){
     console.error('[intro loader]', e);
     hardKill();
