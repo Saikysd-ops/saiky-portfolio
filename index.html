@@ -2344,7 +2344,7 @@
      Pure geometry, no mask-image/@property, so the corner math is trivial and exact. */
   #introLoader .il-hole{position:absolute;top:50%;left:50%;width:0;height:0;margin:0;
     border-radius:50%;box-shadow:0 0 0 100vmax #452064;transform:translate(-50%,-50%);z-index:0;will-change:width,height;
-    transition:width 1.6s cubic-bezier(.65,0,.35,1),height 1.6s cubic-bezier(.65,0,.35,1);}
+    transition:width 1.8s cubic-bezier(.76,0,.24,1),height 1.8s cubic-bezier(.76,0,.24,1);}
   /* 250vmax comfortably exceeds any viewport's half-diagonal (max ~71vmax) at any aspect ratio */
   #introLoader.il-out .il-hole{width:250vmax;height:250vmax;}
   /* the eye — brand lilac lines on the plum ground, white for what's alive (progress, pupil, number) */
@@ -2359,11 +2359,12 @@
   }
   .il-iris-track{fill:none;stroke:rgba(255,255,255,.14);stroke-width:1.4;}
   .il-iris{fill:none;stroke:#FFFFFF;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;}
-  .il-pupil{fill:#FFFFFF;transform-box:fill-box;transform-origin:50% 50%;opacity:0;animation:ilPupil 600ms cubic-bezier(.22,.61,.36,1) 450ms both;}
+  .il-pupil{fill:#FFFFFF;transform-origin:80px 40px;opacity:0;animation:ilPupil 600ms cubic-bezier(.22,.61,.36,1) 450ms both;}
   @keyframes ilPupil{0%{opacity:0;transform:scale(.4);}70%{opacity:1;transform:scale(1.08);}100%{opacity:1;transform:scale(1);}}
   /* the number: large editorial figures, a small lilac % set beside them */
   .il-pct{display:flex;align-items:flex-start;justify-content:center;gap:.08em;margin-top:6px;color:#fff;
-    opacity:0;animation:ilFadeIn .6s ease 200ms forwards;}
+    opacity:0;transition:opacity .6s ease;}
+  #introLoader.il-ready .il-pct{opacity:1;}
   .il-num{font-family:var(--font-display);font-weight:300;font-size:clamp(104px,19vw,280px);line-height:.78;letter-spacing:-.04em;
     font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum","tnum";min-width:2.6ch;text-align:right;}
   .il-sym{font-family:var(--font-mono);font-size:clamp(13px,1.3vw,17px);font-weight:500;letter-spacing:.06em;color:#BC80CC;margin-top:.2em;}
@@ -2371,13 +2372,14 @@
   #introLoader .il-pct{position:absolute;left:clamp(20px,4vw,64px);bottom:clamp(14px,3.2vw,48px);margin:0;justify-content:flex-start;gap:.35em;}
   #introLoader .il-num{min-width:0;text-align:left;}
   .il-quote{max-width:30ch;margin:6px 0 0;text-align:center;font-family:var(--font-display);font-style:italic;font-weight:400;
-    font-size:clamp(14px,1.25vw,16px);line-height:1.5;color:rgba(255,255,255,.78);transition:opacity .5s ease;}
+    font-size:clamp(14px,1.25vw,16px);line-height:1.5;color:rgba(255,255,255,.78);opacity:0;transition:opacity .6s ease;}
+  #introLoader.il-ready .il-quote{opacity:1;}
   /* exit: everything quietly leaves together, then the circle opens */
   /* at 100%: the eye opens wide and fades as it grows — then the circle opens onto the page */
   #introLoader.il-logo-out .il-lidshape{animation:ilWide .5s cubic-bezier(.22,.61,.36,1) forwards;}
   #introLoader.il-logo-out .il-eye{opacity:0;transform:scale(1.12);transition:opacity .4s ease .12s,transform .55s cubic-bezier(.22,.61,.36,1);}
   @keyframes ilWide{from{transform:scaleY(1);}to{transform:scaleY(1.3);}}
-  #introLoader.il-out .il-quote{opacity:0;}
+  #introLoader.il-ready.il-out .il-quote{opacity:0;transition:opacity .7s ease;}
   #introLoader.il-logo-out .il-pct{animation:ilFadeOut .45s ease forwards;}
   @keyframes ilFadeOut{from{opacity:1;}to{opacity:0;}}
   /* no transition here on purpose — once the logo has fully faded, the number hides instantly */
@@ -2388,7 +2390,7 @@
     .il-eye{transition:none;}
     .il-lidshape{animation:none!important;transform:none;}
     .il-pupil{animation:none!important;opacity:1;transform:none;}
-    .il-pct{animation:none!important;opacity:1;}
+    .il-pct,.il-quote{transition:none!important;}
   }
 
   /* view transition loader */
@@ -2928,6 +2930,20 @@
       it already reads 100, which is a far smaller-feeling pause than a frozen 98. */
 
     var irisEl = document.getElementById('ilIris');
+    /* show the number + quote only once their real fonts are in — no fallback-font "blink" (max 600ms wait) */
+    var markReady = safe(function(){ loader.classList.add('il-ready'); });
+    if(document.fonts && document.fonts.load){
+      Promise.all([document.fonts.load('italic 500 16px Fraunces'), document.fonts.load('300 120px Fraunces')]).then(markReady, markReady);
+      setTimeout(markReady, 600);
+    } else { markReady(); }
+    /* the reveal circle grows from the pupil, so the eye itself opens onto the page */
+    function centreHoleOnEye(){
+      var eye = loader.querySelector('.il-eye'), hole = loader.querySelector('.il-hole');
+      if(!eye || !hole) return;
+      var r = eye.getBoundingClientRect();
+      hole.style.left = (r.left + r.width/2) + 'px';
+      hole.style.top  = (r.top + r.height/2) + 'px';
+    }
     function paint(){ numEl.textContent = Math.round(pct); if(irisEl) irisEl.style.strokeDashoffset = String(1 - pct/100); }
 
     var finish = safe(function(){
@@ -2936,6 +2952,7 @@
       clearInterval(ticker);
       pct = 100; paint();
       setTimeout(safe(function(){
+        centreHoleOnEye();
         loader.classList.add('il-logo-out');   // 1) the logo animates out first, on its own
 
         // 2) wait for that fade to actually finish (a real transitionend, not a guessed
@@ -2947,10 +2964,10 @@
           loader.removeEventListener('transitionend', onLogoFade);
           loader.classList.add('il-pct-out');    // 3) then the number hides immediately (no fade)
           setTimeout(safe(function(){             // 4) a short, deliberate 50ms beat
-            loader.classList.add('il-out');      // 5) only then does the circle open
+            loader.classList.add('il-out');      // 5) only then does the circle open — from the eye
             root.style.overflow = prevOverflow;
             if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
-            setTimeout(function(){ hardKill(); }, reduce ? 60 : 1700);
+            setTimeout(function(){ hardKill(); }, reduce ? 60 : 1900);
           }), reduce ? 0 : 160);
         });
         function onLogoFade(e){ if(e.propertyName === 'opacity') afterLogoGone(); }
