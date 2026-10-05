@@ -2347,28 +2347,45 @@
     transition:width 1.6s cubic-bezier(.65,0,.35,1),height 1.6s cubic-bezier(.65,0,.35,1);}
   /* 250vmax comfortably exceeds any viewport's half-diagonal (max ~71vmax) at any aspect ratio */
   #introLoader.il-out .il-hole{width:250vmax;height:250vmax;}
-  .il-cairn{width:56px;height:64px;overflow:visible;transition:opacity .45s ease;}
-  #introLoader.il-logo-out .il-cairn{opacity:0;}
+  /* the eye — brand lilac lines on the plum ground, white for what's alive (progress, pupil, number) */
+  .il-eye{width:clamp(132px,16vw,168px);height:auto;overflow:visible;transition:opacity .45s ease,transform .6s cubic-bezier(.65,0,.35,1);}
+  .il-lid{fill:none;stroke:#BC80CC;stroke-width:1.4;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;
+    animation:ilDraw 1s cubic-bezier(.65,0,.35,1) 80ms forwards;}
+  .il-iris-track{fill:none;stroke:rgba(255,255,255,.14);stroke-width:1.4;}
+  .il-iris{fill:none;stroke:#FFFFFF;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;}
+  @keyframes ilDraw{to{stroke-dashoffset:0;}}
+  .il-cairn{overflow:visible;}
   .il-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
   .il-cairn .s1{fill:#BC80CC;} .il-cairn .s2{fill:#E4CDEC;} .il-cairn .s3{fill:#FFFFFF;}
-  .il-cairn .s3{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 0ms both;}
-  .il-cairn .s2{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 140ms both;}
-  .il-cairn .s1{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 280ms both;}
+  .il-cairn .s3{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 300ms both;}
+  .il-cairn .s2{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 440ms both;}
+  .il-cairn .s1{animation:ilSettle 520ms cubic-bezier(.22,.61,.36,1) 580ms both;}
   @keyframes ilSettle{
     0%{opacity:0;transform:translateY(-10px) scale(.94);}
     60%{opacity:1;transform:translateY(2px) scale(1.02);}
     100%{opacity:1;transform:translateY(0) scale(1);}
   }
-  .il-pct{font-family:var(--font-mono);font-size:14px;letter-spacing:.06em;color:rgba(255,255,255,.72);
-    font-variant-numeric:tabular-nums;opacity:0;animation:ilFadeIn .5s ease 200ms forwards;}
+  /* the number: large editorial figures, a small lilac % set beside them */
+  .il-pct{display:flex;align-items:flex-start;justify-content:center;gap:.08em;margin-top:6px;color:#fff;
+    opacity:0;animation:ilFadeIn .6s ease 200ms forwards;}
+  .il-num{font-family:var(--font-display);font-weight:300;font-size:clamp(72px,11vw,128px);line-height:.9;letter-spacing:-.03em;
+    font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum","tnum";min-width:2.6ch;text-align:right;}
+  .il-sym{font-family:var(--font-mono);font-size:clamp(13px,1.3vw,16px);font-weight:500;letter-spacing:.06em;color:#BC80CC;margin-top:.7em;}
+  .il-quote{max-width:30ch;margin:6px 0 0;text-align:center;font-family:var(--font-display);font-style:italic;font-weight:400;
+    font-size:clamp(14px,1.25vw,16px);line-height:1.5;color:rgba(255,255,255,.78);opacity:0;animation:ilFadeIn .8s ease 650ms forwards;}
+  /* exit: everything quietly leaves together, then the circle opens */
+  #introLoader.il-logo-out .il-eye{opacity:0;transform:scale(.96);}
+  #introLoader.il-logo-out .il-pct, #introLoader.il-logo-out .il-quote{animation:ilFadeOut .45s ease forwards;}
+  @keyframes ilFadeOut{from{opacity:1;}to{opacity:0;}}
   /* no transition here on purpose — once the logo has fully faded, the number hides instantly */
   #introLoader.il-pct-out .il-pct{opacity:0;animation:none;}
   @keyframes ilFadeIn{to{opacity:1;}}
   @media (prefers-reduced-motion:reduce){
     .il-hole{transition:none;}
-    .il-cairn{transition:none;}
+    .il-eye{transition:none;}
+    .il-lid{animation:none!important;stroke-dashoffset:0;}
     .il-cairn .stone{animation:none!important;opacity:1;transform:none;}
-    .il-pct{animation:none!important;opacity:1;}
+    .il-pct,.il-quote{animation:none!important;opacity:1;}
   }
 
   /* view transition loader */
@@ -2845,12 +2862,20 @@
      page that then pops the animation in a few seconds late. -->
 <div id="introLoader">
   <i class="il-hole" aria-hidden="true"></i>
-  <svg class="il-cairn" viewBox="0 0 40 46" aria-hidden="true">
-    <ellipse class="stone s1" cx="20" cy="6.25" rx="8.75" ry="4.17"/>
-    <ellipse class="stone s2" cx="20" cy="18.75" rx="12.92" ry="6.25"/>
-    <ellipse class="stone s3" cx="20" cy="35" rx="17.92" ry="8.33"/>
+  <!-- the eye: an almond outline that draws in, an iris ring that fills with progress, the cairn as its pupil.
+       At 100% it fades and the circle opens — the eye opening onto the page. -->
+  <svg class="il-eye" viewBox="0 0 160 80" aria-hidden="true">
+    <path class="il-lid" pathLength="1" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/>
+    <circle class="il-iris-track" cx="80" cy="40" r="25"/>
+    <circle class="il-iris" id="ilIris" cx="80" cy="40" r="25" pathLength="1" transform="rotate(-90 80 40)"/>
+    <svg class="il-cairn" x="68" y="26.5" width="24" height="27" viewBox="0 0 40 46">
+      <ellipse class="stone s1" cx="20" cy="6.25" rx="8.75" ry="4.17"/>
+      <ellipse class="stone s2" cx="20" cy="18.75" rx="12.92" ry="6.25"/>
+      <ellipse class="stone s3" cx="20" cy="35" rx="17.92" ry="8.33"/>
+    </svg>
   </svg>
-  <div class="il-pct" role="status" aria-live="polite"><span id="ilPctNum">0</span>%</div>
+  <div class="il-pct" role="status" aria-live="polite"><span class="il-num" id="ilPctNum">0</span><span class="il-sym">%</span></div>
+  <p class="il-quote">“I believe humane design starts with understanding people.”</p>
 </div>
 <noscript><style>#introLoader{display:none!important}</style></noscript>
 <script>
@@ -2900,7 +2925,8 @@
       on real fonts/images; that wait (usually near-instant anyway) happens quietly after
       it already reads 100, which is a far smaller-feeling pause than a frozen 98. */
 
-    function paint(){ numEl.textContent = Math.round(pct); }
+    var irisEl = document.getElementById('ilIris');
+    function paint(){ numEl.textContent = Math.round(pct); if(irisEl) irisEl.style.strokeDashoffset = String(1 - pct/100); }
 
     var finish = safe(function(){
       if(done) return;
