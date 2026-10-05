@@ -9287,12 +9287,13 @@ setActive(0); startRotation();
   /* ORB CTA: swap the inline arrow in every arrow .btn for the dot → circle orb (see .btn-orb CSS) */
   (function(){
     var DOWN='<svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var DOWNLOAD='<svg viewBox="0 0 16 16" fill="none"><path d="M8 2.5v7.5M4.8 6.8 8 10l3.2-3.2M3 13h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     var UP_RIGHT='<svg viewBox="0 0 16 16" fill="none"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     function orbify(){
       document.querySelectorAll('.btn:not(.btn-orb)').forEach(function(b){
         var a=b.querySelector(':scope > .cta-arrow, :scope > .c-arrow'); if(!a) return;
         var orb=document.createElement('span'); orb.className='btn-orb__dot'; orb.setAttribute('aria-hidden','true');
-        orb.innerHTML=(a.textContent||'').trim()==='\u2193'?DOWN:UP_RIGHT;
+        orb.innerHTML=b.hasAttribute('download')||b.hasAttribute('data-resume-download')?DOWNLOAD:(a.textContent||'').trim()==='\u2193'?DOWN:UP_RIGHT;
         a.replaceWith(orb); b.classList.add('btn-orb');
       });
     }
