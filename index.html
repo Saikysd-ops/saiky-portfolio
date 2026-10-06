@@ -2348,7 +2348,7 @@
   /* 250vmax comfortably exceeds any viewport's half-diagonal (max ~71vmax) at any aspect ratio */
   #introLoader.il-out .il-hole{width:250vmax;height:250vmax;}
   /* the eye — brand lilac lines on the plum ground, white for what's alive (progress, pupil, number) */
-  .il-eye{width:clamp(132px,16vw,168px);height:auto;overflow:visible;transform-origin:50% 50%;transition:opacity .45s ease;margin-top:-6vh;}
+  .il-eye{width:clamp(132px,16vw,168px);height:auto;overflow:visible;transform-origin:50% 50%;transition:opacity .45s ease;order:1;}
   .il-lid{fill:none;stroke:#BC80CC;stroke-width:1.4;stroke-linejoin:round;vector-effect:non-scaling-stroke;}
   .il-lidshape{transform-origin:80px 40px;transform:scaleY(.04);
     animation:ilOpen .7s cubic-bezier(.22,.61,.36,1) 120ms both, ilBlinkLoop 2.6s cubic-bezier(.45,0,.55,1) 1.3s infinite;}
@@ -2362,12 +2362,13 @@
   .il-pct{display:flex;align-items:flex-start;justify-content:center;gap:.08em;margin-top:6px;color:#fff;
     opacity:0;transition:opacity .6s ease;}
   #introLoader.il-ready .il-pct{opacity:1;}
-  .il-num{font-family:var(--font-display);font-weight:300;font-size:clamp(104px,19vw,280px);line-height:.78;letter-spacing:-.04em;
+  .il-num{font-family:var(--font-display);font-weight:300;font-size:clamp(88px,13vw,176px);line-height:.82;letter-spacing:-.04em;
     font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum","tnum";min-width:2.6ch;text-align:right;}
   .il-sym{font-family:var(--font-mono);font-size:clamp(13px,1.3vw,17px);font-weight:500;letter-spacing:.06em;color:#BC80CC;margin-top:.2em;}
-  /* the number lives in the bottom-left corner — a large editorial figure, not a centred counter */
-  #introLoader .il-pct{position:absolute;left:clamp(20px,4vw,64px);bottom:clamp(14px,3.2vw,48px);margin:0;justify-content:flex-start;gap:.35em;}
-  #introLoader .il-num{min-width:0;text-align:left;}
+  /* order: eye → quote → the large number, all on the centre line */
+  #introLoader .il-quote{order:2;}
+  #introLoader .il-pct{order:3;margin-top:clamp(14px,2.4vh,28px);justify-content:center;gap:.3em;}
+  #introLoader .il-num{min-width:0;text-align:center;}
   .il-quote{max-width:30ch;margin:6px 0 0;text-align:center;font-family:var(--font-display);font-style:italic;font-weight:400;
     font-size:clamp(14px,1.25vw,16px);line-height:1.5;color:rgba(255,255,255,.78);opacity:0;transition:opacity .6s ease;}
   #introLoader.il-ready .il-quote{opacity:1;}
