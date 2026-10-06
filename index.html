@@ -2350,15 +2350,12 @@
   /* the eye — brand lilac lines on the plum ground, white for what's alive (progress, pupil, number) */
   .il-eye{width:clamp(132px,16vw,168px);height:auto;overflow:visible;transform-origin:50% 50%;transition:opacity .45s ease;margin-top:-6vh;}
   .il-lid{fill:none;stroke:#BC80CC;stroke-width:1.4;stroke-linejoin:round;vector-effect:non-scaling-stroke;}
-  .il-lidshape{transform-origin:80px 40px;transform:scaleY(.04);animation:ilBlink 2.4s cubic-bezier(.45,0,.25,1) 120ms forwards;}
-  @keyframes ilBlink{
-    0%{transform:scaleY(.04);}
-    22%{transform:scaleY(1.04);}  28%{transform:scaleY(1);}      /* opens, settling */
-    62%{transform:scaleY(1);}     67%{transform:scaleY(.04);}    /* a natural blink */
-    74%{transform:scaleY(1);}     100%{transform:scaleY(1);}
-  }
-  .il-iris-track{fill:none;stroke:rgba(255,255,255,.14);stroke-width:1.4;}
-  .il-iris{fill:none;stroke:#FFFFFF;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;}
+  .il-lidshape{transform-origin:80px 40px;transform:scaleY(.04);
+    animation:ilOpen .7s cubic-bezier(.22,.61,.36,1) 120ms both, ilBlinkLoop 2.6s cubic-bezier(.45,0,.55,1) 1.3s infinite;}
+  @keyframes ilOpen{0%{transform:scaleY(.04);}75%{transform:scaleY(1.04);}100%{transform:scaleY(1);}}
+  /* close → open, then rest: a calm, natural blink */
+  @keyframes ilBlinkLoop{0%,72%{transform:scaleY(1);}82%{transform:scaleY(.04);}92%,100%{transform:scaleY(1);}}
+  .il-iris-track{fill:none;stroke:rgba(255,255,255,.55);stroke-width:1.4;}
   .il-pupil{fill:#FFFFFF;transform-origin:80px 40px;opacity:0;animation:ilPupil 600ms cubic-bezier(.22,.61,.36,1) 450ms both;}
   @keyframes ilPupil{0%{opacity:0;transform:scale(.4);}70%{opacity:1;transform:scale(1.08);}100%{opacity:1;transform:scale(1);}}
   /* the number: large editorial figures, a small lilac % set beside them */
@@ -2867,13 +2864,12 @@
      page that then pops the animation in a few seconds late. -->
 <div id="introLoader">
   <i class="il-hole" aria-hidden="true"></i>
-  <!-- the eye: it opens, blinks once while loading, and opens wide at 100% — then the circle opens onto the page.
+  <!-- the eye: it opens, blinks calmly while loading, and opens wide at 100% — then the circle opens onto the page.
        The lids (and the clip that hides the iris behind them) scale together, so the iris stays round. -->
   <svg class="il-eye" viewBox="0 0 160 80" aria-hidden="true">
     <defs><clipPath id="ilEyeClip"><path class="il-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></clipPath></defs>
     <g clip-path="url(#ilEyeClip)">
       <circle class="il-iris-track" cx="80" cy="40" r="25"/>
-      <circle class="il-iris" id="ilIris" cx="80" cy="40" r="25" pathLength="1" transform="rotate(-90 80 40)"/>
       <circle class="il-pupil" cx="80" cy="40" r="8"/>
     </g>
     <path class="il-lid il-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/>
@@ -2924,12 +2920,11 @@
 
     var pct = 0, done = false, fontsReady = false, assetsReady = false, swept = false;
     var startedAt = Date.now();
-    var COUNT_MS = reduce ? 150 : 900; /* fixed schedule for the visible 0->100 sweep —
+    var COUNT_MS = reduce ? 150 : 1400; /* fixed schedule for the visible 0->100 sweep —
       it always completes on this clock, so the number can never stall mid-count waiting
       on real fonts/images; that wait (usually near-instant anyway) happens quietly after
       it already reads 100, which is a far smaller-feeling pause than a frozen 98. */
 
-    var irisEl = document.getElementById('ilIris');
     /* show the number + quote only once their real fonts are in — no fallback-font "blink" (max 600ms wait) */
     var markReady = safe(function(){ loader.classList.add('il-ready'); });
     if(document.fonts && document.fonts.load){
@@ -2944,12 +2939,12 @@
       hole.style.left = (r.left + r.width/2) + 'px';
       hole.style.top  = (r.top + r.height/2) + 'px';
     }
-    function paint(){ numEl.textContent = Math.round(pct); if(irisEl) irisEl.style.strokeDashoffset = String(1 - pct/100); }
+    function paint(){ numEl.textContent = Math.round(pct); }
 
     var finish = safe(function(){
       if(done) return;
       done = true;
-      clearInterval(ticker);
+      ticker = 0;
       pct = 100; paint();
       setTimeout(safe(function(){
         centreHoleOnEye();
@@ -2981,8 +2976,10 @@
       }), reduce ? 60 : 700);   /* hold on 100% for a beat before anything moves */
     });
 
-    var ticker = setInterval(safe(function(){
-      if(done) return;
+    /* counted on animation frames (not a 40ms timer) so 0 → 100 runs smoothly */
+    var ticker = 1;
+    var tick = safe(function(){
+      if(done || !ticker) return;
       var t = Math.min(1, (Date.now() - startedAt) / COUNT_MS);
       pct = (1 - Math.pow(1 - t, 3)) * 100; /* cubic ease-out: quick start, gentle settle */
       paint();
@@ -2991,8 +2988,9 @@
         if(fontsReady && assetsReady) finish();
         /* else the number is already sitting at 100, quietly waiting on the real page —
            nothing left to animate, so there is nothing left to look stuck */
-      }
-    }), reduce ? 20 : 40);
+      } else { requestAnimationFrame(tick); }
+    });
+    requestAnimationFrame(tick);
 
     /* real signal 1: the webfonts the hero headline needs. Only relevant once the visible
        sweep has already finished — if it resolves before that, the ticker's own check above
