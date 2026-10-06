@@ -2334,61 +2334,55 @@
 
   /* first-visit preloader — see the inline script beside its markup for the
      0→100 logic; this is just the look. */
-  #introLoader{position:fixed;inset:0;z-index:2000;overflow:hidden;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
+  /* INTRO LOADER — Loading → Seeing → Opening → Exploring.
+     0–100%: the eye opens once and stays (nearly) still while the number counts up.
+     At 100%: a short hold, the number fades first, the eye contracts slightly — then its iris expands
+     into an ivory disc that fills the screen (purple → ivory), and the loader fades away to reveal the
+     homepage already rendered underneath. The exit animates only transform and opacity. */
+  #introLoader{position:fixed;inset:0;z-index:2000;overflow:hidden;background:#452064;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .6s ease;}
   #introLoader > *{position:relative;z-index:1;}
   #introLoader.il-out{pointer-events:none;}
-  /* the "opens" motion: one true circle, not a mask — a 0-size dot whose huge, hard-edged
-     box-shadow fills the rest of the screen. Growing the dot's own width/height grows the
-     visible "hole" at its exact center; the shadow always fills whatever is left outside it.
-     Pure geometry, no mask-image/@property, so the corner math is trivial and exact. */
-  #introLoader .il-hole{position:absolute;top:50%;left:50%;width:0;height:0;margin:0;
-    border-radius:50%;box-shadow:0 0 0 100vmax #452064;transform:translate(-50%,-50%);z-index:0;will-change:width,height;
-    transition:width 1.8s cubic-bezier(.76,0,.24,1),height 1.8s cubic-bezier(.76,0,.24,1);}
-  /* 250vmax comfortably exceeds any viewport's half-diagonal (max ~71vmax) at any aspect ratio */
-  #introLoader.il-out .il-hole{width:250vmax;height:250vmax;}
-  /* the eye — brand lilac lines on the plum ground, white for what's alive (progress, pupil, number) */
-  .il-eye{width:clamp(132px,16vw,168px);height:auto;overflow:visible;transform-origin:50% 50%;transition:opacity .45s ease;order:1;}
+  #introLoader.il-gone{opacity:0;}
+  /* the opening: an ivory disc sized (by JS) to cover the screen from the eye's centre, starting at the iris */
+  #introLoader .il-hole{position:absolute;left:50%;top:50%;width:300vmax;height:300vmax;margin:-150vmax 0 0 -150vmax;z-index:2;
+    border-radius:50%;background:var(--paper);transform:scale(0);opacity:0;will-change:transform;
+    transition:transform 1.15s cubic-bezier(.7,0,.25,1),opacity .18s ease;}
+  #introLoader.il-out .il-hole{transform:scale(1);opacity:1;}
+  /* the eye — brand lilac lines on the plum ground, white for the iris and pupil */
+  .il-eye{width:clamp(132px,16vw,168px);height:auto;overflow:visible;transform-origin:50% 50%;order:1;
+    transition:transform .5s cubic-bezier(.4,0,.2,1);}
   .il-lid{fill:none;stroke:#BC80CC;stroke-width:1.4;stroke-linejoin:round;vector-effect:non-scaling-stroke;}
   .il-lidshape{transform-origin:80px 40px;transform:scaleY(.04);
-    animation:ilOpen .7s cubic-bezier(.22,.61,.36,1) 120ms both, ilBlinkLoop 2.6s cubic-bezier(.45,0,.55,1) 1.3s infinite;}
-  @keyframes ilOpen{0%{transform:scaleY(.04);}75%{transform:scaleY(1.04);}100%{transform:scaleY(1);}}
-  /* close → open, then rest: a calm, natural blink */
-  @keyframes ilBlinkLoop{0%,72%{transform:scaleY(1);}82%{transform:scaleY(.04);}92%,100%{transform:scaleY(1);}}
+    animation:ilOpen .9s cubic-bezier(.22,.61,.36,1) 120ms both, ilBlink .9s cubic-bezier(.45,0,.55,1) 1.55s 1;}
+  @keyframes ilOpen{from{transform:scaleY(.04);}to{transform:scaleY(1);}}
+  /* one slow, natural blink while loading — then still */
+  @keyframes ilBlink{0%{transform:scaleY(1);}40%{transform:scaleY(.06);}100%{transform:scaleY(1);}}
   .il-iris-track{fill:none;stroke:rgba(255,255,255,.55);stroke-width:1.4;}
-  .il-pupil{fill:#FFFFFF;transform-origin:80px 40px;opacity:0;animation:ilPupil 600ms cubic-bezier(.22,.61,.36,1) 450ms both;}
-  @keyframes ilPupil{0%{opacity:0;transform:scale(.4);}70%{opacity:1;transform:scale(1.08);}100%{opacity:1;transform:scale(1);}}
-  /* the number: large editorial figures, a small lilac % set beside them */
-  .il-pct{display:flex;align-items:flex-start;justify-content:center;gap:.08em;margin-top:6px;color:#fff;
-    opacity:0;transition:opacity .6s ease;}
-  #introLoader.il-ready .il-pct{opacity:1;}
+  .il-pupil{fill:#FFFFFF;transform-origin:80px 40px;opacity:0;animation:ilPupil .6s ease 500ms both;}
+  @keyframes ilPupil{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:scale(1);}}
+  /* the number: large editorial figures, revealed upward, a small lilac % beside them */
+  .il-pct{display:flex;align-items:flex-start;justify-content:center;color:#fff;opacity:0;
+    clip-path:inset(100% 0 0 0);transition:opacity .7s ease,clip-path .9s cubic-bezier(.22,.61,.36,1);}
+  #introLoader.il-ready .il-pct{opacity:1;clip-path:inset(-10% -10% -10% -10%);}
   .il-num{font-family:var(--font-display);font-weight:300;font-size:clamp(88px,13vw,176px);line-height:.82;letter-spacing:-.04em;
-    font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum","tnum";min-width:2.6ch;text-align:right;}
+    font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum","tnum";text-align:center;}
   .il-sym{font-family:var(--font-mono);font-size:clamp(13px,1.3vw,17px);font-weight:500;letter-spacing:.06em;color:#BC80CC;margin-top:.2em;}
   /* order: eye → quote → the large number, all on the centre line */
   #introLoader .il-quote{order:2;}
-  #introLoader .il-pct{order:3;margin-top:clamp(14px,2.4vh,28px);justify-content:center;gap:.3em;}
-  #introLoader .il-num{min-width:0;text-align:center;}
+  #introLoader .il-pct{order:3;margin-top:clamp(14px,2.4vh,28px);gap:.3em;}
   .il-quote{max-width:30ch;margin:6px 0 0;text-align:center;font-family:var(--font-display);font-style:italic;font-weight:400;
     font-size:clamp(14px,1.25vw,16px);line-height:1.5;color:rgba(255,255,255,.78);opacity:0;transition:opacity .6s ease;}
   #introLoader.il-ready .il-quote{opacity:1;}
-  /* exit: everything quietly leaves together, then the circle opens */
-  /* at 100%: the eye opens wide and fades as it grows — then the circle opens onto the page */
-  #introLoader.il-logo-out .il-lidshape{animation:ilWide .5s cubic-bezier(.22,.61,.36,1) forwards;}
-  #introLoader.il-logo-out .il-eye{opacity:0;transform:scale(1.12);transition:opacity .4s ease .12s,transform .55s cubic-bezier(.22,.61,.36,1);}
-  @keyframes ilWide{from{transform:scaleY(1);}to{transform:scaleY(1.3);}}
-  #introLoader.il-ready.il-out .il-quote{opacity:0;transition:opacity .7s ease;}
-  #introLoader.il-logo-out .il-pct{animation:ilFadeOut .45s ease forwards;}
-  @keyframes ilFadeOut{from{opacity:1;}to{opacity:0;}}
-  /* no transition here on purpose — once the logo has fully faded, the number hides instantly */
-  #introLoader.il-pct-out .il-pct{opacity:0;animation:none;}
-  @keyframes ilFadeIn{to{opacity:1;}}
+  /* exit choreography */
+  #introLoader.il-ready.il-num-out .il-pct{opacity:0;transform:translateY(6px);transition:opacity .35s ease,transform .35s ease;}
+  #introLoader.il-focus .il-eye{transform:scale(.92);}
+  #introLoader.il-ready.il-out .il-quote{opacity:0;transition:opacity .45s ease;}
   @media (prefers-reduced-motion:reduce){
-    .il-hole{transition:none;}
-    .il-eye{transition:none;}
+    #introLoader,.il-hole,.il-eye,.il-pct,.il-quote{transition:none!important;}
     .il-lidshape{animation:none!important;transform:none;}
     .il-pupil{animation:none!important;opacity:1;transform:none;}
-    .il-pct,.il-quote{transition:none!important;}
+    .il-pct{clip-path:none;}
   }
 
   /* view transition loader */
@@ -2865,7 +2859,7 @@
      page that then pops the animation in a few seconds late. -->
 <div id="introLoader">
   <i class="il-hole" aria-hidden="true"></i>
-  <!-- the eye: it opens, blinks calmly while loading, and opens wide at 100% — then the circle opens onto the page.
+  <!-- the eye: it opens, blinks once while loading, contracts at 100% — then its iris opens into the page.
        The lids (and the clip that hides the iris behind them) scale together, so the iris stays round. -->
   <svg class="il-eye" viewBox="0 0 160 80" aria-hidden="true">
     <defs><clipPath id="ilEyeClip"><path class="il-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></clipPath></defs>
@@ -2921,7 +2915,7 @@
 
     var pct = 0, done = false, fontsReady = false, assetsReady = false, swept = false;
     var startedAt = Date.now();
-    var COUNT_MS = reduce ? 150 : 1400; /* fixed schedule for the visible 0->100 sweep —
+    var COUNT_MS = reduce ? 150 : 1600; /* fixed schedule for the visible 0->100 sweep —
       it always completes on this clock, so the number can never stall mid-count waiting
       on real fonts/images; that wait (usually near-instant anyway) happens quietly after
       it already reads 100, which is a far smaller-feeling pause than a frozen 98. */
@@ -2932,13 +2926,21 @@
       Promise.all([document.fonts.load('italic 500 16px Fraunces'), document.fonts.load('300 120px Fraunces')]).then(markReady, markReady);
       setTimeout(markReady, 600);
     } else { markReady(); }
-    /* the reveal circle grows from the pupil, so the eye itself opens onto the page */
+    /* the ivory disc starts as the iris and grows from its exact centre until it covers the screen */
     function centreHoleOnEye(){
-      var eye = loader.querySelector('.il-eye'), hole = loader.querySelector('.il-hole');
+      var eye = loader.querySelector('.il-eye'), iris = loader.querySelector('.il-iris-track'), hole = loader.querySelector('.il-hole');
       if(!eye || !hole) return;
-      var r = eye.getBoundingClientRect();
-      hole.style.left = (r.left + r.width/2) + 'px';
-      hole.style.top  = (r.top + r.height/2) + 'px';
+      var r = (iris||eye).getBoundingClientRect(), cx = r.left + r.width/2, cy = r.top + r.height/2;
+      var w = window.innerWidth, h = window.innerHeight;
+      var R = Math.ceil(Math.sqrt(Math.pow(Math.max(cx, w-cx),2) + Math.pow(Math.max(cy, h-cy),2))) + 2;
+      hole.style.width = hole.style.height = (2*R) + 'px';
+      hole.style.margin = '0';
+      hole.style.left = (cx - R) + 'px';
+      hole.style.top  = (cy - R) + 'px';
+      hole.style.transition = 'none';
+      hole.style.transform = 'scale(' + Math.max(0.001, (r.width/2) / R).toFixed(4) + ')';
+      void hole.offsetWidth;            /* commit the starting size before the transition runs */
+      hole.style.transition = '';
     }
     function paint(){ numEl.textContent = Math.round(pct); }
 
@@ -2947,34 +2949,24 @@
       done = true;
       ticker = 0;
       pct = 100; paint();
-      setTimeout(safe(function(){
-        centreHoleOnEye();
-        loader.classList.add('il-logo-out');   // 1) the logo animates out first, on its own
-
-        // 2) wait for that fade to actually finish (a real transitionend, not a guessed
-        //    delay — a safety-net timeout covers the rare case it never fires).
-        var loggedOut = false;
-        var afterLogoGone = safe(function(){
-          if(loggedOut) return;
-          loggedOut = true;
-          loader.removeEventListener('transitionend', onLogoFade);
-          loader.classList.add('il-pct-out');    // 3) then the number hides immediately (no fade)
-          setTimeout(safe(function(){             // 4) a short, deliberate 50ms beat
-            loader.classList.add('il-out');      // 5) only then does the circle open — from the eye
+      var step = function(fn, ms){ setTimeout(safe(fn), reduce ? 0 : ms); };
+      step(function(){
+        loader.classList.add('il-num-out');            // 1) the 100 leaves first
+        step(function(){
+          loader.classList.add('il-focus');            // 2) the eye contracts slightly — the focal point
+          step(function(){
+            centreHoleOnEye();
+            loader.classList.add('il-out');            // 3) the iris opens into an ivory disc
+            var hole = loader.querySelector('.il-hole'); if(hole) hole.style.transform = 'scale(1)';
             root.style.overflow = prevOverflow;
             if(window.__resizeHeadline){ try{ window.__resizeHeadline(); }catch(e){} }
-            setTimeout(function(){ hardKill(); }, reduce ? 60 : 1900);
-          }), reduce ? 0 : 160);
-        });
-        function onLogoFade(e){ if(e.propertyName === 'opacity') afterLogoGone(); }
-
-        if(reduce){
-          afterLogoGone();
-        } else {
-          loader.addEventListener('transitionend', onLogoFade);
-          setTimeout(afterLogoGone, 900);
-        }
-      }), reduce ? 60 : 700);   /* hold on 100% for a beat before anything moves */
+            step(function(){
+              loader.classList.add('il-gone');         // 4) the ivory dissolves into the homepage beneath
+              step(hardKill, 650);
+            }, 1100);
+          }, 420);
+        }, 320);
+      }, 260);                                         /* a very short hold on 100 */
     });
 
     /* counted on animation frames (not a 40ms timer) so 0 → 100 runs smoothly */
@@ -2982,7 +2974,7 @@
     var tick = safe(function(){
       if(done || !ticker) return;
       var t = Math.min(1, (Date.now() - startedAt) / COUNT_MS);
-      pct = (1 - Math.pow(1 - t, 3)) * 100; /* cubic ease-out: quick start, gentle settle */
+      pct = (1 - Math.pow(1 - t, 4)) * 100; /* quartic ease-out: an unhurried, revealing settle into 100 */
       paint();
       if(t >= 1){
         swept = true;
