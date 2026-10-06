@@ -324,7 +324,6 @@
   .lab-card:hover .btn-orb .btn-orb__dot svg{opacity:1;transform:none;}
   .btn-primary.btn-orb .btn-orb__dot{--orb-bg:#fff;--orb-ink:var(--violet);}
   .btn-primary.btn-orb:hover .btn-orb__dot{--orb-ink:var(--violet-ink);}
-  .about-hero-content .btn-ghost.btn-orb .btn-orb__dot{--orb-ink:#14141B;}
   /* touch screens have no hover — show the expanded circle so the arrow stays visible */
   @media (hover:none){ .btn-orb__dot::before{transform:scale(1);} .btn-orb__dot svg{opacity:1;transform:none;} }
   @media (prefers-reduced-motion:reduce){ .btn-orb__dot::before, .btn-orb__dot svg{transition:none;} }
@@ -342,10 +341,11 @@
   :root[data-theme="dark"] .btn-ghost:hover, :root[data-theme="dark"] .btn-outline:hover{background:#241E30;color:#E4CDEC;border-color:var(--accent);box-shadow:6px 6px 0 var(--accent);}
   :root[data-theme="dark"] .btn-ghost.btn-orb .btn-orb__dot, :root[data-theme="dark"] .btn-outline.btn-orb .btn-orb__dot,
   :root[data-theme="dark"] .lab-card:hover .btn-outline.btn-orb .btn-orb__dot{--orb-bg:var(--accent);--orb-ink:#241E30;}
-  /* the About hero sits on a dark photo panel: keep its secondary white */
-  .about-hero-content .btn-ghost, .about-hero-content .btn-ghost:hover{color:#fff;}
-  .about-hero-content .btn-ghost:hover{background:rgba(255,255,255,.08);box-shadow:6px 6px 0 var(--accent);}
-  .about-hero-content .btn-ghost.btn-orb .btn-orb__dot, :root[data-theme="dark"] .about-hero-content .btn-ghost.btn-orb .btn-orb__dot{--orb-bg:#fff;--orb-ink:#14141B;}
+  /* the About hero sits on a dark panel in both themes: its secondary uses the lilac (dark-mode) treatment */
+  .about-hero-content .btn-ghost{background:transparent;color:#C79BD6;border-color:#BC80CC;}
+  .about-hero-content .btn-ghost:hover{background:#241E30;color:#E4CDEC;border-color:#BC80CC;box-shadow:6px 6px 0 #BC80CC;}
+  .about-hero-content .btn-ghost.btn-orb .btn-orb__dot, :root[data-theme="dark"] .about-hero-content .btn-ghost.btn-orb .btn-orb__dot,
+  .about-hero-content .btn-ghost.btn-orb:hover .btn-orb__dot{--orb-bg:#BC80CC;--orb-ink:#241E30;}
   /* ~8% smaller than .btn-small — reads as editorial, not a SaaS CTA */
   .impact-cta{padding:11px 20px;font-size:12px;}
 
@@ -1179,7 +1179,6 @@
   .about-hero-content .pills{flex-wrap:nowrap;gap:clamp(6px,1vw,10px);}
   .about-hero-content .pills .pill{font-size:clamp(10px,.95vw,12.5px);
     padding:7px clamp(8px,1.1vw,15px);}
-  .about-hero-content .btn-ghost{background:transparent;border-color:rgba(255,255,255,.3);color:#fff;}
   /* 34px between paragraphs → quote → pills, then 60px before the buttons */
   /* desktop: anchor the short version to the top of the panel (a fixed, modest top gap) instead of centring —
      the panel is a full 100vh and can extend below the visible area, which pushed centred text too low */
@@ -1187,7 +1186,6 @@
   .about-hero-content .about-cta{margin-top:60px;margin-bottom:0;}
   .about-hero-content .pills{margin-top:34px;}
   .about-hero-content .about-grid .pull{margin-top:10px;}
-  .about-hero-content .btn-ghost:hover{border-color:#fff;}
   .about-hero-content .about-grid{grid-template-columns:1fr;gap:24px;}
   .about-hero-content .about-lede{font-size:clamp(21px,2.1vw,27px);line-height:1.44;font-weight:500;}
   .about-hero-content .pull{font-size:16.5px;}
