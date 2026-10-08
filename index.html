@@ -204,6 +204,8 @@
   .me-lid{fill:none;stroke:var(--violet);stroke-width:2.6;stroke-linejoin:miter;stroke-miterlimit:10;stroke-linecap:round;vector-effect:non-scaling-stroke;
     transform-origin:84px 42px;animation:eyeBlink 4.2s cubic-bezier(.45,0,.55,1) 1.2s infinite;}
   :root[data-theme="dark"] .me-lid{stroke:var(--accent);}
+  /* dark page: a deep aubergine eye instead of a bright white one */
+  :root[data-theme="dark"] .mask-cursor .grad{background:#241E30;}
 
   /* open, open, open… blink */
   @keyframes eyeBlink{0%,86%{transform:scaleY(1);}92%{transform:scaleY(.05);}98%,100%{transform:scaleY(1);}}
