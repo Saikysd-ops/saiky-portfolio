@@ -353,6 +353,8 @@
   /* the About hero sits on a dark panel in both themes: its secondary uses the lilac (dark-mode) treatment */
   .about-hero-content .btn-ghost{background:transparent;color:#C79BD6;border-color:#BC80CC;}
   .about-hero-content .btn-ghost:hover{background:#241E30;color:#E4CDEC;border-color:#BC80CC;box-shadow:6px 6px 0 #BC80CC;}
+  /* the About hero is always dark: its primary uses the dark-mode hover too (lilac offset shadow), in both themes */
+  .about-hero-content .btn-primary:hover{box-shadow:6px 6px 0 #BC80CC;}
   .about-hero-content .btn-ghost.btn-orb .btn-orb__dot, :root[data-theme="dark"] .about-hero-content .btn-ghost.btn-orb .btn-orb__dot,
   .about-hero-content .btn-ghost.btn-orb:hover .btn-orb__dot{--orb-bg:#BC80CC;--orb-ink:#241E30;}
   /* ~8% smaller than .btn-small — reads as editorial, not a SaaS CTA */
