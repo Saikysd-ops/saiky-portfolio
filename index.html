@@ -198,10 +198,13 @@
     shape-rendering:geometricPrecision;}
   h1.headline:hover .mask-eye{opacity:1;transform:translate(-50%,-50%) scale(1);}
   .me-shape{transform-origin:84px 42px;animation:eyeBlink 4.2s cubic-bezier(.45,0,.55,1) 1.2s infinite;}
-  .me-fill{fill:#452064;fill-opacity:.5;}   /* a tinted lens: the headline stays visible through the eye */
-  .me-lid{fill:none;stroke:#BC80CC;stroke-width:2.6;stroke-linejoin:miter;stroke-miterlimit:10;vector-effect:non-scaling-stroke;}
-  .me-iris{fill:none;stroke:rgba(255,255,255,.55);stroke-width:1.5;vector-effect:non-scaling-stroke;}
-  .me-pupil{fill:#fff;}
+  .me-fill{fill:none;}   /* outline only: the headline shows through untinted */
+  .me-lid{fill:none;stroke:var(--violet);stroke-width:2.6;stroke-linejoin:miter;stroke-miterlimit:10;vector-effect:non-scaling-stroke;}
+  .me-iris{fill:none;stroke:var(--violet);stroke-opacity:.55;stroke-width:1.5;vector-effect:non-scaling-stroke;}
+  .me-pupil{fill:var(--violet);}
+  /* dark page: the same outline eye in lilac */
+  :root[data-theme="dark"] .me-lid,:root[data-theme="dark"] .me-iris{stroke:#BC80CC;}
+  :root[data-theme="dark"] .me-pupil{fill:#BC80CC;}
   /* open, open, open… blink */
   @keyframes eyeBlink{0%,86%{transform:scaleY(1);}92%{transform:scaleY(.05);}98%,100%{transform:scaleY(1);}}
   @media (prefers-reduced-motion:reduce){ .me-shape{animation:none;} }
