@@ -199,17 +199,15 @@
     clip-path:path('M4 42C36 4 132 4 164 42C132 80 36 80 4 42Z');}
   .mask-eye{z-index:6;overflow:visible;}
   h1.headline:hover .mask-cursor, h1.headline:hover .mask-eye{opacity:1;transform:translate(-50%,-50%) scale(1);}
-  .mask-cursor .grad{position:absolute;inset:0;background:#241E30;transform-origin:50% 50%;animation:eyeBlink 4.2s cubic-bezier(.45,0,.55,1) 1.2s infinite;}
+  .mask-cursor .grad{position:absolute;inset:0;background:#fff;transform-origin:50% 50%;animation:eyeBlink 4.2s cubic-bezier(.45,0,.55,1) 1.2s infinite;}
   .mask-eye{shape-rendering:geometricPrecision;}
-  .me-lid{fill:none;stroke:var(--violet);stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;vector-effect:non-scaling-stroke;
+  .me-lid{fill:none;stroke:var(--violet);stroke-width:2.6;stroke-linejoin:miter;stroke-miterlimit:10;stroke-linecap:round;vector-effect:non-scaling-stroke;
     transform-origin:84px 42px;animation:eyeBlink 4.2s cubic-bezier(.45,0,.55,1) 1.2s infinite;}
   :root[data-theme="dark"] .me-lid{stroke:var(--accent);}
-  :root[data-theme="dark"] .mask-cursor .grad{background:#F1EAF7;}
-  .me-iris{fill:none;stroke:rgba(255,255,255,.75);stroke-width:1.6;vector-effect:non-scaling-stroke;transform-origin:84px 42px;animation:eyeBlink 4.2s cubic-bezier(.45,0,.55,1) 1.2s infinite;}
-  :root[data-theme="dark"] .me-iris{stroke:rgba(36,30,48,.7);}
+
   /* open, open, open… blink */
   @keyframes eyeBlink{0%,86%{transform:scaleY(1);}92%{transform:scaleY(.05);}98%,100%{transform:scaleY(1);}}
-  @media (prefers-reduced-motion:reduce){ .mask-cursor .grad,.me-lid,.me-iris{animation:none;} }
+  @media (prefers-reduced-motion:reduce){ .mask-cursor .grad,.me-lid{animation:none;} }
   .role{font-family:var(--font-body);font-size:clamp(11px,2.7vw,19px);font-weight:500;letter-spacing:.02em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px;white-space:nowrap;}
   .role b{color:var(--ink);font-weight:600;}
   .current{font-size:clamp(9.5px,2.55vw,17px);font-weight:400;color:var(--ink-soft);margin-bottom:12px;white-space:nowrap;}
@@ -3093,7 +3091,7 @@
     <div class="design-canvas design-canvas--dark" aria-hidden="true"></div>
     <div class="hero-left">
       <div class="eyebrow" id="eyebrowText">I DESIGN <span class="eyebrow-word" id="eyebrowWord"><span class="ew-live">THROUGH</span></span></div>
-      <h1 class="headline"><span class="word-stage" id="wordStage"><span class="word" data-word="COMPLEXITY" id="wComplexity">COMPLEXITY<span class="dot"></span></span><span class="word" data-word="CLARITY" id="wClarity">CLARITY<span class="dot"></span></span></span><div class="mask-cursor" id="maskCursor"><div class="grad"></div></div><svg class="mask-eye" id="maskEye" viewBox="0 0 168 84" aria-hidden="true"><circle class="me-iris" cx="84" cy="42" r="21"/><path class="me-lid" d="M4 42C36 4 132 4 164 42C132 80 36 80 4 42Z"/></svg></h1>
+      <h1 class="headline"><span class="word-stage" id="wordStage"><span class="word" data-word="COMPLEXITY" id="wComplexity">COMPLEXITY<span class="dot"></span></span><span class="word" data-word="CLARITY" id="wClarity">CLARITY<span class="dot"></span></span></span><div class="mask-cursor" id="maskCursor"><div class="grad"></div></div><svg class="mask-eye" id="maskEye" viewBox="0 0 168 84" aria-hidden="true"><path class="me-lid" d="M4 42C36 4 132 4 164 42C132 80 36 80 4 42Z"/></svg></h1>
       <div class="role"><b>Product Designer</b> · Enterprise AI · Decision Systems</div>
       <div class="current">Designing enterprise products at <span class="wm-link"><img class="wm-logo" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:1.1em;width:auto;vertical-align:-0.18em;margin:0 4px"></span> · Bengaluru, India</div>
       <div class="hero-avail"><span class="hero-avail-dot" aria-hidden="true"></span>Open to select collaborations</div>
