@@ -190,15 +190,22 @@
   .word-stage .word.anim-in .dot{animation:dotIn .5s cubic-bezier(.34,1.56,.64,1) 1s backwards, pulse 2.6s ease-in-out 1.5s infinite;}
   @keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.35);opacity:.55;}}
 
-  /* negative-mask hover cursor — bold rotating colour, mix-blend-mode:difference */
-  .mask-cursor{position:absolute;width:120px;height:120px;border-radius:50%;overflow:hidden;
-    mix-blend-mode:difference;pointer-events:none;top:0;left:0;z-index:5;
-    opacity:0;transform:translate(-50%,-50%) scale(.5);transition:opacity .3s ease, transform .3s ease;}
-  h1.headline:hover .mask-cursor{opacity:1;transform:translate(-50%,-50%) scale(1);}
-  .mask-cursor .grad{position:absolute;inset:-25%;
-    background:conic-gradient(from 0deg, #000 0deg 90deg, #fff 90deg 180deg, #000 180deg 270deg, #fff 270deg 360deg);
-    animation:spinGradient 5s linear infinite;}
-  @keyframes spinGradient{to{transform:rotate(360deg);}}
+  /* negative-mask hover cursor — the loader's eye: an almond of mix-blend-mode:difference that inverts
+     the headline beneath it, a thin brand outline on top, and an occasional blink. The site cursor's
+     ring and dot sit at its centre as the iris and pupil. */
+  .mask-cursor,.mask-eye{position:absolute;width:168px;height:84px;pointer-events:none;top:0;left:0;
+    opacity:0;transform:translate(-50%,-50%) scale(.6);transition:opacity .3s ease, transform .35s cubic-bezier(.22,.61,.36,1);}
+  .mask-cursor{z-index:5;mix-blend-mode:difference;overflow:hidden;
+    clip-path:path('M4 42C36 4 132 4 164 42C132 80 36 80 4 42Z');}
+  .mask-eye{z-index:6;overflow:visible;}
+  h1.headline:hover .mask-cursor, h1.headline:hover .mask-eye{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  .mask-cursor .grad{position:absolute;inset:0;background:#fff;transform-origin:50% 50%;animation:eyeBlink 4.2s cubic-bezier(.45,0,.55,1) 1.2s infinite;}
+  .me-lid{fill:none;stroke:var(--violet);stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke;
+    transform-origin:84px 42px;animation:eyeBlink 4.2s cubic-bezier(.45,0,.55,1) 1.2s infinite;}
+  :root[data-theme="dark"] .me-lid{stroke:var(--accent);}
+  /* open, open, open… blink */
+  @keyframes eyeBlink{0%,86%{transform:scaleY(1);}92%{transform:scaleY(.05);}98%,100%{transform:scaleY(1);}}
+  @media (prefers-reduced-motion:reduce){ .mask-cursor .grad,.me-lid{animation:none;} }
   .role{font-family:var(--font-body);font-size:clamp(11px,2.7vw,19px);font-weight:500;letter-spacing:.02em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px;white-space:nowrap;}
   .role b{color:var(--ink);font-weight:600;}
   .current{font-size:clamp(9.5px,2.55vw,17px);font-weight:400;color:var(--ink-soft);margin-bottom:12px;white-space:nowrap;}
@@ -3082,7 +3089,7 @@
     <div class="design-canvas design-canvas--dark" aria-hidden="true"></div>
     <div class="hero-left">
       <div class="eyebrow" id="eyebrowText">I DESIGN <span class="eyebrow-word" id="eyebrowWord"><span class="ew-live">THROUGH</span></span></div>
-      <h1 class="headline"><span class="word-stage" id="wordStage"><span class="word" data-word="COMPLEXITY" id="wComplexity">COMPLEXITY<span class="dot"></span></span><span class="word" data-word="CLARITY" id="wClarity">CLARITY<span class="dot"></span></span></span><div class="mask-cursor" id="maskCursor"><div class="grad"></div></div></h1>
+      <h1 class="headline"><span class="word-stage" id="wordStage"><span class="word" data-word="COMPLEXITY" id="wComplexity">COMPLEXITY<span class="dot"></span></span><span class="word" data-word="CLARITY" id="wClarity">CLARITY<span class="dot"></span></span></span><div class="mask-cursor" id="maskCursor"><div class="grad"></div></div><svg class="mask-eye" id="maskEye" viewBox="0 0 168 84" aria-hidden="true"><path class="me-lid" d="M4 42C36 4 132 4 164 42C132 80 36 80 4 42Z"/></svg></h1>
       <div class="role"><b>Product Designer</b> · Enterprise AI · Decision Systems</div>
       <div class="current">Designing enterprise products at <span class="wm-link"><img class="wm-logo" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:1.1em;width:auto;vertical-align:-0.18em;margin:0 4px"></span> · Bengaluru, India</div>
       <div class="hero-avail"><span class="hero-avail-dot" aria-hidden="true"></span>Open to select collaborations</div>
@@ -7682,6 +7689,7 @@ try{
 (function(){
   const headline = document.querySelector('h1.headline');
   const cursor = document.getElementById('maskCursor');
+  const eyeLine = document.getElementById('maskEye');
   let targetX=0, targetY=0, curX=0, curY=0, active=false;
 
   headline.addEventListener('mousemove', (ev)=>{
@@ -7697,6 +7705,7 @@ try{
     curY += (targetY-curY)*0.16;
     cursor.style.left = curX+'px';
     cursor.style.top = curY+'px';
+    if(eyeLine){ eyeLine.style.left = curX+'px'; eyeLine.style.top = curY+'px'; }
     requestAnimationFrame(tick);
   }
   tick();
