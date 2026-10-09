@@ -683,11 +683,10 @@
   .shot-base{transition:transform .4s cubic-bezier(.22,1,.36,1);}
   .work-card:hover .shot-base{transform:translate(1px,-1px) scale(1.006);}
 
-  /* collaborator presence — quiet, Figma-style cursor tags that reveal
-     on card hover (never idle-animating, so it reads as an editorial
-     detail rather than a gimmick). Position is set by a modifier class;
+  /* collaborator presence — Figma-style multiplayer cursors that glide in on card hover and then drift slowly
+     while you stay (no motion at rest). Position is set by a modifier class;
      each tag carries its own accent color inline via --c. */
-  .work-collab{position:absolute;z-index:14;display:inline-flex;align-items:center;gap:4px;
+  .work-collab{position:absolute;z-index:14;display:inline-flex;align-items:flex-start;gap:2px;
     pointer-events:none;opacity:0;transform:translateY(10px);
     transition:opacity .38s cubic-bezier(.16,1,.3,1), transform .38s cubic-bezier(.16,1,.3,1);}
   .work-card:hover .work-collab{opacity:1;transform:translateY(0);}
@@ -708,8 +707,9 @@
      clear the line while dragging the pill along with it. */
   .work-collab--l{left:-16px;top:40%;transition-delay:.05s;}
   .work-collab--r{right:-16px;top:58%;transition-delay:.1s;flex-direction:row-reverse;}
-  .work-collab-cursor{width:14px;height:14px;flex:none;fill:var(--c);
-    filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));
+  /* the cursor: brand colour with a crisp white outline (Figma-style multiplayer cursor) */
+  .work-collab-cursor{width:28px;height:28px;flex:none;fill:var(--c);stroke:#fff;stroke-width:2;stroke-linejoin:round;paint-order:stroke;
+    filter:drop-shadow(0 3px 6px rgba(20,14,30,.28));overflow:visible;
     transform:rotate(-8deg) scale(.8);
     transition:transform .38s cubic-bezier(.16,1,.3,1);}
   .work-card:hover .work-collab-cursor{transform:rotate(0deg) scale(1);}
@@ -721,11 +721,28 @@
      the card, instead of away from it. */
   .work-collab--r .work-collab-cursor{transform:scaleX(-1) rotate(-8deg) scale(.8);}
   .work-card:hover .work-collab--r .work-collab-cursor{transform:scaleX(-1) rotate(0deg) scale(1);}
-  .work-collab-pill{font-family:var(--font-body);font-size:12.5px;font-weight:700;color:#fff;
-    background:var(--c);padding:6px 13px;border-radius:999px;white-space:nowrap;line-height:1.2;
-    box-shadow:0 6px 16px -6px rgba(0,0,0,.35);}
+  /* the name pill: white, a thin outline in the person's colour, avatar + name */
+  .work-collab-pill{display:inline-flex;align-items:center;gap:7px;margin-top:20px;margin-left:-10px;
+    font-family:var(--font-body);font-size:13px;font-weight:600;color:#17171C;letter-spacing:-.005em;
+    background:#fff;padding:4px 13px 4px 4px;border-radius:999px;white-space:nowrap;line-height:1.2;
+    border:1.5px solid color-mix(in srgb, var(--c) 55%, #fff);
+    box-shadow:0 8px 20px -10px rgba(20,14,30,.35);}
+  .work-collab--r .work-collab-pill{padding:4px 13px 4px 4px;margin-left:0;margin-right:-10px;}
+  .wc-av{width:22px;height:22px;border-radius:50%;flex:none;display:grid;place-items:center;object-fit:cover;
+    background:var(--c);color:#fff;font-size:11px;font-weight:700;}
+  :root[data-theme="dark"] .work-collab-pill{background:#1F1C25;color:#F4F3F1;border-color:color-mix(in srgb, var(--c) 70%, #1F1C25);}
+  :root[data-theme="dark"] .wc-saiky{--c:#BC80CC !important;}   /* beats the inline light-mode colour */
+  :root[data-theme="dark"] .work-collab-cursor{stroke:#1F1C25;}
+  /* live presence: while the card is hovered, each collaborator drifts on its own slow path */
+  .work-collab{animation:wcDriftA 6.5s ease-in-out infinite;animation-play-state:paused;}
+  .work-collab--l{animation-name:wcDriftB;animation-duration:7.6s;}
+  .work-collab--r{animation-name:wcDriftC;animation-duration:8.4s;}
+  .work-card:hover .work-collab{animation-play-state:running;}
+  @keyframes wcDriftA{0%,100%{translate:0 0;}25%{translate:-16px 10px;}50%{translate:-28px 22px;}75%{translate:-10px 30px;}}
+  @keyframes wcDriftB{0%,100%{translate:0 0;}30%{translate:22px -12px;}55%{translate:34px 8px;}80%{translate:14px 18px;}}
+  @keyframes wcDriftC{0%,100%{translate:0 0;}25%{translate:-18px -14px;}50%{translate:-30px 4px;}75%{translate:-12px 16px;}}
   @media (max-width:760px){.work-collab{display:none;}}
-  @media (prefers-reduced-motion:reduce){.work-collab{transition:opacity .2s ease;}}
+  @media (prefers-reduced-motion:reduce){.work-collab{transition:opacity .2s ease;animation:none;}}
   /* signature motif: phase flow with outcome arrows, sitting inside the composition */
   .flow-strip{position:absolute;left:0;right:0;bottom:0;z-index:7;pointer-events:none;
     display:flex;align-items:center;justify-content:center;gap:9px;
@@ -3343,9 +3360,9 @@
       <a class="work-card" role="link" tabindex="0" data-view="case-supplier">
         <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
-          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
-        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <span class="work-collab work-collab--tr wc-saiky" style="--c:#5B2A68" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><img class="wc-av" src="assets/images/image-021-c79ebb4a8f18.jpg" alt=""><span class="wc-name">Saiky</span></span></span>
+        <span class="work-collab work-collab--l wc-joy" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">J</span><span class="wc-name">Joy</span></span></span>
+        <span class="work-collab work-collab--r wc-rahul" style="--c:#B98A3E" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">R</span><span class="wc-name">Rahul</span></span></span>
           <div class="work-thumb shot-thumb" id="smThumb">
           <div class="monitor">
             <div class="monitor-body">
@@ -3379,9 +3396,9 @@
       <a class="work-card" role="link" tabindex="0" data-view="case-scintilla">
         <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
-          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
-        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <span class="work-collab work-collab--tr wc-saiky" style="--c:#5B2A68" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><img class="wc-av" src="assets/images/image-021-c79ebb4a8f18.jpg" alt=""><span class="wc-name">Saiky</span></span></span>
+        <span class="work-collab work-collab--l wc-joy" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">J</span><span class="wc-name">Joy</span></span></span>
+        <span class="work-collab work-collab--r wc-rahul" style="--c:#B98A3E" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">R</span><span class="wc-name">Rahul</span></span></span>
           <div class="work-thumb shot-thumb sc-thumb" id="scThumb">
           <div class="monitor">
             <div class="monitor-body">
@@ -3417,9 +3434,9 @@
       <a class="work-card" role="link" tabindex="0" data-view="case-omni">
         <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
-          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
-        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <span class="work-collab work-collab--tr wc-saiky" style="--c:#5B2A68" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><img class="wc-av" src="assets/images/image-021-c79ebb4a8f18.jpg" alt=""><span class="wc-name">Saiky</span></span></span>
+        <span class="work-collab work-collab--l wc-joy" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">J</span><span class="wc-name">Joy</span></span></span>
+        <span class="work-collab work-collab--r wc-rahul" style="--c:#B98A3E" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">R</span><span class="wc-name">Rahul</span></span></span>
           <div class="work-thumb shot-thumb om-thumb" id="omThumb">
           <div class="monitor">
             <div class="monitor-body">
@@ -3452,9 +3469,9 @@
       <a class="work-card" role="link" tabindex="0" data-view="case-solv">
         <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
-          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
-        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <span class="work-collab work-collab--tr wc-saiky" style="--c:#5B2A68" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><img class="wc-av" src="assets/images/image-021-c79ebb4a8f18.jpg" alt=""><span class="wc-name">Saiky</span></span></span>
+        <span class="work-collab work-collab--l wc-joy" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">J</span><span class="wc-name">Joy</span></span></span>
+        <span class="work-collab work-collab--r wc-rahul" style="--c:#B98A3E" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">R</span><span class="wc-name">Rahul</span></span></span>
           <div class="work-thumb phone-thumb" id="smeThumb">
           <div class="phone-stage">
             <img class="ph-rest ph-a" src="assets/images/image-002-f041ebeedcf3.png" alt="Invoice finance screen showing available credit limit, utilised limit and credit statements">
@@ -3481,9 +3498,9 @@
       <a class="work-card is-workonly" role="link" tabindex="0" data-view="case-bawsala">
         <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
-          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
-        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <span class="work-collab work-collab--tr wc-saiky" style="--c:#5B2A68" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><img class="wc-av" src="assets/images/image-021-c79ebb4a8f18.jpg" alt=""><span class="wc-name">Saiky</span></span></span>
+        <span class="work-collab work-collab--l wc-joy" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">J</span><span class="wc-name">Joy</span></span></span>
+        <span class="work-collab work-collab--r wc-rahul" style="--c:#B98A3E" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">R</span><span class="wc-name">Rahul</span></span></span>
           <div class="work-thumb shot-thumb bw-thumb" id="bwThumb">
           <div class="monitor">
             <div class="monitor-body">
@@ -3516,9 +3533,9 @@
       <a class="work-card is-workonly" role="link" tabindex="0" data-view="case-delivery">
         <span class="work-corner work-corner--tl" aria-hidden="true"></span><span class="work-corner work-corner--tr" aria-hidden="true"></span><span class="work-corner work-corner--bl" aria-hidden="true"></span><span class="work-corner work-corner--br" aria-hidden="true"></span>
         <div class="work-thumb-wrap">
-          <span class="work-collab work-collab--tr" style="--c:#C49A45" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Saiky</span></span>
-        <span class="work-collab work-collab--l" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Joy</span></span>
-        <span class="work-collab work-collab--r" style="--c:#C54879" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l14 8.5-6.2 1.4L9.5 19 4 2Z"/></svg><span class="work-collab-pill">Rahul</span></span>
+          <span class="work-collab work-collab--tr wc-saiky" style="--c:#5B2A68" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><img class="wc-av" src="assets/images/image-021-c79ebb4a8f18.jpg" alt=""><span class="wc-name">Saiky</span></span></span>
+        <span class="work-collab work-collab--l wc-joy" style="--c:#E46B5D" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">J</span><span class="wc-name">Joy</span></span></span>
+        <span class="work-collab work-collab--r wc-rahul" style="--c:#B98A3E" aria-hidden="true"><svg class="work-collab-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.3 3.4c-.5-.3-1.1.2-.9.7l5.6 16.3c.2.6 1 .6 1.2.1l2.6-6.1c.1-.3.4-.5.7-.6l6.2-1.9c.6-.2.6-1 .1-1.3L4.3 3.4Z"/></svg><span class="work-collab-pill"><span class="wc-av">R</span><span class="wc-name">Rahul</span></span></span>
           <div class="work-thumb shot-thumb md-thumb" id="mdThumb">
           <div class="monitor">
             <div class="monitor-body">
