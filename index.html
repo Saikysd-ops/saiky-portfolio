@@ -2531,11 +2531,18 @@
      into its resting place on the "i" in Desai. The motion reads as
      Understand → Structure → Simplify: separate elements arriving, an
      organized stack forming, a single clear mark completing the identity. */
-  #loader .l-cairn{width:92px;height:92px;overflow:visible;}
-  #loader .l-cairn .stone{transform-box:fill-box;transform-origin:50% 50%;opacity:0;}
-  #loader.on .l-cairn .s3{animation:stoneSettle 560ms cubic-bezier(.22,.61,.36,1) 0ms both;}
-  #loader.on .l-cairn .s2{animation:stoneSettle 560ms cubic-bezier(.22,.61,.36,1) 220ms both;}
-  #loader.on .l-cairn .s1{animation:stoneSettle 560ms cubic-bezier(.22,.61,.36,1) 440ms both;}
+  #loader .l-cairn{position:relative;width:92px;height:92px;overflow:visible;}
+  #loader .l-cairn .stone{position:absolute;display:block;border-radius:50%;}
+  #loader .l-cairn .s1{left:28.5px;top:4.16px;width:35.0px;height:16.68px;}
+  #loader .l-cairn .s2{left:20.16px;top:25.0px;width:51.68px;height:25.0px;}
+  #loader .l-cairn .s3{left:10.16px;top:53.34px;width:71.68px;height:33.32px;}
+  #loader .l-cairn .s1{background:#B8B8B8;} #loader .l-cairn .s2{background:#858585;} #loader .l-cairn .s3{background:#17171B;}
+  #loader .l-cairn .stone{transform-origin:50% 50%;opacity:1;}   /* visible by default — see note below */
+  /* 'backwards' (not 'both'): the start frame applies during the delay, and when the animation ends — or if the browser
+     never paints it (busy main thread, quick re-trigger) — the stones simply rest in their visible default state. */
+  #loader.on .l-cairn .s3{animation:stoneSettle 560ms cubic-bezier(.22,.61,.36,1) 0ms backwards;}
+  #loader.on .l-cairn .s2{animation:stoneSettle 560ms cubic-bezier(.22,.61,.36,1) 220ms backwards;}
+  #loader.on .l-cairn .s1{animation:stoneSettle 560ms cubic-bezier(.22,.61,.36,1) 440ms backwards;}
   @keyframes stoneSettle{
     0%{opacity:0;transform:translateY(-16px) scale(.94);}
     58%{opacity:1;transform:translateY(3px) scale(1.02);}
@@ -2555,9 +2562,9 @@
      small drop-and-bounce-back physics as the stones, landing on the "i" */
   #loader .l-i-wrap{position:relative;display:inline-block;}
   #loader .l-dot{position:absolute;left:50%;top:0;width:8px;height:8px;border-radius:50%;
-    background:var(--violet);transform:translate(-50%,-15px) scale(.75);opacity:0;}
+    background:var(--violet);transform:translate(-50%,-7px) scale(1);opacity:1;}   /* resting state is the default */
   :root[data-theme="dark"] #loader .l-dot{background:var(--accent);}
-  #loader.on .l-dot{animation:dotReveal 520ms cubic-bezier(.22,.61,.36,1) 1300ms both;}
+  #loader.on .l-dot{animation:dotReveal 520ms cubic-bezier(.22,.61,.36,1) 1300ms backwards;}
   @keyframes dotReveal{
     0%{opacity:0;transform:translate(-50%,-15px) scale(.75);}
     60%{opacity:1;transform:translate(-50%,-4px) scale(1.12);}
@@ -2569,9 +2576,9 @@
     #loader .l-cairn .stone{opacity:1;transform:none;}
     #loader .l-dot{opacity:1;transform:translate(-50%,-7px) scale(1);}
   }
-  :root[data-theme="dark"] #loader .l-cairn .s1{fill:#BDBDBD;}
-  :root[data-theme="dark"] #loader .l-cairn .s2{fill:#D8D8D8;}
-  :root[data-theme="dark"] #loader .l-cairn .s3{fill:#F5F5F5;}
+  :root[data-theme="dark"] #loader .l-cairn .s1{background:#BDBDBD;}
+  :root[data-theme="dark"] #loader .l-cairn .s2{background:#D8D8D8;}
+  :root[data-theme="dark"] #loader .l-cairn .s3{background:#F5F5F5;}
 
   /* HOW I ACTUALLY WORK — clean 2×2 card grid.
      Each habit is a real bordered card (not an editorial fixed-position
@@ -3161,11 +3168,9 @@
 </script>
 
 <div id="loader" aria-hidden="true">
-  <svg class="l-cairn" viewBox="0 0 40 46">
-    <ellipse class="stone s1" cx="20" cy="6.25" rx="8.75" ry="4.17" fill="#B8B8B8"/>
-    <ellipse class="stone s2" cx="20" cy="18.75" rx="12.92" ry="6.25" fill="#858585"/>
-    <ellipse class="stone s3" cx="20" cy="35" rx="17.92" ry="8.33" fill="#17171B"/>
-  </svg>
+  <!-- the cairn as plain HTML shapes (not SVG): HTML opacity/transform animations are composited and paint
+       reliably while the loader fades in; SVG children sometimes didn't repaint, leaving the stones blank -->
+  <div class="l-cairn" aria-hidden="true"><i class="stone s1"></i><i class="stone s2"></i><i class="stone s3"></i></div>
   <span class="l-mark">Saiky Desa<span class="l-i-wrap">i<span class="l-dot"></span></span></span>
 </div>
 <div class="cursor-dot" id="curDot" aria-hidden="true"></div>
@@ -8502,13 +8507,20 @@ try{
     }, 150);
   });
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* one loader at a time: restart its animations cleanly, and cancel any timers from a previous run so a
+     stale timer can never close (or skip) a newer loader */
+  let loaderTimers = [];
+  function runLoader(then){
+    loaderTimers.forEach(clearTimeout); loaderTimers = [];
+    loader.classList.remove('on'); void loader.offsetWidth; loader.classList.add('on');
+    loaderTimers.push(setTimeout(()=>{
+      then();
+      loaderTimers.push(setTimeout(()=>loader.classList.remove('on'), 300));
+    }, 2000));
+  }
   function go(view){
     if(reduce || !loader){ show(view); return; }
-    loader.classList.add('on');
-    setTimeout(()=>{
-      show(view);
-      setTimeout(()=>loader.classList.remove('on'), 300);
-    }, 2000);
+    runLoader(()=>show(view));
   }
   document.querySelectorAll('[data-view]').forEach(el=>{
     el.addEventListener('click', (ev)=>{ ev.preventDefault(); go(el.getAttribute('data-view')); });
@@ -8535,8 +8547,7 @@ try{
     const onSubview = /\bon-(about|work|brand|case)/.test(document.body.className);
     if(onSubview){
       if(reduce || !loader){ show('home'); run(); setTimeout(run, 80); return; }
-      loader.classList.add('on');
-      setTimeout(()=>{ show('home'); run(); setTimeout(run, 80); setTimeout(()=>loader.classList.remove('on'), 300); }, 2000);
+      runLoader(()=>{ show('home'); run(); setTimeout(run, 80); });
     } else { run(); }
   }
   document.querySelectorAll('[data-goto]').forEach(el=>{
