@@ -177,10 +177,11 @@
   h1.headline{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,7.8vw,104px);line-height:.97;margin:0 0 9px;letter-spacing:-.02em;font-optical-sizing:auto;font-variation-settings:'opsz' 144;position:relative;}
   .word-stage{position:relative;display:inline-block;vertical-align:bottom;overflow:hidden;}
   .word-stage .word{position:absolute;left:0;top:0;white-space:nowrap;opacity:0;transform:translateX(-32px);
-    background:linear-gradient(90deg, #1E46D8 0%, #5A2BD6 40%, #C42E6C 74%, #DE4F33 100%);
+    /* brand gradient, one for both themes: stops tuned to hold ≥3:1 on cream and on near-black;
+       blended in OKLab where supported so the blue → violet → coral mix stays clean, never muddy */
+    background:linear-gradient(90deg, #3A62E8 0%, #7C4DE6 36%, #D04C82 70%, #E8634F 100%);
+    background:linear-gradient(90deg in oklab, #3A62E8 0%, #7C4DE6 36%, #D04C82 70%, #E8634F 100%);
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
-  /* dark page: brighter stops so the word stays legible on the near-black background */
-  :root[data-theme="dark"] .word-stage .word{background-image:linear-gradient(90deg, #6F8CFF 0%, #A27BFF 40%, #F2679F 74%, #FF8A6B 100%);}
   #wComplexity{font-size:.82em;}
   #wClarity{font-size:.82em;}
   @keyframes wordIn{0%{opacity:0;transform:translateX(-36px);}100%{opacity:1;transform:translateX(0);}}
