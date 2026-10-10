@@ -3253,7 +3253,7 @@
       <p class="value-tagline">Complex problems. Clear systems. Meaningful decisions.</p>
       <hr class="hero-rule">
       <div class="stat-grid hero-stats">
-        <div class="stat"><div class="num"><span id="yearsNum">0</span>+</div><div class="lbl">Years designing enterprise products</div></div>
+        <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
         <div class="stat"><div class="num">4K+</div><div class="lbl">Private-brand suppliers across global sourcing</div></div>
         <div class="stat"><div class="num">4</div><div class="lbl">Markets supported</div></div>
         <div class="stat"><div class="num">6+</div><div class="lbl">business units partnered across</div></div>
@@ -7927,23 +7927,38 @@ try{
 try{
 
 
-/* "10+ years" count-up, once, on load */
+/* "9+ years" count-up, once. The HTML already says 9, so crawlers, link previews, screenshots and no-JS
+   visitors always see "9+". The count (0 → 9) plays only once the intro loader has opened, so people
+   actually see it, and a timer guarantees it ends on 9 even if the browser pauses animation frames. */
 (function(){
   const el = document.getElementById('yearsNum');
   if(!el) return;
   const TO = 9, DURATION = 1100;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent = TO; return; }
+  let started = false, done = false;
+  function finish(){ done = true; el.textContent = TO; }
   function animate(){
+    if(started) return; started = true;
     let start = null;
+    el.textContent = 0;
     function step(ts){
+      if(done) return;                               /* the safety net already landed it */
       if(!start) start = ts;
       const p = Math.min((ts - start) / DURATION, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(eased * TO);
-      if(p < 1) requestAnimationFrame(step);
+      el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * TO);
+      if(p < 1) requestAnimationFrame(step); else finish();
     }
     requestAnimationFrame(step);
+    setTimeout(finish, DURATION + 400);              /* safety net: always lands on 9 */
   }
-  setTimeout(animate, 1500);
+  /* start after the intro loader is gone (it is removed from the page when the circle has opened) */
+  function loaderGone(){ return !document.getElementById('introLoader'); }
+  if(loaderGone()){ setTimeout(animate, 400); }
+  else {
+    const mo = new MutationObserver(()=>{ if(loaderGone()){ mo.disconnect(); setTimeout(animate, 150); } });
+    mo.observe(document.body, {childList:true});
+    setTimeout(()=>{ mo.disconnect(); animate(); }, 9000);   /* never wait forever */
+  }
 })();
 }catch(e){ console.error('[section error]', e); }
 
