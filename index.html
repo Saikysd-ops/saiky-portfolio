@@ -177,8 +177,10 @@
   h1.headline{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,7.8vw,104px);line-height:.97;margin:0 0 9px;letter-spacing:-.02em;font-optical-sizing:auto;font-variation-settings:'opsz' 144;position:relative;}
   .word-stage{position:relative;display:inline-block;vertical-align:bottom;overflow:hidden;}
   .word-stage .word{position:absolute;left:0;top:0;white-space:nowrap;opacity:0;transform:translateX(-32px);
-    background:linear-gradient(90deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);
+    background:linear-gradient(90deg, #1E46D8 0%, #5A2BD6 40%, #C42E6C 74%, #DE4F33 100%);
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
+  /* dark page: brighter stops so the word stays legible on the near-black background */
+  :root[data-theme="dark"] .word-stage .word{background-image:linear-gradient(90deg, #6F8CFF 0%, #A27BFF 40%, #F2679F 74%, #FF8A6B 100%);}
   #wComplexity{font-size:.82em;}
   #wClarity{font-size:.82em;}
   @keyframes wordIn{0%{opacity:0;transform:translateX(-36px);}100%{opacity:1;transform:translateX(0);}}
@@ -502,7 +504,7 @@
   .pv-eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);}
   .pv-headline{font-family:var(--font-display);font-weight:500;font-size:clamp(34px,4.6vw,64px);line-height:1.04;letter-spacing:-.025em;
     color:var(--ink);margin:clamp(22px,3vw,40px) 0 0;max-width:12em;}
-  .pv-support{margin:clamp(18px,2.4vw,30px) 0 0;max-width:34em;font-size:clamp(15px,1.35vw,18px);line-height:1.6;color:var(--ink-soft);}
+  .pv-support{margin:clamp(14px,1.8vw,22px) 0 0;max-width:34em;font-size:clamp(15px,1.35vw,18px);line-height:1.6;color:var(--ink-soft);}
   .pv-flow{display:inline-flex;align-items:center;gap:14px;margin-top:clamp(26px,3.4vw,46px);font-family:var(--font-mono);
     font-size:clamp(15px,1.5vw,19px);letter-spacing:.06em;color:var(--violet);}
   :root[data-theme="dark"] .pv-flow{color:var(--accent);}
@@ -521,14 +523,17 @@
   :root[data-theme="dark"] .pv-n-sys{fill:#BC80CC;} :root[data-theme="dark"] .pv-n-dat{fill:#D2A864;} :root[data-theme="dark"] .pv-n-pro{fill:#8FB39A;}
   .pv-tick{stroke:var(--ink-soft);stroke-opacity:.3;stroke-width:1;stroke-dasharray:3 4;}
   .pv-halo{fill:var(--paper);fill-opacity:.55;stroke:#5B2A68;stroke-opacity:.16;stroke-width:1;
-    transform-origin:320px 298px;transition:transform 1.1s cubic-bezier(.22,.61,.36,1),stroke-opacity .9s ease;}
+    transform-origin:320px 286px;transition:transform 1.1s cubic-bezier(.22,.61,.36,1),stroke-opacity .9s ease;}
   :root[data-theme="dark"] .pv-halo{stroke:#BC80CC;fill:#141419;}
-  .pv-core{fill:var(--violet);transform-origin:320px 298px;transition:transform .9s cubic-bezier(.34,1.4,.64,1);}
+  .pv-core{fill:var(--violet);transform-origin:320px 286px;transition:transform .9s cubic-bezier(.34,1.4,.64,1);}
   :root[data-theme="dark"] .pv-core{fill:var(--accent);}
+  /* the centre point, named: a quiet mono label under the dot, in the Systems purple */
+  .pv-center{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;fill:#5B2A68;fill-opacity:.78;}
+  :root[data-theme="dark"] .pv-center{fill:#C79BD6;fill-opacity:.85;}
   .pv-k{font-family:var(--font-mono);font-size:17px;font-weight:600;letter-spacing:.18em;}   /* primary */
   .pv-k-sys{fill:#5B2A68;} .pv-k-dat{fill:#B98A3E;} .pv-k-pro{fill:#4F6B57;}
   :root[data-theme="dark"] .pv-k-sys{fill:#C79BD6;} :root[data-theme="dark"] .pv-k-dat{fill:#D2A864;} :root[data-theme="dark"] .pv-k-pro{fill:#8FB39A;}
-  .pv-d{font-family:var(--font-body);font-size:13.5px;fill:var(--ink);fill-opacity:.62;}   /* secondary: smaller, still readable */
+  .pv-d{font-family:var(--font-body);font-size:13.5px;fill:var(--ink);fill-opacity:.74;}   /* secondary: smaller, still readable */
   /* hover — Complex → Clear. The three areas converge on the centre (900ms); Systems gently expands, Products
      shifts and expands, a small dot orbits Data; the central dot stays still. Hovering one area brings it forward. */
   .pv-c{transition:transform .9s cubic-bezier(.22,.61,.36,1);transform-box:view-box;}
@@ -542,7 +547,7 @@
   .pv-c{cursor:default;}
   .pv-venn:hover .pv-c .pv-fill{fill-opacity:.03;} .pv-venn:hover .pv-c .pv-line{stroke-opacity:.25;}
   .pv-venn .pv-c:hover .pv-fill{fill-opacity:.12;} .pv-venn .pv-c:hover .pv-line{stroke-opacity:.75;stroke-width:1.4;}
-  .pv-venn:hover .pv-c .pv-d{transition:fill-opacity .6s ease;} .pv-venn .pv-c:hover .pv-d{fill-opacity:.8;}
+  .pv-venn:hover .pv-c .pv-d{transition:fill-opacity .6s ease;} .pv-venn .pv-c:hover .pv-d{fill-opacity:.9;}
   /* the shared outer orbit: its three nodes glide while hovered, pause in place otherwise */
   .pv-orb{animation:pvOrbit 60s linear infinite;}   /* slow, continuous; hover speeds it up (see script) */
   @keyframes pvOrbit{to{transform:rotate(360deg);}}
@@ -3334,7 +3339,7 @@
         <div class="pv-flow"><span>Complex</span><span class="pv-arrow" aria-hidden="true">→</span><span>Clear</span><span class="pv-dot" aria-hidden="true"></span></div>
       </div>
       <div class="pv-right">
-        <svg class="pv-venn" viewBox="0 0 640 600" style="overflow:visible" role="img" aria-label="Systems, Data and Products overlap, with clarity at the centre">
+        <svg class="pv-venn" viewBox="0 0 640 600" style="overflow:visible" role="img" aria-label="Systems, Data and Products overlap, with decisions at the centre">
           <!-- the three areas -->
           <g class="pv-c pv-c-sys"><circle cx="320" cy="190" r="162" class="pv-fill"/><circle cx="320" cy="190" r="162" class="pv-line"/><text x="320" y="104" class="pv-k pv-k-sys" text-anchor="middle">SYSTEMS</text><text x="320" y="132" class="pv-d" text-anchor="middle">Untangle workflows</text><text x="320" y="153" class="pv-d" text-anchor="middle">and dependencies.</text></g>
           <g class="pv-c pv-c-dat"><g class="pv-dat-orbit" style="transform-origin:226px 352px"><circle cx="73.8" cy="296.6" r="5.5" class="pv-node pv-n-dat"/></g><circle cx="226" cy="352" r="162" class="pv-fill"/><circle cx="226" cy="352" r="162" class="pv-line"/><text x="184" y="404" class="pv-k pv-k-dat" text-anchor="middle">DATA</text><text x="184" y="432" class="pv-d" text-anchor="middle">Turn complex</text><text x="184" y="453" class="pv-d" text-anchor="middle">data into signals.</text></g>
@@ -3342,8 +3347,9 @@
           <!-- one shared orbit around the whole system, one node per area; it travels while you hover -->
           <g class="pv-orb" style="transform-origin:320px 297px"><circle cx="320" cy="297" r="286" class="pv-orbit"/><circle cx="320.0" cy="11.0" r="7" class="pv-node pv-n-sys"/><circle cx="60.8" cy="417.9" r="7" class="pv-node pv-n-dat"/><circle cx="572.5" cy="431.3" r="7" class="pv-node pv-n-pro"/></g>
           <!-- clarity at the centre -->
-          <circle cx="320" cy="298" r="34" class="pv-halo"/>
-          <circle cx="320" cy="298" r="13" class="pv-core"/>
+          <circle cx="320" cy="286" r="30" class="pv-halo"/>
+          <circle cx="320" cy="286" r="13" class="pv-core"/>
+          <text x="320" y="337" class="pv-center" text-anchor="middle">DECISIONS</text>
         </svg>
       </div>
     </div>
