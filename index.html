@@ -9827,6 +9827,7 @@ setActive(0); startRotation();
   const pt=e=>{ const r=cv.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top,t:performance.now()}; };
   const hit=p=>{ for(let i=balls.length-1;i>=0;i--){ const b=balls[i]; if((p.x-b.x)**2+(p.y-b.y)**2<=(b.r+4)**2) return b; } return null; };
   cv.addEventListener('pointerdown',e=>{
+    init(); visible=true;
     const p=pt(e), b=hit(p); wrap.classList.add('is-touched');
     if(b){ grab={b,ox:b.x-p.x,oy:b.y-p.y,px:p.x,py:p.y,pt:p.t,vx:0,vy:0}; b.vx=b.vy=0; cv.setPointerCapture(e.pointerId); cv.classList.add('is-grab'); }
     else for(const o of balls){ const dx=o.x-p.x, dy=o.y-p.y, d=Math.hypot(dx,dy)||1, R=230;
@@ -9845,12 +9846,21 @@ setActive(0); startRotation();
     grab=null; cv.classList.remove('is-grab'); wake(); };
   cv.addEventListener('pointerup',drop); cv.addEventListener('pointercancel',drop);
 
-  /* start when the band scrolls into view; pause when it leaves */
-  new IntersectionObserver(es=>{ visible=es.some(x=>x.isIntersecting);
-    if(visible&&!started){ started=true; size(); make(!reduce);
-      if(reduce){ for(let i=0;i<600;i++) step(1/60); draw(); } else wake(); }
-    else if(visible) wake(); }, {threshold:.25}).observe(wrap);
-  if('ResizeObserver' in window) new ResizeObserver(()=>{ if(!started) return; size(); draw(); wake(); }).observe(wrap);
+  /* the settled pile is drawn as soon as the band has a size; when it scrolls into view the balls pop and
+     bounce. Visibility comes from IntersectionObserver with a scroll check as backup; touching always wakes it. */
+  let popped=false;
+  function init(){ if(started) return; size(); if(W<40||H<40) return; started=true; make(false);
+    for(let i=0;i<700;i++) step(1/60); draw(); }
+  function shown(){ init(); if(!started) return;
+    if(!popped&&!reduce){ popped=true; balls.forEach(b=>{ b.vy-=320+Math.random()*520; b.vx+=(Math.random()-.5)*220; }); }
+    wake(); }
+  function setVisible(v){ if(v===visible) return; visible=v; if(v) shown(); }
+  if('IntersectionObserver' in window) new IntersectionObserver(es=>setVisible(es.some(x=>x.isIntersecting)),{threshold:.2}).observe(wrap);
+  const check=()=>{ const r=wrap.getBoundingClientRect(); setVisible(r.top<innerHeight-40&&r.bottom>40); };
+  addEventListener('scroll',check,{passive:true}); addEventListener('resize',check);
+  if(document.readyState==='complete'){ init(); check(); } else addEventListener('load',()=>{ init(); check(); });
+  cv.addEventListener('pointerenter',()=>{ init(); visible=true; wake(); });
+  if('ResizeObserver' in window) new ResizeObserver(()=>{ if(!started){ init(); return; } size(); draw(); wake(); }).observe(wrap);
 })();
 </script>
 </body>
