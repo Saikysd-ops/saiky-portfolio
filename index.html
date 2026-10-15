@@ -262,10 +262,14 @@
   /* header: Work leads; the clock is quieter */
   .navlinks a[data-view="work"]{color:var(--ink);font-weight:600;}
   .nav-clock{opacity:.55;}
-  @media (min-width:881px){ #view-home .hero{grid-template-columns:1.25fr 1fr;} }
+  @media (min-width:881px){ #view-home .hero{grid-template-columns:1.25fr 1fr;align-items:center;align-content:center;} }
+  /* wide screens: a little more room for the artwork, so it can grow into the first screen */
+  @media (min-width:1280px){ #view-home .hero{grid-template-columns:1.12fr 1fr;} }
   @media (min-width:861px){
-    #view-home .hero-right .portrait-frame{max-width:352px;margin-bottom:10px;}
-    #view-home .hero-right .portrait-caption,#view-home .hero-right .quote-panel{max-width:352px;}
+    /* artwork scales with the screen height so it fills the hero down to the scroll cue (≥400px, up to the column width) */
+    #view-home .hero-right{--art-w:clamp(400px, calc((100svh - var(--hero-top, 190px) - 200px) * .75), 100%);}
+    #view-home .hero-right .portrait-frame{max-width:var(--art-w);margin-bottom:10px;}
+    #view-home .hero-right .portrait-caption,#view-home .hero-right .quote-panel{max-width:var(--art-w);}
     #view-home .hero-right .portrait-caption{margin-bottom:2px;}
     #view-home .hero-right .quote-panel{margin-top:0;gap:6px;min-height:72px;}
     #view-home .hero-right .quote-panel .label{margin-bottom:2px;font-size:13px;}
