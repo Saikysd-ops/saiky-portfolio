@@ -318,19 +318,22 @@
   .proof-stats .lbl{margin-top:6px;font-size:12px;max-width:30ch;}
   .proof-teams{padding-top:0;}
   /* lower half: copy on the left, a ball playground in the open space on the right */
-  .proof-lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;padding-top:28px;border-top:1px solid var(--line);}
-  .proof-play{position:relative;min-height:240px;margin-bottom:-40px;}   /* the pile rests a little into the band's bottom padding */
+  .proof-lower{padding-top:28px;border-top:1px solid var(--line);}
+  /* ball playground: a layer across the whole band (edge to edge of the viewport); the copy sits above it and lets
+     pointer events through, so balls can be grabbed anywhere in the band */
+  .proof-play{position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:0;}
+  .home-proof > :not(.proof-play){position:relative;z-index:1;pointer-events:none;}
   .proof-play canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:default;}
   .proof-play canvas.is-over{cursor:grab;} .proof-play canvas.is-grab{cursor:grabbing;}
-  .proof-play-hint{position:absolute;top:0;right:0;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  .home-proof > .proof-play-hint{position:absolute;top:76px;right:0;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
     color:var(--ink-soft);opacity:.7;pointer-events:none;transition:opacity .6s ease;}
-  .proof-play.is-touched .proof-play-hint{opacity:0;}
+  .home-proof.is-touched .proof-play-hint{opacity:0;}
+  @media (hover:none){ .proof-play canvas{touch-action:pan-y;} }   /* phones: vertical swipes still scroll the page */
   .proof-teams .proof-k{margin-bottom:8px;}
   .proof-list{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0 0 44px;}   /* clear pause before the closing statement */
   .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(20px,1.75vw,24px);line-height:1.3;letter-spacing:-.005em;color:var(--ink);margin:0;max-width:40ch;text-wrap:balance;}
   @media (max-width:880px){
-    .proof-lower{grid-template-columns:1fr;gap:28px;}
-    .proof-play{min-height:200px;margin-bottom:-24px;}
+    .home-proof > .proof-play-hint{top:52px;}
     #view-home .proof-stats{grid-template-columns:repeat(2,1fr);gap:28px 0;}
     #view-home .proof-stats .stat{padding:0 12px 0 20px;}
     #view-home .proof-stats .stat:nth-child(odd){padding-left:0;border-left:0;}
@@ -3429,6 +3432,8 @@
   </section>
 
   <section class="home-proof" aria-labelledby="proofH">
+    <div class="proof-play" id="proofPlay" aria-hidden="true"><canvas></canvas></div>
+    <span class="proof-play-hint" aria-hidden="true">Drag · throw · scatter</span>
     <h2 class="proof-k" id="proofH">Experience at scale</h2>
     <div class="stat-grid proof-stats">
       <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
@@ -3444,7 +3449,6 @@
         </div>
         <p class="proof-quote">I don't define myself by titles —<br>I define myself by the products I help build.</p>
       </div>
-      <div class="proof-play" id="proofPlay" aria-hidden="true"><canvas></canvas><span class="proof-play-hint">Drag · throw · scatter</span></div>
     </div>
   </section>
 
@@ -9773,7 +9777,7 @@ setActive(0); startRotation();
   const wrap=document.getElementById('proofPlay'); if(!wrap) return;
   const cv=wrap.querySelector('canvas'), ctx=cv.getContext('2d');
   const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const COLORS=['#BC80CC','#F1EAF7','#E46B5D','#D2A864','#8FB39A','#8AA4C8','#7438F0','#EFE4D2','#9B5BAE'];
+  const COLORS=['#2C58F2','#5B7CFA','#7438F0','#9B6BF2','#BC80CC','#D8357A','#EE5539','#F48C6E','#EBDDF5'];   /* the headline gradient, plus lilac and a pale highlight */
   const G=1500, REST=.4, AIR=.996, MAXV=2600;
   let W=0,H=0,balls=[],raf=0,visible=false,started=false,grab=null,calm=0,last=0;
 
@@ -9783,9 +9787,9 @@ setActive(0); startRotation();
     balls.forEach(b=>{ b.x=Math.min(Math.max(b.x,b.r),W-b.r); if(b.y>H-b.r) b.y=H-b.r; });
   }
   function make(drop){
-    const n=Math.round(Math.min(34,Math.max(20,W*H/3600))); balls=[];
-    for(let i=0;i<n;i++){ const r=9+Math.random()*16;
-      balls.push({x:r+Math.random()*(W-2*r), y:drop?-r-Math.random()*H*1.4:H-r-Math.random()*H*.5, vx:(Math.random()-.5)*80, vy:0, r, m:r*r, c:COLORS[i%COLORS.length]}); }
+    const n=Math.round(Math.min(64,Math.max(26,W/24))); balls=[];
+    for(let i=0;i<n;i++){ const r=8+Math.random()*14;
+      balls.push({x:r+Math.random()*(W-2*r), y:drop?-r-Math.random()*H*1.4:H-r-Math.random()*H*.25, vx:(Math.random()-.5)*80, vy:0, r, m:r*r, c:COLORS[i%COLORS.length]}); }
   }
   function step(dt){
     const g=grab&&grab.b;
@@ -9828,7 +9832,7 @@ setActive(0); startRotation();
   const hit=p=>{ for(let i=balls.length-1;i>=0;i--){ const b=balls[i]; if((p.x-b.x)**2+(p.y-b.y)**2<=(b.r+4)**2) return b; } return null; };
   cv.addEventListener('pointerdown',e=>{
     init(); visible=true;
-    const p=pt(e), b=hit(p); wrap.classList.add('is-touched');
+    const p=pt(e), b=hit(p); (wrap.closest('section')||wrap).classList.add('is-touched');
     if(b){ grab={b,ox:b.x-p.x,oy:b.y-p.y,px:p.x,py:p.y,pt:p.t,vx:0,vy:0}; b.vx=b.vy=0; cv.setPointerCapture(e.pointerId); cv.classList.add('is-grab'); }
     else for(const o of balls){ const dx=o.x-p.x, dy=o.y-p.y, d=Math.hypot(dx,dy)||1, R=230;
       if(d<R){ const f=(1-d/R)*1100; o.vx+=dx/d*f; o.vy+=dy/d*f-f*.35; } }
