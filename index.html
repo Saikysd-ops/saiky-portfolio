@@ -239,7 +239,7 @@
   /* ===== hero: identity → value → one action; the evidence lives in section 2 ===== */
   /* hero fills the first screen (original min-height rule); Latest impact starts below it */
   #view-home .hero{padding-top:20px;padding-bottom:28px;min-height:calc(100svh - var(--hero-top, 190px));}
-  #view-home .impact + .home-proof{border-top:1px solid var(--line);}
+  #view-home .home-proof + .philosophy{border-top:0;}   /* the band replaces the dividers either side */
   #view-home .hero-left{max-width:600px;}
   .value-lead{font-family:var(--font-display);font-weight:500;font-size:clamp(28px,2.5vw,36px);line-height:1.15;letter-spacing:-.015em;
     color:color-mix(in srgb, var(--ink) 92%, #3A3540);max-width:620px;margin:16px 0 14px;text-wrap:balance;}
@@ -301,7 +301,12 @@
   @media (max-width:880px){ #view-home .scroll-cue{display:none;} }
   @media (max-height:680px){ #view-home .scroll-cue{display:none;} }
   /* ===== section 2: selected impact ===== */
-  .home-proof{padding:64px 0 60px;}
+  /* experience at a glance: a full-width band (edge to edge of the viewport) in a soft brand-lilac tint */
+  .home-proof{position:relative;isolation:isolate;padding:72px 0 76px;--band:#F3EEF6;}
+  :root[data-theme="dark"] .home-proof{--band:#1A1621;}
+  .home-proof::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:-1;background:var(--band);
+    border-top:1px solid color-mix(in srgb, #5B2A68 8%, transparent);border-bottom:1px solid color-mix(in srgb, #5B2A68 8%, transparent);transition:background .3s ease;}
+  :root[data-theme="dark"] .home-proof::before{border-color:color-mix(in srgb, #BC80CC 10%, transparent);}
   .proof-k{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 22px;}
   .proof-stats{grid-template-columns:repeat(4,1fr);gap:0;margin:0 0 48px;}
   .proof-stats .stat{padding:0 24px;border-left:1px solid color-mix(in srgb, var(--line) 80%, transparent);}
@@ -326,7 +331,7 @@
     .cred-strip{grid-template-columns:1fr;gap:10px;}
     .cred-strip li{gap:2px;}
     #view-home .hero-left .value-line{font-size:16px;}
-    .home-proof{padding:48px 0 44px;}
+    .home-proof{padding:52px 0 56px;}
     .proof-stats .num{font-size:28px;}
     #view-home .impact-stats .num{font-size:28px;}
     #view-home .hero-cred .current{font-size:clamp(11px,3.1vw,13px);}
@@ -3426,7 +3431,7 @@
   </section>
 
   <section class="home-proof" aria-labelledby="proofH">
-    <h2 class="proof-k" id="proofH">Experience at scale</h2>
+    <h2 class="proof-k" id="proofH">Experience at a glance</h2>
     <div class="stat-grid proof-stats">
       <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
       <div class="stat"><div class="num">4K+</div><div class="lbl">Private-brand suppliers across global sourcing</div></div>
