@@ -236,6 +236,91 @@
   .value-tagline{font-family:var(--font-display);font-weight:600;font-size:17px;
     color:var(--ink);line-height:1.5;letter-spacing:.001em;max-width:none;margin-bottom:24px;
     white-space:nowrap;}
+  /* ===== hero: identity → value → one action; the evidence lives in section 2 ===== */
+  /* hero fills the first screen (original min-height rule); Latest impact starts below it */
+  #view-home .hero{padding-top:20px;padding-bottom:28px;min-height:calc(100svh - var(--hero-top, 190px));}
+  #view-home .impact + .home-proof{border-top:1px solid var(--line);}
+  #view-home .hero-left{max-width:600px;}
+  .value-lead{font-family:var(--font-display);font-weight:500;font-size:clamp(28px,2.5vw,36px);line-height:1.15;letter-spacing:-.015em;
+    color:color-mix(in srgb, var(--ink) 92%, #3A3540);max-width:620px;margin:16px 0 14px;text-wrap:balance;}
+  #view-home .hero-left .value-line{font-size:18px;line-height:1.55;max-width:600px;margin:0 0 12px;
+    color:color-mix(in srgb, var(--ink) 66%, var(--ink-soft) 34%);}
+  #view-home .hero-left .value-tagline{margin-bottom:24px;}
+  #view-home .hero-left .cta-row{margin-bottom:24px;}
+  /* role label: stronger contrast between the title and the focus areas */
+  #view-home .role{color:color-mix(in srgb, var(--ink-soft) 85%, transparent);}
+  #view-home .role b{color:var(--ink);font-weight:700;}
+  /* credibility block under the CTA: compact labels, not cards */
+  .hero-cred{padding-top:0;}
+  .cred-strip{list-style:none;margin:0 0 24px;padding:0;display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:18px;}
+  .cred-strip li{display:flex;flex-direction:column;gap:3px;min-width:0;}
+  .cred-strip b{font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);}
+  @media (min-width:1280px){ .cred-strip{grid-template-columns:repeat(3,auto);justify-content:space-between;} .cred-strip b,.cred-strip span{white-space:nowrap;} }
+  .cred-strip span{font-size:13px;line-height:1.4;color:var(--ink-soft);}
+  #view-home .hero-cred .current{font-size:clamp(9.5px,2.55vw,15px);margin-bottom:8px;}
+  #view-home .hero-cred .hero-avail{margin-bottom:0;opacity:.85;}
+  /* header: Work leads; the clock is quieter */
+  .navlinks a[data-view="work"]{color:var(--ink);font-weight:600;}
+  .nav-clock{opacity:.55;}
+  @media (min-width:881px){ #view-home .hero{grid-template-columns:1.25fr 1fr;} }
+  @media (min-width:861px){
+    #view-home .hero-right .portrait-frame{max-width:352px;margin-bottom:10px;}
+    #view-home .hero-right .portrait-caption,#view-home .hero-right .quote-panel{max-width:352px;}
+    #view-home .hero-right .portrait-caption{margin-bottom:2px;}
+    #view-home .hero-right .quote-panel{margin-top:0;gap:6px;min-height:72px;}
+    #view-home .hero-right .quote-panel .label{margin-bottom:2px;font-size:13px;}
+    #view-home .hero-right .quote-panel .desc{font-size:12px;}
+    #view-home .hero-right .quote-panel{opacity:.6;min-height:0;flex-direction:row;justify-content:center;text-align:left;gap:10px;margin-top:6px;}
+    #view-home .hero-right .quote-panel .icon{width:32px;height:32px;}
+    #view-home .hero-right .portrait-caption{font-size:11px;opacity:.65;}
+  }
+  /* scroll cue: bottom centre of the full-height hero (desktop only) */
+  #view-home .scroll-cue{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;
+    background:none;border:0;padding:4px;cursor:pointer;color:var(--ink-soft);transition:opacity .4s ease,transform .4s ease;}
+  .scroll-cue__anim{display:block;width:44px;height:44px;}
+  .scroll-cue__anim svg{display:block;}
+  .scroll-cue__label{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.7;}
+  .scroll-cue .sc-ring path{stroke:color-mix(in srgb, var(--ink) 30%, transparent);}
+  .scroll-cue .sc-arc path{stroke:var(--violet);}
+  .scroll-cue .sc-dot path{fill:var(--violet);}
+  :root[data-theme="dark"] .scroll-cue .sc-arc path{stroke:#BC80CC;}
+  :root[data-theme="dark"] .scroll-cue .sc-dot path{fill:#BC80CC;}
+  #view-home .scroll-cue:hover{color:var(--ink);}
+  #view-home .scroll-cue:hover .sc-ring path{stroke:color-mix(in srgb, var(--ink) 55%, transparent);}
+  #view-home .scroll-cue:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px;}
+  #view-home .scroll-cue.is-off{display:none;}
+  #view-home .scroll-cue.is-gone{opacity:0;pointer-events:none;transform:translate(-50%,8px);}
+  /* no Lottie player (offline / blocked): a plain ring with a dot */
+  .scroll-cue.is-static .scroll-cue__anim{border:1.4px solid color-mix(in srgb, var(--ink) 30%, transparent);border-radius:50%;width:40px;height:40px;position:relative;}
+  .scroll-cue.is-static .scroll-cue__anim::after{content:'';position:absolute;left:50%;top:30%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--violet);}
+  @media (max-width:880px){ #view-home .scroll-cue{display:none;} }
+  @media (max-height:680px){ #view-home .scroll-cue{display:none;} }
+  /* ===== section 2: selected impact ===== */
+  .home-proof{padding:64px 0 60px;}
+  .proof-k{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 22px;}
+  .proof-stats{grid-template-columns:repeat(4,1fr);gap:0;margin:0 0 48px;}
+  .proof-stats .stat{padding:0 24px;border-left:1px solid color-mix(in srgb, var(--line) 80%, transparent);}
+  .proof-stats .stat:first-child{padding-left:0;border-left:0;}
+  .proof-stats .num{font-size:clamp(34px,3.2vw,44px);line-height:1;letter-spacing:-.01em;}
+  .proof-stats .lbl{margin-top:10px;font-size:13px;max-width:28ch;}
+  .proof-teams{padding-top:28px;border-top:1px solid var(--line);}
+  .proof-teams .proof-k{margin-bottom:8px;}
+  .proof-list{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0 0 36px;}
+  .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(20px,1.9vw,26px);line-height:1.3;letter-spacing:-.005em;color:var(--ink);margin:0;max-width:40ch;text-wrap:balance;}
+  @media (max-width:880px){
+    #view-home .proof-stats{grid-template-columns:repeat(2,1fr);gap:28px 0;}
+    #view-home .proof-stats .stat{padding:0 12px 0 20px;}
+    #view-home .proof-stats .stat:nth-child(odd){padding-left:0;border-left:0;}
+  }
+  @media (max-width:560px){
+    .value-lead{font-size:27px;margin-top:18px;}
+    .cred-strip{grid-template-columns:1fr;gap:10px;}
+    .cred-strip li{gap:2px;}
+    #view-home .hero-left .value-line{font-size:16px;}
+    .home-proof{padding:48px 0 44px;}
+    .proof-stats .num{font-size:30px;}
+    .proof-list{font-size:15px;}
+  }
   .hl{color:var(--accent);font-weight:700;}
   p.bio{font-size:17px;font-weight:400;line-height:1.65;color:var(--ink-soft);max-width:46ch;margin:0 0 24px;}
   p.bio:last-of-type{margin-bottom:32px;}
@@ -3019,6 +3104,7 @@
   .work-thumb .monitor{box-shadow:0 0 0 1px rgba(255,255,255,.16), 0 12px 28px -16px rgba(0,0,0,.42);}
   .work-card:hover .work-thumb{box-shadow:0 12px 24px -16px rgba(20,20,27,.22);}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie_light.min.js" integrity="sha512-Pe5arL9TnWlLgXT1VY0d50tfo6J9bh0qM7irYJuACQcGz7mbIahBXZmNeav+46mTQBtPY170Vi89KDa4kd4QVg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 </head>
 <body>
 
@@ -3252,25 +3338,16 @@
     <div class="hero-left">
       <div class="eyebrow" id="eyebrowText">I DESIGN <span class="eyebrow-word" id="eyebrowWord"><span class="ew-live">THROUGH</span></span></div>
       <h1 class="headline"><span class="word-stage" id="wordStage"><span class="word" data-word="COMPLEXITY" id="wComplexity">COMPLEXITY<span class="dot"></span></span><span class="word" data-word="CLARITY" id="wClarity">CLARITY<span class="dot"></span></span></span><div class="mask-cursor" id="maskCursor"><div class="mc-blink"><div class="grad"></div></div></div><svg class="mask-eye" id="maskEye" viewBox="0 0 160 80" aria-hidden="true"><defs><clipPath id="meClip"><path class="me-shape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></clipPath></defs><path class="me-fill me-shape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/><g clip-path="url(#meClip)"><circle class="me-iris" cx="80" cy="40" r="25"/><circle class="me-pupil" id="maskPupil" cx="80" cy="40" r="8"/></g><path class="me-lid me-shape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></svg></h1>
-      <div class="role"><b>Senior Product Designer</b> · Enterprise AI · Decision Systems</div>
-      <div class="current">Designing enterprise products at <span class="wm-link"><img class="wm-logo" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:1.1em;width:auto;vertical-align:-0.18em;margin:0 4px"></span> · Bengaluru, India</div>
-      <div class="hero-avail"><span class="hero-avail-dot" aria-hidden="true"></span>Open to select collaborations</div>
-      <p class="value-line">I turn complex workflows, data and AI into clearer decisions.</p>
+      <div class="role"><b>Senior Product Designer</b> · Enterprise UX · AI Experiences</div>
+      <p class="value-lead">I turn enterprise complexity into clarity.</p>
+      <p class="value-line">I bring UX, business, and technology together to solve complex product problems. Working with product managers, engineers, and stakeholders, I turn competing needs into clear, intuitive experiences.</p>
       <p class="value-tagline">Complex problems. Clear systems. Meaningful decisions.</p>
-      <hr class="hero-rule">
-      <div class="stat-grid hero-stats">
-        <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
-        <div class="stat"><div class="num">4K+</div><div class="lbl">Private-brand suppliers across global sourcing</div></div>
-        <div class="stat"><div class="num">4</div><div class="lbl">Markets supported</div></div>
-        <div class="stat"><div class="num">6+</div><div class="lbl">business units partnered across</div></div>
-      </div>
-      <hr class="hero-rule">
-      <div class="hero-label">DESIGNED FOR TEAMS ACROSS THE BUSINESS</div>
-      <p class="hero-stakeholders">Associates · Sourcing Managers · Merchants · Business Teams</p>
-      <p class="bio statement">I don't define myself by titles —<br>I define myself by the products I help build.</p>
       <div class="cta-row">
-        <button class="btn btn-primary" data-scroll="work">Explore the work <span class="cta-arrow">↓</span></button>
-        <a class="text-link" data-scroll="about">More about me <span class="cta-arrow">→</span></a>
+        <button class="btn btn-primary" data-scroll="work">Explore my work <span class="cta-arrow">↓</span></button>
+      </div>
+      <div class="hero-cred">
+        <div class="current">Designing enterprise products at <span class="wm-link"><img class="wm-logo" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:1.1em;width:auto;vertical-align:-0.18em;margin:0 4px"></span> · Bengaluru, India</div>
+        <div class="hero-avail"><span class="hero-avail-dot" aria-hidden="true"></span>Open to select collaborations</div>
       </div>
     </div>
 
@@ -3314,6 +3391,10 @@
         <span class="txt" id="quoteTxt"></span>
       </div>
     </div>
+    <button class="scroll-cue" type="button" id="scrollCue" aria-label="Scroll to the next section">
+      <span class="scroll-cue__anim" id="scrollCueAnim" aria-hidden="true"></span>
+      <span class="scroll-cue__label">Scroll</span>
+    </button>
   </section>
 
   <section class="impact">
@@ -3329,6 +3410,21 @@
     </div>
     <p class="highlight">From fragmented supplier data to one sourcing decision model.</p>
     <button class="btn btn-outline btn-small impact-cta" data-view="case-supplier">Explore the case study <span class="cta-arrow">→</span></button>
+  </section>
+
+  <section class="home-proof" aria-labelledby="proofH">
+    <h2 class="proof-k" id="proofH">Selected impact</h2>
+    <div class="stat-grid proof-stats">
+      <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
+      <div class="stat"><div class="num">4K+</div><div class="lbl">Private-brand suppliers across global sourcing</div></div>
+      <div class="stat"><div class="num">4</div><div class="lbl">Markets supported</div></div>
+      <div class="stat"><div class="num">6+</div><div class="lbl">Business units partnered across</div></div>
+    </div>
+    <div class="proof-teams">
+      <div class="proof-k">Designed for teams across the business</div>
+      <p class="proof-list">Associates · Sourcing Managers · Merchants · Business Teams</p>
+    </div>
+    <p class="proof-quote">I don't define myself by titles — I define myself by the products I help build.</p>
   </section>
 
   <section class="philosophy">
@@ -7960,6 +8056,11 @@ try{
   }
   /* start after the intro loader is gone (it is removed from the page when the circle has opened) */
   function loaderGone(){ return !document.getElementById('introLoader'); }
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && loaderGone()){ io.disconnect(); setTimeout(animate, 150); } }, {threshold:.6});
+    io.observe(el.closest('.stat') || el);
+    return;
+  }
   if(loaderGone()){ setTimeout(animate, 400); }
   else {
     const mo = new MutationObserver(()=>{ if(loaderGone()){ mo.disconnect(); setTimeout(animate, 150); } });
@@ -9605,6 +9706,28 @@ setActive(0); startRotation();
     // home can start hidden (deep link to another view) — re-measure after in-page navigation
     document.addEventListener('click', function(){ setTimeout(fit, 60); });
   })();
+</script>
+<script>
+/* scroll cue — a ring with an orbiting purple arc and a dot gliding down (hand-authored Lottie, coloured by CSS per theme).
+   Click scrolls to the next section (Latest impact); it fades once the page is scrolled. Reduced motion shows a still frame. */
+(function(){
+  const btn=document.getElementById('scrollCue'), box=document.getElementById('scrollCueAnim'); if(!btn||!box) return;
+  const DATA={"v":"5.7.4","fr":60,"ip":0,"op":120,"w":64,"h":64,"nm":"saiky scroll cue","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":4,"nm":"dot","cl":"sc-dot","sr":1,"ks":{"o":{"a":1,"k":[{"t":0,"s":[0],"i":{"x":[0.33],"y":[1]},"o":{"x":[0.67],"y":[0]}},{"t":12,"s":[100],"i":{"x":[0.33],"y":[1]},"o":{"x":[0.67],"y":[0]}},{"t":46,"s":[100],"i":{"x":[0.33],"y":[1]},"o":{"x":[0.67],"y":[0]}},{"t":66,"s":[0],"i":{"x":[0.33],"y":[1]},"o":{"x":[0.67],"y":[0]},"h":1},{"t":120,"s":[0],"i":{"x":[0.33],"y":[1]},"o":{"x":[0.67],"y":[0]}}]},"r":{"a":0,"k":0},"p":{"a":1,"k":[{"t":0,"s":[32,19,0],"i":{"x":0.2,"y":1},"o":{"x":0.42,"y":0},"to":[0,0,0],"ti":[0,0,0]},{"t":64,"s":[32,43,0],"h":1},{"t":120,"s":[32,19,0]}]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"el","d":1,"p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[7,7]}},{"ty":"fl","c":{"a":0,"k":[0.357,0.165,0.408,1]},"o":{"a":0,"k":100},"r":1},{"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}]}],"ip":0,"op":120,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":4,"nm":"arc","cl":"sc-arc","sr":1,"ks":{"o":{"a":0,"k":100},"r":{"a":0,"k":0},"p":{"a":0,"k":[32,32,0]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"el","d":1,"p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[52,52]}},{"ty":"tm","m":1,"s":{"a":0,"k":0},"e":{"a":0,"k":18},"o":{"a":1,"k":[{"t":0,"s":[0],"i":{"x":[1],"y":[1]},"o":{"x":[0],"y":[0]}},{"t":120,"s":[360]}]}},{"ty":"st","c":{"a":0,"k":[0.357,0.165,0.408,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2.2},"lc":2,"lj":2},{"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}]}],"ip":0,"op":120,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":4,"nm":"ring","cl":"sc-ring","sr":1,"ks":{"o":{"a":0,"k":100},"r":{"a":0,"k":0},"p":{"a":0,"k":[32,32,0]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"el","d":1,"p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[52,52]}},{"ty":"st","c":{"a":0,"k":[0.09,0.09,0.11,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":1.4},"lc":2,"lj":2},{"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}]}],"ip":0,"op":120,"st":0,"bm":0}]}, reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function start(){ if(!window.lottie){ btn.classList.add('is-static'); return; }
+    const a=lottie.loadAnimation({container:box,renderer:'svg',loop:true,autoplay:!reduce,animationData:DATA,rendererSettings:{preserveAspectRatio:'xMidYMid meet'}});
+    if(reduce) a.addEventListener('DOMLoaded',()=>a.goToAndStop(30,true));
+    document.addEventListener('visibilitychange',()=>{ if(reduce) return; document.hidden?a.pause():a.play(); }); }
+  if(document.readyState==='complete') start(); else addEventListener('load',start);
+  btn.addEventListener('click',()=>{ const hero=btn.closest('.hero'), t=hero&&hero.nextElementSibling; if(!t) return;
+    const nav=document.querySelector('.navbar'), off=nav?nav.getBoundingClientRect().height:0;
+    window.scrollTo({top:t.getBoundingClientRect().top+scrollY-off,behavior:reduce?'auto':'smooth'}); });
+  const onScroll=()=>btn.classList.toggle('is-gone',window.scrollY>40);
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  /* only when the hero ends at the bottom of the window — if its content is taller, the cue would sit below the fold */
+  const hero=btn.closest('.hero');
+  const fit=()=>{ if(!hero) return; btn.classList.toggle('is-off', hero.getBoundingClientRect().bottom+scrollY > innerHeight+2); };
+  addEventListener('resize',fit); addEventListener('load',fit); if(document.fonts) document.fonts.ready.then(fit); fit();
+})();
 </script>
 </body>
 </html>
