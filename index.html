@@ -272,15 +272,18 @@
     #view-home .hero-right .portrait-caption,#view-home .hero-right .quote-panel{max-width:var(--art-w);}
     /* caption → breathing room → icon → centred quote (the original stacked rhythm) */
     #view-home .hero-right .portrait-caption{margin-bottom:22px;}
-    #view-home .hero-right .quote-panel{margin-top:0;gap:10px;min-height:0;}
+    #view-home .hero-right .quote-panel{margin-top:0;gap:0;min-height:0;}
     #view-home .hero-right .quote-panel .icon{width:44px;height:44px;}
-    #view-home .hero-right .quote-panel .label{margin-bottom:4px;}
+    #view-home .hero-right .quote-panel .label{margin-bottom:2px;font-size:14px;}
+    #view-home .hero-right .quote-panel .desc{font-size:12.5px;}
     #view-home .hero-right .quote-panel .desc{text-wrap:balance;}   /* even lines, no one-word orphan */
   }
   /* scroll cue: bottom centre of the full-height hero (desktop only) */
-  #view-home .scroll-cue{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;
+  /* Walmart / availability on the left, the scroll cue on the right of the same row: no extra height */
+  #view-home .hero-foot{display:flex;align-items:center;justify-content:space-between;gap:24px;}
+  #view-home .scroll-cue{position:relative;z-index:2;display:inline-flex;flex-direction:row;align-items:center;gap:8px;margin:0 -4px 0 0;flex:none;
     background:none;border:0;padding:4px;cursor:pointer;color:var(--ink-soft);transition:opacity .4s ease,transform .4s ease;}
-  .scroll-cue__anim{display:block;width:44px;height:44px;}
+  .scroll-cue__anim{display:block;width:36px;height:36px;}
   .scroll-cue__anim svg{display:block;}
   .scroll-cue__label{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.7;}
   .scroll-cue .sc-ring path{stroke:color-mix(in srgb, var(--ink) 30%, transparent);}
@@ -291,10 +294,10 @@
   #view-home .scroll-cue:hover{color:var(--ink);}
   #view-home .scroll-cue:hover .sc-ring path{stroke:color-mix(in srgb, var(--ink) 55%, transparent);}
   #view-home .scroll-cue:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px;}
-  #view-home .scroll-cue.is-off{display:none;}
-  #view-home .scroll-cue.is-gone{opacity:0;pointer-events:none;transform:translate(-50%,8px);}
+  #view-home .scroll-cue.is-off{visibility:hidden;}
+  #view-home .scroll-cue.is-gone{opacity:0;pointer-events:none;transform:translateY(6px);}
   /* no Lottie player (offline / blocked): a plain ring with a dot */
-  .scroll-cue.is-static .scroll-cue__anim{border:1.4px solid color-mix(in srgb, var(--ink) 30%, transparent);border-radius:50%;width:40px;height:40px;position:relative;}
+  .scroll-cue.is-static .scroll-cue__anim{border:1.4px solid color-mix(in srgb, var(--ink) 30%, transparent);border-radius:50%;width:32px;height:32px;position:relative;}
   .scroll-cue.is-static .scroll-cue__anim::after{content:'';position:absolute;left:50%;top:30%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--violet);}
   @media (max-width:880px){ #view-home .scroll-cue{display:none;} }
   @media (max-height:680px){ #view-home .scroll-cue{display:none;} }
@@ -3356,9 +3359,15 @@
       <div class="cta-row">
         <button class="btn btn-primary" data-scroll="work">Explore my work <span class="cta-arrow">↓</span></button>
       </div>
-      <div class="hero-cred">
-        <div class="current">Designing enterprise products at <span class="wm-link"><img class="wm-logo" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:1.1em;width:auto;vertical-align:-0.18em;margin:0 4px"></span> · Bengaluru, India</div>
-        <div class="hero-avail"><span class="hero-avail-dot" aria-hidden="true"></span>Open to select collaborations</div>
+      <div class="hero-foot">
+        <div class="hero-cred">
+          <div class="current">Designing enterprise products at <span class="wm-link"><img class="wm-logo" src="assets/images/image-001-7a4c68daa836.png" alt="Walmart" style="height:1.1em;width:auto;vertical-align:-0.18em;margin:0 4px"></span> · Bengaluru, India</div>
+          <div class="hero-avail"><span class="hero-avail-dot" aria-hidden="true"></span>Open to select collaborations</div>
+        </div>
+        <button class="scroll-cue" type="button" id="scrollCue" aria-label="Scroll to the next section">
+          <span class="scroll-cue__anim" id="scrollCueAnim" aria-hidden="true"></span>
+          <span class="scroll-cue__label">Scroll</span>
+        </button>
       </div>
     </div>
 
@@ -3402,10 +3411,6 @@
         <span class="txt" id="quoteTxt"></span>
       </div>
     </div>
-    <button class="scroll-cue" type="button" id="scrollCue" aria-label="Scroll to the next section">
-      <span class="scroll-cue__anim" id="scrollCueAnim" aria-hidden="true"></span>
-      <span class="scroll-cue__label">Scroll</span>
-    </button>
   </section>
 
   <section class="impact">
@@ -9736,7 +9741,7 @@ setActive(0); startRotation();
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   /* only when the hero ends at the bottom of the window — if its content is taller, the cue would sit below the fold */
   const hero=btn.closest('.hero');
-  const fit=()=>{ if(!hero) return; btn.classList.toggle('is-off', hero.getBoundingClientRect().bottom+scrollY > innerHeight+2); };
+  const fit=()=>{ btn.classList.toggle('is-off', btn.getBoundingClientRect().bottom+scrollY > innerHeight-8); };
   addEventListener('resize',fit); addEventListener('load',fit); if(document.fonts) document.fonts.ready.then(fit); fit();
 })();
 </script>
