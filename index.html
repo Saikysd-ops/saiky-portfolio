@@ -268,7 +268,7 @@
   @media (min-width:861px){
     /* artwork sized to the screen height so image, caption and quote fit the first screen together (350–440px) */
     #view-home .hero-right{--art-w:clamp(320px, calc((100svh - var(--hero-top, 190px) - 270px) * .75), 400px);}
-    #view-home .hero-right .portrait-frame{max-width:var(--art-w);margin-bottom:14px;}
+    #view-home .hero-right .portrait-frame{max-width:var(--art-w);margin-bottom:22px;}   /* room for the hover tilt, so the image never meets the caption */
     #view-home .hero-right .portrait-caption,#view-home .hero-right .quote-panel{max-width:var(--art-w);}
     /* caption → breathing room → icon → centred quote (the original stacked rhythm) */
     #view-home .hero-right .portrait-caption{margin-bottom:6px;}
@@ -8988,7 +8988,7 @@ try{
   const lightImg = frame.querySelector('.light-img');
   const darkImg = frame.querySelector('.dark-img');
   const cursor = document.getElementById('figmaCursor');
-  const MAX_TILT = 9;
+  const MAX_TILT = 6;
   const REVEAL_R = 110; // px — the reveal circle, a bit bigger than the Figma cursor
 
   // same dotted base image and the same colour reveal on hover in both themes
@@ -9006,7 +9006,7 @@ try{
     const py = (ev.clientY - r.top) / r.height;   // 0..1
     const rotY = (px - 0.5) * MAX_TILT * 2;
     const rotX = (0.5 - py) * MAX_TILT * 2;
-    img.style.transform = `scale(1.035) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    img.style.transform = `scale(1.015) rotateX(${rotX}deg) rotateY(${rotY}deg)`;   /* gentle: the tilted edge stays clear of the caption */
     cursor.style.transform = `translate(${ev.clientX - r.left}px, ${ev.clientY - r.top}px)`;
     frame.style.setProperty('--mx', (ev.clientX - r.left) + 'px');
     frame.style.setProperty('--my', (ev.clientY - r.top) + 'px');
