@@ -316,11 +316,21 @@
   .proof-stats .stat:first-child{padding-left:0;border-left:0;}
   .proof-stats .num{font-size:36px;line-height:1.1;}   /* same scale as the Supplier Matrix metrics above */
   .proof-stats .lbl{margin-top:6px;font-size:12px;max-width:30ch;}
-  .proof-teams{padding-top:28px;border-top:1px solid var(--line);}
+  .proof-teams{padding-top:0;}
+  /* lower half: copy on the left, a ball playground in the open space on the right */
+  .proof-lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;padding-top:28px;border-top:1px solid var(--line);}
+  .proof-play{position:relative;min-height:240px;margin-bottom:-40px;}   /* the pile rests a little into the band's bottom padding */
+  .proof-play canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:default;}
+  .proof-play canvas.is-over{cursor:grab;} .proof-play canvas.is-grab{cursor:grabbing;}
+  .proof-play-hint{position:absolute;top:0;right:0;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-soft);opacity:.7;pointer-events:none;transition:opacity .6s ease;}
+  .proof-play.is-touched .proof-play-hint{opacity:0;}
   .proof-teams .proof-k{margin-bottom:8px;}
   .proof-list{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0 0 44px;}   /* clear pause before the closing statement */
   .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(20px,1.75vw,24px);line-height:1.3;letter-spacing:-.005em;color:var(--ink);margin:0;max-width:40ch;text-wrap:balance;}
   @media (max-width:880px){
+    .proof-lower{grid-template-columns:1fr;gap:28px;}
+    .proof-play{min-height:200px;margin-bottom:-24px;}
     #view-home .proof-stats{grid-template-columns:repeat(2,1fr);gap:28px 0;}
     #view-home .proof-stats .stat{padding:0 12px 0 20px;}
     #view-home .proof-stats .stat:nth-child(odd){padding-left:0;border-left:0;}
@@ -3426,11 +3436,16 @@
       <div class="stat"><div class="num">4</div><div class="lbl">Markets supported</div></div>
       <div class="stat"><div class="num">6+</div><div class="lbl">Business units partnered across</div></div>
     </div>
-    <div class="proof-teams">
-      <div class="proof-k">Designed for teams across the business</div>
-      <p class="proof-list">Associates · Sourcing Managers · Merchants · Business Teams</p>
+    <div class="proof-lower">
+      <div class="proof-copy">
+        <div class="proof-teams">
+          <div class="proof-k">Designed for teams across the business</div>
+          <p class="proof-list">Associates · Sourcing Managers · Merchants · Business Teams</p>
+        </div>
+        <p class="proof-quote">I don't define myself by titles —<br>I define myself by the products I help build.</p>
+      </div>
+      <div class="proof-play" id="proofPlay" aria-hidden="true"><canvas></canvas><span class="proof-play-hint">Drag · throw · scatter</span></div>
     </div>
-    <p class="proof-quote">I don't define myself by titles —<br>I define myself by the products I help build.</p>
   </section>
 
   <section class="impact">
@@ -9748,6 +9763,94 @@ setActive(0); startRotation();
   const hero=btn.closest('.hero');
   const fit=()=>{ btn.classList.toggle('is-off', btn.getBoundingClientRect().bottom+scrollY > innerHeight-8); };
   addEventListener('resize',fit); addEventListener('load',fit); if(document.fonts) document.fonts.ready.then(fit); fit();
+})();
+</script>
+<script>
+/* Experience at scale — a small ball playground in brand colours. Plain canvas physics (gravity, collisions,
+   walls). Grab a ball to drag it, let go to throw it; tap empty space to scatter nearby balls.
+   Starts when the band scrolls into view, sleeps when everything is still or off screen. */
+(function(){
+  const wrap=document.getElementById('proofPlay'); if(!wrap) return;
+  const cv=wrap.querySelector('canvas'), ctx=cv.getContext('2d');
+  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COLORS=['#BC80CC','#F1EAF7','#E46B5D','#D2A864','#8FB39A','#8AA4C8','#7438F0','#EFE4D2','#9B5BAE'];
+  const G=1500, REST=.4, AIR=.996, MAXV=2600;
+  let W=0,H=0,balls=[],raf=0,visible=false,started=false,grab=null,calm=0,last=0;
+
+  function size(){
+    const r=wrap.getBoundingClientRect(), d=Math.min(2,window.devicePixelRatio||1);
+    W=r.width; H=r.height; cv.width=Math.round(W*d); cv.height=Math.round(H*d); ctx.setTransform(d,0,0,d,0,0);
+    balls.forEach(b=>{ b.x=Math.min(Math.max(b.x,b.r),W-b.r); if(b.y>H-b.r) b.y=H-b.r; });
+  }
+  function make(drop){
+    const n=Math.round(Math.min(34,Math.max(20,W*H/3600))); balls=[];
+    for(let i=0;i<n;i++){ const r=9+Math.random()*16;
+      balls.push({x:r+Math.random()*(W-2*r), y:drop?-r-Math.random()*H*1.4:H-r-Math.random()*H*.5, vx:(Math.random()-.5)*80, vy:0, r, m:r*r, c:COLORS[i%COLORS.length]}); }
+  }
+  function step(dt){
+    const g=grab&&grab.b;
+    for(const b of balls){
+      if(b===g) continue;
+      b.vy+=G*dt; const k=Math.pow(AIR,dt*60); b.vx*=k; b.vy*=k;
+      b.x+=b.vx*dt; b.y+=b.vy*dt;
+      if(b.x<b.r){b.x=b.r;b.vx=-b.vx*REST;} else if(b.x>W-b.r){b.x=W-b.r;b.vx=-b.vx*REST;}
+      if(b.y>H-b.r){b.y=H-b.r;b.vy=-b.vy*REST;b.vx*=.9; if(Math.abs(b.vy)<20) b.vy=0;}
+      if(b.y<-H*1.5){b.y=-H*1.5;b.vy=0;}
+    }
+    for(let it=0;it<3;it++) for(let i=0;i<balls.length;i++) for(let j=i+1;j<balls.length;j++){
+      const a=balls[i], b=balls[j], dx=b.x-a.x, dy=b.y-a.y, rr=a.r+b.r, d2=dx*dx+dy*dy;
+      if(d2>=rr*rr||d2<1e-6) continue;
+      const d=Math.sqrt(d2), nx=dx/d, ny=dy/d, ov=rr-d, ia=a===g?0:1/a.m, ib=b===g?0:1/b.m, s=ia+ib; if(!s) continue;
+      a.x-=nx*ov*ia/s; a.y-=ny*ov*ia/s; b.x+=nx*ov*ib/s; b.y+=ny*ov*ib/s;
+      const rv=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;
+      if(rv<0){ const J=-(1+REST)*rv/s; a.vx-=J*ia*nx; a.vy-=J*ia*ny; b.vx+=J*ib*nx; b.vy+=J*ib*ny; }
+    }
+    /* collisions can push edge balls out of the box: keep every ball fully inside */
+    for(const b of balls){ if(b.x<b.r) b.x=b.r; else if(b.x>W-b.r) b.x=W-b.r; if(b.y>H-b.r){ b.y=H-b.r; if(b.vy>0) b.vy=0; } }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const b of balls){ ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fillStyle=b.c; ctx.fill();
+      if(grab&&grab.b===b){ ctx.lineWidth=2; ctx.strokeStyle='rgba(255,255,255,.85)'; ctx.stroke(); } }
+  }
+  function frame(t){
+    const dt=Math.min(1/30,(t-(last||t))/1000)||1/60; last=t;
+    const sub=2; for(let i=0;i<sub;i++) step(dt/sub);
+    draw();
+    const moving=grab||balls.some(b=>b.y>-b.r&&(Math.abs(b.vx)>6||Math.abs(b.vy)>6))||balls.some(b=>b.y<-b.r);
+    calm=moving?0:calm+1;
+    if(visible&&calm<45) raf=requestAnimationFrame(frame); else { raf=0; last=0; }
+  }
+  function wake(){ if(!raf&&visible){ calm=0; last=0; raf=requestAnimationFrame(frame); } }
+
+  /* pointer: grab / throw / scatter */
+  const pt=e=>{ const r=cv.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top,t:performance.now()}; };
+  const hit=p=>{ for(let i=balls.length-1;i>=0;i--){ const b=balls[i]; if((p.x-b.x)**2+(p.y-b.y)**2<=(b.r+4)**2) return b; } return null; };
+  cv.addEventListener('pointerdown',e=>{
+    const p=pt(e), b=hit(p); wrap.classList.add('is-touched');
+    if(b){ grab={b,ox:b.x-p.x,oy:b.y-p.y,px:p.x,py:p.y,pt:p.t,vx:0,vy:0}; b.vx=b.vy=0; cv.setPointerCapture(e.pointerId); cv.classList.add('is-grab'); }
+    else for(const o of balls){ const dx=o.x-p.x, dy=o.y-p.y, d=Math.hypot(dx,dy)||1, R=230;
+      if(d<R){ const f=(1-d/R)*1100; o.vx+=dx/d*f; o.vy+=dy/d*f-f*.35; } }
+    wake();
+  });
+  cv.addEventListener('pointermove',e=>{
+    const p=pt(e);
+    if(grab){ const b=grab.b, dt=Math.max(1,p.t-grab.pt)/1000;
+      grab.vx=grab.vx*.4+((p.x-grab.px)/dt)*.6; grab.vy=grab.vy*.4+((p.y-grab.py)/dt)*.6; grab.px=p.x; grab.py=p.y; grab.pt=p.t;
+      b.x=Math.min(Math.max(p.x+grab.ox,b.r),W-b.r); b.y=Math.min(p.y+grab.oy,H-b.r); wake(); }
+    else cv.classList.toggle('is-over',!!hit(p));
+  });
+  const drop=e=>{ if(!grab) return; const b=grab.b;
+    b.vx=Math.max(-MAXV,Math.min(MAXV,grab.vx)); b.vy=Math.max(-MAXV,Math.min(MAXV,grab.vy));
+    grab=null; cv.classList.remove('is-grab'); wake(); };
+  cv.addEventListener('pointerup',drop); cv.addEventListener('pointercancel',drop);
+
+  /* start when the band scrolls into view; pause when it leaves */
+  new IntersectionObserver(es=>{ visible=es.some(x=>x.isIntersecting);
+    if(visible&&!started){ started=true; size(); make(!reduce);
+      if(reduce){ for(let i=0;i<600;i++) step(1/60); draw(); } else wake(); }
+    else if(visible) wake(); }, {threshold:.25}).observe(wrap);
+  if('ResizeObserver' in window) new ResizeObserver(()=>{ if(!started) return; size(); draw(); wake(); }).observe(wrap);
 })();
 </script>
 </body>
