@@ -266,17 +266,15 @@
   /* wide screens: a little more room for the artwork, so it can grow into the first screen */
   @media (min-width:1280px){ #view-home .hero{grid-template-columns:1.12fr 1fr;} }
   @media (min-width:861px){
-    /* artwork scales with the screen height so it fills the hero down to the scroll cue (≥400px, up to the column width) */
-    #view-home .hero-right{--art-w:clamp(400px, calc((100svh - var(--hero-top, 190px) - 200px) * .75), 100%);}
-    #view-home .hero-right .portrait-frame{max-width:var(--art-w);margin-bottom:10px;}
+    /* artwork sized to the screen height so image, caption and quote fit the first screen together (350–440px) */
+    #view-home .hero-right{--art-w:clamp(350px, calc((100svh - var(--hero-top, 190px) - 235px) * .75), 440px);}
+    #view-home .hero-right .portrait-frame{max-width:var(--art-w);margin-bottom:14px;}
     #view-home .hero-right .portrait-caption,#view-home .hero-right .quote-panel{max-width:var(--art-w);}
-    #view-home .hero-right .portrait-caption{margin-bottom:2px;}
-    #view-home .hero-right .quote-panel{margin-top:0;gap:6px;min-height:72px;}
-    #view-home .hero-right .quote-panel .label{margin-bottom:2px;font-size:13px;}
-    #view-home .hero-right .quote-panel .desc{font-size:12px;}
-    #view-home .hero-right .quote-panel{opacity:.6;min-height:0;flex-direction:row;justify-content:center;text-align:left;gap:10px;margin-top:6px;}
-    #view-home .hero-right .quote-panel .icon{width:32px;height:32px;}
-    #view-home .hero-right .portrait-caption{font-size:11px;opacity:.65;}
+    /* caption → breathing room → icon → centred quote (the original stacked rhythm) */
+    #view-home .hero-right .portrait-caption{margin-bottom:22px;}
+    #view-home .hero-right .quote-panel{margin-top:0;gap:10px;min-height:0;}
+    #view-home .hero-right .quote-panel .icon{width:44px;height:44px;}
+    #view-home .hero-right .quote-panel .label{margin-bottom:4px;}
   }
   /* scroll cue: bottom centre of the full-height hero (desktop only) */
   #view-home .scroll-cue{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;
