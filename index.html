@@ -330,7 +330,7 @@
   .home-proof.is-touched .proof-play-hint{opacity:0;}
   @media (hover:none){ .proof-play canvas{touch-action:pan-y;} }   /* phones: vertical swipes still scroll the page */
   .proof-teams .proof-k{margin-bottom:8px;}
-  .proof-list{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0 0 44px;}   /* clear pause before the closing statement */
+  .proof-list{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0 0 34px;}   /* a pause before the closing statement */
   .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(20px,1.75vw,24px);line-height:1.3;letter-spacing:-.005em;color:var(--ink);margin:0;max-width:40ch;text-wrap:balance;}
   @media (max-width:880px){
     .home-proof > .proof-play-hint{top:52px;}
@@ -3439,7 +3439,7 @@
       <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
       <div class="stat"><div class="num">4K+</div><div class="lbl">Private-brand suppliers across global sourcing</div></div>
       <div class="stat"><div class="num">4</div><div class="lbl">Markets supported</div></div>
-      <div class="stat"><div class="num">6+</div><div class="lbl">Business units partnered across</div></div>
+      <div class="stat"><div class="num">6+</div><div class="lbl">Business units collaborated with</div></div>
     </div>
     <div class="proof-lower">
       <div class="proof-copy">
@@ -9787,8 +9787,8 @@ setActive(0); startRotation();
     balls.forEach(b=>{ b.x=Math.min(Math.max(b.x,b.r),W-b.r); if(b.y>H-b.r) b.y=H-b.r; });
   }
   function make(drop){
-    const n=Math.round(Math.min(64,Math.max(26,W/24))); balls=[];
-    for(let i=0;i<n;i++){ const r=8+Math.random()*14;
+    const n=Math.round(Math.min(90,Math.max(30,W/17))); balls=[];
+    for(let i=0;i<n;i++){ const r=6+Math.random()*11;   /* max 17px (was 22): the motif stays below the statement */
       balls.push({x:r+Math.random()*(W-2*r), y:drop?-r-Math.random()*H*1.4:H-r-Math.random()*H*.25, vx:(Math.random()-.5)*80, vy:0, r, m:r*r, c:COLORS[i%COLORS.length]}); }
   }
   function step(dt){
