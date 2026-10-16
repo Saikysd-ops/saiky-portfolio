@@ -9856,12 +9856,17 @@ setActive(0); startRotation();
       b.a+=b.v*dt;
     }
   }
-  function frame(t){ const dt=Math.min(.05,(t-(last||t))/1000); last=t; step(dt); draw(); raf=visible?requestAnimationFrame(frame):0; if(!raf) last=0; }
+  /* the layer spans the viewport (100vw) while the content column is capped, so it can change size on its own:
+     re-measure whenever the canvas's on-screen size differs from its bitmap, or the circles get stretched */
+  function fit(){ if(Math.round(wrap.clientWidth)!==Math.round(W)||Math.round(wrap.clientHeight)!==Math.round(H)) layout(); }
+  function frame(t){ const dt=Math.min(.05,(t-(last||t))/1000); last=t; fit(); step(dt); draw(); raf=visible?requestAnimationFrame(frame):0; if(!raf) last=0; }
   function setVisible(v){ visible=v; if(v&&!raf&&!reduce){ raf=requestAnimationFrame(frame); } }
   function init(){ layout(); draw(); }
   if(document.readyState==='complete') init(); else addEventListener('load',init);
   if(document.fonts) document.fonts.ready.then(init);
-  if('ResizeObserver' in window) new ResizeObserver(()=>{ layout(); draw(); }).observe(sec);
+  const relayout=()=>{ layout(); draw(); };
+  if('ResizeObserver' in window){ const ro=new ResizeObserver(relayout); ro.observe(sec); ro.observe(wrap); }
+  addEventListener('resize',relayout); addEventListener('orientationchange',relayout);
   if('IntersectionObserver' in window) new IntersectionObserver(es=>setVisible(es.some(x=>x.isIntersecting)),{threshold:0}).observe(wrap);
   const check=()=>{ const r=wrap.getBoundingClientRect(); setVisible(r.top<innerHeight&&r.bottom>0); };
   addEventListener('scroll',check,{passive:true}); check();
