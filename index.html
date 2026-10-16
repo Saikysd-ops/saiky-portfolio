@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Saiky Desai — Senior Product Designer</title>
 <meta name="description" content="Saiky Desai is a Senior Product Designer at Walmart, designing enterprise AI and decision systems that turn complex business problems into clear product direction. Bengaluru, India.">
+<link rel="canonical" href="https://www.saiky.in/">
+<meta name="theme-color" content="#F8F7F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151419" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Saiky Desai">
+<meta property="og:url" content="https://www.saiky.in/">
+<meta property="og:title" content="Saiky Desai — Senior Product Designer">
+<meta property="og:description" content="Saiky Desai is a Senior Product Designer at Walmart, designing enterprise AI and decision systems that turn complex business problems into clear product direction. Bengaluru, India.">
+<meta property="og:image" content="https://www.saiky.in/assets/images/image-001-913a25f86ea9.jpg">
+<meta property="og:image:alt" content="Dotted stipple portrait illustration of Saiky Desai wearing headphones">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Saiky Desai — Senior Product Designer">
+<meta name="twitter:description" content="Saiky Desai is a Senior Product Designer at Walmart, designing enterprise AI and decision systems that turn complex business problems into clear product direction. Bengaluru, India.">
+<meta name="twitter:image" content="https://www.saiky.in/assets/images/image-001-913a25f86ea9.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -816,6 +830,7 @@
   .work-card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;
     border-radius:14px;outline:none;}
   .work-card:focus-visible{outline:3px solid var(--violet);outline-offset:6px;}
+  :root[data-theme="dark"] .work-card:focus-visible{outline-color:var(--accent);}   /* aubergine is ~1.8:1 on dark; lilac passes 3:1 */
   /* frame that appears around the whole card on hover — a sharp-cornered
      "selected" outline (design-tool style, no border-radius) offset
      outward from the content, with a small square handle at each
@@ -2571,6 +2586,20 @@
   .case-compare-col{background:var(--paper-raised);padding:28px 26px;}
   .case-compare-col--accent{background:color-mix(in srgb, var(--violet) 6%, var(--paper-raised));}
   .case-compare-h3{font-family:var(--font-display);font-weight:400;font-size:19px;color:var(--ink);margin:6px 0 18px;}
+  /* three key decisions: problem → decision → intended value, scannable in one place */
+  .case-decisions{margin-top:44px;}
+  .case-decisions .case-tag{margin-bottom:12px;}
+  .case-dec-row{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:28px;padding:16px 0;border-top:1px solid var(--line);}
+  .case-dec-row p{margin:0;font-size:14px;line-height:1.55;color:var(--ink-soft);}
+  .case-dec-row p b{color:var(--ink);font-weight:600;}
+  .case-dec-row i{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;font-style:normal;}   /* read aloud; the header row shows them visually */
+  .case-dec-head{padding:0 0 10px;border-top:0;}
+  .case-dec-head span{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);opacity:.75;}
+  @media (max-width:760px){
+    .case-dec-head{display:none;}
+    .case-dec-row{grid-template-columns:1fr;gap:8px;}
+    .case-dec-row i{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;display:block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);opacity:.75;margin-bottom:2px;}
+  }
   .case-row{font-size:14px;line-height:1.5;color:var(--ink-soft);padding:12px 0;border-top:1px solid var(--line);}
   .case-row:first-of-type{border-top:0;}
   .case-row b{display:block;color:var(--ink);font-weight:600;margin-bottom:3px;}
@@ -4633,6 +4662,13 @@
         <div><div class="case-tag">Business</div><h3>One trusted starting point</h3><p>Bring supplier information, performance and risk into a shared evaluation experience.</p></div>
         <div><div class="case-tag">Experience</div><h3>Less manual synthesis</h3><p>Connect discovery, evaluation, comparison and monitoring instead of making associates reconstruct the story.</p></div>
         <div><div class="case-tag">Platform</div><h3>Foundation for intelligence</h3><p>Establish the structure for capabilities, Supplier Insights, semantic search and proactive recommendations.</p></div>
+      </div>
+          <div class="case-decisions" aria-labelledby="csDecH">
+        <div class="case-tag" id="csDecH">Three key decisions</div>
+        <div class="case-dec-row case-dec-head" aria-hidden="true"><span>Problem</span><span>Design decision</span><span>Intended value</span></div>
+        <div class="case-dec-row"><p><i>Problem</i>Supplier signals came from many systems — onboarding (VIP), internal tools (AMA, GSE) and a legacy Informix database.</p><p><i>Design decision</i><b>Build a decision layer on top of existing supplier data</b>, not another supplier database.</p><p><i>Intended value</i>One trusted starting point to find, understand, evaluate and monitor suppliers.</p></div>
+        <div class="case-dec-row"><p><i>Problem</i>Teams applied inconsistent evaluation criteria.</p><p><i>Design decision</i><b>Structure evaluation around Performance, Risk and Capability</b>, rather than one supplier-health score.</p><p><i>Intended value</i>Clearer, consistent criteria for comparing and ranking suppliers.</p></div>
+        <div class="case-dec-row"><p><i>Problem</i>A score alone did not create confidence.</p><p><i>Design decision</i><b>Make scores explainable</b> — score → drivers → trend → calculation → context.</p><p><i>Intended value</i>Associates can understand a score without the calculation being hidden.</p></div>
       </div>
     </section>
 
@@ -7504,9 +7540,9 @@ h3{font-size:18px;line-height:1.2}
 <section class="page">
   <div class="brand-header">
     <div class="logo-box">
-      <div class="mark-wrap"><svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="title desc">
-<title id="title">Saiky Desai stacked stones logo — light mode</title>
-<desc id="desc">Three stacked rounded stones with a small purple dot to the right.</desc>
+      <div class="mark-wrap"><svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="logoT1 logoD1">
+<title id="logoT1">Saiky Desai stacked stones logo — light mode</title>
+<desc id="logoD1">Three stacked rounded stones with a small purple dot to the right.</desc>
 <g>
   <ellipse class="adaptive-stone s1" cx="20" cy="10.25" rx="5.25" ry="2.5" fill="#B8B8B8"/>
   <ellipse class="adaptive-stone s2" cx="20" cy="17.75" rx="7.75" ry="3.75" fill="#858585"/>
@@ -7569,9 +7605,9 @@ h3{font-size:18px;line-height:1.2}
   <div class="logo-grid">
     <div class="logo-panel light">
       <div class="kicker">Light mode</div>
-      <div><svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="title desc">
-<title id="title">Saiky Desai stacked stones logo — light mode</title>
-<desc id="desc">Three stacked rounded stones with a small purple dot to the right.</desc>
+      <div><svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="logoT2 logoD2">
+<title id="logoT2">Saiky Desai stacked stones logo — light mode</title>
+<desc id="logoD2">Three stacked rounded stones with a small purple dot to the right.</desc>
 <g>
   <ellipse cx="20" cy="10.25" rx="5.25" ry="2.5" fill="#B8B8B8"/>
   <ellipse cx="20" cy="17.75" rx="7.75" ry="3.75" fill="#858585"/>
@@ -7583,9 +7619,9 @@ h3{font-size:18px;line-height:1.2}
     </div>
     <div class="logo-panel dark">
       <div class="kicker" style="color:#CDBCE0">Dark mode</div>
-      <div><svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="title desc">
-<title id="title">Saiky Desai stacked stones logo — dark mode</title>
-<desc id="desc">Three stacked light stones with a small purple dot to the right on a transparent background.</desc>
+      <div><svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="logoT3 logoD3">
+<title id="logoT3">Saiky Desai stacked stones logo — dark mode</title>
+<desc id="logoD3">Three stacked light stones with a small purple dot to the right on a transparent background.</desc>
 <g>
   <ellipse cx="20" cy="10.25" rx="5.25" ry="2.5" fill="#BDBDBD"/>
   <ellipse cx="20" cy="17.75" rx="7.75" ry="3.75" fill="#D8D8D8"/>
@@ -7599,9 +7635,9 @@ h3{font-size:18px;line-height:1.2}
 
   <div class="logo-rules">
     <div class="rule-card"><strong>Clear space</strong><span class="small muted">Keep a minimum clear area around the mark equal to the height of the small purple dot.</span></div>
-    <div class="rule-card"><strong>Top icon / favicon</strong><span class="small muted">Use the stones + dot only; use the main brand color #5B2A68 for the dot; do not add the wordmark inside a small browser or app icon.</span><div class="favicon-row"><div class="favicon"><svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="title desc">
-<title id="title">Saiky Desai stacked stones logo — light mode</title>
-<desc id="desc">Three stacked rounded stones with a small purple dot to the right.</desc>
+    <div class="rule-card"><strong>Top icon / favicon</strong><span class="small muted">Use the stones + dot only; use the main brand color #5B2A68 for the dot; do not add the wordmark inside a small browser or app icon.</span><div class="favicon-row"><div class="favicon"><svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="logoT4 logoD4">
+<title id="logoT4">Saiky Desai stacked stones logo — light mode</title>
+<desc id="logoD4">Three stacked rounded stones with a small purple dot to the right.</desc>
 <g>
   <ellipse class="adaptive-stone s1" cx="20" cy="10.25" rx="5.25" ry="2.5" fill="#B8B8B8"/>
   <ellipse class="adaptive-stone s2" cx="20" cy="17.75" rx="7.75" ry="3.75" fill="#858585"/>
