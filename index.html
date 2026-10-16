@@ -606,6 +606,7 @@
   .impact-stats .stat:first-child{border-left:0;padding-left:0;}
   /* a goal, not a measured result: flagged in words, and the number set lighter */
   .stat--target .num{color:var(--ink-soft);}
+  .impact .stat-status{font-size:12.5px;line-height:1.55;color:var(--ink-soft);margin:-6px 0 22px;max-width:none;}
   .stat-flag{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb, var(--accent) 45%, transparent);border-radius:4px;padding:1px 5px;margin-right:4px;vertical-align:1px;}
   .stat-icon{width:38px;height:38px;border-radius:9px;background:rgba(20,20,27,.04);
     display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--ink-soft);}
@@ -3504,6 +3505,7 @@
       <div class="stat"><div class="num">≥90%</div><div class="lbl">Profiles ready for evaluation</div></div>
       <div class="stat stat--target"><div class="num">&gt;90%</div><div class="lbl"><span class="stat-flag">Target</span> Assessments initiated within Matrix</div></div>
     </div>
+    <p class="stat-status">Measured outcomes from the shipped product: 25% faster discovery, ≥80% relevance, ≥90% profile readiness. &gt;90% assessments within Matrix is a target, not yet achieved.</p>
     <p class="highlight">From fragmented supplier data to one sourcing decision model.</p>
     <button class="btn btn-outline btn-small impact-cta" data-view="case-supplier">Explore the case study <span class="cta-arrow">→</span></button>
   </section>
