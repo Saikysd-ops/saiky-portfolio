@@ -313,7 +313,7 @@
   @media (max-height:680px){ #view-home .scroll-cue{display:none;} }
   /* ===== section 2: selected impact ===== */
   /* experience at a glance: a full-width band (edge to edge of the viewport) in a soft brand-lilac tint */
-  .home-proof{position:relative;isolation:isolate;padding:76px 0 80px;--band:#1E1826;
+  .home-proof{position:relative;isolation:isolate;padding:76px 0 112px;--band:#1E1826;
     --ink:#F4F2F6;--ink-soft:#ABA4B4;--line:rgba(255,255,255,.12);color:var(--ink);}
   :root[data-theme="dark"] .home-proof{--band:#1A1620;}
   .home-proof .proof-quote{color:#FFFFFF;}
@@ -323,13 +323,13 @@
   :root[data-theme="dark"] .home-proof::before{border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);}
   .proof-k{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 22px;}
   .proof-stats{grid-template-columns:repeat(4,1fr);gap:0;margin:0 0 48px;}
-  .proof-stats .stat{padding:0 24px;border-left:1px solid color-mix(in srgb, var(--line) 80%, transparent);}
+  .proof-stats .stat{padding:0 24px;border-left:1px solid rgba(255,255,255,.1);}
   .proof-stats .stat:first-child{padding-left:0;border-left:0;}
-  .proof-stats .num{font-size:36px;line-height:1.1;}   /* same scale as the Supplier Matrix metrics above */
-  .proof-stats .lbl{margin-top:6px;font-size:12px;max-width:30ch;}
+  .proof-stats .num{font-size:40px;line-height:1.1;}
+  .proof-stats .lbl{margin-top:8px;font-size:12.5px;max-width:30ch;color:#C9C2D1;opacity:1;}
   .proof-teams{padding-top:0;}
   /* lower half: copy on the left, a ball playground in the open space on the right */
-  .proof-lower{padding-top:28px;border-top:1px solid var(--line);}
+  .proof-lower{padding-top:32px;border-top:1px solid rgba(255,255,255,.2);}
   /* ball playground: a layer across the whole band (edge to edge of the viewport); the copy sits above it and lets
      pointer events through, so balls can be grabbed anywhere in the band */
   .proof-play{position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:0;}
@@ -338,11 +338,14 @@
   .proof-play canvas.is-over{cursor:grab;} .proof-play canvas.is-grab{cursor:grabbing;}
   .home-proof > .proof-play-hint{position:absolute;top:76px;right:0;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
     color:var(--ink-soft);opacity:.7;pointer-events:none;transition:opacity .6s ease;}
-  .home-proof.is-touched .proof-play-hint{opacity:0;}
+  .home-proof > .proof-play-hint{transition:opacity .4s ease,color .3s ease,letter-spacing .4s ease;}
+  @media (hover:hover){ .home-proof:hover > .proof-play-hint{opacity:1;color:#D9C2E6;letter-spacing:.2em;} }
+  .home-proof.is-touched .proof-play-hint{opacity:0!important;}
   @media (hover:none){ .proof-play canvas{touch-action:pan-y;} }   /* phones: vertical swipes still scroll the page */
   .proof-teams .proof-k{margin-bottom:8px;}
-  .proof-list{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0 0 34px;}   /* a pause before the closing statement */
-  .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(20px,1.75vw,24px);line-height:1.3;letter-spacing:-.005em;color:var(--ink);margin:0;max-width:40ch;text-wrap:balance;}
+  .proof-list{font-size:17px;line-height:1.6;color:var(--ink);font-weight:500;margin:0 0 40px;display:flex;flex-wrap:wrap;column-gap:12px;}
+  .proof-list i{font-style:normal;font-weight:400;color:var(--ink-soft);opacity:.55;}
+  .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(22px,1.95vw,26.5px);line-height:1.28;letter-spacing:-.008em;color:var(--ink);margin:0;max-width:65%;text-wrap:balance;}
   @media (max-width:880px){
     .home-proof > .proof-play-hint{top:52px;}
     #view-home .proof-stats{grid-template-columns:repeat(2,1fr);gap:28px 0;}
@@ -363,8 +366,8 @@
     #view-home .impact-stats .num{font-size:28px;}
     #view-home .hero-cred .current{font-size:clamp(11px,3.1vw,13px);}
     #view-home .hero-left .value-tagline{text-wrap:balance;}
-    .proof-quote{font-size:19px;text-wrap:pretty;}
-    .proof-list{font-size:15px;}
+    .proof-quote{font-size:20px;text-wrap:pretty;max-width:none;}
+    .proof-list{font-size:15px;column-gap:8px;}
   }
   .hl{color:var(--accent);font-weight:700;}
   p.bio{font-size:17px;font-weight:400;line-height:1.65;color:var(--ink-soft);max-width:46ch;margin:0 0 24px;}
@@ -3454,8 +3457,8 @@
     <div class="proof-lower">
       <div class="proof-copy">
         <div class="proof-teams">
-          <div class="proof-k">Designed for teams across the business</div>
-          <p class="proof-list">Associates · Sourcing Managers · Merchants · Business Teams</p>
+          <div class="proof-k">Designed for</div>
+          <p class="proof-list"><span>Associates</span><i>/</i><span>Sourcing Managers</span><i>/</i><span>Merchants</span><i>/</i><span>Business Teams</span></p>
         </div>
         <p class="proof-quote">I don't define myself by titles —<br>I define myself by the products I help build.</p>
       </div>
@@ -9797,7 +9800,7 @@ setActive(0); startRotation();
     balls.forEach(b=>{ b.x=Math.min(Math.max(b.x,b.r),W-b.r); if(b.y>H-b.r) b.y=H-b.r; });
   }
   function make(drop){
-    const n=Math.round(Math.min(90,Math.max(30,W/17))); balls=[];
+    const n=Math.round(Math.min(52,Math.max(16,W/28))); balls=[];   /* about one row's worth, so the pile stays low */
     for(let i=0;i<n;i++){ const r=6+Math.random()*11;   /* max 17px (was 22): the motif stays below the statement */
       balls.push({x:r+Math.random()*(W-2*r), y:drop?-r-Math.random()*H*1.4:H-r-Math.random()*H*.25, vx:(Math.random()-.5)*80, vy:0, r, m:r*r, c:COLORS[i%COLORS.length]}); }
   }
