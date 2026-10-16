@@ -265,6 +265,17 @@
   @media (min-width:881px){ #view-home .hero{grid-template-columns:1.25fr 1fr;align-items:center;align-content:center;} }
   /* wide screens: a little more room for the artwork, so it can grow into the first screen */
   @media (min-width:1280px){ #view-home .hero{grid-template-columns:1.12fr 1fr;} }
+  /* hero rhythm (8-pt): eyebrow 12 · headline 20 · role/Walmart pair 8 · statement 32 · CTA 32 · status 24.
+     Content is centred in the space above the scroll cue, so the space above and below it is equal. */
+  @media (min-width:881px){
+    #view-home .hero{padding-top:16px;padding-bottom:96px;}
+    #view-home .hero-left .eyebrow{margin-bottom:12px;}
+    #view-home .hero-left h1.headline{margin-bottom:20px;}
+    #view-home .hero-left .role{margin-bottom:8px;}
+    #view-home .hero-left .current{font-size:15px;margin-bottom:32px;}
+    #view-home .hero-left .value-lead{margin:0 0 32px;}
+    #view-home .hero-left .cta-row{margin-bottom:24px;}
+  }
   @media (min-width:861px){
     /* artwork sized to the screen height so image, caption and quote fit the first screen together (350–440px) */
     #view-home .hero-right{--art-w:clamp(320px, calc((100svh - var(--hero-top, 190px) - 270px) * .75), 400px);}
