@@ -3388,7 +3388,7 @@
             <path class="sm-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" fill="currentColor"/>
           </svg>
         </button>
-        <button class="say-hi" data-goto="contact">Let's talk <span class="cta-arrow">→</span></button>
+        <button class="say-hi" data-book>Let's talk <span class="cta-arrow">→</span></button>
       </div>
     </nav>
   </div>
@@ -3413,7 +3413,7 @@
       <p class="value-lead">I turn complex workflows, data, and AI into intuitive products that help teams make better decisions.</p>
       <div class="cta-row">
         <button class="btn btn-primary" data-scroll="work">Explore selected work <span class="cta-arrow">↓</span></button>
-        <a class="text-link" data-book href="#book">Get in touch</a>
+        <a class="text-link" data-scroll="contact" href="#contact">Get in touch</a>
       </div>
       <div class="hero-cred">
         <div class="hero-avail"><span class="hero-avail-dot" aria-hidden="true"></span>Open to select collaborations.</div>
@@ -4388,7 +4388,7 @@
     <h2>Let's make something good — <em class="case-gradient" style="font-style:italic">together.</em></h2>
     <div class="cta-row">
       <button class="btn btn-primary" data-goto="contact">Let's talk <svg class="c-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9 L9 3 M4.4 3 H9 V7.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <a class="btn btn-ghost" href="https://calendly.com/saikirandesai7/30min" target="_blank" rel="noopener">Book a call <span class="cta-arrow">→</span></a>
+      <a class="btn btn-ghost" data-book href="#book">Book a call <span class="cta-arrow">→</span></a>
     </div>
     <div><a class="back-link" data-view="home">← Back to work</a></div>
   </section>
@@ -9887,12 +9887,12 @@ setActive(0); startRotation();
   </div>
 </div>
 <script>
-/* Book a call — "Get in touch" opens a full-screen booking page with the Cal.com calendar
-   (cal.com/saikiran-desai-sfwiif/30min). Close, Esc or the browser Back button return to the home page.
+/* Book a call — "Let's talk" (top nav) opens a full-screen booking page with the Cal.com calendar
+   (cal.com/saikiran-desai-sfwiif/30min). Close or Esc returns to the page in one step.
    The embed loads on first open and follows the site's light/dark toggle. */
 (function(){
   const page=document.getElementById('bookPage'), box=document.getElementById('calInline'); if(!page||!box) return;
-  const frame=box.closest('.book-frame'); let loaded=false, opener=null, pushed=false;
+  const frame=box.closest('.book-frame'); let loaded=false, opener=null;
   const theme=()=>document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
   function load(){
     if(loaded) return; loaded=true;
@@ -9906,31 +9906,26 @@ setActive(0); startRotation();
     new MutationObserver(()=>{ try{ Cal.ns.book30("ui",{theme:theme()}); }catch(e){} })
       .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   }
-  function open(fromLink){
+  /* No history entries: Cal.com's calendar navigates inside its frame, and stepping "back" would walk through
+     those screens (details → calendar …) before closing. Close always closes in one step. */
+  function open(){
     if(!page.hidden) return;
     opener=document.activeElement; page.hidden=false; document.documentElement.classList.add('book-lock');
     void page.offsetWidth; page.classList.add('is-open'); page.scrollTop=0; load();   /* reflow first, so the fade-in runs */
-    if(fromLink){ try{ history.pushState({book:1},'','#book'); pushed=true; }catch(e){} }
     setTimeout(()=>{ const c=page.querySelector('[data-book-close]'); c&&c.focus({preventScroll:true}); },60);
-  }
-  function hide(){
-    if(page.hidden) return;
-    page.classList.remove('is-open'); document.documentElement.classList.remove('book-lock');
-    page.hidden=true;
-    if(opener&&opener.focus) opener.focus({preventScroll:true});
   }
   function close(){
     if(page.hidden) return;
-    if(pushed&&history.state&&history.state.book){ pushed=false; history.back(); }   /* popstate hides it */
-    else { hide(); try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} }
+    page.classList.remove('is-open'); document.documentElement.classList.remove('book-lock'); page.hidden=true;
+    if(location.hash==='#book'){ try{ history.replaceState(history.state,'',location.pathname+location.search); }catch(e){} }
+    if(opener&&opener.focus) opener.focus({preventScroll:true});
   }
   document.addEventListener('click',e=>{
-    const o=e.target.closest('[data-book]'); if(o){ e.preventDefault(); open(true); return; }
+    const o=e.target.closest('[data-book]'); if(o){ e.preventDefault(); e.stopImmediatePropagation(); open(); return; }
     if(e.target.closest('[data-book-close]')){ e.preventDefault(); close(); }
-  });
+  },true);
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!page.hidden) close(); });
-  window.addEventListener('popstate',()=>{ if(location.hash==='#book') open(false); else hide(); });
-  if(location.hash==='#book') open(false);
+  if(location.hash==='#book') open();   /* saiky.in/#book opens straight onto the booking page */
 })();
 </script>
 </body>
