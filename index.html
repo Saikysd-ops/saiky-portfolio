@@ -333,21 +333,15 @@
   /* ball playground: a layer across the whole band (edge to edge of the viewport); the copy sits above it and lets
      pointer events through, so balls can be grabbed anywhere in the band */
   .proof-play{position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:0;}
-  .home-proof > :not(.proof-play){position:relative;z-index:1;pointer-events:none;}
-  .proof-play canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:default;}
-  .proof-play canvas.is-over{cursor:grab;} .proof-play canvas.is-grab{cursor:grabbing;}
-  .home-proof > .proof-play-hint{position:absolute;top:76px;right:0;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink-soft);opacity:.7;pointer-events:none;transition:opacity .6s ease;}
-  .home-proof > .proof-play-hint{transition:opacity .4s ease,color .3s ease,letter-spacing .4s ease;}
-  @media (hover:hover){ .home-proof:hover > .proof-play-hint{opacity:1;color:#D9C2E6;letter-spacing:.2em;} }
-  .home-proof.is-touched .proof-play-hint{opacity:0!important;}
-  @media (hover:none){ .proof-play canvas{touch-action:pan-y;} }   /* phones: vertical swipes still scroll the page */
+  .home-proof > :not(.proof-play){position:relative;z-index:1;}
+  .proof-play{pointer-events:none;}   /* decorative orbits: never intercept the pointer */
+  @media (max-width:699px){ .home-proof{padding-bottom:248px !important;} }   /* room for the orbits under the statement */
+  .proof-play canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .proof-teams .proof-k{margin-bottom:8px;}
   .proof-list{font-size:17px;line-height:1.6;color:var(--ink);font-weight:500;margin:0 0 40px;display:flex;flex-wrap:wrap;column-gap:12px;}
   .proof-list i{font-style:normal;font-weight:400;color:var(--ink-soft);opacity:.55;}
   .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(22px,1.95vw,26.5px);line-height:1.28;letter-spacing:-.008em;color:var(--ink);margin:0;max-width:65%;text-wrap:balance;}
   @media (max-width:880px){
-    .home-proof > .proof-play-hint{top:52px;}
     #view-home .proof-stats{grid-template-columns:repeat(2,1fr);gap:28px 0;}
     #view-home .proof-stats .stat{padding:0 12px 0 20px;}
     #view-home .proof-stats .stat:nth-child(odd){padding-left:0;border-left:0;}
@@ -3473,7 +3467,6 @@
 
   <section class="home-proof" aria-labelledby="proofH">
     <div class="proof-play" id="proofPlay" aria-hidden="true"><canvas></canvas></div>
-    <span class="proof-play-hint" aria-hidden="true">Drag · throw · scatter</span>
     <h2 class="proof-k" id="proofH">Experience at scale</h2>
     <div class="stat-grid proof-stats">
       <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
@@ -9810,101 +9803,64 @@ setActive(0); startRotation();
 })();
 </script>
 <script>
-/* Experience at scale — a small ball playground in brand colours. Plain canvas physics (gravity, collisions,
-   walls). Grab a ball to drag it, let go to throw it; tap empty space to scatter nearby balls.
-   Starts when the band scrolls into view, sleeps when everything is still or off screen. */
+/* Experience at scale — orbit motif: two thin lilac orbits with a few brand-coloured bodies travelling on them.
+   Each body drifts at its own speed and, every few seconds, eases to a new random speed (sometimes reversing).
+   Decorative only: sits in the open space right of the closing statement; pauses off screen; still for reduced motion. */
 (function(){
   const wrap=document.getElementById('proofPlay'); if(!wrap) return;
-  const cv=wrap.querySelector('canvas'), ctx=cv.getContext('2d');
+  const sec=wrap.closest('section'), cv=wrap.querySelector('canvas'), ctx=cv.getContext('2d');
   const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const COLORS=['#2C58F2','#5B7CFA','#7438F0','#9B6BF2','#BC80CC','#D8357A','#EE5539','#F48C6E','#EBDDF5'];   /* the headline gradient, plus lilac and a pale highlight */
-  const G=1500, REST=.4, AIR=.996, MAXV=2600;
-  let W=0,H=0,balls=[],raf=0,visible=false,started=false,grab=null,calm=0,last=0;
-
-  function size(){
+  const LILAC='#BC80CC', CREAM='#EFE4D2', ORBIT='rgba(188,128,204,.55)';
+  let W=0,H=0,cx=0,cy=0,Rr=0,alpha=1,raf=0,visible=false,last=0;
+  /* orbit 0: outer ring · orbit 1: inner ring, offset up-right (as in an orrery sketch) */
+  const orbits=[{dx:0,dy:0,k:1},{dx:.1,dy:-.07,k:.86}];
+  const rnd=(a,b)=>a+Math.random()*(b-a), sgn=()=>Math.random()<.5?-1:1;
+  const bodies=[
+    {o:1,kind:'disc',r:.27,c:LILAC},
+    {o:0,kind:'disc',r:.1,c:CREAM},
+    {o:0,kind:'ring',r:.2,c:CREAM},
+    {o:1,kind:'disc',r:.035,c:LILAC},
+    {o:0,kind:'disc',r:.025,c:CREAM}
+  ].map(b=>Object.assign(b,{a:rnd(0,Math.PI*2),v:sgn()*rnd(.08,.3),t:0,next:rnd(2,6)}));
+  function layout(){
     const r=wrap.getBoundingClientRect(), d=Math.min(2,window.devicePixelRatio||1);
     W=r.width; H=r.height; cv.width=Math.round(W*d); cv.height=Math.round(H*d); ctx.setTransform(d,0,0,d,0,0);
-    balls.forEach(b=>{ b.x=Math.min(Math.max(b.x,b.r),W-b.r); if(b.y>H-b.r) b.y=H-b.r; });
+    const s=sec.getBoundingClientRect(), q=sec.querySelector('.proof-quote'), low=sec.querySelector('.proof-lower');
+    const right=s.right-r.left, qr=q?q.getBoundingClientRect().right-r.left:0, top=low?low.getBoundingClientRect().top-r.top:H*.4;
+    if(W<700){ Rr=Math.min(80,(W-40)/2.4); cx=W/2; cy=H-28-Rr*1.2; alpha=1; }      /* phones: centred under the statement, in its own space */
+    else{
+      /* the whole motif (orbits + bodies) spans about 2.4R: keep it below the divider and right of the statement */
+      Rr=Math.min(170,(H-top-56)/2.4,(right-qr-56)/2.4);
+      cx=right-Rr*1.22; cy=top+28+Rr*1.2; alpha=1;
+    }
   }
-  function make(drop){
-    const n=Math.round(Math.min(52,Math.max(16,W/28))); balls=[];   /* about one row's worth, so the pile stays low */
-    for(let i=0;i<n;i++){ const r=6+Math.random()*11;   /* max 17px (was 22): the motif stays below the statement */
-      balls.push({x:r+Math.random()*(W-2*r), y:drop?-r-Math.random()*H*1.4:H-r-Math.random()*H*.25, vx:(Math.random()-.5)*80, vy:0, r, m:r*r, c:COLORS[i%COLORS.length]}); }
+  function pos(b){ const o=orbits[b.o], R=Rr*o.k; return [cx+o.dx*Rr+Math.cos(b.a)*R, cy+o.dy*Rr+Math.sin(b.a)*R]; }
+  function draw(){
+    ctx.clearRect(0,0,W,H); if(Rr<30) return;
+    ctx.globalAlpha=alpha; ctx.lineWidth=1; ctx.strokeStyle=ORBIT;
+    orbits.forEach(o=>{ ctx.beginPath(); ctx.arc(cx+o.dx*Rr,cy+o.dy*Rr,Rr*o.k,0,Math.PI*2); ctx.stroke(); });
+    for(const b of bodies){ const [x,y]=pos(b), r=Math.max(3,b.r*Rr);
+      ctx.beginPath();
+      if(b.kind==='ring'){ ctx.arc(x,y,r,0,Math.PI*2); ctx.arc(x,y,r*.42,0,Math.PI*2,true); ctx.fillStyle=b.c; ctx.fill('evenodd'); }
+      else { ctx.arc(x,y,r,0,Math.PI*2); ctx.fillStyle=b.c; ctx.fill(); } }
+    ctx.globalAlpha=1;
   }
   function step(dt){
-    const g=grab&&grab.b;
-    for(const b of balls){
-      if(b===g) continue;
-      b.vy+=G*dt; const k=Math.pow(AIR,dt*60); b.vx*=k; b.vy*=k;
-      b.x+=b.vx*dt; b.y+=b.vy*dt;
-      if(b.x<b.r){b.x=b.r;b.vx=-b.vx*REST;} else if(b.x>W-b.r){b.x=W-b.r;b.vx=-b.vx*REST;}
-      if(b.y>H-b.r){b.y=H-b.r;b.vy=-b.vy*REST;b.vx*=.9; if(Math.abs(b.vy)<20) b.vy=0;}
-      if(b.y<-H*1.5){b.y=-H*1.5;b.vy=0;}
+    for(const b of bodies){
+      b.t+=dt; if(b.t>b.next){ b.t=0; b.next=rnd(2.5,7); b.target=(Math.random()<.25?-Math.sign(b.v||1):Math.sign(b.v||1))*rnd(.06,.34); }
+      if(b.target!==undefined) b.v+=(b.target-b.v)*Math.min(1,dt*.9);   /* ease into the new speed */
+      b.a+=b.v*dt;
     }
-    for(let it=0;it<3;it++) for(let i=0;i<balls.length;i++) for(let j=i+1;j<balls.length;j++){
-      const a=balls[i], b=balls[j], dx=b.x-a.x, dy=b.y-a.y, rr=a.r+b.r, d2=dx*dx+dy*dy;
-      if(d2>=rr*rr||d2<1e-6) continue;
-      const d=Math.sqrt(d2), nx=dx/d, ny=dy/d, ov=rr-d, ia=a===g?0:1/a.m, ib=b===g?0:1/b.m, s=ia+ib; if(!s) continue;
-      a.x-=nx*ov*ia/s; a.y-=ny*ov*ia/s; b.x+=nx*ov*ib/s; b.y+=ny*ov*ib/s;
-      const rv=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;
-      if(rv<0){ const J=-(1+REST)*rv/s; a.vx-=J*ia*nx; a.vy-=J*ia*ny; b.vx+=J*ib*nx; b.vy+=J*ib*ny; }
-    }
-    /* collisions can push edge balls out of the box: keep every ball fully inside */
-    for(const b of balls){ if(b.x<b.r) b.x=b.r; else if(b.x>W-b.r) b.x=W-b.r; if(b.y>H-b.r){ b.y=H-b.r; if(b.vy>0) b.vy=0; } }
   }
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    for(const b of balls){ ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fillStyle=b.c; ctx.fill();
-      if(grab&&grab.b===b){ ctx.lineWidth=2; ctx.strokeStyle='rgba(255,255,255,.85)'; ctx.stroke(); } }
-  }
-  function frame(t){
-    const dt=Math.min(1/30,(t-(last||t))/1000)||1/60; last=t;
-    const sub=2; for(let i=0;i<sub;i++) step(dt/sub);
-    draw();
-    const moving=grab||balls.some(b=>b.y>-b.r&&(Math.abs(b.vx)>6||Math.abs(b.vy)>6))||balls.some(b=>b.y<-b.r);
-    calm=moving?0:calm+1;
-    if(visible&&calm<45) raf=requestAnimationFrame(frame); else { raf=0; last=0; }
-  }
-  function wake(){ if(!raf&&visible){ calm=0; last=0; raf=requestAnimationFrame(frame); } }
-
-  /* pointer: grab / throw / scatter */
-  const pt=e=>{ const r=cv.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top,t:performance.now()}; };
-  const hit=p=>{ for(let i=balls.length-1;i>=0;i--){ const b=balls[i]; if((p.x-b.x)**2+(p.y-b.y)**2<=(b.r+4)**2) return b; } return null; };
-  cv.addEventListener('pointerdown',e=>{
-    init(); visible=true;
-    const p=pt(e), b=hit(p); (wrap.closest('section')||wrap).classList.add('is-touched');
-    if(b){ grab={b,ox:b.x-p.x,oy:b.y-p.y,px:p.x,py:p.y,pt:p.t,vx:0,vy:0}; b.vx=b.vy=0; cv.setPointerCapture(e.pointerId); cv.classList.add('is-grab'); }
-    else for(const o of balls){ const dx=o.x-p.x, dy=o.y-p.y, d=Math.hypot(dx,dy)||1, R=230;
-      if(d<R){ const f=(1-d/R)*1100; o.vx+=dx/d*f; o.vy+=dy/d*f-f*.35; } }
-    wake();
-  });
-  cv.addEventListener('pointermove',e=>{
-    const p=pt(e);
-    if(grab){ const b=grab.b, dt=Math.max(1,p.t-grab.pt)/1000;
-      grab.vx=grab.vx*.4+((p.x-grab.px)/dt)*.6; grab.vy=grab.vy*.4+((p.y-grab.py)/dt)*.6; grab.px=p.x; grab.py=p.y; grab.pt=p.t;
-      b.x=Math.min(Math.max(p.x+grab.ox,b.r),W-b.r); b.y=Math.min(p.y+grab.oy,H-b.r); wake(); }
-    else cv.classList.toggle('is-over',!!hit(p));
-  });
-  const drop=e=>{ if(!grab) return; const b=grab.b;
-    b.vx=Math.max(-MAXV,Math.min(MAXV,grab.vx)); b.vy=Math.max(-MAXV,Math.min(MAXV,grab.vy));
-    grab=null; cv.classList.remove('is-grab'); wake(); };
-  cv.addEventListener('pointerup',drop); cv.addEventListener('pointercancel',drop);
-
-  /* the settled pile is drawn as soon as the band has a size; when it scrolls into view the balls pop and
-     bounce. Visibility comes from IntersectionObserver with a scroll check as backup; touching always wakes it. */
-  let popped=false;
-  function init(){ if(started) return; size(); if(W<40||H<40) return; started=true; make(false);
-    for(let i=0;i<700;i++) step(1/60); draw(); }
-  function shown(){ init(); if(!started) return;
-    if(!popped&&!reduce){ popped=true; balls.forEach(b=>{ b.vy-=320+Math.random()*520; b.vx+=(Math.random()-.5)*220; }); }
-    wake(); }
-  function setVisible(v){ if(v===visible) return; visible=v; if(v) shown(); }
-  if('IntersectionObserver' in window) new IntersectionObserver(es=>setVisible(es.some(x=>x.isIntersecting)),{threshold:.2}).observe(wrap);
-  const check=()=>{ const r=wrap.getBoundingClientRect(); setVisible(r.top<innerHeight-40&&r.bottom>40); };
-  addEventListener('scroll',check,{passive:true}); addEventListener('resize',check);
-  if(document.readyState==='complete'){ init(); check(); } else addEventListener('load',()=>{ init(); check(); });
-  cv.addEventListener('pointerenter',()=>{ init(); visible=true; wake(); });
-  if('ResizeObserver' in window) new ResizeObserver(()=>{ if(!started){ init(); return; } size(); draw(); wake(); }).observe(wrap);
+  function frame(t){ const dt=Math.min(.05,(t-(last||t))/1000); last=t; step(dt); draw(); raf=visible?requestAnimationFrame(frame):0; if(!raf) last=0; }
+  function setVisible(v){ visible=v; if(v&&!raf&&!reduce){ raf=requestAnimationFrame(frame); } }
+  function init(){ layout(); draw(); }
+  if(document.readyState==='complete') init(); else addEventListener('load',init);
+  if(document.fonts) document.fonts.ready.then(init);
+  if('ResizeObserver' in window) new ResizeObserver(()=>{ layout(); draw(); }).observe(sec);
+  if('IntersectionObserver' in window) new IntersectionObserver(es=>setVisible(es.some(x=>x.isIntersecting)),{threshold:0}).observe(wrap);
+  const check=()=>{ const r=wrap.getBoundingClientRect(); setVisible(r.top<innerHeight&&r.bottom>0); };
+  addEventListener('scroll',check,{passive:true}); check();
 })();
 </script>
 <div class="book-page" id="bookPage" role="dialog" aria-modal="true" aria-labelledby="bookTitle" hidden>
