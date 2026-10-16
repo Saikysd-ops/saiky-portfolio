@@ -21,8 +21,9 @@
     --font-display:'Fraunces', serif; --font-body:'Satoshi','General Sans',sans-serif; --font-mono:'IBM Plex Mono', monospace;
   }
   :root[data-theme="dark"]{
-    --paper:#101014; --paper-raised:#1A1A21;
-    --ink:#F4F3F1; --ink-soft:#9C9BA2; --line:#2A2A33;
+    --paper:#151419; --paper-raised:#1D1C22;
+    /* text hierarchy: primary · secondary (supporting copy) · tertiary (labels, metadata) */
+    --ink:#ECEAEE; --ink-soft:#A6A3AD; --ink-3:#85828D; --line:#2A2830;
     /* Deep Aubergine as TEXT/border on dark backgrounds fails WCAG AA (1.79:1) —
        --accent is a lightened version (L 28%→65%, same hue/saturation) used
        anywhere the brand color reads as text or a border, giving 6.4:1+.
@@ -142,10 +143,13 @@
     opacity:1;}
   .design-canvas--dark{
     border-bottom:1px solid #2A2A33;
-    background-image:linear-gradient(to right, rgba(48,48,58,.35) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(48,48,58,.35) 1px, transparent 1px);
+    background-image:linear-gradient(to right, rgba(36,33,41,.7) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(36,33,41,.7) 1px, transparent 1px);
     opacity:0;}
   :root[data-theme="dark"] .design-canvas--light{opacity:0;}
+  /* dark mode: labels and metadata step down to the tertiary tier, at full opacity, so supporting copy stays the second level */
+  :root[data-theme="dark"] :is(.eyebrow,.hero-avail,.portrait-caption,.nav-clock,.contact-label,.eyebrow-lbl,.impact .head,.tags span:not([style])){color:var(--ink-3);opacity:1;}
+  :root[data-theme="dark"] .design-ruler__nums span{color:var(--ink-3);opacity:.6;}
   :root[data-theme="dark"] .design-canvas--dark{opacity:1;}
   .hero > *:not(.design-canvas){position:relative;z-index:1;}
   #view-home{position:relative;}
@@ -7113,8 +7117,8 @@
   transition: background .25s ease, color .25s ease;
 }
 :root[data-theme="dark"] {
-  --ink:#F4F3F1;
-  --paper:#101014;
+  --ink:#ECEAEE;
+  --paper:#151419;
   --slate:#9C9BA2;
   --lilac:#241E30;
   --line:#2A2A33;
