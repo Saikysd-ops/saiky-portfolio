@@ -313,7 +313,7 @@
   @media (max-height:680px){ #view-home .scroll-cue{display:none;} }
   /* ===== section 2: selected impact ===== */
   /* experience at a glance: a full-width band (edge to edge of the viewport) in a soft brand-lilac tint */
-  .home-proof{position:relative;isolation:isolate;padding:76px 0 112px;--band:#1E1826;
+  .home-proof{position:relative;isolation:isolate;padding:80px 0 72px;--band:#1E1826;
     --ink:#F4F2F6;--ink-soft:#ABA4B4;--line:rgba(255,255,255,.12);color:var(--ink);}
   :root[data-theme="dark"] .home-proof{--band:#1A1620;}
   .home-proof .proof-quote{color:#FFFFFF;}
@@ -336,6 +336,7 @@
   .home-proof > :not(.proof-play){position:relative;z-index:1;}
   .proof-play{pointer-events:none;}   /* decorative orbits: never intercept the pointer */
   @media (max-width:699px){ .home-proof{padding-bottom:248px !important;} }   /* room for the orbits under the statement */
+  @media (min-width:700px){ .proof-lower{min-height:352px;box-sizing:border-box;display:flex;align-items:center;} .proof-copy{flex:1 1 auto;min-width:0;} }   /* copy and orbits share one centre line */
   .proof-play canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .proof-teams .proof-k{margin-bottom:8px;}
   .proof-list{font-size:17px;line-height:1.6;color:var(--ink);font-weight:500;margin:0 0 40px;display:flex;flex-wrap:wrap;column-gap:12px;}
@@ -9826,12 +9827,15 @@ setActive(0); startRotation();
     const r=wrap.getBoundingClientRect(), d=Math.min(2,window.devicePixelRatio||1);
     W=r.width; H=r.height; cv.width=Math.round(W*d); cv.height=Math.round(H*d); ctx.setTransform(d,0,0,d,0,0);
     const s=sec.getBoundingClientRect(), q=sec.querySelector('.proof-quote'), low=sec.querySelector('.proof-lower');
-    const right=s.right-r.left, qr=q?q.getBoundingClientRect().right-r.left:0, top=low?low.getBoundingClientRect().top-r.top:H*.4;
+    const right=s.right-r.left, qr=q?q.getBoundingClientRect().right-r.left:0;
+    const lr=low?low.getBoundingClientRect():null, top=lr?lr.top-r.top+32:H*.45, bot=lr?lr.bottom-r.top:H-72;   /* the lower block, below its divider padding */
     if(W<700){ Rr=Math.min(80,(W-40)/2.4); cx=W/2; cy=H-28-Rr*1.2; alpha=1; }      /* phones: centred under the statement, in its own space */
     else{
-      /* the whole motif (orbits + bodies) spans about 2.4R: keep it below the divider and right of the statement */
-      Rr=Math.min(170,(H-top-56)/2.4,(right-qr-56)/2.4);
-      cx=right-Rr*1.22; cy=top+28+Rr*1.2; alpha=1;
+      /* the motif spans about 2.4R: it fills the lower block's height, shares its centre line with the copy,
+         and its right edge sits on the content's right edge */
+      const avail=bot-top;
+      Rr=Math.min(150,avail/2.4,(right-qr-64)/2.43);
+      cx=right-Rr*1.23; cy=top+avail/2; alpha=1;
     }
   }
   function pos(b){ const o=orbits[b.o], R=Rr*o.k; return [cx+o.dx*Rr+Math.cos(b.a)*R, cy+o.dy*Rr+Math.sin(b.a)*R]; }
