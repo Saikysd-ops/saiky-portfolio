@@ -9817,7 +9817,7 @@ setActive(0); startRotation();
   const orbits=[{dx:0,dy:0,k:1},{dx:.1,dy:-.07,k:.86}];
   const rnd=(a,b)=>a+Math.random()*(b-a), sgn=()=>Math.random()<.5?-1:1;
   const bodies=[
-    {o:1,kind:'disc',r:.27,c:LILAC},
+    {o:1,kind:'disc',r:.22,c:LILAC},   /* ~18% smaller, so the statement keeps the attention */
     {o:0,kind:'disc',r:.1,c:CREAM},
     {o:0,kind:'ring',r:.2,c:CREAM},
     {o:1,kind:'disc',r:.035,c:LILAC},
