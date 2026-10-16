@@ -604,6 +604,9 @@
   .stat .lbl{font-size:12px;line-height:1.45;color:var(--ink-soft);opacity:.85;letter-spacing:.005em;margin-top:3px;}
   .impact-stats .stat{border-left:1px solid color-mix(in srgb, var(--line) 65%, transparent);padding-left:22px;}
   .impact-stats .stat:first-child{border-left:0;padding-left:0;}
+  /* a goal, not a measured result: flagged in words, and the number set lighter */
+  .stat--target .num{color:var(--ink-soft);}
+  .stat-flag{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb, var(--accent) 45%, transparent);border-radius:4px;padding:1px 5px;margin-right:4px;vertical-align:1px;}
   .stat-icon{width:38px;height:38px;border-radius:9px;background:rgba(20,20,27,.04);
     display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--ink-soft);}
   .stat-icon svg{width:18px;height:18px;transition:transform .35s cubic-bezier(.22,1,.36,1);}
@@ -3499,7 +3502,7 @@
       <div class="stat"><div class="num">25% faster</div><div class="lbl">Qualified supplier discovery</div></div>
       <div class="stat"><div class="num">≥80%</div><div class="lbl">Relevance in top-five search results</div></div>
       <div class="stat"><div class="num">≥90%</div><div class="lbl">Profiles ready for evaluation</div></div>
-      <div class="stat"><div class="num">&gt;90%</div><div class="lbl">Assessments initiated within Matrix</div></div>
+      <div class="stat stat--target"><div class="num">&gt;90%</div><div class="lbl"><span class="stat-flag">Target</span> Assessments initiated within Matrix</div></div>
     </div>
     <p class="highlight">From fragmented supplier data to one sourcing decision model.</p>
     <button class="btn btn-outline btn-small impact-cta" data-view="case-supplier">Explore the case study <span class="cta-arrow">→</span></button>
@@ -4945,15 +4948,22 @@
         </div>
       </div>
 
+      <div class="case-tag" style="margin-top:44px">Measured outcomes</div>
+      <h3 class="case-h3" style="margin-top:8px">What the shipped product has delivered.</h3>
+      <div class="case-cardgrid case-cardgrid--3">
+        <div class="case-card"><div class="case-card-lbl">Qualified supplier discovery</div><div class="case-card-num">25% faster</div><div class="case-card-copy">Reduction in time to identify a qualified supplier.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Search relevance</div><div class="case-card-num">≥80%</div><div class="case-card-copy">Relevant suppliers in the top-five search results.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Profile readiness</div><div class="case-card-num">≥90%</div><div class="case-card-copy">Supplier profiles with foundational fields complete and ready for evaluation.</div></div>
+      </div>
+
       <div class="case-tag" style="margin-top:44px">Product success targets</div>
       <h3 class="case-h3" style="margin-top:8px">Not yet achieved outcomes—targets for what comes next.</h3>
-      <div class="case-cardgrid case-cardgrid--4">
-        <div class="case-card"><div class="case-card-lbl">Profile completeness</div><div class="case-card-num">≥90%</div><div class="case-card-copy">Foundational supplier fields.</div></div>
-        <div class="case-card"><div class="case-card-lbl">Qualified supplier discovery</div><div class="case-card-num">−25%</div><div class="case-card-copy">Target reduction in identification time.</div></div>
+      <div class="case-cardgrid case-cardgrid--3">
+        <div class="case-card"><div class="case-card-lbl">Assessments in Matrix</div><div class="case-card-num">&gt;90%</div><div class="case-card-copy">Target share of supplier assessments initiated within Matrix.</div></div>
         <div class="case-card"><div class="case-card-lbl">Decision adoption</div><div class="case-card-num">≥70%</div><div class="case-card-copy">Target use of insights / benchmarking in award decisions.</div></div>
         <div class="case-card"><div class="case-card-lbl">Sourcing cycle</div><div class="case-card-num">−20–30%</div><div class="case-card-copy">Target reduction from request to supplier selection.</div></div>
       </div>
-      <div class="case-source-note">Targets are shown separately from shipped product evidence.</div>
+      <div class="case-source-note">Measured outcomes come from the shipped product. Targets are shown separately and are not yet achieved.</div>
     </section>
 
     <section class="case-sec" id="cs-clarity">
