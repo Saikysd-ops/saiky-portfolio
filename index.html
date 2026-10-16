@@ -1955,6 +1955,11 @@
   .case-jump-item:hover{color:var(--ink);}
   .case-jump-item.is-active{color:var(--accent);font-weight:600;}
   .case-jump-item.is-active i{width:26px;background:var(--accent);opacity:1;}
+  /* sub-item: nested under its parent section, a step smaller */
+  .case-jump-sub{padding-left:14px;font-size:12px;}
+  .case-jump-sub i{width:8px;}
+  .case-jump-sub.is-active i{width:16px;}
+  .case-okrs{scroll-margin-top:96px;}
   @media (min-width:1650px){
     .case-jumpnav{display:flex;}
   }
@@ -4542,6 +4547,7 @@
         <a class="case-jump-item" href="#cs-experience"><i></i>Designing the experience</a>
         <a class="case-jump-item" href="#cs-inside"><i></i>Inside the interface</a>
         <a class="case-jump-item" href="#cs-scale"><i></i>Shipped vs. future</a>
+        <a class="case-jump-item case-jump-sub" href="#cs-okrs"><i></i>OKRs &amp; targets</a>
         <a class="case-jump-item" href="#cs-clarity"><i></i>Complexity to clarity</a>
         <a class="case-jump-item" href="#cs-ai"><i></i>AI accelerated exploration</a>
         <a class="case-jump-item" href="#cs-outcome"><i></i>Outcome &amp; reflection</a>
@@ -5010,6 +5016,7 @@
         </div>
       </div>
 
+      <div class="case-okrs" id="cs-okrs">
       <p class="case-contrib"><b>My contribution:</b> I shaped the supplier decision framework, information architecture and core evaluation workflows, partnering with product, research, data and engineering to turn fragmented supplier information into a consistent decision experience.</p>
 
       <div class="case-tag" style="margin-top:36px">Business OKRs</div>
@@ -5027,6 +5034,7 @@
         <div class="case-card"><div class="case-card-lbl">Sourcing cycle</div><div class="case-card-num">−20–30%</div><div class="case-card-copy">Target reduction from request to supplier selection.</div></div>
       </div>
       <div class="case-source-note">Business OKRs and targets are intended outcomes the product was designed to support — not independently verified post-launch results.</div>
+      </div>
     </section>
 
     <section class="case-sec" id="cs-clarity">
