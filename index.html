@@ -2545,6 +2545,33 @@
   .case-row span{display:block;font-size:12.5px;color:var(--ink-soft);}
   .case-compare-col--accent .case-row b{color:var(--ink);}
   .case-source-note{font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);opacity:.7;margin-top:8px;}
+  /* progressive disclosure on outcome cards: the number first, the "why" on demand */
+  .case-cardgrid--more{align-items:start;background:none;gap:12px;border:0;border-radius:0;overflow:visible;}
+  .case-cardgrid--more .case-card-copy{min-height:2.9em;}   /* two lines reserved, so every "What supported it" row lines up */
+  .case-cardgrid--more .case-card{border:1px solid var(--line);border-radius:14px;}
+  .case-more{margin-top:16px;border-top:1px solid var(--line);}
+  .case-more summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0 2px;cursor:pointer;
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
+  .case-more summary::-webkit-details-marker{display:none;}
+  .case-more summary i{position:relative;width:18px;height:18px;border-radius:50%;border:1px solid color-mix(in srgb, var(--accent) 45%, transparent);flex:none;transition:transform .3s cubic-bezier(.22,1,.36,1),background .2s ease;}
+  .case-more summary i::before,.case-more summary i::after{content:'';position:absolute;left:50%;top:50%;width:8px;height:1.4px;margin:-.7px 0 0 -4px;background:currentColor;border-radius:1px;}
+  .case-more summary i::after{transform:rotate(90deg);transition:transform .3s ease;}
+  .case-more[open] summary i{transform:rotate(180deg);}
+  .case-more[open] summary i::after{transform:rotate(0deg);}
+  .case-more summary:hover i{background:color-mix(in srgb, var(--accent) 12%, transparent);}
+  .case-more summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px;}
+  .case-more-body{padding-top:10px;}
+  .case-more[open] .case-more-body{animation:caseMore .35s cubic-bezier(.22,1,.36,1);}
+  @keyframes caseMore{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+  .case-more-body p{font-size:13px;line-height:1.55;color:var(--ink);margin:0 0 10px;}
+  .case-more-body ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;}
+  .case-more-body li{position:relative;padding-left:14px;font-size:12.5px;line-height:1.5;color:var(--ink-soft);}
+  .case-more-body li::before{content:'';position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.7;}
+  .case-more-body li b{color:var(--ink);font-weight:600;}
+  @media (prefers-reduced-motion:reduce){ .case-more[open] .case-more-body{animation:none;} .case-more summary i,.case-more summary i::after{transition:none;} }
+  .case-contrib{font-size:15.5px;line-height:1.7;color:var(--ink-soft);max-width:66ch;margin:40px 0 0;padding-left:16px;border-left:2px solid var(--accent);}
+  .case-contrib b{color:var(--ink);font-weight:600;}
+
 
   .case-sec--statement{text-align:center;padding:60px 0;}
 
@@ -4950,20 +4977,22 @@
         </div>
       </div>
 
-      <div class="case-tag" style="margin-top:44px">Measured outcomes</div>
+      <p class="case-contrib"><b>My contribution:</b> I shaped the supplier decision framework, information architecture and core evaluation workflows, partnering with product, research, data and engineering to turn fragmented supplier information into a consistent decision experience.</p>
+
+      <div class="case-tag" style="margin-top:36px">Measured outcomes</div>
       <h3 class="case-h3" style="margin-top:8px">What the shipped product has delivered.</h3>
-      <div class="case-cardgrid case-cardgrid--3">
-        <div class="case-card"><div class="case-card-lbl">Qualified supplier discovery</div><div class="case-card-num">25% faster</div><div class="case-card-copy">Reduction in time to identify a qualified supplier.</div></div>
-        <div class="case-card"><div class="case-card-lbl">Search relevance</div><div class="case-card-num">≥80%</div><div class="case-card-copy">Relevant suppliers in the top-five search results.</div></div>
-        <div class="case-card"><div class="case-card-lbl">Profile readiness</div><div class="case-card-num">≥90%</div><div class="case-card-copy">Supplier profiles with foundational fields complete and ready for evaluation.</div></div>
+      <div class="case-cardgrid case-cardgrid--3 case-cardgrid--more">
+        <div class="case-card"><div class="case-card-lbl">Qualified supplier discovery</div><div class="case-card-num">25% faster</div><div class="case-card-copy">Reduction in time to identify a qualified supplier.</div><details class="case-more"><summary><span>What supported it</span><i aria-hidden="true"></i></summary><div class="case-more-body"><p>Structured supplier discovery through search, filtering and consistent supplier information, with direct lookup and comparison to support qualification.</p><ul><li><b>Search and filtering</b> — narrow the supplier base by business-relevant criteria.</li><li><b>Consistent supplier listing</b> — the same core information on every supplier.</li><li><b>Supplier ID lookup</b> — go straight to a known supplier.</li><li><b>Shortlisting and comparison</b> — evaluate candidates side by side.</li></ul></div></details></div>
+        <div class="case-card"><div class="case-card-lbl">Search relevance</div><div class="case-card-num">≥80%</div><div class="case-card-copy">Relevant suppliers in the top-five search results.</div><details class="case-more"><summary><span>What supported it</span><i aria-hidden="true"></i></summary><div class="case-more-body"><p>Connected supplier records, direct Supplier ID lookup and similar-supplier discovery supported a more focused supplier discovery experience.</p><ul><li><b>Unified vendor linkage</b> — connected supplier records for a more coherent view.</li><li><b>Supplier ID search</b> — direct lookup using supplier identifiers.</li><li><b>Similar supplier discovery</b> — explore alternatives when the first supplier isn't suitable.</li><li><b>Business-relevant criteria</b> — more focused supplier discovery.</li></ul></div></details></div>
+        <div class="case-card"><div class="case-card-lbl">Profile readiness</div><div class="case-card-num">≥90%</div><div class="case-card-copy">Supplier profiles with foundational fields complete and ready for evaluation.</div><details class="case-more"><summary><span>What supported it</span><i aria-hidden="true"></i></summary><div class="case-more-body"><p>A unified supplier profile brought foundational supplier information and evaluation context into one structured experience.</p><ul><li><b>Unified supplier profile</b> — one place for each supplier.</li><li><b>Consistent identity and foundational fields</b> — the same core data on every profile.</li><li><b>Performance and financial-risk information</b> — evaluation context alongside the basics.</li><li><b>Clear score definitions</b> — with the supporting evidence behind each score.</li></ul></div></details></div>
       </div>
 
       <div class="case-tag" style="margin-top:44px">Product success targets</div>
       <h3 class="case-h3" style="margin-top:8px">Not yet achieved outcomes—targets for what comes next.</h3>
       <div class="case-cardgrid case-cardgrid--3">
-        <div class="case-card"><div class="case-card-lbl">Assessments in Matrix</div><div class="case-card-num">&gt;90%</div><div class="case-card-copy">Target share of supplier assessments initiated within Matrix.</div></div>
-        <div class="case-card"><div class="case-card-lbl">Decision adoption</div><div class="case-card-num">≥70%</div><div class="case-card-copy">Target use of insights / benchmarking in award decisions.</div></div>
-        <div class="case-card"><div class="case-card-lbl">Sourcing cycle</div><div class="case-card-num">−20–30%</div><div class="case-card-copy">Target reduction from request to supplier selection.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Assessments in Matrix</div><div class="case-card-num">&gt;90%</div><div class="case-card-copy">Target: supplier assessments initiated within Matrix.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Decision adoption</div><div class="case-card-num">≥70%</div><div class="case-card-copy">Target: decision adoption — insights and benchmarking used in award decisions.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Sourcing cycle</div><div class="case-card-num">20–30%</div><div class="case-card-copy">Target: reduction in sourcing cycle time, from request to supplier selection.</div></div>
       </div>
       <div class="case-source-note">Measured outcomes come from the shipped product. Targets are shown separately and are not yet achieved.</div>
     </section>
