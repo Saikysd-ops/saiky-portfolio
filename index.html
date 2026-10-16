@@ -644,6 +644,10 @@
      divider higher than the other card's in the same row */
   .work-stats .lbl{font-size:11px;line-height:1.4;color:var(--ink-soft);opacity:.7;min-height:2.8em;}
   .work-stats-2x2{grid-template-columns:repeat(2,1fr);row-gap:22px;}
+  /* a goal, not a measured result: the same quiet tag as the homepage's Business OKRs label */
+  .okr-mini{display:table;font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+    border:1px solid color-mix(in srgb, var(--accent) 40%, transparent);border-radius:3px;padding:1px 4px;margin:0 0 5px;opacity:1;}
+  .work-stats .lbl:has(.okr-mini){opacity:1;color:color-mix(in srgb, var(--ink-soft) 70%, transparent);}
   .hero-stats .num{font-size:26px;}
   .hero-label{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;
     text-transform:uppercase;color:var(--ink-soft);opacity:.75;margin-bottom:6px;}
@@ -3637,8 +3641,8 @@
         <div class="work-body"><p class="desc">Performance, risk, and capability signals lived across fragmented systems. Supplier Matrix unified them into one trusted decision layer for supplier discovery, evaluation, and monitoring.</p>
         <p class="opp">From fragmented supplier signals → to a trusted decision layer.</p>
         <div class="stat-grid work-stats">
-          <div class="stat"><div class="num">25%</div><div class="lbl">Faster supplier identification</div></div>
-          <div class="stat"><div class="num">50%</div><div class="lbl">Fewer manual evaluations</div></div>
+          <div class="stat"><div class="num">25%</div><div class="lbl"><span class="okr-mini">Business OKR</span>Faster supplier identification</div></div>
+          <div class="stat"><div class="num">50%</div><div class="lbl"><span class="okr-mini">Business OKR</span>Fewer manual evaluations</div></div>
           <div class="stat"><div class="num">12K</div><div class="lbl">Active suppliers</div></div>
         </div>
           <p class="work-note">6+ SBUs · 4+ Markets · Released Q1 2026 · Piloted across every SBU</p>
