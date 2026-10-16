@@ -2872,6 +2872,18 @@
 
   /* CONTACT */
   .contact{border-top:1px solid var(--line);scroll-margin-top:88px;padding-bottom:0;}
+  /* booking: Cal.com inline embed under the contact grid */
+  .contact-book{margin:64px 0 80px;padding-top:48px;border-top:1px solid var(--line);scroll-margin-top:96px;}
+  .book-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px;}
+  .book-head .contact-label{margin:0;}
+  .book-sub{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink-soft);max-width:52ch;}
+  .book-frame{position:relative;min-height:560px;border:1px solid var(--line);border-radius:18px;background:var(--paper-raised, #fff);overflow:hidden;}
+  .book-cal{width:100%;min-height:560px;}
+  .book-cal iframe{display:block;}
+  .book-fallback{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:14px;font-weight:600;color:var(--accent);text-decoration:none;display:none;}
+  .book-frame.is-slow:not(.is-live) .book-fallback{display:block;}   /* only if the calendar hasn't loaded after 10s */
+  @media (max-width:880px){ .contact-book{margin:48px 0 56px;padding-top:36px;} .book-frame,.book-cal{min-height:640px;} }
+
   .contact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
   .greet{display:flex;align-items:center;gap:0px;min-height:78px;margin-bottom:14px;
     font-size:clamp(40px,5.4vw,64px);}
@@ -3773,6 +3785,7 @@
             <span class="c-text">saikirandesai7@gmail.com</span>
             <span class="c-hint">Click to copy</span>
           </button>
+          <a class="c-link c-secondary" data-scroll="book" href="#book">Book a 30-min call ↓</a>
           <a class="c-link c-secondary" href="https://www.linkedin.com/in/saikiran-desai-33103764/" target="_blank" rel="noopener">LinkedIn <svg class="c-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9 L9 3 M4.4 3 H9 V7.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
         <div class="localtime">
@@ -3799,6 +3812,17 @@
           <img class="art-sig sig-ink" src="assets/images/image-014-f1eccc4f38fd.png" alt="Signed: By saiky">
           <img class="art-sig sig-white" src="assets/images/image-015-0759721dcb93.png" alt="">
         </div>
+      </div>
+    </div>
+
+    <div class="contact-book" id="book">
+      <div class="book-head">
+        <div class="contact-label">Book a 30-min call</div>
+        <p class="book-sub">Pick a time that suits you. It lands in my calendar with a Google Meet link, and we both get a confirmation email.</p>
+      </div>
+      <div class="book-frame">
+        <div id="calInline" class="book-cal"></div>
+        <a class="book-fallback" href="https://cal.com/saikiran-desai-sfwiif/30min" target="_blank" rel="noopener">Open the booking page →</a>
       </div>
     </div>
 
@@ -9878,6 +9902,32 @@ setActive(0); startRotation();
   if(document.readyState==='complete'){ init(); check(); } else addEventListener('load',()=>{ init(); check(); });
   cv.addEventListener('pointerenter',()=>{ init(); visible=true; wake(); });
   if('ResizeObserver' in window) new ResizeObserver(()=>{ if(!started){ init(); return; } size(); draw(); wake(); }).observe(wrap);
+})();
+</script>
+<script>
+/* Book a call — Cal.com inline embed (cal.com/saikiran-desai-sfwiif/30min). Loads only when the contact
+   section comes near the screen; follows the site's light/dark toggle; brand purple for the selected day. */
+(function(){
+  const box=document.getElementById('calInline'); if(!box) return;
+  const frame=box.closest('.book-frame'); let loaded=false;
+  const theme=()=>document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
+  function load(){
+    if(loaded) return; loaded=true;
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "book30", {origin:"https://app.cal.com"});
+    Cal.ns.book30("inline", {elementOrSelector:"#calInline", calLink:"saikiran-desai-sfwiif/30min", config:{layout:"month_view", theme:theme()}});
+    Cal.ns.book30("ui", {theme:theme(), hideEventTypeDetails:false, layout:"month_view",
+      cssVarsPerTheme:{light:{"cal-brand":"#5B2A68"}, dark:{"cal-brand":"#BC80CC"}}});
+    Cal.ns.book30("on", {action:"linkReady", callback:()=>frame&&frame.classList.add('is-live')});
+    setTimeout(()=>frame&&frame.classList.add('is-slow'),10000);
+    /* keep the calendar in step with the site's theme toggle */
+    new MutationObserver(()=>{ try{ Cal.ns.book30("ui",{theme:theme()}); }catch(e){} })
+      .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  }
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); load(); } },{rootMargin:'800px 0px'});
+    io.observe(box);
+  } else load();
 })();
 </script>
 </body>
