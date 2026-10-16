@@ -2872,17 +2872,32 @@
 
   /* CONTACT */
   .contact{border-top:1px solid var(--line);scroll-margin-top:88px;padding-bottom:0;}
-  /* booking: Cal.com inline embed under the contact grid */
-  .contact-book{margin:64px 0 80px;padding-top:48px;border-top:1px solid var(--line);scroll-margin-top:96px;}
-  .book-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px;}
-  .book-head .contact-label{margin:0;}
-  .book-sub{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink-soft);max-width:52ch;}
-  .book-frame{position:relative;min-height:560px;border:1px solid var(--line);border-radius:18px;background:var(--paper-raised, #fff);overflow:hidden;}
-  .book-cal{width:100%;min-height:560px;}
+  /* booking page: opens from "Get in touch" over the site; Close / Esc / Back return home */
+  .book-page{position:fixed;inset:0;z-index:600;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;}
+  /* the page covers the site at once; only its content fades and rises in */
+  .book-page .book-body{opacity:0;transform:translateY(14px);transition:opacity .4s ease .05s,transform .5s cubic-bezier(.22,1,.36,1) .05s;}
+  .book-page.is-open .book-body{opacity:1;transform:none;}
+  .book-bar{position:sticky;top:0;z-index:2;background:color-mix(in srgb, var(--paper) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .book-bar-in{display:flex;align-items:center;justify-content:space-between;height:72px;}
+  .book-k{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+  .book-close{display:inline-flex;align-items:center;gap:10px;font:600 14px var(--font-body);color:var(--ink);background:transparent;
+    border:1.5px solid var(--ink);border-radius:999px;padding:10px 18px;cursor:pointer;transition:background .2s ease,color .2s ease;}
+  .book-close:hover{background:var(--ink);color:var(--paper);}
+  .book-close:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .book-body{padding-top:48px;padding-bottom:64px;}
+  .book-head{margin-bottom:28px;}
+  .book-title{font-family:var(--font-display);font-weight:500;font-size:clamp(30px,3.4vw,44px);line-height:1.1;letter-spacing:-.015em;color:var(--ink);margin:0 0 10px;}
+  .book-sub{margin:0;font-size:16px;line-height:1.55;color:var(--ink-soft);max-width:56ch;}
+  .book-frame{position:relative;min-height:600px;border:1px solid var(--line);border-radius:18px;background:var(--paper-raised, #fff);overflow:hidden;}
+  .book-cal{width:100%;min-height:600px;}
   .book-cal iframe{display:block;}
   .book-fallback{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:14px;font-weight:600;color:var(--accent);text-decoration:none;display:none;}
   .book-frame.is-slow:not(.is-live) .book-fallback{display:block;}   /* only if the calendar hasn't loaded after 10s */
-  @media (max-width:880px){ .contact-book{margin:48px 0 56px;padding-top:36px;} .book-frame,.book-cal{min-height:640px;} }
+  .book-alt{margin:20px 0 0;font-size:14px;color:var(--ink-soft);}
+  .book-alt a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px solid var(--line);}
+  html.book-lock,html.book-lock body{overflow:hidden!important;}
+  @media (max-width:880px){ .book-bar-in{height:60px;} .book-body{padding-top:40px;} .book-frame,.book-cal{min-height:680px;} }
+  @media (prefers-reduced-motion:reduce){ .book-page .book-body{transition:none;transform:none;opacity:1;} }
 
   .contact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
   .greet{display:flex;align-items:center;gap:0px;min-height:78px;margin-bottom:14px;
@@ -3403,7 +3418,7 @@
       <p class="value-lead">I turn complex workflows, data, and AI into intuitive products that help teams make better decisions.</p>
       <div class="cta-row">
         <button class="btn btn-primary" data-scroll="work">Explore selected work <span class="cta-arrow">↓</span></button>
-        <a class="text-link" data-scroll="contact" href="#contact">Get in touch</a>
+        <a class="text-link" data-book href="#book">Get in touch</a>
       </div>
       <div class="hero-cred">
         <div class="hero-avail"><span class="hero-avail-dot" aria-hidden="true"></span>Open to select collaborations.</div>
@@ -3785,7 +3800,6 @@
             <span class="c-text">saikirandesai7@gmail.com</span>
             <span class="c-hint">Click to copy</span>
           </button>
-          <a class="c-link c-secondary" data-scroll="book" href="#book">Book a 30-min call ↓</a>
           <a class="c-link c-secondary" href="https://www.linkedin.com/in/saikiran-desai-33103764/" target="_blank" rel="noopener">LinkedIn <svg class="c-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9 L9 3 M4.4 3 H9 V7.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
         <div class="localtime">
@@ -3812,17 +3826,6 @@
           <img class="art-sig sig-ink" src="assets/images/image-014-f1eccc4f38fd.png" alt="Signed: By saiky">
           <img class="art-sig sig-white" src="assets/images/image-015-0759721dcb93.png" alt="">
         </div>
-      </div>
-    </div>
-
-    <div class="contact-book" id="book">
-      <div class="book-head">
-        <div class="contact-label">Book a 30-min call</div>
-        <p class="book-sub">Pick a time that suits you. It lands in my calendar with a Google Meet link, and we both get a confirmation email.</p>
-      </div>
-      <div class="book-frame">
-        <div id="calInline" class="book-cal"></div>
-        <a class="book-fallback" href="https://cal.com/saikiran-desai-sfwiif/30min" target="_blank" rel="noopener">Open the booking page →</a>
       </div>
     </div>
 
@@ -9904,12 +9907,32 @@ setActive(0); startRotation();
   if('ResizeObserver' in window) new ResizeObserver(()=>{ if(!started){ init(); return; } size(); draw(); wake(); }).observe(wrap);
 })();
 </script>
+<div class="book-page" id="bookPage" role="dialog" aria-modal="true" aria-labelledby="bookTitle" hidden>
+  <div class="book-bar">
+    <div class="wrap book-bar-in">
+      <span class="book-k">Get in touch</span>
+      <button class="book-close" type="button" data-book-close aria-label="Close and return to the home page">Close <span aria-hidden="true">✕</span></button>
+    </div>
+  </div>
+  <div class="wrap book-body">
+    <div class="book-head">
+      <h2 class="book-title" id="bookTitle">Book a 30-min call</h2>
+      <p class="book-sub">Pick a time that suits you. It lands in my calendar with a Google Meet link, and we both get a confirmation email.</p>
+    </div>
+    <div class="book-frame">
+      <div id="calInline" class="book-cal"></div>
+      <a class="book-fallback" href="https://cal.com/saikiran-desai-sfwiif/30min" target="_blank" rel="noopener">Open the booking page →</a>
+    </div>
+    <p class="book-alt">Prefer email? <a href="mailto:saikirandesai7@gmail.com">saikirandesai7@gmail.com</a></p>
+  </div>
+</div>
 <script>
-/* Book a call — Cal.com inline embed (cal.com/saikiran-desai-sfwiif/30min). Loads only when the contact
-   section comes near the screen; follows the site's light/dark toggle; brand purple for the selected day. */
+/* Book a call — "Get in touch" opens a full-screen booking page with the Cal.com calendar
+   (cal.com/saikiran-desai-sfwiif/30min). Close, Esc or the browser Back button return to the home page.
+   The embed loads on first open and follows the site's light/dark toggle. */
 (function(){
-  const box=document.getElementById('calInline'); if(!box) return;
-  const frame=box.closest('.book-frame'); let loaded=false;
+  const page=document.getElementById('bookPage'), box=document.getElementById('calInline'); if(!page||!box) return;
+  const frame=box.closest('.book-frame'); let loaded=false, opener=null, pushed=false;
   const theme=()=>document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
   function load(){
     if(loaded) return; loaded=true;
@@ -9920,14 +9943,34 @@ setActive(0); startRotation();
       cssVarsPerTheme:{light:{"cal-brand":"#5B2A68"}, dark:{"cal-brand":"#BC80CC"}}});
     Cal.ns.book30("on", {action:"linkReady", callback:()=>frame&&frame.classList.add('is-live')});
     setTimeout(()=>frame&&frame.classList.add('is-slow'),10000);
-    /* keep the calendar in step with the site's theme toggle */
     new MutationObserver(()=>{ try{ Cal.ns.book30("ui",{theme:theme()}); }catch(e){} })
       .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   }
-  if('IntersectionObserver' in window){
-    const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); load(); } },{rootMargin:'800px 0px'});
-    io.observe(box);
-  } else load();
+  function open(fromLink){
+    if(!page.hidden) return;
+    opener=document.activeElement; page.hidden=false; document.documentElement.classList.add('book-lock');
+    void page.offsetWidth; page.classList.add('is-open'); page.scrollTop=0; load();   /* reflow first, so the fade-in runs */
+    if(fromLink){ try{ history.pushState({book:1},'','#book'); pushed=true; }catch(e){} }
+    setTimeout(()=>{ const c=page.querySelector('[data-book-close]'); c&&c.focus({preventScroll:true}); },60);
+  }
+  function hide(){
+    if(page.hidden) return;
+    page.classList.remove('is-open'); document.documentElement.classList.remove('book-lock');
+    page.hidden=true;
+    if(opener&&opener.focus) opener.focus({preventScroll:true});
+  }
+  function close(){
+    if(page.hidden) return;
+    if(pushed&&history.state&&history.state.book){ pushed=false; history.back(); }   /* popstate hides it */
+    else { hide(); try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} }
+  }
+  document.addEventListener('click',e=>{
+    const o=e.target.closest('[data-book]'); if(o){ e.preventDefault(); open(true); return; }
+    if(e.target.closest('[data-book-close]')){ e.preventDefault(); close(); }
+  });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!page.hidden) close(); });
+  window.addEventListener('popstate',()=>{ if(location.hash==='#book') open(false); else hide(); });
+  if(location.hash==='#book') open(false);
 })();
 </script>
 </body>
