@@ -1866,10 +1866,10 @@
   }
 
   .navlinks a.is-current{color:var(--ink);}
-  /* nav dot: drops in with a small bounce under the hovered link and stays while hovered; it also marks the current page */
+  /* nav dot: drops in with a small bounce beside (left of) the hovered link and stays while hovered; it also marks the current page */
   @media (min-width:861px){
     .navlinks a{position:relative;}
-    .navlinks a::after{content:'';position:absolute;left:50%;top:calc(100% + 6px);width:5px;height:5px;margin-left:-2.5px;border-radius:50%;
+    .navlinks a::after{content:'';position:absolute;left:-11px;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;
       background:var(--violet);opacity:0;transform:translateY(-8px) scale(.4);pointer-events:none;}
     :root[data-theme="dark"] .navlinks a::after{background:var(--accent);}
     .navlinks a.is-current::after{opacity:1;transform:none;}
