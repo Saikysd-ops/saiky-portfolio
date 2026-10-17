@@ -648,7 +648,7 @@
   @media (max-width:880px){ .impact-top{grid-template-columns:1fr;gap:20px;margin-bottom:28px;} }   /* phones and tablets: illustration under the copy */
   .impact-copy .body{margin-bottom:0;}
   .il{margin:0;position:relative;display:flex;flex-direction:column;align-self:stretch;}
-  .il-stage{position:relative;flex:1;min-height:240px;cursor:crosshair;}
+  .il-stage{position:relative;flex:1;min-height:240px;cursor:default;}   /* decorative: no data-reading cursor */
   .il-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
   .il-guides line{stroke:var(--ink-soft);stroke-opacity:.16;stroke-width:1;stroke-dasharray:1 5;stroke-linecap:round;}
   .il-line{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25;} .il-line-r{stroke-width:2;}
@@ -665,6 +665,7 @@
     -webkit-backdrop-filter:blur(10px) saturate(1.3);backdrop-filter:blur(10px) saturate(1.3);
     opacity:0;scale:.96;transition:opacity .25s ease,scale .25s cubic-bezier(.22,1,.36,1);will-change:transform;}
   .il.hover .il-tip{opacity:1;scale:1;}
+  .il-tip em{font-style:normal;font-size:9.5px;letter-spacing:.1em;color:var(--ink-soft);padding-bottom:5px;margin-bottom:1px;border-bottom:1px solid color-mix(in srgb, var(--ink) 8%, transparent);}
   .il-tip span{display:flex;align-items:center;gap:7px;} .il-tip i{width:6px;height:6px;border-radius:50%;}
   .il-tip i.p{background:#8A5CF0;} .il-tip i.r{background:#E46B5D;}
   .il-tip span:first-child b{color:#7B4FE0;} .il-tip span:last-child b{color:#D9573F;}
@@ -3705,9 +3706,9 @@
       <p class="role-label">Product Strategy · System Design · UX Direction</p>
       <p class="body">I shaped the product strategy and UX direction, aligning business, data, and product teams around one decision model for supplier discovery, evaluation, and assessment.</p>
       </div>
-    <figure class="il" aria-hidden="true">
+    <figure class="il" role="img" aria-label="Decorative illustration of a performance trend rising while risk falls — not measured data">
       <div class="il-stage" id="ilStage">
-        <svg class="il-svg">
+        <svg class="il-svg" aria-hidden="true" focusable="false">
           <defs>
             <linearGradient id="ilGP" x1="0" x2="1"><stop offset="0" stop-color="#5B7CFA"/><stop offset=".55" stop-color="#8A5CF0"/><stop offset="1" stop-color="#BC80CC"/></linearGradient>
             <linearGradient id="ilGR" x1="0" x2="1"><stop offset="0" stop-color="#F48C6E"/><stop offset="1" stop-color="#E46B5D"/></linearGradient>
@@ -3721,7 +3722,7 @@
           <circle class="il-run il-run-p" r="4.5"/><circle class="il-run il-run-r" r="4.5"/>
           <circle class="il-hov il-hov-p" r="5.5"/><circle class="il-hov il-hov-r" r="5.5"/>
         </svg>
-        <div class="il-tip"><span><i class="p"></i>Performance <b>↑</b></span><span><i class="r"></i>Risk <b>↓</b></span></div>
+        <div class="il-tip" aria-hidden="true"><em>Illustrative trend</em><span><i class="p"></i>Performance <b>↑</b></span><span><i class="r"></i>Risk <b>↓</b></span></div>
       </div>
     </figure>
     </div>
