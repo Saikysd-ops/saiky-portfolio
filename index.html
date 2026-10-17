@@ -334,15 +334,15 @@
     --ink:#F4F2F6;--ink-soft:#ABA4B4;--line:rgba(255,255,255,.12);color:var(--ink);}
   :root[data-theme="dark"] .home-proof{--band:#1A1620;}
   .home-proof .proof-quote{color:#FFFFFF;}
-  /* headline: words rise in one by one when the band comes into view; "build." carries the brand gradient */
+  /* headline: only "build." animates — it rises in, in the brand gradient, when the band comes into view */
   .proof-quote .w{display:inline-block;}
-  .proof-quote.is-armed .w{opacity:0;transform:translateY(.4em);filter:blur(3px);}
-  .proof-quote.is-in .w{opacity:1;transform:none;filter:none;
-    transition:opacity .55s ease,transform .7s cubic-bezier(.22,1,.36,1),filter .55s ease;transition-delay:calc(var(--i,0) * 60ms);}
+  .proof-quote.is-armed .w-grad{opacity:0;transform:translateY(.4em);filter:blur(3px);}
+  .proof-quote.is-in .w-grad{opacity:1;transform:none;filter:none;
+    transition:opacity .6s ease .15s,transform .8s cubic-bezier(.22,1,.36,1) .15s,filter .6s ease .15s;}
   .proof-quote .w-grad{background:linear-gradient(90deg,#6F8CFF 0%,#A27BFF 35%,#F2679F 70%,#FF8A6B 100%);
     background:linear-gradient(90deg in oklab,#6F8CFF 0%,#A27BFF 35%,#F2679F 70%,#FF8A6B 100%);
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;padding-right:.04em;}
-  @media (prefers-reduced-motion:reduce){ .proof-quote.is-armed .w{opacity:1;transform:none;filter:none;} }
+  @media (prefers-reduced-motion:reduce){ .proof-quote.is-armed .w-grad{opacity:1;transform:none;filter:none;} }
   .home-proof .proof-k{color:#B7A4C4;}
   .home-proof::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:-1;background:var(--band);
     transition:background-color .3s ease;}
@@ -10097,11 +10097,10 @@ setActive(0); startRotation();
 })();
 </script>
 <script>
-/* Experience at scale — the headline reveals word by word the first time it scrolls into view.
-   Words stay visible without JS or with reduced motion. */
+/* Experience at scale — "build." rises in the first time the headline scrolls into view.
+   It stays visible without JS or with reduced motion. */
 (function(){
   const q=document.querySelector('.proof-quote[data-words]'); if(!q) return;
-  q.querySelectorAll('.w').forEach((w,i)=>w.style.setProperty('--i',i));
   if(!('IntersectionObserver' in window) || (window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   q.classList.add('is-armed');
   const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); requestAnimationFrame(()=>q.classList.add('is-in')); } },{threshold:.5});
