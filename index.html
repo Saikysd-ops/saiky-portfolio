@@ -680,7 +680,7 @@
   .il-tip i.p{background:#8A5CF0;} .il-tip i.r{background:#E46B5D;}
   .il-tip span:first-child b{color:#7B4FE0;} .il-tip span:last-child b{color:#D9573F;}
   :root[data-theme="dark"] .il-tip span:first-child b{color:#B48CFF;} :root[data-theme="dark"] .il-tip span:last-child b{color:#F2876C;}
-  @media (max-width:880px){ .il-stage{flex:none;height:220px;} }
+  @media (max-width:880px){ .il-stage{flex:none;height:190px;min-height:0;} }
   @media (prefers-reduced-motion:reduce){ .il-area,.il-run,.il-tip{transition:none;} }
   /* editorial rhythm for the section copy */
   #view-home .impact .lead{font-size:clamp(26px,2.6vw,36px);line-height:1.15;letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance;}
@@ -10279,10 +10279,14 @@ setActive(0); startRotation();
       d+=` C${p1[0]+(p2[0]-p0[0])/6} ${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6} ${p2[1]-(p3[1]-p1[1])/6} ${p2[0]} ${p2[1]}`; } return d; };
   const lp=q('.il-line-p'), lr=q('.il-line-r'), runP=q('.il-run-p'), runR=q('.il-run-r'), hp=q('.il-hov-p'), hr=q('.il-hov-r'), hair=q('.il-hair');
   let W=0,H=0,X0=0,X1=0,T=14,B=146,LP=1,LR=1,drawn=false;
+  const mq=window.matchMedia?matchMedia('(max-width:880px)'):{matches:false}, compact=()=>mq.matches;
   const setC=(c,pt)=>{ c.setAttribute('cx',pt.x); c.setAttribute('cy',pt.y); };
   function build(){
     W=Math.max(200,stage.clientWidth); H=Math.max(160,stage.clientHeight); svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-    X0=8; X1=W-8; T=14; B=H-14; const map=pts=>pts.map(([x,y])=>[X0+x*(X1-X0),T+y*(B-T)]);
+    X0=8; X1=W-8; T=14; B=H-14;
+    /* small screens: stretch the curves to fill the frame, so there is no dead space above and below */
+    const lo=compact()?Math.min(...FP.concat(FR).map(p=>p[1])):0, hi=compact()?Math.max(...FP.concat(FR).map(p=>p[1])):1;
+    const map=pts=>pts.map(([x,y])=>[X0+x*(X1-X0),T+((y-lo)/(hi-lo))*(B-T)]);
     const dP=smooth(map(FP)), dR=smooth(map(FR)); lp.setAttribute('d',dP); lr.setAttribute('d',dR);
     q('.il-area').setAttribute('d',dP+` L${X1} ${B} L${X0} ${B} Z`);
     const g=q('.il-guides'); g.innerHTML=''; [0,.5,1].forEach(f=>{ const l=document.createElementNS(NS,'line'); const y=T+f*(B-T); l.setAttribute('x1',X0); l.setAttribute('x2',X1); l.setAttribute('y1',y); l.setAttribute('y2',y); g.appendChild(l); });
@@ -10299,19 +10303,30 @@ setActive(0); startRotation();
   const draw=()=>{ drawn=true; fig.classList.add('on'); [lp,lr].forEach((p,i)=>{ p.style.transition=`stroke-dashoffset 1.8s cubic-bezier(.22,1,.36,1) ${i?.25:0}s`; p.style.strokeDashoffset=0; }); setTimeout(()=>{ vis=true; start(); },reduce?0:1700); };
   if(reduce||!('IntersectionObserver' in window)) draw();
   else{ let done=false; new IntersectionObserver(es=>{ const v=es.some(e=>e.isIntersecting); if(v&&!done){ done=true; draw(); } else if(done){ vis=v; if(v) start(); } },{threshold:.35}).observe(stage); }
-  let rw=stage.clientWidth,rh=stage.clientHeight; const re=()=>{ if(stage.clientWidth===rw&&stage.clientHeight===rh) return; rw=stage.clientWidth; rh=stage.clientHeight; build(); };
+  let rw=stage.clientWidth,rh=stage.clientHeight; const re=()=>{ if(stage.clientWidth===rw&&stage.clientHeight===rh) return; rw=stage.clientWidth; rh=stage.clientHeight; build(); if(compact()&&fig.classList.contains('hover')) showAt(X0+(X1-X0)*.72,true); };
   if('ResizeObserver' in window) new ResizeObserver(re).observe(stage); else addEventListener('resize',re);
   /* hover: guide, tracking dots and a tooltip that eases after the pointer */
   const findAt=(path,len,x)=>{ let lo=0,hi=len; for(let i=0;i<18;i++){ const m=(lo+hi)/2; if(path.getPointAtLength(m).x<x) lo=m; else hi=m; } return path.getPointAtLength(lo); };
   let tx=0,ty=0,cx=0,cy=0,traf=0;
   const glide=()=>{ cx+=(tx-cx)*.18; cy+=(ty-cy)*.18; tip.style.transform=`translate(${cx}px,${cy}px)`; traf=(Math.abs(tx-cx)>.3||Math.abs(ty-cy)>.3)?requestAnimationFrame(glide):0; };
-  stage.addEventListener('pointermove',e=>{ const r=stage.getBoundingClientRect(), x=Math.max(X0,Math.min(X1,e.clientX-r.left));
+  function showAt(x,snap){ const r=stage.getBoundingClientRect(); x=Math.max(X0,Math.min(X1,x));
     const a=findAt(lp,LP,x), b=findAt(lr,LR,x), val=pt=>Math.round(100-(pt.y-T)/(B-T)*100);
-    tip.querySelector('[data-v="p"]').textContent=val(a); tip.querySelector('[data-v="r"]').textContent=val(b); hair.setAttribute('x1',x); hair.setAttribute('x2',x); setC(hp,a); setC(hr,b);
+    tip.querySelector('[data-v="p"]').textContent=val(a); tip.querySelector('[data-v="r"]').textContent=val(b);
+    hair.setAttribute('x1',x); hair.setAttribute('x2',x); setC(hp,a); setC(hr,b);
     const first=!fig.classList.contains('hover'); fig.classList.add('hover');
-    const tw=tip.offsetWidth, th=tip.offsetHeight; tx=x+16+tw>r.width?x-16-tw:x+16; ty=Math.max(0,Math.min(r.height-th,Math.min(a.y,b.y)-th-10));
-    if(first||reduce){ cx=tx; cy=ty; tip.style.transform=`translate(${cx}px,${cy}px)`; } else if(!traf) traf=requestAnimationFrame(glide); });
-  stage.addEventListener('pointerleave',()=>{ fig.classList.remove('hover'); start(); });
+    const tw=tip.offsetWidth, th=tip.offsetHeight;
+    tx=x+16+tw>r.width?x-16-tw:x+16;
+    ty=compact()?Math.max(0,Math.min(r.height-th,(a.y+b.y)/2-th/2))      /* small screens: between the two curves */
+               :Math.max(0,Math.min(r.height-th,Math.min(a.y,b.y)-th-10));
+    if(first||snap||reduce){ cx=tx; cy=ty; tip.style.transform=`translate(${cx}px,${cy}px)`; } else if(!traf) traf=requestAnimationFrame(glide); }
+  stage.addEventListener('pointermove',e=>showAt(e.clientX-stage.getBoundingClientRect().left));
+  stage.addEventListener('pointerdown',e=>showAt(e.clientX-stage.getBoundingClientRect().left));
+  stage.addEventListener('pointerleave',()=>{ if(compact()) return; fig.classList.remove('hover'); start(); });
+  /* small screens: the tooltip is always shown (no hover on touch); tap or drag to move it */
+  const rest=()=>{ if(compact()) showAt(X0+(X1-X0)*.72,true); else { fig.classList.remove('hover'); start(); } };
+  const restLater=()=>setTimeout(rest,reduce?0:1900);
+  if(drawn) restLater(); else { const iv=setInterval(()=>{ if(drawn){ clearInterval(iv); restLater(); } },200); }
+  if(mq.addEventListener) mq.addEventListener('change',()=>{ build(); rest(); });
 })();
 </script>
 </body>
