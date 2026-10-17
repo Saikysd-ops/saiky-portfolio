@@ -390,6 +390,16 @@
   }
   @media (max-width:880px){ .proof-orbit-slot{height:220px;margin-top:20px;} }   /* tablets and phones: orbits stack under the statement */
   .proof-play canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  /* centre of the orbit: the story in five words — People → Systems → Data → Decisions → Clarity */
+  .orb-word{position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;pointer-events:none;opacity:0;transition:opacity .4s ease;}
+  .orb-word.is-on{opacity:1;}
+  .orb-n{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.18em;color:#B7A4C4;opacity:.7;}
+  .orb-w{font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:#F4F2F6;padding-left:.24em;
+    transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1),filter .45s ease;}
+  .orb-w.out{opacity:0;transform:translateY(6px);filter:blur(3px);}
+  .orb-w.is-last{background:linear-gradient(90deg,#6F8CFF,#A27BFF 40%,#F2679F 75%,#FF8A6B);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
+  @media (max-width:880px){ .orb-w{font-size:11px;} .orb-n{font-size:8.5px;} }
+  @media (prefers-reduced-motion:reduce){ .orb-w{transition:none;} }
   .proof-teams .proof-k{margin-bottom:8px;}
   .proof-list{font-size:17px;line-height:1.6;color:var(--ink);font-weight:500;margin:0 0 40px;display:flex;flex-wrap:wrap;column-gap:12px;}
   .proof-list i{font-style:normal;font-weight:400;color:var(--ink-soft);opacity:.55;}
@@ -3682,7 +3692,9 @@
   </section>
 
   <section class="home-proof" aria-labelledby="proofH">
-    <div class="proof-play" id="proofPlay" aria-hidden="true"><canvas></canvas></div>
+    <div class="proof-play" id="proofPlay" aria-hidden="true"><canvas></canvas>
+      <div class="orb-word"><span class="orb-n">01 / 05</span><span class="orb-w">People</span></div>
+    </div>
     <h2 class="proof-k" id="proofH">Experience at scale</h2>
     <div class="stat-grid proof-stats">
       <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
@@ -3692,6 +3704,7 @@
     </div>
     <div class="proof-lower">
       <div class="proof-copy">
+        <p class="sr-only">People, systems, data, decisions, clarity.</p>
         <div class="proof-teams">
           <div class="proof-k">Designed for</div>
           <p class="proof-list"><span>Associates</span><i>/</i><span>Sourcing Managers</span><i>/</i><span>Merchants</span><i>/</i><span>Business Teams</span></p>
@@ -10128,6 +10141,8 @@ setActive(0); startRotation();
       }
     } else { Rr=0; }
   }
+  const wordEl=wrap.querySelector('.orb-word');
+  function placeWord(){ if(!wordEl) return; wordEl.style.left=cx+'px'; wordEl.style.top=cy+'px'; wordEl.classList.toggle('is-on',Rr>=30); }
   function pos(b){ const o=orbits[b.o], R=Rr*o.k; return [cx+o.dx*Rr+Math.cos(b.a)*R, cy+o.dy*Rr+Math.sin(b.a)*R]; }
   function draw(){
     ctx.clearRect(0,0,W,H); if(Rr<30) return;
@@ -10148,18 +10163,29 @@ setActive(0); startRotation();
   }
   /* the layer spans the viewport (100vw) while the content column is capped, so it can change size on its own:
      re-measure whenever the canvas's on-screen size differs from its bitmap, or the circles get stretched */
-  function fit(){ if(Math.round(wrap.clientWidth)!==Math.round(W)||Math.round(wrap.clientHeight)!==Math.round(H)) layout(); }
+  function fit(){ if(Math.round(wrap.clientWidth)!==Math.round(W)||Math.round(wrap.clientHeight)!==Math.round(H)){ layout(); placeWord(); } }
   function frame(t){ const dt=Math.min(.05,(t-(last||t))/1000); last=t; fit(); step(dt); draw(); raf=visible?requestAnimationFrame(frame):0; if(!raf) last=0; }
   function setVisible(v){ visible=v; if(v&&!raf&&!reduce){ raf=requestAnimationFrame(frame); } }
-  function init(){ layout(); draw(); }
+  function init(){ layout(); draw(); placeWord(); }
   if(document.readyState==='complete') init(); else addEventListener('load',init);
   if(document.fonts) document.fonts.ready.then(init);
-  const relayout=()=>{ layout(); draw(); };
+  const relayout=()=>{ layout(); draw(); placeWord(); };
   if('ResizeObserver' in window){ const ro=new ResizeObserver(relayout); ro.observe(sec); ro.observe(wrap); }
   addEventListener('resize',relayout); addEventListener('orientationchange',relayout);
   if('IntersectionObserver' in window) new IntersectionObserver(es=>setVisible(es.some(x=>x.isIntersecting)),{threshold:0}).observe(wrap);
   const check=()=>{ const r=wrap.getBoundingClientRect(); setVisible(r.top<innerHeight&&r.bottom>0); };
   addEventListener('scroll',check,{passive:true}); check();
+  /* the word sequence: one step every 2.4s while the band is on screen (Clarity holds a little longer); reduced motion shows "Clarity" */
+  (function(){
+    if(!wordEl) return; const W5=['People','Systems','Data','Decisions','Clarity'], w=wordEl.querySelector('.orb-w'), n=wordEl.querySelector('.orb-n');
+    const show=k=>{ w.textContent=W5[k]; n.textContent=`0${k+1} / 05`; w.classList.toggle('is-last',k===W5.length-1); };
+    if(reduce){ show(4); return; }
+    let k=0, t=null, on=false; show(0);
+    const step=()=>{ if(!on){ t=null; return; } w.classList.add('out');
+      setTimeout(()=>{ k=(k+1)%W5.length; show(k); w.classList.remove('out'); t=setTimeout(step,k===W5.length-1?3600:2400); },450); };
+    const run=v=>{ on=v; if(v&&!t) t=setTimeout(step,2400); };
+    if('IntersectionObserver' in window) new IntersectionObserver(es=>run(es.some(e=>e.isIntersecting)),{threshold:.2}).observe(wrap); else run(true);
+  })();
 })();
 </script>
 <div class="book-page" id="bookPage" role="dialog" aria-modal="true" aria-labelledby="bookTitle" hidden>
