@@ -397,9 +397,9 @@
     #view-home .proof-stats .stat{padding:0 12px 0 20px;}
     #view-home .proof-stats .stat:nth-child(odd){padding-left:0;border-left:0;}
     /* Supplier Matrix metrics match: a 2×2 grid instead of a tall single column */
-    #view-home .impact-stats{grid-template-columns:repeat(2,1fr);gap:28px 0;}
-    #view-home .impact-stats .stat{border-top:0;padding:0 12px 0 20px;border-left:1px solid color-mix(in srgb, var(--line) 80%, transparent);}
-    #view-home .impact-stats .stat:nth-child(odd){padding-left:0;border-left:0;}
+    #view-home .impact-stats{grid-template-columns:1fr;gap:0;}   /* KPIs stack; each expands on its own */
+    #view-home .impact-stats .stat{border-left:0;padding:18px 0;border-top:1px solid color-mix(in srgb, var(--line) 80%, transparent);}
+    #view-home .impact-stats .stat:first-child{border-top:0;padding-top:0;}
   }
   @media (max-width:560px){
     .value-lead{font-size:28px;line-height:1.2;margin-top:18px;}
@@ -653,6 +653,28 @@
   /* Business OKRs: a quiet status label, then the numbers; definitions and capabilities wait behind one disclosure,
      laid out in the same four columns so each sits directly under its KPI */
   .okr-k{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 14px;}
+  /* per-KPI progressive disclosure: figures always visible; each "Details" opens its own panel beneath it */
+  .okr-stats{align-items:start;}
+  .okr-toggle{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:4px 0;background:none;border:0;cursor:pointer;
+    font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
+  .okr-toggle i{position:relative;width:16px;height:16px;border-radius:50%;border:1px solid color-mix(in srgb, var(--accent) 45%, transparent);flex:none;transition:background .2s ease;}
+  .okr-toggle i::before,.okr-toggle i::after{content:'';position:absolute;left:50%;top:50%;width:7px;height:1.3px;margin:-.65px 0 0 -3.5px;background:currentColor;border-radius:1px;}
+  .okr-toggle i::after{transform:rotate(90deg);transition:transform .22s ease;}
+  .okr-toggle[aria-expanded="true"] i::after{transform:rotate(0deg);}
+  .okr-toggle:hover i{background:color-mix(in srgb, var(--accent) 12%, transparent);}
+  .okr-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+  .okr-panel{display:grid;grid-template-rows:1fr;}
+  .okr-panel-in{min-height:0;overflow:hidden;}
+  .okr-panel-in .okr-def{margin:10px 0 8px;}
+  /* collapsing only happens once JS is ready, so without JS every explanation is simply shown */
+  .okr-js .okr-panel{grid-template-rows:0fr;transition:grid-template-rows .22s ease;}
+  .okr-js .okr-panel.is-open{grid-template-rows:1fr;}
+  .okr-js .okr-toggle{display:inline-flex;} .okr-toggle{display:none;}
+  .impact .okr-note{font-family:var(--font-mono);font-size:10.5px;line-height:1.55;color:var(--ink-soft);opacity:.8;margin:-6px 0 22px;max-width:none;}
+  .impact .okr-panel .okr-def{font-size:13px;line-height:1.5;color:var(--ink);margin:10px 0 8px;max-width:30ch;}
+  .impact .okr-panel .okr-cap{font-size:13px;line-height:1.5;color:var(--ink-soft);margin:0 0 4px;max-width:30ch;}
+  @media (max-width:880px){ .impact .okr-panel .okr-def,.impact .okr-panel .okr-cap{max-width:none;} }
+  @media (prefers-reduced-motion:reduce){ .okr-js .okr-panel,.okr-toggle i::after{transition:none;} }
   .okr-tag{font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
     border:1px solid color-mix(in srgb, var(--accent) 40%, transparent);border-radius:4px;padding:2px 6px;}
   .okr-sub{font-size:13px;color:var(--ink-soft);}
@@ -3639,21 +3661,37 @@
     <p class="role-label">Product Strategy · System Design · UX Direction</p>
     <p class="body">I shaped the product strategy and UX direction, aligning business, data, and product teams around one decision model for supplier discovery, evaluation, and assessment.</p>
     <div class="okr-k"><span class="okr-tag">Business OKRs · Supplier Matrix</span><span class="okr-sub">Success measures across supplier discovery, search relevance, profile readiness and assessment adoption.</span></div>
-    <div class="stat-grid impact-stats">
-      <div class="stat"><div class="num">25% faster</div><div class="lbl">Qualified supplier identification</div></div>
-      <div class="stat"><div class="num">≥80%</div><div class="lbl">Search relevance</div></div>
-      <div class="stat"><div class="num">≥90%</div><div class="lbl">Profile readiness</div></div>
-      <div class="stat"><div class="num">&gt;90%</div><div class="lbl">Assessments in Matrix</div></div>
-    </div>
-    <details class="okr-more">
-      <summary><span>What each OKR means and the capabilities behind it</span><i aria-hidden="true"></i></summary>
-      <div class="okr-grid">
-        <div class="okr-cell"><b class="okr-t">25% faster · Qualified supplier identification</b><p class="okr-def">Target reduction in time to identify a qualified supplier.</p><p class="okr-cap"><span>Intended to support it</span>Search, filters, structured supplier information and shortlisting.</p></div>
-        <div class="okr-cell"><b class="okr-t">≥80% · Search relevance</b><p class="okr-def">Target percentage of relevant suppliers within the top-five search results.</p><p class="okr-cap"><span>Intended to support it</span>Unified vendor linkage, Supplier ID search, business-relevant search criteria and similar-supplier discovery.</p></div>
-        <div class="okr-cell"><b class="okr-t">≥90% · Profile readiness</b><p class="okr-def">Target percentage of supplier profiles with foundational fields complete and ready for evaluation.</p><p class="okr-cap"><span>Intended to support it</span>Unified supplier profiles, consistent supplier identity and foundational supplier information.</p></div>
-        <div class="okr-cell"><b class="okr-t">&gt;90% · Assessments in Matrix</b><p class="okr-def">Target share of supplier assessments initiated directly in Matrix.</p><p class="okr-cap"><span>Intended to support it</span>A structured supplier evaluation experience using Performance, Risk and Capability, with explainable scores and supporting evidence.</p></div>
+    <div class="stat-grid impact-stats okr-stats">
+      <div class="stat okr-stat">
+        <div class="num">25% faster</div><div class="lbl">Qualified supplier identification</div>
+        <button class="okr-toggle" type="button" aria-expanded="false" aria-controls="okrP1"><span>Details</span><span class="sr-only"> for Qualified supplier identification</span><i aria-hidden="true"></i></button>
+        <div class="okr-panel" id="okrP1" role="region" aria-label="Qualified supplier identification details"><div class="okr-panel-in">
+          <p class="okr-def">Target reduction in time to identify a qualified supplier.</p><p class="okr-cap"><span>Intended to support it</span>Search, filters, structured supplier information and shortlisting.</p>
+        </div></div>
       </div>
-    </details>
+      <div class="stat okr-stat">
+        <div class="num">≥80%</div><div class="lbl">Search relevance</div>
+        <button class="okr-toggle" type="button" aria-expanded="false" aria-controls="okrP2"><span>Details</span><span class="sr-only"> for Search relevance</span><i aria-hidden="true"></i></button>
+        <div class="okr-panel" id="okrP2" role="region" aria-label="Search relevance details"><div class="okr-panel-in">
+          <p class="okr-def">Target percentage of relevant suppliers within the top-five search results.</p><p class="okr-cap"><span>Intended to support it</span>Unified vendor linkage, Supplier ID search, business-relevant search criteria and similar-supplier discovery.</p>
+        </div></div>
+      </div>
+      <div class="stat okr-stat">
+        <div class="num">≥90%</div><div class="lbl">Profile readiness</div>
+        <button class="okr-toggle" type="button" aria-expanded="false" aria-controls="okrP3"><span>Details</span><span class="sr-only"> for Profile readiness</span><i aria-hidden="true"></i></button>
+        <div class="okr-panel" id="okrP3" role="region" aria-label="Profile readiness details"><div class="okr-panel-in">
+          <p class="okr-def">Target percentage of supplier profiles with foundational fields complete and ready for evaluation.</p><p class="okr-cap"><span>Intended to support it</span>Unified supplier profiles, consistent supplier identity and foundational supplier information.</p>
+        </div></div>
+      </div>
+      <div class="stat okr-stat">
+        <div class="num">&gt;90%</div><div class="lbl">Assessments in Matrix</div>
+        <button class="okr-toggle" type="button" aria-expanded="false" aria-controls="okrP4"><span>Details</span><span class="sr-only"> for Assessments in Matrix</span><i aria-hidden="true"></i></button>
+        <div class="okr-panel" id="okrP4" role="region" aria-label="Assessments in Matrix details"><div class="okr-panel-in">
+          <p class="okr-def">Target share of supplier assessments initiated directly in Matrix.</p><p class="okr-cap"><span>Intended to support it</span>A structured supplier evaluation experience using Performance, Risk and Capability, with explainable scores and supporting evidence.</p>
+        </div></div>
+      </div>
+    </div>
+    <p class="okr-note">Business OKRs are intended outcomes the product was designed to support — not independently verified post-launch results.</p>
     <p class="highlight">From fragmented supplier data to one sourcing decision model.</p>
     <button class="btn btn-outline btn-small impact-cta" data-view="case-supplier">Explore the case study <span class="cta-arrow">→</span></button>
   </section>
@@ -10125,6 +10163,20 @@ setActive(0); startRotation();
   const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); requestAnimationFrame(()=>q.classList.add('is-in')); } },{threshold:.5});
   io.observe(q);
   setTimeout(()=>{ if(!q.classList.contains('is-in')){ const r=q.getBoundingClientRect(); if(r.top<innerHeight&&r.bottom>0) q.classList.add('is-in'); } },4000);   /* safety: never stay hidden on screen */
+})();
+</script>
+<script>
+/* Supplier Matrix Business OKRs — each KPI's "Details" control expands its own explanation (independent, not an accordion) */
+(function(){
+  const sec=document.querySelector('.impact .okr-stats'); if(!sec) return;
+  const root=sec.closest('.impact'); root.classList.add('okr-js');
+  sec.querySelectorAll('.okr-toggle').forEach(btn=>{
+    const panel=document.getElementById(btn.getAttribute('aria-controls')); if(!panel) return;
+    const set=open=>{ btn.setAttribute('aria-expanded',open); panel.classList.toggle('is-open',open);
+      if(open) panel.removeAttribute('inert'); else panel.setAttribute('inert',''); };
+    set(false);
+    btn.addEventListener('click',()=>set(btn.getAttribute('aria-expanded')!=='true'));
+  });
 })();
 </script>
 </body>
