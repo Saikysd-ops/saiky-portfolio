@@ -352,8 +352,13 @@
   .proof-play{position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:0;}
   .home-proof > :not(.proof-play){position:relative;z-index:1;}
   .proof-play{pointer-events:none;}   /* decorative orbits: never intercept the pointer */
-  @media (max-width:699px){ .home-proof{padding-bottom:248px !important;} }   /* room for the orbits under the statement */
-  @media (min-width:700px){ .proof-lower{min-height:352px;box-sizing:border-box;display:flex;align-items:center;} .proof-copy{flex:1 1 auto;min-width:0;} }   /* copy and orbits share one centre line */
+  /* lower area: 60% copy · 40% orbits, one shared centre line */
+  @media (min-width:881px){
+    .proof-lower{display:grid;grid-template-columns:minmax(0,60fr) minmax(0,40fr);column-gap:0;align-items:center;}
+    .proof-orbit-slot{align-self:stretch;min-height:320px;}
+    .proof-copy .proof-quote{max-width:none;}
+  }
+  @media (max-width:880px){ .proof-orbit-slot{height:220px;margin-top:20px;} }   /* tablets and phones: orbits stack under the statement */
   .proof-play canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .proof-teams .proof-k{margin-bottom:8px;}
   .proof-list{font-size:17px;line-height:1.6;color:var(--ink);font-weight:500;margin:0 0 40px;display:flex;flex-wrap:wrap;column-gap:12px;}
@@ -3594,8 +3599,9 @@
           <div class="proof-k">Designed for</div>
           <p class="proof-list"><span>Associates</span><i>/</i><span>Sourcing Managers</span><i>/</i><span>Merchants</span><i>/</i><span>Business Teams</span></p>
         </div>
-        <p class="proof-quote">I don't define myself by titles —<br>I define myself by the products I help build.</p>
+        <p class="proof-quote">I don't define myself by titles.<br>I define myself by the products I help build.</p>
       </div>
+      <div class="proof-orbit-slot" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -9970,14 +9976,21 @@ setActive(0); startRotation();
     const s=sec.getBoundingClientRect(), q=sec.querySelector('.proof-quote'), low=sec.querySelector('.proof-lower');
     const right=s.right-r.left, qr=q?q.getBoundingClientRect().right-r.left:0;
     const lr=low?low.getBoundingClientRect():null, top=lr?lr.top-r.top+32:H*.45, bot=lr?lr.bottom-r.top:H-72;   /* the lower block, below its divider padding */
-    if(W<700){ Rr=Math.min(80,(W-40)/2.4); cx=W/2; cy=H-28-Rr*1.2; alpha=1; }      /* phones: centred under the statement, in its own space */
-    else{
-      /* the motif spans about 2.4R: it fills the lower block's height, shares its centre line with the copy,
-         and its right edge sits on the content's right edge */
-      const avail=bot-top;
-      Rr=Math.min(150,avail/2.4,(right-qr-64)/2.43);
-      cx=right-Rr*1.23; cy=top+avail/2; alpha=1;
-    }
+    const slot=sec.querySelector('.proof-orbit-slot'), sr=slot?slot.getBoundingClientRect():null;
+    alpha=1;
+    if(sr&&sr.width>0){
+      /* the motif spans about 2.4R × 2.4R: centred in its 40% column, vertically aligned with the headline,
+         and kept inside the band */
+      const sl=sr.left-r.left, st=sr.top-r.top, sw=sr.width, sh=sr.height;
+      if(W<881){ Rr=Math.min(85,(sw-24)/2.4,sh/2.4); cx=sl+sw/2; cy=st+sh/2; }
+      else{
+        Rr=Math.min(150,(sw-16)/2.4,(bot-top)/2.4);
+        cx=sl+sw/2;
+        const cp=sec.querySelector('.proof-copy'), cb=cp?cp.getBoundingClientRect():null;
+        const cc=cb?(cb.top+cb.bottom)/2-r.top:st+sh/2;   /* centre line of label, groups and headline */
+        cy=Math.max(top+Rr*1.2,Math.min(cc,bot-Rr*1.2));
+      }
+    } else { Rr=0; }
   }
   function pos(b){ const o=orbits[b.o], R=Rr*o.k; return [cx+o.dx*Rr+Math.cos(b.a)*R, cy+o.dy*Rr+Math.sin(b.a)*R]; }
   function draw(){
