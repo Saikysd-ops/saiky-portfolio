@@ -3146,6 +3146,10 @@
     .hero-stats .num{font-size:22px;}
     .greet{font-size:clamp(32px,10vw,44px);}
     .cta-row .btn{padding:15px 24px;font-size:14px;}
+    /* phones: buttons were desktop-sized (62px, 16px). A calmer 50px keeps a comfortable tap target (≥44px) */
+    .btn:not(.btn-small):not(.nda-unlock){min-height:50px;font-size:15px;}
+    .btn.btn-orb{font-size:15px;padding:0 9px 0 24px;gap:14px;}
+    .btn-orb__dot{width:28px;height:28px;}
     .navbar.open .navlinks, .navbar.open .nav-right{padding-left:20px;padding-right:20px;}
     .c-mail{font-size:16px;}
     .c-hint{display:none;}
