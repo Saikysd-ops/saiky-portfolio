@@ -669,7 +669,8 @@
   .il-tag-p i{background:#8A5CF0;} .il-tag-p b{color:#7B4FE0;} .il-tag-r i{background:#E46B5D;} .il-tag-r b{color:#D9573F;}
   :root[data-theme="dark"] .il-tag-p b{color:#B48CFF;} :root[data-theme="dark"] .il-tag-r b{color:#F2876C;}
   .il-tag-p{right:1%;top:6%;} .il-tag-r{right:1%;bottom:12%;}
-  .impact .il-cap{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);opacity:.6;margin:4px 0 0;text-align:right;}
+  .impact .il-cap{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);opacity:1;margin:6px 0 0;text-align:right;max-width:none;}
+  .impact .il-cap b{color:var(--ink);font-weight:600;}
   @media (max-width:880px){ .impact .il-cap{text-align:left;} }
   @media (prefers-reduced-motion:reduce){ .il-area,.il-run,.il-tag{transition:none;} }
   /* editorial rhythm for the section copy */
@@ -694,7 +695,10 @@
      laid out in the same four columns so each sits directly under its KPI */
   .okr-k{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 14px;}
   /* per-KPI progressive disclosure: figures always visible; each "Details" opens its own panel beneath it */
-  .okr-stats{align-items:start;}
+  .okr-stats{align-items:stretch;}
+  .okr-stat{display:flex;flex-direction:column;justify-content:flex-start;}
+  .okr-stat .lbl{min-height:1.45em;}
+  .okr-stat .okr-toggle{align-self:flex-start;}
   .okr-toggle{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:4px 0;background:none;border:0;cursor:pointer;
     font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
   .okr-toggle i{position:relative;width:16px;height:16px;border-radius:50%;border:1px solid color-mix(in srgb, var(--accent) 45%, transparent);flex:none;transition:background .2s ease;}
@@ -3723,7 +3727,7 @@
         <span class="il-tag il-tag-p"><i></i>Performance <b>↑</b></span>
         <span class="il-tag il-tag-r"><i></i>Risk <b>↓</b></span>
       </div>
-      <figcaption class="il-cap">Illustration · performance and risk signals in one view</figcaption>
+      <figcaption class="il-cap"><b>Illustration</b> · not measured data — performance and risk signals in one view</figcaption>
     </figure>
     </div>
     <div class="okr-k"><span class="okr-tag">Business OKRs · Supplier Matrix</span><span class="okr-sub">Success measures across supplier discovery, search relevance, profile readiness and assessment adoption.</span></div>
