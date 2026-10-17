@@ -644,35 +644,33 @@
   :root[data-theme="dark"] #view-home .impact::before{background:radial-gradient(rgba(188,128,204,.08) 1px,transparent 1.2px) 0 0/22px 22px,#18171C;}
   #view-home .hero + .home-proof + .impact{padding-top:76px;}
   #view-home .impact{padding-bottom:64px;}
-  .impact-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:center;margin-bottom:36px;}
+  .impact-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:stretch;margin-bottom:36px;}   /* equal halves; the illustration takes the copy's height */
   @media (max-width:880px){ .impact-top{grid-template-columns:1fr;gap:20px;margin-bottom:28px;} }   /* phones and tablets: illustration under the copy */
   .impact-copy .body{margin-bottom:0;}
-  .il{margin:0;position:relative;}
-  .il-stage{position:relative;aspect-ratio:560/320;width:100%;cursor:crosshair;}
+  .il{margin:0;position:relative;display:flex;flex-direction:column;align-self:stretch;}
+  .il-stage{position:relative;flex:1;min-height:240px;cursor:crosshair;}
   .il-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
   .il-guides line{stroke:var(--ink-soft);stroke-opacity:.16;stroke-width:1;stroke-dasharray:1 5;stroke-linecap:round;}
-  .il-nums text{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;fill:var(--ink-soft);opacity:.55;}
-  .il-line{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25;}
-  .il-line-r{stroke-width:2;}
+  .il-line{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25;} .il-line-r{stroke-width:2;}
   .il-area{opacity:0;transition:opacity 1.2s ease .9s;} .il.on .il-area{opacity:1;}
   .il-run{opacity:0;transition:opacity .6s ease 1.6s;} .il.on .il-run{opacity:1;}
   .il-run-p{fill:var(--paper);stroke:#8A5CF0;stroke-width:2;} .il-run-r{fill:var(--paper);stroke:#E46B5D;stroke-width:2;}
-  .il-hair{stroke:var(--ink);stroke-opacity:.16;stroke-width:1;opacity:0;transition:opacity .2s;}
-  .il-hov{opacity:0;transition:opacity .2s;} .il-hov-p{fill:#8A5CF0;stroke:var(--paper);stroke-width:2.5;} .il-hov-r{fill:#E46B5D;stroke:var(--paper);stroke-width:2.5;}
-  .il.hover .il-hair,.il.hover .il-hov{opacity:1;} .il.hover .il-run{opacity:.2;}
-  /* quiet line tags: a dot and a word, no chip, no shadow */
-  .il-tag{position:absolute;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--ink-soft);opacity:0;transition:opacity .6s ease 1.5s;white-space:nowrap;}
-  .il.on .il-tag{opacity:1;}
-  .il-tag i{width:6px;height:6px;border-radius:50%;}
-  .il-tag b{font-weight:600;}
-  .il-tag-p i{background:#8A5CF0;} .il-tag-p b{color:#7B4FE0;} .il-tag-r i{background:#E46B5D;} .il-tag-r b{color:#D9573F;}
-  :root[data-theme="dark"] .il-tag-p b{color:#B48CFF;} :root[data-theme="dark"] .il-tag-r b{color:#F2876C;}
-  .il-tag-p{right:1%;top:6%;} .il-tag-r{right:1%;bottom:12%;}
-  .impact .il-cap{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);opacity:1;margin:6px 0 0;text-align:right;max-width:none;}
-  .impact .il-cap b{color:var(--ink);font-weight:600;}
-  @media (max-width:880px){ .impact .il-cap{text-align:left;} }
-  @media (prefers-reduced-motion:reduce){ .il-area,.il-run,.il-tag{transition:none;} }
+  .il-hair{stroke:var(--ink);stroke-opacity:.14;stroke-width:1;opacity:0;transition:opacity .25s;}
+  .il-hov{opacity:0;transition:opacity .25s;} .il-hov-p{fill:#8A5CF0;stroke:var(--paper);stroke-width:2.5;} .il-hov-r{fill:#E46B5D;stroke:var(--paper);stroke-width:2.5;}
+  .il.hover .il-hair,.il.hover .il-hov{opacity:1;} .il.hover .il-run{opacity:.15;}
+  /* glass tooltip that glides after the pointer */
+  .il-tip{position:absolute;left:0;top:0;display:flex;flex-direction:column;gap:5px;padding:9px 12px;border-radius:12px;pointer-events:none;
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);white-space:nowrap;
+    background:color-mix(in srgb, var(--paper-raised) 78%, transparent);border:1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    -webkit-backdrop-filter:blur(10px) saturate(1.3);backdrop-filter:blur(10px) saturate(1.3);
+    opacity:0;scale:.96;transition:opacity .25s ease,scale .25s cubic-bezier(.22,1,.36,1);will-change:transform;}
+  .il.hover .il-tip{opacity:1;scale:1;}
+  .il-tip span{display:flex;align-items:center;gap:7px;} .il-tip i{width:6px;height:6px;border-radius:50%;}
+  .il-tip i.p{background:#8A5CF0;} .il-tip i.r{background:#E46B5D;}
+  .il-tip span:first-child b{color:#7B4FE0;} .il-tip span:last-child b{color:#D9573F;}
+  :root[data-theme="dark"] .il-tip span:first-child b{color:#B48CFF;} :root[data-theme="dark"] .il-tip span:last-child b{color:#F2876C;}
+  @media (max-width:880px){ .il-stage{flex:none;height:220px;} }
+  @media (prefers-reduced-motion:reduce){ .il-area,.il-run,.il-tip{transition:none;} }
   /* editorial rhythm for the section copy */
   #view-home .impact .lead{font-size:clamp(26px,2.6vw,36px);line-height:1.15;letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance;}
   #view-home .impact .head{margin-bottom:18px;}
@@ -3707,27 +3705,24 @@
       <p class="role-label">Product Strategy · System Design · UX Direction</p>
       <p class="body">I shaped the product strategy and UX direction, aligning business, data, and product teams around one decision model for supplier discovery, evaluation, and assessment.</p>
       </div>
-    <figure class="il" aria-label="Illustration: supplier performance rising while risk falls">
+    <figure class="il" aria-hidden="true">
       <div class="il-stage" id="ilStage">
-        <svg class="il-svg" viewBox="0 0 560 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <svg class="il-svg">
           <defs>
             <linearGradient id="ilGP" x1="0" x2="1"><stop offset="0" stop-color="#5B7CFA"/><stop offset=".55" stop-color="#8A5CF0"/><stop offset="1" stop-color="#BC80CC"/></linearGradient>
             <linearGradient id="ilGR" x1="0" x2="1"><stop offset="0" stop-color="#F48C6E"/><stop offset="1" stop-color="#E46B5D"/></linearGradient>
-            <linearGradient id="ilGA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A5CF0" stop-opacity=".22"/><stop offset="1" stop-color="#8A5CF0" stop-opacity="0"/></linearGradient>
+            <linearGradient id="ilGA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A5CF0" stop-opacity=".2"/><stop offset="1" stop-color="#8A5CF0" stop-opacity="0"/></linearGradient>
           </defs>
           <g class="il-guides"></g>
-          <g class="il-nums"></g>
           <path class="il-area" fill="url(#ilGA)"/>
           <path class="il-line il-line-p" stroke="url(#ilGP)"/>
           <path class="il-line il-line-r" stroke="url(#ilGR)"/>
-          <line class="il-hair" y1="18" y2="300"/>
+          <line class="il-hair"/>
           <circle class="il-run il-run-p" r="4.5"/><circle class="il-run il-run-r" r="4.5"/>
-          <circle class="il-hov il-hov-p" r="6"/><circle class="il-hov il-hov-r" r="6"/>
+          <circle class="il-hov il-hov-p" r="5.5"/><circle class="il-hov il-hov-r" r="5.5"/>
         </svg>
-        <span class="il-tag il-tag-p"><i></i>Performance <b>↑</b></span>
-        <span class="il-tag il-tag-r"><i></i>Risk <b>↓</b></span>
+        <div class="il-tip"><span><i class="p"></i>Performance <b>↑</b></span><span><i class="r"></i>Risk <b>↓</b></span></div>
       </div>
-      <figcaption class="il-cap"><b>Illustration</b> · not measured data — performance and risk signals in one view</figcaption>
     </figure>
     </div>
     <div class="okr-k"><span class="okr-tag">Business OKRs · Supplier Matrix</span><span class="okr-sub">Success measures across supplier discovery, search relevance, profile readiness and assessment adoption.</span></div>
@@ -10250,44 +10245,49 @@ setActive(0); startRotation();
 })();
 </script>
 <script>
-/* Latest impact — decorative illustration: two flowing curves (performance rising, risk falling) draw in,
-   a glowing dot travels each line, and on hover a guide + dots follow the pointer. No data, no numbers. */
+/* Latest impact — decorative illustration: two flowing curves draw in, a dot travels each line,
+   and on hover a guide, two tracking dots and a glass tooltip glide after the pointer. No data. */
 (function(){
   const fig=document.querySelector('.impact .il'); if(!fig) return;
-  const stage=fig.querySelector('.il-stage'), svg=fig.querySelector('svg'), q=s=>svg.querySelector(s);
-  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const W=560,H=320;
-  const P=[[20,214],[90,200],[160,206],[230,168],[300,150],[370,118],[440,96],[540,58]];
-  const Rk=[[20,104],[90,122],[160,116],[230,156],[300,170],[370,196],[440,214],[540,246]];
+  const stage=fig.querySelector('.il-stage'), svg=fig.querySelector('svg'), q=s=>svg.querySelector(s), NS='http://www.w3.org/2000/svg';
+  const tip=fig.querySelector('.il-tip'), reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FP=[[0,.66],[.13,.62],[.26,.64],[.4,.5],[.53,.44],[.66,.33],[.8,.26],[1,.1]];
+  const FR=[[0,.28],[.13,.34],[.26,.32],[.4,.46],[.53,.51],[.66,.6],[.8,.66],[1,.78]];
   const smooth=pts=>{ let d=`M${pts[0][0]} ${pts[0][1]}`; for(let i=0;i<pts.length-1;i++){ const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
       d+=` C${p1[0]+(p2[0]-p0[0])/6} ${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6} ${p2[1]-(p3[1]-p1[1])/6} ${p2[0]} ${p2[1]}`; } return d; };
-  const dP=smooth(P), dR=smooth(Rk);
-  q('.il-line-p').setAttribute('d',dP); q('.il-line-r').setAttribute('d',dR);
-  q('.il-area').setAttribute('d',dP+` L540 300 L20 300 Z`);
-  /* light index numbers: an illustrative 0–100 scale and quarters, kept faint */
-  const nm=q('.il-nums'), tx=(x,y,s,a)=>{ const t=document.createElementNS('http://www.w3.org/2000/svg','text'); t.setAttribute('x',x); t.setAttribute('y',y); t.setAttribute('text-anchor',a||'start'); t.textContent=s; nm.appendChild(t); };
-  [[44,'100'],[162,'50'],[280,'0']].forEach(([y,s])=>tx(14,y+3,s,'end'));
-  ['Q1','Q2','Q3','Q4'].forEach((s,i)=>tx(20+i*(520/3),312,s,i===0?'start':i===3?'end':'middle'));
-  const g=q('.il-guides'); [44,162,280].forEach(y=>{ const l=document.createElementNS('http://www.w3.org/2000/svg','line'); l.setAttribute('x1',20);l.setAttribute('x2',540);l.setAttribute('y1',y);l.setAttribute('y2',y); g.appendChild(l); });
-  const lines=[...svg.querySelectorAll('.il-line')], lp=q('.il-line-p'), lr=q('.il-line-r'), LP=lp.getTotalLength(), LR=lr.getTotalLength();
-  lines.forEach(p=>{ const L=p.getTotalLength(); p.style.strokeDasharray=L; p.style.strokeDashoffset=reduce?0:L; });
-  const runP=q('.il-run-p'), runR=q('.il-run-r');
-  const at=(path,len,t)=>path.getPointAtLength(len*t);
+  const lp=q('.il-line-p'), lr=q('.il-line-r'), runP=q('.il-run-p'), runR=q('.il-run-r'), hp=q('.il-hov-p'), hr=q('.il-hov-r'), hair=q('.il-hair');
+  let W=0,H=0,X0=0,X1=0,LP=1,LR=1,drawn=false;
   const setC=(c,pt)=>{ c.setAttribute('cx',pt.x); c.setAttribute('cy',pt.y); };
-  setC(runP,at(lp,LP,1)); setC(runR,at(lr,LR,1));
+  function build(){
+    W=Math.max(200,stage.clientWidth); H=Math.max(160,stage.clientHeight); svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    X0=8; X1=W-8; const T=14,B=H-14, map=pts=>pts.map(([x,y])=>[X0+x*(X1-X0),T+y*(B-T)]);
+    const dP=smooth(map(FP)), dR=smooth(map(FR)); lp.setAttribute('d',dP); lr.setAttribute('d',dR);
+    q('.il-area').setAttribute('d',dP+` L${X1} ${B} L${X0} ${B} Z`);
+    const g=q('.il-guides'); g.innerHTML=''; [0,.5,1].forEach(f=>{ const l=document.createElementNS(NS,'line'); const y=T+f*(B-T); l.setAttribute('x1',X0); l.setAttribute('x2',X1); l.setAttribute('y1',y); l.setAttribute('y2',y); g.appendChild(l); });
+    hair.setAttribute('y1',T); hair.setAttribute('y2',B);
+    LP=lp.getTotalLength(); LR=lr.getTotalLength();
+    [lp,lr].forEach(p=>{ const L=p.getTotalLength(); p.style.transition='none'; p.style.strokeDasharray=L; p.style.strokeDashoffset=(reduce||drawn)?0:L; });
+    setC(runP,lp.getPointAtLength(LP)); setC(runR,lr.getPointAtLength(LR));
+  }
+  build();
   let raf=0,t0=0,vis=false;
-  const loop=t=>{ if(!t0)t0=t; const k=((t-t0)/6000)%1, e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;   /* eased, 6s per lap */
-    setC(runP,at(lp,LP,e)); setC(runR,at(lr,LR,(e+.5)%1)); raf=vis&&!fig.classList.contains('hover')?requestAnimationFrame(loop):0; };
-  const start=()=>{ if(!raf&&!reduce) raf=requestAnimationFrame(loop); };
-  const draw=()=>{ fig.classList.add('on'); lines.forEach((p,i)=>{ p.style.transition=`stroke-dashoffset 1.8s cubic-bezier(.22,1,.36,1) ${i?.25:0}s`; p.style.strokeDashoffset=0; }); setTimeout(()=>{ vis=true; start(); },reduce?0:1700); };
+  const loop=t=>{ if(!t0)t0=t; const k=((t-t0)/6500)%1, e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    setC(runP,lp.getPointAtLength(LP*e)); setC(runR,lr.getPointAtLength(LR*((e+.5)%1))); raf=vis&&!fig.classList.contains('hover')?requestAnimationFrame(loop):0; };
+  const start=()=>{ if(!raf&&!reduce&&vis) raf=requestAnimationFrame(loop); };
+  const draw=()=>{ drawn=true; fig.classList.add('on'); [lp,lr].forEach((p,i)=>{ p.style.transition=`stroke-dashoffset 1.8s cubic-bezier(.22,1,.36,1) ${i?.25:0}s`; p.style.strokeDashoffset=0; }); setTimeout(()=>{ vis=true; start(); },reduce?0:1700); };
   if(reduce||!('IntersectionObserver' in window)) draw();
   else{ let done=false; new IntersectionObserver(es=>{ const v=es.some(e=>e.isIntersecting); if(v&&!done){ done=true; draw(); } else if(done){ vis=v; if(v) start(); } },{threshold:.35}).observe(stage); }
-  /* hover: guide + dots follow the pointer along both curves */
-  const findY=(path,len,x)=>{ let lo=0,hi=len; for(let i=0;i<18;i++){ const m=(lo+hi)/2; if(path.getPointAtLength(m).x<x) lo=m; else hi=m; } return path.getPointAtLength(lo); };
-  const hp=q('.il-hov-p'), hr=q('.il-hov-r'), hair=q('.il-hair');
-  stage.addEventListener('pointermove',e=>{ const r=svg.getBoundingClientRect(), s=Math.min(r.width/W,r.height/H), ox=(r.width-W*s)/2;
-    const x=Math.max(20,Math.min(540,(e.clientX-r.left-ox)/s)); fig.classList.add('hover');
-    hair.setAttribute('x1',x); hair.setAttribute('x2',x); setC(hp,findY(lp,LP,x)); setC(hr,findY(lr,LR,x)); });
+  let rw=stage.clientWidth,rh=stage.clientHeight; const re=()=>{ if(stage.clientWidth===rw&&stage.clientHeight===rh) return; rw=stage.clientWidth; rh=stage.clientHeight; build(); };
+  if('ResizeObserver' in window) new ResizeObserver(re).observe(stage); else addEventListener('resize',re);
+  /* hover: guide, tracking dots and a tooltip that eases after the pointer */
+  const findAt=(path,len,x)=>{ let lo=0,hi=len; for(let i=0;i<18;i++){ const m=(lo+hi)/2; if(path.getPointAtLength(m).x<x) lo=m; else hi=m; } return path.getPointAtLength(lo); };
+  let tx=0,ty=0,cx=0,cy=0,traf=0;
+  const glide=()=>{ cx+=(tx-cx)*.18; cy+=(ty-cy)*.18; tip.style.transform=`translate(${cx}px,${cy}px)`; traf=(Math.abs(tx-cx)>.3||Math.abs(ty-cy)>.3)?requestAnimationFrame(glide):0; };
+  stage.addEventListener('pointermove',e=>{ const r=stage.getBoundingClientRect(), x=Math.max(X0,Math.min(X1,e.clientX-r.left));
+    const a=findAt(lp,LP,x), b=findAt(lr,LR,x); hair.setAttribute('x1',x); hair.setAttribute('x2',x); setC(hp,a); setC(hr,b);
+    const first=!fig.classList.contains('hover'); fig.classList.add('hover');
+    const tw=tip.offsetWidth, th=tip.offsetHeight; tx=x+16+tw>r.width?x-16-tw:x+16; ty=Math.max(0,Math.min(r.height-th,Math.min(a.y,b.y)-th-10));
+    if(first||reduce){ cx=tx; cy=ty; tip.style.transform=`translate(${cx}px,${cy}px)`; } else if(!traf) traf=requestAnimationFrame(glide); });
   stage.addEventListener('pointerleave',()=>{ fig.classList.remove('hover'); start(); });
 })();
 </script>
