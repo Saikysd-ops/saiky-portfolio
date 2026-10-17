@@ -650,12 +650,12 @@
   @media (max-width:880px){ .impact-top{grid-template-columns:1fr;gap:20px;margin-bottom:28px;} }   /* phones and tablets: illustration under the copy */
   .impact-copy .body{margin-bottom:0;}
   .il{margin:0;position:relative;display:flex;flex-direction:column;align-self:stretch;}
-  @media (min-width:881px){ .impact-top .il{width:85%;justify-self:end;padding:20px 0;box-sizing:border-box;} }   /* ~15% smaller, right-aligned, centred on the copy */
+  @media (min-width:881px){ .impact-top .il{width:90%;justify-self:end;align-self:center;} .impact-top .il-stage{flex:none;aspect-ratio:16/9;min-height:0;} }   /* 16:9, right-aligned, centred on the copy */
   .il-stage{position:relative;flex:1;min-height:240px;cursor:default;}   /* decorative: no data-reading cursor */
   .il-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
   .il-guides line{stroke:var(--ink-soft);stroke-opacity:.16;stroke-width:1;stroke-dasharray:1 5;stroke-linecap:round;}
   .il-line{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25;} .il-line-r{stroke-width:2;}
-  .il-area{opacity:0;transition:opacity 1.2s ease .9s;} .il.on .il-area{opacity:1;}
+  .il-area{opacity:0;transition:opacity .45s ease;} .il.hover .il-area{opacity:1;}   /* lines only at rest; shade on hover */
   .il-run{opacity:0;transition:opacity .6s ease 1.6s;} .il.on .il-run{opacity:1;}
   .il-run-p{fill:var(--paper);stroke:#8A5CF0;stroke-width:2;} .il-run-r{fill:var(--paper);stroke:#E46B5D;stroke-width:2;}
   .il-hair{stroke:var(--ink);stroke-opacity:.14;stroke-width:1;opacity:0;transition:opacity .25s;}
@@ -669,7 +669,8 @@
     opacity:0;scale:.96;transition:opacity .25s ease,scale .25s cubic-bezier(.22,1,.36,1);will-change:transform;}
   .il.hover .il-tip{opacity:1;scale:1;}
   .il-tip em{font-style:normal;font-size:9.5px;letter-spacing:.1em;color:var(--ink-soft);padding-bottom:5px;margin-bottom:1px;border-bottom:1px solid color-mix(in srgb, var(--ink) 8%, transparent);}
-  .il-tip span{display:flex;align-items:center;gap:7px;} .il-tip i{width:6px;height:6px;border-radius:50%;}
+  .il-tip span{display:flex;align-items:center;gap:7px;}
+  .il-tip strong{margin-left:auto;padding-left:12px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;} .il-tip i{width:6px;height:6px;border-radius:50%;}
   .il-tip i.p{background:#8A5CF0;} .il-tip i.r{background:#E46B5D;}
   .il-tip span:first-child b{color:#7B4FE0;} .il-tip span:last-child b{color:#D9573F;}
   :root[data-theme="dark"] .il-tip span:first-child b{color:#B48CFF;} :root[data-theme="dark"] .il-tip span:last-child b{color:#F2876C;}
@@ -3725,7 +3726,7 @@
           <circle class="il-run il-run-p" r="4.5"/><circle class="il-run il-run-r" r="4.5"/>
           <circle class="il-hov il-hov-p" r="5.5"/><circle class="il-hov il-hov-r" r="5.5"/>
         </svg>
-        <div class="il-tip" aria-hidden="true"><em>Illustrative trend</em><span><i class="p"></i>Performance <b>↑</b></span><span><i class="r"></i>Risk <b>↓</b></span></div>
+        <div class="il-tip" aria-hidden="true"><em>Illustrative trend</em><span><i class="p"></i>Performance <strong data-v="p">—</strong> <b>↑</b></span><span><i class="r"></i>Risk <strong data-v="r">—</strong> <b>↓</b></span></div>
       </div>
     </figure>
     </div>
@@ -10260,11 +10261,11 @@ setActive(0); startRotation();
   const smooth=pts=>{ let d=`M${pts[0][0]} ${pts[0][1]}`; for(let i=0;i<pts.length-1;i++){ const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
       d+=` C${p1[0]+(p2[0]-p0[0])/6} ${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6} ${p2[1]-(p3[1]-p1[1])/6} ${p2[0]} ${p2[1]}`; } return d; };
   const lp=q('.il-line-p'), lr=q('.il-line-r'), runP=q('.il-run-p'), runR=q('.il-run-r'), hp=q('.il-hov-p'), hr=q('.il-hov-r'), hair=q('.il-hair');
-  let W=0,H=0,X0=0,X1=0,LP=1,LR=1,drawn=false;
+  let W=0,H=0,X0=0,X1=0,T=14,B=146,LP=1,LR=1,drawn=false;
   const setC=(c,pt)=>{ c.setAttribute('cx',pt.x); c.setAttribute('cy',pt.y); };
   function build(){
     W=Math.max(200,stage.clientWidth); H=Math.max(160,stage.clientHeight); svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-    X0=8; X1=W-8; const T=14,B=H-14, map=pts=>pts.map(([x,y])=>[X0+x*(X1-X0),T+y*(B-T)]);
+    X0=8; X1=W-8; T=14; B=H-14; const map=pts=>pts.map(([x,y])=>[X0+x*(X1-X0),T+y*(B-T)]);
     const dP=smooth(map(FP)), dR=smooth(map(FR)); lp.setAttribute('d',dP); lr.setAttribute('d',dR);
     q('.il-area').setAttribute('d',dP+` L${X1} ${B} L${X0} ${B} Z`);
     const g=q('.il-guides'); g.innerHTML=''; [0,.5,1].forEach(f=>{ const l=document.createElementNS(NS,'line'); const y=T+f*(B-T); l.setAttribute('x1',X0); l.setAttribute('x2',X1); l.setAttribute('y1',y); l.setAttribute('y2',y); g.appendChild(l); });
@@ -10288,7 +10289,8 @@ setActive(0); startRotation();
   let tx=0,ty=0,cx=0,cy=0,traf=0;
   const glide=()=>{ cx+=(tx-cx)*.18; cy+=(ty-cy)*.18; tip.style.transform=`translate(${cx}px,${cy}px)`; traf=(Math.abs(tx-cx)>.3||Math.abs(ty-cy)>.3)?requestAnimationFrame(glide):0; };
   stage.addEventListener('pointermove',e=>{ const r=stage.getBoundingClientRect(), x=Math.max(X0,Math.min(X1,e.clientX-r.left));
-    const a=findAt(lp,LP,x), b=findAt(lr,LR,x); hair.setAttribute('x1',x); hair.setAttribute('x2',x); setC(hp,a); setC(hr,b);
+    const a=findAt(lp,LP,x), b=findAt(lr,LR,x), val=pt=>Math.round(100-(pt.y-T)/(B-T)*100);
+    tip.querySelector('[data-v="p"]').textContent=val(a); tip.querySelector('[data-v="r"]').textContent=val(b); hair.setAttribute('x1',x); hair.setAttribute('x2',x); setC(hp,a); setC(hr,b);
     const first=!fig.classList.contains('hover'); fig.classList.add('hover');
     const tw=tip.offsetWidth, th=tip.offsetHeight; tx=x+16+tw>r.width?x-16-tw:x+16; ty=Math.max(0,Math.min(r.height-th,Math.min(a.y,b.y)-th-10));
     if(first||reduce){ cx=tx; cy=ty; tip.style.transform=`translate(${cx}px,${cy}px)`; } else if(!traf) traf=requestAnimationFrame(glide); });
