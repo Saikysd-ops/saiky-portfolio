@@ -650,26 +650,33 @@
   .il{margin:0;position:relative;}
   .il-stage{position:relative;aspect-ratio:560/320;width:100%;cursor:crosshair;}
   .il-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
-  .il-guides line{stroke:var(--ink-soft);stroke-opacity:.14;stroke-width:1;stroke-dasharray:2 6;stroke-linecap:round;}
-  .il-line,.il-glow{fill:none;stroke-linecap:round;stroke-linejoin:round;}
-  .il-line{stroke-width:3;} .il-glow{stroke-width:8;opacity:.35;}
-  .il-line-r{stroke-width:2.5;} .il-glow-r{opacity:.25;}
+  .il-guides line{stroke:var(--ink-soft);stroke-opacity:.16;stroke-width:1;stroke-dasharray:1 5;stroke-linecap:round;}
+  .il-nums text{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;fill:var(--ink-soft);opacity:.55;}
+  .il-line{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25;}
+  .il-line-r{stroke-width:2;}
   .il-area{opacity:0;transition:opacity 1.2s ease .9s;} .il.on .il-area{opacity:1;}
   .il-run{opacity:0;transition:opacity .6s ease 1.6s;} .il.on .il-run{opacity:1;}
-  .il-run-p{fill:#fff;stroke:#8A5CF0;stroke-width:2.5;} .il-run-r{fill:#fff;stroke:#E46B5D;stroke-width:2.5;}
-  .il-hair{stroke:var(--ink);stroke-opacity:.18;stroke-width:1;opacity:0;transition:opacity .2s;}
-  .il-hov{opacity:0;transition:opacity .2s;} .il-hov-p{fill:#8A5CF0;stroke:var(--paper);stroke-width:3;} .il-hov-r{fill:#E46B5D;stroke:var(--paper);stroke-width:3;}
-  .il.hover .il-hair,.il.hover .il-hov{opacity:1;} .il.hover .il-run{opacity:.25;}
-  .il-pill{position:absolute;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;
-    background:var(--paper-raised);color:var(--ink);border:1px solid var(--line);box-shadow:0 8px 20px -12px rgba(54,24,77,.35);
-    opacity:0;transform:translateY(6px);transition:opacity .5s ease 1.4s,transform .6s cubic-bezier(.22,1,.36,1) 1.4s;white-space:nowrap;}
-  .il.on .il-pill{opacity:1;transform:none;}
-  .il-pill-p b{color:#7B4FE0;} .il-pill-r b{color:#D9573F;}
-  :root[data-theme="dark"] .il-pill-p b{color:#B48CFF;} :root[data-theme="dark"] .il-pill-r b{color:#F2876C;}
-  .il-pill-p{right:2%;top:2%;} .il-pill-r{right:2%;bottom:3%;}
-  .impact .il-cap{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);opacity:.75;margin:6px 0 0;text-align:right;}
+  .il-run-p{fill:var(--paper);stroke:#8A5CF0;stroke-width:2;} .il-run-r{fill:var(--paper);stroke:#E46B5D;stroke-width:2;}
+  .il-hair{stroke:var(--ink);stroke-opacity:.16;stroke-width:1;opacity:0;transition:opacity .2s;}
+  .il-hov{opacity:0;transition:opacity .2s;} .il-hov-p{fill:#8A5CF0;stroke:var(--paper);stroke-width:2.5;} .il-hov-r{fill:#E46B5D;stroke:var(--paper);stroke-width:2.5;}
+  .il.hover .il-hair,.il.hover .il-hov{opacity:1;} .il.hover .il-run{opacity:.2;}
+  /* quiet line tags: a dot and a word, no chip, no shadow */
+  .il-tag{position:absolute;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);opacity:0;transition:opacity .6s ease 1.5s;white-space:nowrap;}
+  .il.on .il-tag{opacity:1;}
+  .il-tag i{width:6px;height:6px;border-radius:50%;}
+  .il-tag b{font-weight:600;}
+  .il-tag-p i{background:#8A5CF0;} .il-tag-p b{color:#7B4FE0;} .il-tag-r i{background:#E46B5D;} .il-tag-r b{color:#D9573F;}
+  :root[data-theme="dark"] .il-tag-p b{color:#B48CFF;} :root[data-theme="dark"] .il-tag-r b{color:#F2876C;}
+  .il-tag-p{right:1%;top:6%;} .il-tag-r{right:1%;bottom:12%;}
+  .impact .il-cap{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);opacity:.6;margin:4px 0 0;text-align:right;}
   @media (max-width:880px){ .impact .il-cap{text-align:left;} }
-  @media (prefers-reduced-motion:reduce){ .il-area,.il-run,.il-pill{transition:none;} }
+  @media (prefers-reduced-motion:reduce){ .il-area,.il-run,.il-tag{transition:none;} }
+  /* editorial rhythm for the section copy */
+  #view-home .impact .lead{font-size:clamp(26px,2.6vw,36px);line-height:1.15;letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance;}
+  #view-home .impact .head{margin-bottom:18px;}
+  #view-home .impact .body{font-size:15.5px;line-height:1.7;max-width:46ch;}
+  #view-home .impact-top{margin-bottom:44px;padding-bottom:40px;border-bottom:1px solid color-mix(in srgb, var(--ink) 9%, transparent);}
   .impact .head{font-family:var(--font-mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;opacity:.75;margin-bottom:22px;line-height:1.6;}
   .impact .head b{color:var(--accent);font-weight:500;}
   .impact .lead{font-family:var(--font-display);font-size:clamp(20px,2.4vw,26px);color:var(--ink);margin:0 0 8px;}
@@ -3703,20 +3710,18 @@
             <linearGradient id="ilGP" x1="0" x2="1"><stop offset="0" stop-color="#5B7CFA"/><stop offset=".55" stop-color="#8A5CF0"/><stop offset="1" stop-color="#BC80CC"/></linearGradient>
             <linearGradient id="ilGR" x1="0" x2="1"><stop offset="0" stop-color="#F48C6E"/><stop offset="1" stop-color="#E46B5D"/></linearGradient>
             <linearGradient id="ilGA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A5CF0" stop-opacity=".22"/><stop offset="1" stop-color="#8A5CF0" stop-opacity="0"/></linearGradient>
-            <filter id="ilGlow" x="-20%" y="-40%" width="140%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
           </defs>
           <g class="il-guides"></g>
+          <g class="il-nums"></g>
           <path class="il-area" fill="url(#ilGA)"/>
-          <path class="il-glow il-glow-p" stroke="url(#ilGP)" filter="url(#ilGlow)"/>
           <path class="il-line il-line-p" stroke="url(#ilGP)"/>
-          <path class="il-glow il-glow-r" stroke="url(#ilGR)" filter="url(#ilGlow)"/>
           <path class="il-line il-line-r" stroke="url(#ilGR)"/>
           <line class="il-hair" y1="18" y2="300"/>
           <circle class="il-run il-run-p" r="4.5"/><circle class="il-run il-run-r" r="4.5"/>
           <circle class="il-hov il-hov-p" r="6"/><circle class="il-hov il-hov-r" r="6"/>
         </svg>
-        <span class="il-pill il-pill-p">Performance <b>↑</b></span>
-        <span class="il-pill il-pill-r">Risk <b>↓</b></span>
+        <span class="il-tag il-tag-p"><i></i>Performance <b>↑</b></span>
+        <span class="il-tag il-tag-r"><i></i>Risk <b>↓</b></span>
       </div>
       <figcaption class="il-cap">Illustration · performance and risk signals in one view</figcaption>
     </figure>
@@ -10253,10 +10258,14 @@ setActive(0); startRotation();
   const smooth=pts=>{ let d=`M${pts[0][0]} ${pts[0][1]}`; for(let i=0;i<pts.length-1;i++){ const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
       d+=` C${p1[0]+(p2[0]-p0[0])/6} ${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6} ${p2[1]-(p3[1]-p1[1])/6} ${p2[0]} ${p2[1]}`; } return d; };
   const dP=smooth(P), dR=smooth(Rk);
-  ['.il-line-p','.il-glow-p'].forEach(s=>q(s).setAttribute('d',dP)); ['.il-line-r','.il-glow-r'].forEach(s=>q(s).setAttribute('d',dR));
+  q('.il-line-p').setAttribute('d',dP); q('.il-line-r').setAttribute('d',dR);
   q('.il-area').setAttribute('d',dP+` L540 300 L20 300 Z`);
-  const g=q('.il-guides'); [70,140,210,280].forEach(y=>{ const l=document.createElementNS('http://www.w3.org/2000/svg','line'); l.setAttribute('x1',20);l.setAttribute('x2',540);l.setAttribute('y1',y);l.setAttribute('y2',y); g.appendChild(l); });
-  const lines=[...svg.querySelectorAll('.il-line,.il-glow')], lp=q('.il-line-p'), lr=q('.il-line-r'), LP=lp.getTotalLength(), LR=lr.getTotalLength();
+  /* light index numbers: an illustrative 0–100 scale and quarters, kept faint */
+  const nm=q('.il-nums'), tx=(x,y,s,a)=>{ const t=document.createElementNS('http://www.w3.org/2000/svg','text'); t.setAttribute('x',x); t.setAttribute('y',y); t.setAttribute('text-anchor',a||'start'); t.textContent=s; nm.appendChild(t); };
+  [[44,'100'],[162,'50'],[280,'0']].forEach(([y,s])=>tx(14,y+3,s,'end'));
+  ['Q1','Q2','Q3','Q4'].forEach((s,i)=>tx(20+i*(520/3),312,s,i===0?'start':i===3?'end':'middle'));
+  const g=q('.il-guides'); [44,162,280].forEach(y=>{ const l=document.createElementNS('http://www.w3.org/2000/svg','line'); l.setAttribute('x1',20);l.setAttribute('x2',540);l.setAttribute('y1',y);l.setAttribute('y2',y); g.appendChild(l); });
+  const lines=[...svg.querySelectorAll('.il-line')], lp=q('.il-line-p'), lr=q('.il-line-r'), LP=lp.getTotalLength(), LR=lr.getTotalLength();
   lines.forEach(p=>{ const L=p.getTotalLength(); p.style.strokeDasharray=L; p.style.strokeDashoffset=reduce?0:L; });
   const runP=q('.il-run-p'), runR=q('.il-run-r');
   const at=(path,len,t)=>path.getPointAtLength(len*t);
@@ -10266,7 +10275,7 @@ setActive(0); startRotation();
   const loop=t=>{ if(!t0)t0=t; const k=((t-t0)/6000)%1, e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;   /* eased, 6s per lap */
     setC(runP,at(lp,LP,e)); setC(runR,at(lr,LR,(e+.5)%1)); raf=vis&&!fig.classList.contains('hover')?requestAnimationFrame(loop):0; };
   const start=()=>{ if(!raf&&!reduce) raf=requestAnimationFrame(loop); };
-  const draw=()=>{ fig.classList.add('on'); lines.forEach((p,i)=>{ p.style.transition=`stroke-dashoffset 1.8s cubic-bezier(.22,1,.36,1) ${i>1?.25:0}s`; p.style.strokeDashoffset=0; }); setTimeout(()=>{ vis=true; start(); },reduce?0:1700); };
+  const draw=()=>{ fig.classList.add('on'); lines.forEach((p,i)=>{ p.style.transition=`stroke-dashoffset 1.8s cubic-bezier(.22,1,.36,1) ${i?.25:0}s`; p.style.strokeDashoffset=0; }); setTimeout(()=>{ vis=true; start(); },reduce?0:1700); };
   if(reduce||!('IntersectionObserver' in window)) draw();
   else{ let done=false; new IntersectionObserver(es=>{ const v=es.some(e=>e.isIntersecting); if(v&&!done){ done=true; draw(); } else if(done){ vis=v; if(v) start(); } },{threshold:.35}).observe(stage); }
   /* hover: guide + dots follow the pointer along both curves */
