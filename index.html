@@ -382,7 +382,9 @@
   .proof-play{pointer-events:none;}   /* decorative orbits: never intercept the pointer */
   /* lower area: 60% copy · 40% orbits, one shared centre line */
   @media (min-width:881px){
-    .proof-lower{display:grid;grid-template-columns:minmax(0,60fr) minmax(0,40fr);column-gap:0;align-items:center;}
+    .proof-lower{display:grid;grid-template-columns:minmax(0,40fr) minmax(0,60fr);column-gap:0;align-items:center;}
+    .proof-orbit-slot{order:-1;}   /* orbit on the left, copy on the right */
+    .proof-copy{padding-left:24px;}
     .proof-orbit-slot{align-self:stretch;min-height:320px;}
     .proof-copy .proof-quote{max-width:none;}
   }
@@ -645,8 +647,6 @@
   #view-home .hero + .home-proof + .impact{padding-top:76px;}
   #view-home .impact{padding-bottom:64px;}
   .impact-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:stretch;margin-bottom:36px;}   /* equal halves; the illustration takes the copy's height */
-  /* desktop: illustration left, copy right — both centred on one line (the illustration matches the copy's height) */
-  @media (min-width:881px){ .impact-top .il{order:-1;} .impact-copy{align-self:center;} }
   @media (max-width:880px){ .impact-top{grid-template-columns:1fr;gap:20px;margin-bottom:28px;} }   /* phones and tablets: illustration under the copy */
   .impact-copy .body{margin-bottom:0;}
   .il{margin:0;position:relative;display:flex;flex-direction:column;align-self:stretch;}
