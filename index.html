@@ -334,6 +334,15 @@
     --ink:#F4F2F6;--ink-soft:#ABA4B4;--line:rgba(255,255,255,.12);color:var(--ink);}
   :root[data-theme="dark"] .home-proof{--band:#1A1620;}
   .home-proof .proof-quote{color:#FFFFFF;}
+  /* headline: words rise in one by one when the band comes into view; "build." carries the brand gradient */
+  .proof-quote .w{display:inline-block;}
+  .proof-quote.is-armed .w{opacity:0;transform:translateY(.4em);filter:blur(3px);}
+  .proof-quote.is-in .w{opacity:1;transform:none;filter:none;
+    transition:opacity .55s ease,transform .7s cubic-bezier(.22,1,.36,1),filter .55s ease;transition-delay:calc(var(--i,0) * 60ms);}
+  .proof-quote .w-grad{background:linear-gradient(90deg,#6F8CFF 0%,#A27BFF 35%,#F2679F 70%,#FF8A6B 100%);
+    background:linear-gradient(90deg in oklab,#6F8CFF 0%,#A27BFF 35%,#F2679F 70%,#FF8A6B 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;padding-right:.04em;}
+  @media (prefers-reduced-motion:reduce){ .proof-quote.is-armed .w{opacity:1;transform:none;filter:none;} }
   .home-proof .proof-k{color:#B7A4C4;}
   .home-proof::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:-1;background:var(--band);
     transition:background-color .3s ease;}
@@ -343,10 +352,10 @@
   .proof-stats .stat{padding:0 24px;border-left:1px solid rgba(255,255,255,.1);}
   .proof-stats .stat:first-child{padding-left:0;border-left:0;}
   .proof-stats .num{font-size:40px;line-height:1.1;}
-  .proof-stats .lbl{margin-top:8px;font-size:12.5px;max-width:30ch;color:#C9C2D1;opacity:1;}
+  .home-proof .proof-stats .lbl{margin-top:8px;font-size:12.5px;max-width:30ch;color:#DAD4E1;opacity:1;}   /* specific enough to beat the generic .stat .lbl rule */
   .proof-teams{padding-top:0;}
   /* lower half: copy on the left, a ball playground in the open space on the right */
-  .proof-lower{padding-top:32px;border-top:1px solid rgba(255,255,255,.2);}
+  .proof-lower{padding-top:18px;border-top:1px solid rgba(255,255,255,.2);}
   /* ball playground: a layer across the whole band (edge to edge of the viewport); the copy sits above it and lets
      pointer events through, so balls can be grabbed anywhere in the band */
   .proof-play{position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:0;}
@@ -363,7 +372,7 @@
   .proof-teams .proof-k{margin-bottom:8px;}
   .proof-list{font-size:17px;line-height:1.6;color:var(--ink);font-weight:500;margin:0 0 40px;display:flex;flex-wrap:wrap;column-gap:12px;}
   .proof-list i{font-style:normal;font-weight:400;color:var(--ink-soft);opacity:.55;}
-  .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(22px,1.95vw,26.5px);line-height:1.28;letter-spacing:-.008em;color:var(--ink);margin:0;max-width:65%;text-wrap:balance;}
+  .proof-quote{font-family:var(--font-display);font-weight:400;font-size:clamp(23.5px,2.08vw,28.4px);line-height:1.28;letter-spacing:-.008em;color:var(--ink);margin:0;max-width:65%;text-wrap:balance;}
   @media (max-width:880px){
     #view-home .proof-stats{grid-template-columns:repeat(2,1fr);gap:28px 0;}
     #view-home .proof-stats .stat{padding:0 12px 0 20px;}
@@ -383,7 +392,7 @@
     #view-home .impact-stats .num{font-size:28px;}
     #view-home .hero-cred .current{font-size:clamp(11px,3.1vw,13px);}
     #view-home .hero-left .value-tagline{text-wrap:balance;}
-    .proof-quote{font-size:20px;text-wrap:pretty;max-width:none;}
+    .proof-quote{font-size:21.4px;text-wrap:pretty;max-width:none;}
     .proof-list{font-size:15px;column-gap:8px;}
   }
   .hl{color:var(--accent);font-weight:700;}
@@ -3599,7 +3608,7 @@
           <div class="proof-k">Designed for</div>
           <p class="proof-list"><span>Associates</span><i>/</i><span>Sourcing Managers</span><i>/</i><span>Merchants</span><i>/</i><span>Business Teams</span></p>
         </div>
-        <p class="proof-quote">I don't define myself by titles.<br>I define myself by the products I help build.</p>
+        <p class="proof-quote" data-words><span class="w">I</span> <span class="w">don't</span> <span class="w">define</span> <span class="w">myself</span> <span class="w">by</span> <span class="w">titles.</span><br><span class="w">I</span> <span class="w">define</span> <span class="w">myself</span> <span class="w">by</span> <span class="w">the</span> <span class="w">products</span> <span class="w">I</span> <span class="w">help</span> <span class="w w-grad">build.</span></p>
       </div>
       <div class="proof-orbit-slot" aria-hidden="true"></div>
     </div>
@@ -9975,7 +9984,7 @@ setActive(0); startRotation();
     W=r.width; H=r.height; cv.width=Math.round(W*d); cv.height=Math.round(H*d); ctx.setTransform(d,0,0,d,0,0);
     const s=sec.getBoundingClientRect(), q=sec.querySelector('.proof-quote'), low=sec.querySelector('.proof-lower');
     const right=s.right-r.left, qr=q?q.getBoundingClientRect().right-r.left:0;
-    const lr=low?low.getBoundingClientRect():null, top=lr?lr.top-r.top+32:H*.45, bot=lr?lr.bottom-r.top:H-72;   /* the lower block, below its divider padding */
+    const lr=low?low.getBoundingClientRect():null, top=lr?lr.top-r.top+18:H*.45, bot=lr?lr.bottom-r.top:H-72;   /* the lower block, below its divider padding */
     const slot=sec.querySelector('.proof-orbit-slot'), sr=slot?slot.getBoundingClientRect():null;
     alpha=1;
     if(sr&&sr.width>0){
@@ -10085,6 +10094,19 @@ setActive(0); startRotation();
   },true);
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!page.hidden) close(); });
   if(location.hash==='#book') open();   /* saiky.in/#book opens straight onto the booking page */
+})();
+</script>
+<script>
+/* Experience at scale — the headline reveals word by word the first time it scrolls into view.
+   Words stay visible without JS or with reduced motion. */
+(function(){
+  const q=document.querySelector('.proof-quote[data-words]'); if(!q) return;
+  q.querySelectorAll('.w').forEach((w,i)=>w.style.setProperty('--i',i));
+  if(!('IntersectionObserver' in window) || (window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  q.classList.add('is-armed');
+  const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); requestAnimationFrame(()=>q.classList.add('is-in')); } },{threshold:.5});
+  io.observe(q);
+  setTimeout(()=>{ if(!q.classList.contains('is-in')){ const r=q.getBoundingClientRect(); if(r.top<innerHeight&&r.bottom>0) q.classList.add('is-in'); } },4000);   /* safety: never stay hidden on screen */
 })();
 </script>
 </body>
