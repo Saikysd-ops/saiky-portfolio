@@ -8561,7 +8561,7 @@ try{
     const t = e.target.closest('a, button, .work-card, [data-view], [data-scroll], input, .c-mail, .oc, .pill-tag');
     document.body.classList.toggle('cursor-active', !!t);
     // project thumbs carry their own cursor
-    document.body.classList.toggle('cursor-hide', !!e.target.closest('.shot-thumb, .phone-thumb, h1.headline'));
+    document.body.classList.toggle('cursor-hide', !!e.target.closest('.shot-thumb, .phone-thumb, h1.headline, .navlinks a'));   /* nav links show their own dot on the left */
     // flip to white on violet / dark surfaces so it never disappears
     const dark = e.target.closest('.btn-primary, .work-thumb, .clock-tile, .lab-thumb, .phil-card, #loader');
     document.body.classList.toggle('cursor-invert', !!dark);
