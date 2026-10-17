@@ -282,12 +282,12 @@
   @media (min-width:881px){ #view-home .hero{grid-template-columns:1.25fr 1fr;align-items:center;align-content:center;} }
   /* phones and tablets: the message, button and status fill the first screen; the illustration starts below the fold */
   @media (max-width:880px){
-    #view-home .hero-left{min-height:calc(100svh - var(--hero-top, 124px) - 20px);display:flex;flex-direction:column;justify-content:center;padding-bottom:28px;box-sizing:border-box;}
+    #view-home .hero-left{min-height:calc(100svh - var(--hero-top, 124px) - 20px);display:flex;flex-direction:column;justify-content:center;padding:0 0 20px;box-sizing:border-box;}   /* equal space above and below the content */
     #view-home .value-lead{font-size:40px;line-height:1.14;letter-spacing:-.015em;}
     #view-home h1.headline{font-size:clamp(64px,12vw,104px);}
   }
-  @media (max-width:560px){ #view-home .value-lead{font-size:clamp(27px,7.8vw,31px);line-height:1.18;letter-spacing:-.012em;} }   /* medium: ~1.9× smaller than COMPLEXITY */
-  @media (max-width:560px) and (max-height:700px){ #view-home .value-lead{font-size:27px;} }
+  @media (max-width:560px){ #view-home .value-lead{font-size:clamp(25px,7.1vw,28px);line-height:1.2;letter-spacing:-.01em;} }   /* medium: ~2× smaller than COMPLEXITY */
+  @media (max-width:560px) and (max-height:700px){ #view-home .value-lead{font-size:24px;} }
   /* phones: one proportional system — bigger headline word, full-width primary button, even vertical rhythm */
   @media (max-width:560px){
     #view-home h1.headline{font-size:min(calc((100vw - 40px) / 5.05), 76px);letter-spacing:-.03em;margin-bottom:18px;}   /* medium: in proportion with the message */
@@ -295,9 +295,9 @@
     #view-home .hero-left .role{margin-bottom:6px;}
     #view-home .hero-left .current{margin-bottom:26px;}
     #view-home .hero-left .value-lead{margin:0 0 30px;}
-    #view-home .hero-left .cta-row{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:20px;}   /* the pair can't share a row on phones: stacked, left-aligned */
-    #view-home .hero-left .cta-row .btn{width:auto;min-height:54px;font-size:16px;padding:0 26px;}   /* hugs its label; medium height */
-    #view-home .hero-left .cta-row .text-link{font-size:16px;padding:12px 0;}
+    #view-home .hero-left .cta-row{flex-direction:row;flex-wrap:nowrap;align-items:center;gap:clamp(10px,3vw,18px);margin-bottom:22px;}   /* both actions on one line */
+    #view-home .hero-left .cta-row .btn{width:auto;min-height:52px;font-size:15px;padding:0 8px 0 20px;gap:12px;white-space:nowrap;}   /* hugs its label; medium height */
+    #view-home .hero-left .cta-row .text-link{font-size:15px;padding:12px 0;white-space:nowrap;}
   }   /* short phones (e.g. iPhone SE): keep button and status in the first screen */
   /* wide screens: a little more room for the artwork, so it can grow into the first screen */
   @media (min-width:1280px){ #view-home .hero{grid-template-columns:1.12fr 1fr;} }
