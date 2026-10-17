@@ -280,6 +280,12 @@
   /* header: Work leads; the clock is quieter */
   .nav-clock{opacity:.55;}
   @media (min-width:881px){ #view-home .hero{grid-template-columns:1.25fr 1fr;align-items:center;align-content:center;} }
+  /* phones and tablets: the message, button and status fill the first screen; the illustration starts below the fold */
+  @media (max-width:880px){
+    #view-home .hero-left{min-height:calc(100svh - var(--hero-top, 124px) - 20px);display:flex;flex-direction:column;justify-content:center;padding-bottom:28px;box-sizing:border-box;}
+    #view-home .value-lead{font-size:32px;line-height:1.18;}
+  }
+  @media (max-width:560px){ #view-home .value-lead{font-size:28px;line-height:1.2;} }
   /* wide screens: a little more room for the artwork, so it can grow into the first screen */
   @media (min-width:1280px){ #view-home .hero{grid-template-columns:1.12fr 1fr;} }
   /* hero rhythm (8-pt): eyebrow 12 · headline 20 · role/Walmart pair 8 · statement 32 · CTA 32 · status 24.
@@ -383,7 +389,7 @@
     #view-home .impact-stats .stat:nth-child(odd){padding-left:0;border-left:0;}
   }
   @media (max-width:560px){
-    .value-lead{font-size:22px;margin-top:18px;}
+    .value-lead{font-size:28px;line-height:1.2;margin-top:18px;}
     .cred-strip{grid-template-columns:1fr;gap:10px;}
     .cred-strip li{gap:2px;}
     #view-home .hero-left .value-line{font-size:16px;}
