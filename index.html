@@ -295,12 +295,12 @@
     #view-home .hero-left > h1.headline{margin-bottom:0 !important;}
     #view-home .hero-left > .role{margin-top:20px !important;}   /* headline and role read as one block */
     #view-home .hero-left > .current{margin-bottom:0 !important;}
-    #view-home .hero-left > .value-lead{margin-top:auto !important;margin-bottom:0 !important;}
+    #view-home .hero-left > .value-lead{margin-top:clamp(28px,5svh,40px) !important;margin-bottom:0 !important;}   /* message sits close to the role block */
     #view-home .hero-left > .cta-row{margin-top:auto !important;}
     #view-home .hero-left > .hero-cred{margin-bottom:auto !important;}
     #view-home .hero-left{min-height:calc(100svh - var(--hero-top, 124px)) !important;}
     #view-home .hero{padding-top:0 !important;}
-    #view-home .hero-left > .eyebrow,#view-home .hero-left > .value-lead,#view-home .hero-left > .cta-row{padding-top:16px;}   /* a floor, so short phones never touch */
+    #view-home .hero-left > .eyebrow,#view-home .hero-left > .cta-row{padding-top:16px;}   /* a floor, so short phones never touch */
   }
   @media (max-width:880px){ #view-home .hero-left .cta-row{flex-wrap:nowrap;align-items:center;} #view-home .hero-left .cta-row .text-link{white-space:nowrap;} }   /* buttons stay on one line on every small screen */
   /* phones: one proportional system — bigger headline word, full-width primary button, even vertical rhythm */
