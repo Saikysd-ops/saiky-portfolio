@@ -293,14 +293,14 @@
     #view-home .hero-left{padding-bottom:0 !important;}
     #view-home .hero-left > .eyebrow{margin-top:auto !important;}
     #view-home .hero-left > h1.headline{margin-bottom:0 !important;}
-    #view-home .hero-left > .role{margin-top:auto !important;}
+    #view-home .hero-left > .role{margin-top:20px !important;}   /* headline and role read as one block */
     #view-home .hero-left > .current{margin-bottom:0 !important;}
     #view-home .hero-left > .value-lead{margin-top:auto !important;margin-bottom:0 !important;}
     #view-home .hero-left > .cta-row{margin-top:auto !important;}
     #view-home .hero-left > .hero-cred{margin-bottom:auto !important;}
     #view-home .hero-left{min-height:calc(100svh - var(--hero-top, 124px)) !important;}
     #view-home .hero{padding-top:0 !important;}
-    #view-home .hero-left > .eyebrow,#view-home .hero-left > .role,#view-home .hero-left > .value-lead,#view-home .hero-left > .cta-row{padding-top:16px;}   /* a floor, so short phones never touch */
+    #view-home .hero-left > .eyebrow,#view-home .hero-left > .value-lead,#view-home .hero-left > .cta-row{padding-top:16px;}   /* a floor, so short phones never touch */
   }
   @media (max-width:880px){ #view-home .hero-left .cta-row{flex-wrap:nowrap;align-items:center;} #view-home .hero-left .cta-row .text-link{white-space:nowrap;} }   /* buttons stay on one line on every small screen */
   /* phones: one proportional system — bigger headline word, full-width primary button, even vertical rhythm */
@@ -311,7 +311,7 @@
     #view-home .hero-left .current{margin-bottom:26px;}
     #view-home .hero-left .value-lead{margin:0 0 30px;}
     #view-home .hero-left .cta-row{flex-direction:row;flex-wrap:nowrap;align-items:center;gap:clamp(10px,3vw,18px);margin-bottom:22px;}   /* both actions on one line */
-    #view-home .hero-left .cta-row .btn{width:auto;min-height:52px;font-size:15px;padding:0 8px 0 20px;gap:12px;white-space:nowrap;}   /* hugs its label; medium height */
+    #view-home .hero-left .cta-row .btn{width:auto;min-height:58px;font-size:15px;padding:0 8px 0 20px;gap:12px;white-space:nowrap;}   /* hugs its label; medium height */
     #view-home .hero-left .cta-row .text-link{font-size:15px;padding:12px 0;white-space:nowrap;}
   }   /* short phones (e.g. iPhone SE): keep button and status in the first screen */
   /* wide screens: a little more room for the artwork, so it can grow into the first screen */
