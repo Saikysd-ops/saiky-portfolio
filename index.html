@@ -3122,6 +3122,10 @@
   .book-alt{margin:20px 0 0;font-size:14px;color:var(--ink-soft);}
   .book-alt a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px solid var(--line);}
   html.book-lock,html.book-lock body{overflow:hidden!important;}
+  /* the booking page uses the normal system cursor: the custom one can't follow the pointer into Cal.com's frame */
+  html.book-lock body,html.book-lock .book-page{cursor:auto;}
+  html.book-lock .book-page :is(a,button){cursor:pointer;}
+  html.book-lock .cursor-dot,html.book-lock .cursor-ring{display:none !important;}
   @media (max-width:880px){ .book-bar-in{height:60px;} .book-body{padding-top:40px;} .book-frame,.book-cal{min-height:680px;} }
   @media (prefers-reduced-motion:reduce){ .book-page .book-body{transition:none;transform:none;opacity:1;} }
 
@@ -10233,13 +10237,20 @@ setActive(0); startRotation();
     if(loaded) return; loaded=true;
     (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
     Cal("init", "book30", {origin:"https://app.cal.com"});
-    Cal.ns.book30("inline", {elementOrSelector:"#calInline", calLink:"saikiran-desai-sfwiif/30min", config:{layout:"month_view", theme:theme()}});
-    Cal.ns.book30("ui", {theme:theme(), hideEventTypeDetails:false, layout:"month_view",
-      cssVarsPerTheme:{light:{"cal-brand":"#5B2A68"}, dark:{"cal-brand":"#BC80CC"}}});
     Cal.ns.book30("on", {action:"linkReady", callback:()=>frame&&frame.classList.add('is-live')});
     setTimeout(()=>frame&&frame.classList.add('is-slow'),10000);
-    new MutationObserver(()=>{ try{ Cal.ns.book30("ui",{theme:theme()}); }catch(e){} })
+    mount();
+    /* Cal.com ignores a theme change once its calendar has loaded, so a light calendar stayed white in dark
+       mode. When the site's theme changes, the calendar is rebuilt in the new theme. */
+    new MutationObserver(()=>{ if(theme()!==shown) mount(); })
       .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  }
+  let shown=null;
+  function mount(){
+    shown=theme(); box.innerHTML=''; frame&&frame.classList.remove('is-live');
+    Cal.ns.book30("inline", {elementOrSelector:"#calInline", calLink:"saikiran-desai-sfwiif/30min", config:{layout:"month_view", theme:shown}});
+    Cal.ns.book30("ui", {theme:shown, hideEventTypeDetails:false, layout:"month_view",
+      cssVarsPerTheme:{light:{"cal-brand":"#5B2A68"}, dark:{"cal-brand":"#BC80CC"}}});
   }
   /* No history entries: Cal.com's calendar navigates inside its frame, and stepping "back" would walk through
      those screens (details → calendar …) before closing. Close always closes in one step. */
