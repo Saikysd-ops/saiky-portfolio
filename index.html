@@ -288,6 +288,20 @@
   }
   @media (max-width:560px){ #view-home .value-lead{font-size:clamp(25px,7.1vw,28px);line-height:1.2;letter-spacing:-.01em;} }   /* medium: ~2× smaller than COMPLEXITY */
   @media (max-width:560px) and (max-height:700px){ #view-home .value-lead{font-size:24px;} }
+  /* phones/tablets: share the first screen's free space equally — above, between the groups, and below */
+  @media (max-width:880px){
+    #view-home .hero-left{padding-bottom:0 !important;}
+    #view-home .hero-left > .eyebrow{margin-top:auto !important;}
+    #view-home .hero-left > h1.headline{margin-bottom:0 !important;}
+    #view-home .hero-left > .role{margin-top:auto !important;}
+    #view-home .hero-left > .current{margin-bottom:0 !important;}
+    #view-home .hero-left > .value-lead{margin-top:auto !important;margin-bottom:0 !important;}
+    #view-home .hero-left > .cta-row{margin-top:auto !important;}
+    #view-home .hero-left > .hero-cred{margin-bottom:auto !important;}
+    #view-home .hero-left{min-height:calc(100svh - var(--hero-top, 124px)) !important;}
+    #view-home .hero{padding-top:0 !important;}
+    #view-home .hero-left > .eyebrow,#view-home .hero-left > .role,#view-home .hero-left > .value-lead,#view-home .hero-left > .cta-row{padding-top:16px;}   /* a floor, so short phones never touch */
+  }
   @media (max-width:880px){ #view-home .hero-left .cta-row{flex-wrap:nowrap;align-items:center;} #view-home .hero-left .cta-row .text-link{white-space:nowrap;} }   /* buttons stay on one line on every small screen */
   /* phones: one proportional system — bigger headline word, full-width primary button, even vertical rhythm */
   @media (max-width:560px){
@@ -9304,6 +9318,15 @@ try{
     tag.textContent = Math.round(x) + 'px';
     ruler.classList.add('is-live');
   });
+  /* touch screens have no hover: keep the readout visible, start at the centre, follow a finger on the hero */
+  const touch=window.matchMedia&&matchMedia('(hover: none)').matches;
+  if(touch){
+    const at=x=>{ const rect=ruler.getBoundingClientRect(); x=Math.max(0,Math.min(rect.width,x-rect.left)); cursor.style.left=x+'px'; tag.textContent=Math.round(x)+'px'; ruler.classList.add('is-live'); };
+    const centre=()=>{ const rect=ruler.getBoundingClientRect(); at(rect.left+rect.width/2); };
+    centre(); addEventListener('resize',centre);
+    hero.addEventListener('touchstart',e=>at(e.touches[0].clientX),{passive:true});
+    hero.addEventListener('touchmove',e=>at(e.touches[0].clientX),{passive:true});
+  }
 })();
 }catch(e){ console.error('[section error]', e); }
 
