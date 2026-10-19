@@ -662,8 +662,8 @@
   /* Latest impact: a soft full-width band, copy beside an illustrative performance-vs-risk chart */
   .impact{position:relative;isolation:isolate;}
   #view-home .impact::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:-1;
-    background:radial-gradient(rgba(91,42,104,.07) 1px,transparent 1.2px) 0 0/22px 22px,#F3EFF5;}
-  :root[data-theme="dark"] #view-home .impact::before{background:radial-gradient(rgba(188,128,204,.08) 1px,transparent 1.2px) 0 0/22px 22px,#18171C;}
+    background:radial-gradient(rgba(91,42,104,.11) 1px,transparent 1.2px) 0 0/22px 22px,#F3EFF5;}
+  :root[data-theme="dark"] #view-home .impact::before{background:radial-gradient(rgba(188,128,204,.12) 1px,transparent 1.2px) 0 0/22px 22px,#18171C;}
   #view-home .interlude + .impact{padding-top:76px;}
   #view-home .impact{padding-bottom:64px;}
   .impact-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:48px;align-items:stretch;margin-bottom:36px;}   /* equal halves; the illustration takes the copy's height */
@@ -794,6 +794,7 @@
      (blue → purple → magenta → coral) with layered glows, silk-line streaks and film grain.
      All texture is inline SVG/CSS, so there are no extra image files to load. */
   .philosophy{border-top:1px solid var(--line);padding-top:68px;}
+  .impact + .philosophy{border-top:0;}   /* the impact band's own edge already separates them */
 
   /* PHILOSOPHY — Systems · Data · Products: a calm two-column card; three overlapping areas resolve into
      one point of clarity. Purple = Systems (brand), ochre = Data, sage = Products (same accents as the Lab). */
