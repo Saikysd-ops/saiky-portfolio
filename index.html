@@ -3749,7 +3749,7 @@
     <div class="proof-play" id="proofPlay" aria-hidden="true"><canvas></canvas></div>
     <h2 class="proof-k" id="proofH">Experience at scale</h2>
     <div class="stat-grid proof-stats">
-      <div class="stat"><div class="num"><span id="yearsNum">9</span>+</div><div class="lbl">Years designing enterprise products</div></div>
+      <div class="stat"><div class="num"><span id="yearsNum">10</span>+</div><div class="lbl">Years designing enterprise products</div></div>
       <div class="stat"><div class="num">12K</div><div class="lbl">Active Walmart U.S. suppliers</div></div>
       <div class="stat"><div class="num">4</div><div class="lbl">Markets supported</div></div>
       <div class="stat"><div class="num">6+</div><div class="lbl">Business units collaborated with</div></div>
@@ -4096,7 +4096,7 @@
         <div class="eyebrow-lbl">About me</div>
         <h2 class="about-title">Senior Product Designer at Walmart</h2>
         <p class="about-copy">I'm a systems thinker who helps teams turn complicated business problems into clear product direction.</p>
-        <p class="about-copy">For 9+ years, I've worked across Walmart, Maersk, SOLV (Standard Chartered), and KaHa — spanning global enterprise, financial services, logistics, and startups.</p>
+        <p class="about-copy">For 10+ years, I've worked across Walmart, Maersk, SOLV (Standard Chartered), and KaHa — spanning global enterprise, financial services, logistics, and startups.</p>
         <p class="about-copy">I'm drawn to problems that are still messy and undefined. I connect the pieces, challenge assumptions, and help teams find a direction they can build, use, and scale.</p>
 
         <div class="award">
@@ -4573,7 +4573,7 @@
 
   <section class="timeline">
     <div class="eyebrow-lbl">Where I've been</div>
-    <p class="timeline-lede">9+ years of moving from interfaces to complex product systems.</p>
+    <p class="timeline-lede">10+ years of moving from interfaces to complex product systems.</p>
     <div class="timeline-progression">UX/UI → UX → PRODUCT → ENTERPRISE</div>
     <div class="tl-row">
       <div class="tl-years">2017</div>
@@ -8175,7 +8175,7 @@ h3{font-size:18px;line-height:1.2}
       </div>
       <div class="type-specimen">
         <div class="type-label">03 · System / Metadata</div>
-        <div class="plex" style="font-size:24px;line-height:1.25">#PRODUCTDESIGN · 09+ YEARS · 04 MARKETS</div>
+        <div class="plex" style="font-size:24px;line-height:1.25">#PRODUCTDESIGN · 10+ YEARS · 04 MARKETS</div>
         <p class="small muted" style="margin-top:12px">IBM Plex Mono · 400–600 · labels, tags, dates, metadata, technical moments.</p>
       </div>
       <div class="type-specimen" style="border-bottom:none">
@@ -8456,13 +8456,13 @@ try{
 try{
 
 
-/* "9+ years" count-up, once. The HTML already says 9, so crawlers, link previews, screenshots and no-JS
-   visitors always see "9+". The count (0 → 9) plays only once the intro loader has opened, so people
-   actually see it, and a timer guarantees it ends on 9 even if the browser pauses animation frames. */
+/* "10+ years" count-up, once. The HTML already says 10, so crawlers, link previews, screenshots and no-JS
+   visitors always see "10+". The count (0 → 10) plays only once the intro loader has opened, so people
+   actually see it, and a timer guarantees it ends on 10 even if the browser pauses animation frames. */
 (function(){
   const el = document.getElementById('yearsNum');
   if(!el) return;
-  const TO = 9, DURATION = 1100;
+  const TO = 10, DURATION = 1100;
   if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent = TO; return; }
   let started = false, done = false;
   function finish(){ done = true; el.textContent = TO; }
@@ -8478,7 +8478,7 @@ try{
       if(p < 1) requestAnimationFrame(step); else finish();
     }
     requestAnimationFrame(step);
-    setTimeout(finish, DURATION + 400);              /* safety net: always lands on 9 */
+    setTimeout(finish, DURATION + 400);              /* safety net: always lands on 10 */
   }
   /* start after the intro loader is gone (it is removed from the page when the circle has opened) */
   function loaderGone(){ return !document.getElementById('introLoader'); }

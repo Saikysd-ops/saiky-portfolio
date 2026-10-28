@@ -16,7 +16,7 @@
     fullName: 'Saikiran Desai',
     title: 'Senior Product Designer at Walmart',
     location: 'Bengaluru, India',
-    years: '9+ years',
+    years: '10+ years',
     positioning: 'Product Design · Enterprise AI · Systems',
     domains: 'global enterprise, financial services, logistics and startups',
     companies: ['Walmart', 'Maersk', 'SOLV (Standard Chartered)', 'Bawsala', 'Onsurity', 'KaHa Technologies'],
