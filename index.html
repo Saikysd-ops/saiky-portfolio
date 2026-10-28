@@ -637,9 +637,10 @@
   /* floating tags on the hero portrait: a hello, a nudge to hover, years of practice.
      Colours come only from the Brand page palette: Violet #7546D8, Orchid #A65CCB,
      Near Black #17171C, Warm Ivory #F8F7F4, Slate #66666E (edges are tints of these). */
-  .p-tag{position:absolute;z-index:6;pointer-events:none;white-space:nowrap;
+  /* they sit inside .img-stack, so they tilt with the portrait; translateZ lifts them just in front of it */
+  .p-tag{position:absolute;z-index:6;pointer-events:none;white-space:nowrap;transform-style:preserve-3d;
     animation:pTagFloat 6s ease-in-out infinite;transition:opacity .3s ease;}
-  .p-tag > span{display:inline-flex;align-items:center;gap:8px;transform:rotate(var(--rot,0deg));}
+  .p-tag > span{display:inline-flex;align-items:center;gap:8px;transform:translateZ(26px) rotate(var(--rot,0deg));}
   .p-tag--hello{top:-16px;left:-22px;--rot:-7deg;}
   .p-tag--hello > span{font:600 22px/1 var(--font-body);letter-spacing:-.01em;color:#F8F7F4;
     background:#7546D8;
@@ -3696,11 +3697,11 @@
       <div class="portrait-frame" id="portraitFrame">
         <div class="img-stack"><img class="light-img" src="assets/images/image-001-913a25f86ea9.jpg" alt="Dotted stipple portrait">
         <img class="dark-img" src="assets/images/image-002-d195dc1ee442.jpg" alt="Full-colour illustration portrait">
+          <div class="p-tag p-tag--hello" aria-hidden="true"><span>Hello!</span></div>
+          <div class="p-tag p-tag--years" aria-hidden="true"><span><b>10+</b> years</span></div>
+          <div class="p-tag p-tag--hover" aria-hidden="true"><span><svg viewBox="0 0 22 26" fill="none"><path d="M1 1 L1 20 L6 16 L9.5 23 L13 21.5 L9.5 14.5 L17 14.5 Z" fill="#A65CCB"/></svg>Hover over me!</span></div>
         </div>
         <div class="shine"></div>
-        <div class="p-tag p-tag--hello" aria-hidden="true"><span>Hello!</span></div>
-        <div class="p-tag p-tag--years" aria-hidden="true"><span><b>10+</b> years</span></div>
-        <div class="p-tag p-tag--hover" aria-hidden="true"><span><svg viewBox="0 0 22 26" fill="none"><path d="M1 1 L1 20 L6 16 L9.5 23 L13 21.5 L9.5 14.5 L17 14.5 Z" fill="#A65CCB"/></svg>Hover over me!</span></div>
         <div class="figma-cursor" id="figmaCursor">
           <svg width="22" height="26" viewBox="0 0 22 26" fill="none">
             <path d="M1 1 L1 20 L6 16 L9.5 23 L13 21.5 L9.5 14.5 L17 14.5 Z" fill="var(--violet)" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
