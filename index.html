@@ -634,28 +634,29 @@
   }
   @keyframes signDraw{to{stroke-dashoffset:0;}}
 
-  /* floating tags on the hero portrait: a hello, a nudge to hover, years of practice */
+  /* floating tags on the hero portrait: a hello, a nudge to hover, years of practice.
+     Colours come only from the Brand page palette: Violet #7546D8, Orchid #A65CCB,
+     Near Black #17171C, Warm Ivory #F8F7F4, Slate #66666E (edges are tints of these). */
   .p-tag{position:absolute;z-index:6;pointer-events:none;white-space:nowrap;
     animation:pTagFloat 6s ease-in-out infinite;transition:opacity .3s ease;}
   .p-tag > span{display:inline-flex;align-items:center;gap:8px;transform:rotate(var(--rot,0deg));}
   .p-tag--hello{top:-16px;left:-22px;--rot:-7deg;}
-  .p-tag--hello > span{font:600 22px/1 var(--font-body);letter-spacing:-.01em;color:#fff;
-    background:linear-gradient(120deg, #2C58F2 -30%, #7438F0 65%);   /* the headline's brand blue → violet */
-    border:1px solid rgba(255,255,255,.34);padding:14px 24px 15px;border-radius:999px;}
+  .p-tag--hello > span{font:600 22px/1 var(--font-body);letter-spacing:-.01em;color:#F8F7F4;
+    background:#7546D8;
+    border:1px solid rgba(248,247,244,.34);padding:14px 24px 15px;border-radius:999px;}
   .p-tag--years{left:-26px;top:58%;--rot:-3deg;animation-delay:-2s;}
-  .p-tag--years > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
-    background:color-mix(in srgb, var(--paper-raised) 62%, transparent);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
-    border:1px solid color-mix(in srgb, var(--ink) 16%, transparent);padding:9px 14px 9px 12px;border-radius:999px;}
-  .p-tag--years b{font:400 20px/1 var(--font-display);letter-spacing:-.01em;text-transform:none;color:var(--ink);}
+  .p-tag--years > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:#66666E;
+    background:rgba(248,247,244,.62);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
+    border:1px solid rgba(23,23,28,.16);padding:9px 14px 9px 12px;border-radius:999px;}
+  .p-tag--years b{font:400 20px/1 var(--font-display);letter-spacing:-.01em;text-transform:none;color:#17171C;}
   .p-tag--hover{right:-20px;bottom:78px;--rot:4deg;animation-delay:-4s;}
-  .p-tag--hover > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:#F4F3F1;
-    background:rgba(20,20,27,.72);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
-    border:1px solid rgba(255,255,255,.22);padding:10px 14px;border-radius:999px;}
+  .p-tag--hover > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:#F8F7F4;
+    background:rgba(23,23,28,.72);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
+    border:1px solid rgba(248,247,244,.22);padding:10px 14px;border-radius:999px;}
   .p-tag--hover svg{width:11px;height:13px;flex-shrink:0;}
-  /* dark mode: the lilac accent, so the tags glow against the night palette */
-  :root[data-theme="dark"] .p-tag--years > span{background:rgba(24,23,29,.92);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-color:rgba(255,255,255,.16);color:rgba(255,255,255,.78);}
-  :root[data-theme="dark"] .p-tag--years b{color:#fff;}
-  :root[data-theme="dark"] .p-tag--hover > span{background:rgba(244,243,241,.8);color:#14141B;border-color:rgba(255,255,255,.6);}
+  :root[data-theme="dark"] .p-tag--years > span{background:rgba(23,23,28,.92);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-color:rgba(248,247,244,.16);color:rgba(248,247,244,.78);}
+  :root[data-theme="dark"] .p-tag--years b{color:#F8F7F4;}
+  :root[data-theme="dark"] .p-tag--hover > span{background:rgba(248,247,244,.8);color:#17171C;border-color:rgba(248,247,244,.6);}
   .portrait-frame:hover .p-tag--hover{opacity:0;}   /* the nudge steps aside once they're hovering */
   @keyframes pTagFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
   @media (prefers-reduced-motion:reduce){ .p-tag{animation:none;} }
@@ -3699,7 +3700,7 @@
         <div class="shine"></div>
         <div class="p-tag p-tag--hello" aria-hidden="true"><span>Hello!</span></div>
         <div class="p-tag p-tag--years" aria-hidden="true"><span><b>10+</b> years</span></div>
-        <div class="p-tag p-tag--hover" aria-hidden="true"><span><svg viewBox="0 0 22 26" fill="none"><path d="M1 1 L1 20 L6 16 L9.5 23 L13 21.5 L9.5 14.5 L17 14.5 Z" fill="#9C6BD6"/></svg>Hover over me!</span></div>
+        <div class="p-tag p-tag--hover" aria-hidden="true"><span><svg viewBox="0 0 22 26" fill="none"><path d="M1 1 L1 20 L6 16 L9.5 23 L13 21.5 L9.5 14.5 L17 14.5 Z" fill="#A65CCB"/></svg>Hover over me!</span></div>
         <div class="figma-cursor" id="figmaCursor">
           <svg width="22" height="26" viewBox="0 0 22 26" fill="none">
             <path d="M1 1 L1 20 L6 16 L9.5 23 L13 21.5 L9.5 14.5 L17 14.5 Z" fill="var(--violet)" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
