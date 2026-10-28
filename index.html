@@ -659,7 +659,10 @@
   :root[data-theme="dark"] .p-tag--years b{color:#F8F7F4;}
   :root[data-theme="dark"] .p-tag--hover > span{background:rgba(248,247,244,.8);color:#17171C;border-color:rgba(248,247,244,.6);}
   .portrait-frame:hover .p-tag--hover{opacity:0;}   /* the nudge steps aside once they're hovering */
-  @keyframes pTagFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+  /* a gentle bob with a small side-to-side wiggle; each tag runs its own tempo so they never move in step */
+  @keyframes pTagFloat{0%,100%{transform:translateY(0) rotate(0);}25%{transform:translateY(-3px) rotate(1.6deg);}
+    50%{transform:translateY(-6px) rotate(0);}75%{transform:translateY(-3px) rotate(-1.6deg);}}
+  .p-tag--hello{animation-duration:4.6s;} .p-tag--years{animation-duration:5.8s;} .p-tag--hover{animation-duration:5.2s;}
   @media (prefers-reduced-motion:reduce){ .p-tag{animation:none;} }
   @media (hover:none){ .p-tag--hover{display:none;} }   /* nothing to hover on touch screens */
   @media (max-width:560px){
