@@ -634,39 +634,40 @@
   }
   @keyframes signDraw{to{stroke-dashoffset:0;}}
 
-  /* floating tags on the hero portrait: a hello, a nudge to hover, years of practice.
-     Colours come only from the Brand page palette: Violet #7546D8, Orchid #A65CCB,
-     Near Black #17171C, Warm Ivory #F8F7F4, Slate #66666E (edges are tints of these). */
+  /* floating tags on the hero portrait: a hello, a nudge to hover, years of practice, builder mode.
+     Colours are theme variables (spec of 2026-10-29); layout, size, type and rotation are shared by both themes. */
+  :root{
+    --tag-primary-bg:#7546D8; --tag-primary-text:#FFFFFF; --tag-primary-border:#9B7AE8;
+    --tag-neutral-bg:rgba(247,245,241,.88); --tag-neutral-text:#29272E; --tag-neutral-border:rgba(110,105,100,.28);
+    --tag-dark-bg:rgba(48,46,51,.92); --tag-dark-text:#FFFFFF; --tag-dark-border:#56525A; --tag-dark-icon:#A879FF;
+  }
+  :root[data-theme="dark"]{
+    --tag-primary-bg:#7546D8; --tag-primary-text:#FFFFFF; --tag-primary-border:#9B7AE8;
+    --tag-neutral-bg:rgba(35,33,40,.90); --tag-neutral-text:#F5F3F8; --tag-neutral-border:rgba(255,255,255,.20);
+    --tag-dark-bg:rgba(20,19,23,.92); --tag-dark-text:#FFFFFF; --tag-dark-border:rgba(255,255,255,.18); --tag-dark-icon:#B69AFF;
+  }
   /* they sit inside .img-stack, so they tilt with the portrait; translateZ lifts them just in front of it */
   .p-tag{position:absolute;z-index:6;pointer-events:none;white-space:nowrap;transform-style:preserve-3d;
     animation:pTagFloat 6s ease-in-out infinite;transition:opacity .3s ease;}
-  .p-tag > span{display:inline-flex;align-items:center;gap:8px;transform:translateZ(26px) rotate(var(--rot,0deg));}
+  .p-tag > span{display:inline-flex;align-items:center;gap:8px;transform:translateZ(26px) rotate(var(--rot,0deg));
+    border:1px solid;border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
   .p-tag--hello{top:42px;left:-34px;--rot:-7deg;}   /* hangs off the left edge, not the top: on 13–14" laptops the portrait sits ~16px under the ruler, and its readout needs the room */
-  .p-tag--hello > span{font:600 22px/1 var(--font-body);letter-spacing:-.01em;color:#F8F7F4;
-    background:#7546D8;
-    border:1px solid rgba(248,247,244,.34);padding:14px 24px 15px;border-radius:999px;}
+  .p-tag--hello > span{font:600 22px/1 var(--font-body);letter-spacing:-.01em;padding:14px 24px 15px;
+    background:var(--tag-primary-bg);color:var(--tag-primary-text);border-color:var(--tag-primary-border);}
   .p-tag--years{left:-26px;top:58%;--rot:-3deg;animation-delay:-2s;}
-  .p-tag--years > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:#66666E;
-    background:rgba(248,247,244,.62);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
-    border:1px solid rgba(23,23,28,.16);padding:9px 14px 9px 12px;border-radius:999px;}
-  .p-tag--years b{font:400 20px/1 var(--font-display);letter-spacing:-.01em;text-transform:none;color:#17171C;}
   .p-tag--builder{right:-26px;top:20%;--rot:3deg;animation-delay:-1s;}   /* mirrors 10+ years: same 26px overhang, same tilt the other way */
-  /* same treatment as the 10+ years tag */
-  .p-tag--builder > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:#66666E;
-    background:rgba(248,247,244,.62);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
-    border:1px solid rgba(23,23,28,.16);padding:0 14px 0 12px;min-height:40px;box-sizing:border-box;border-radius:999px;gap:7px;}   /* 40px: the 10+ years tag's height */
-  .p-tag--builder i{font-style:normal;font-family:var(--font-body);font-size:13px;letter-spacing:0;color:#17171C;}
-  .p-tag--builder em{font-style:normal;font-weight:600;color:#17171C;}
-  :root[data-theme="dark"] .p-tag--builder > span{background:rgba(23,23,28,.92);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-color:rgba(248,247,244,.16);color:rgba(248,247,244,.78);}
-  :root[data-theme="dark"] .p-tag--builder i,:root[data-theme="dark"] .p-tag--builder em{color:#F8F7F4;}
+  .p-tag--years > span,.p-tag--builder > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
+    padding:0 14px 0 12px;min-height:40px;box-sizing:border-box;
+    background:var(--tag-neutral-bg);color:var(--tag-neutral-text);border-color:var(--tag-neutral-border);}
+  .p-tag--builder > span{gap:7px;}
+  .p-tag--years b{font:400 20px/1 var(--font-display);letter-spacing:-.01em;text-transform:none;}
+  .p-tag--builder i{font-style:normal;font-family:var(--font-body);font-size:13px;letter-spacing:0;}
+  .p-tag--builder em{font-style:normal;font-weight:600;}
   .p-tag--hover{right:-20px;bottom:78px;--rot:4deg;animation-delay:-4s;}
-  .p-tag--hover > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:#F8F7F4;
-    background:rgba(23,23,28,.72);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
-    border:1px solid rgba(248,247,244,.22);padding:10px 14px;border-radius:999px;}
+  .p-tag--hover > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;padding:10px 14px;
+    background:var(--tag-dark-bg);color:var(--tag-dark-text);border-color:var(--tag-dark-border);}
   .p-tag--hover svg{width:11px;height:13px;flex-shrink:0;}
-  :root[data-theme="dark"] .p-tag--years > span{background:rgba(23,23,28,.92);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-color:rgba(248,247,244,.16);color:rgba(248,247,244,.78);}
-  :root[data-theme="dark"] .p-tag--years b{color:#F8F7F4;}
-  :root[data-theme="dark"] .p-tag--hover > span{background:rgba(248,247,244,.8);color:#17171C;border-color:rgba(248,247,244,.6);}
+  .p-tag--hover svg path{fill:var(--tag-dark-icon);}
   .portrait-frame:hover .p-tag--hover{opacity:0;}   /* the nudge steps aside once they're hovering */
   /* a gentle bob with a small side-to-side wiggle; each tag runs its own tempo so they never move in step */
   @keyframes pTagFloat{0%,100%{transform:translateY(0) rotate(0);}25%{transform:translateY(-3px) rotate(1.6deg);}
