@@ -650,6 +650,14 @@
     background:rgba(248,247,244,.62);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
     border:1px solid rgba(23,23,28,.16);padding:9px 14px 9px 12px;border-radius:999px;}
   .p-tag--years b{font:400 20px/1 var(--font-display);letter-spacing:-.01em;text-transform:none;color:#17171C;}
+  .p-tag--builder{right:-26px;top:20%;--rot:5deg;animation-delay:-1s;}
+  .p-tag--builder > span{font:600 10.5px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:#5B2A68;
+    background:rgba(241,234,247,.82);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
+    border:1px solid rgba(91,42,104,.28);padding:10px 14px 10px 12px;border-radius:999px;gap:7px;}
+  .p-tag--builder i{font-style:normal;font-family:var(--font-body);font-size:13px;letter-spacing:0;color:#7546D8;}
+  .p-tag--builder em{font-style:normal;color:#7546D8;}
+  :root[data-theme="dark"] .p-tag--builder > span{background:rgba(91,42,104,.88);color:#F1EAF7;border-color:rgba(241,234,247,.24);}
+  :root[data-theme="dark"] .p-tag--builder i,:root[data-theme="dark"] .p-tag--builder em{color:#F1EAF7;}
   .p-tag--hover{right:-20px;bottom:78px;--rot:4deg;animation-delay:-4s;}
   .p-tag--hover > span{font:500 10.5px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:#F8F7F4;
     background:rgba(23,23,28,.72);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);
@@ -662,12 +670,12 @@
   /* a gentle bob with a small side-to-side wiggle; each tag runs its own tempo so they never move in step */
   @keyframes pTagFloat{0%,100%{transform:translateY(0) rotate(0);}25%{transform:translateY(-3px) rotate(1.6deg);}
     50%{transform:translateY(-6px) rotate(0);}75%{transform:translateY(-3px) rotate(-1.6deg);}}
-  .p-tag--hello{animation-duration:4.6s;} .p-tag--years{animation-duration:5.8s;} .p-tag--hover{animation-duration:5.2s;}
+  .p-tag--builder{animation-duration:6.2s;} .p-tag--hello{animation-duration:4.6s;} .p-tag--years{animation-duration:5.8s;} .p-tag--hover{animation-duration:5.2s;}
   @media (prefers-reduced-motion:reduce){ .p-tag{animation:none;} }
   @media (hover:none){ .p-tag--hover{display:none;} }   /* nothing to hover on touch screens */
   @media (max-width:560px){
     .p-tag--hello{left:-8px;top:-12px;} .p-tag--hello > span{font-size:18px;padding:11px 18px 12px;}
-    .p-tag--years{left:-8px;}
+    .p-tag--years{left:-8px;} .p-tag--builder{right:-8px;}
   }
 
   /* Figma-style collaborator cursor, shown while hovering the portrait */
@@ -3702,6 +3710,7 @@
         <img class="dark-img" src="assets/images/image-002-d195dc1ee442.jpg" alt="Full-colour illustration portrait">
           <div class="p-tag p-tag--hello" aria-hidden="true"><span>Hello!</span></div>
           <div class="p-tag p-tag--years" aria-hidden="true"><span><b>10+</b> years</span></div>
+          <div class="p-tag p-tag--builder" aria-hidden="true"><span><i>↗</i>Builder mode: <em>On</em></span></div>
           <div class="p-tag p-tag--hover" aria-hidden="true"><span><svg viewBox="0 0 22 26" fill="none"><path d="M1 1 L1 20 L6 16 L9.5 23 L13 21.5 L9.5 14.5 L17 14.5 Z" fill="#A65CCB"/></svg>Hover over me!</span></div>
         </div>
         <div class="shine"></div>
