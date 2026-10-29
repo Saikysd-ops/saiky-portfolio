@@ -641,7 +641,7 @@
   .p-tag{position:absolute;z-index:6;pointer-events:none;white-space:nowrap;transform-style:preserve-3d;
     animation:pTagFloat 6s ease-in-out infinite;transition:opacity .3s ease;}
   .p-tag > span{display:inline-flex;align-items:center;gap:8px;transform:translateZ(26px) rotate(var(--rot,0deg));}
-  .p-tag--hello{top:-16px;left:-22px;--rot:-7deg;}
+  .p-tag--hello{top:42px;left:-34px;--rot:-7deg;}   /* hangs off the left edge, not the top: on 13–14" laptops the portrait sits ~16px under the ruler, and its readout needs the room */
   .p-tag--hello > span{font:600 22px/1 var(--font-body);letter-spacing:-.01em;color:#F8F7F4;
     background:#7546D8;
     border:1px solid rgba(248,247,244,.34);padding:14px 24px 15px;border-radius:999px;}
