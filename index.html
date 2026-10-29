@@ -635,16 +635,18 @@
   @keyframes signDraw{to{stroke-dashoffset:0;}}
 
   /* floating tags on the hero portrait: a hello, a nudge to hover, years of practice, builder mode.
-     Colours are theme variables (spec of 2026-10-29); layout, size, type and rotation are shared by both themes. */
+     Brand page palette only (tints = brand hex at reduced alpha): Violet #7546D8, Orchid #A65CCB, Pale Lilac #F1EAF7,
+     Near Black #17171C (rgb 23,23,28), Warm Ivory #F8F7F4 (rgb 248,247,244), Slate #66666E (rgb 102,102,110).
+     Layout, size, type and rotation are shared by both themes. */
   :root{
-    --tag-primary-bg:#7546D8; --tag-primary-text:#FFFFFF; --tag-primary-border:#9B7AE8;
-    --tag-neutral-bg:rgba(247,245,241,.88); --tag-neutral-text:#29272E; --tag-neutral-border:rgba(110,105,100,.28);
-    --tag-dark-bg:rgba(48,46,51,.92); --tag-dark-text:#FFFFFF; --tag-dark-border:#56525A; --tag-dark-icon:#A879FF;
+    --tag-primary-bg:#7546D8; --tag-primary-text:#F8F7F4; --tag-primary-border:rgba(241,234,247,.45);
+    --tag-neutral-bg:rgba(248,247,244,.88); --tag-neutral-text:#17171C; --tag-neutral-border:rgba(102,102,110,.28);
+    --tag-dark-bg:rgba(23,23,28,.88); --tag-dark-text:#F8F7F4; --tag-dark-border:#66666E; --tag-dark-icon:#A65CCB;
   }
   :root[data-theme="dark"]{
-    --tag-primary-bg:#7546D8; --tag-primary-text:#FFFFFF; --tag-primary-border:#9B7AE8;
-    --tag-neutral-bg:rgba(35,33,40,.90); --tag-neutral-text:#F5F3F8; --tag-neutral-border:rgba(255,255,255,.20);
-    --tag-dark-bg:rgba(20,19,23,.92); --tag-dark-text:#FFFFFF; --tag-dark-border:rgba(255,255,255,.18); --tag-dark-icon:#B69AFF;
+    --tag-primary-bg:#7546D8; --tag-primary-text:#F8F7F4; --tag-primary-border:rgba(241,234,247,.45);
+    --tag-neutral-bg:rgba(23,23,28,.90); --tag-neutral-text:#F8F7F4; --tag-neutral-border:rgba(248,247,244,.20);
+    --tag-dark-bg:rgba(23,23,28,.96); --tag-dark-text:#F8F7F4; --tag-dark-border:rgba(248,247,244,.18); --tag-dark-icon:#A65CCB;
   }
   /* they sit inside .img-stack, so they tilt with the portrait; translateZ lifts them just in front of it */
   .p-tag{position:absolute;z-index:6;pointer-events:none;white-space:nowrap;transform-style:preserve-3d;
