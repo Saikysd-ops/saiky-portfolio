@@ -1959,53 +1959,49 @@
   .dot-step-sub{font-family:var(--font-mono);font-size:10px;font-weight:600;
     letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);opacity:.7;}
 
-  /* IN THEIR WORDS — full-screen testimonial carousel, a quiet brand
-     moment before the closing CTA, set as an editorial spread (no card,
-     no avatar frame). Built for 1-5 slides; nav/dots hide themselves
-     automatically when there's only one. */
-  .testimonials-sec{position:relative;min-height:100vh;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;padding:80px 32px;overflow:hidden;
-    text-align:center;border-top:1px solid var(--line);}
-  .testimonials-sec > *{position:relative;z-index:1;}
-  .testi-inner{display:flex;flex-direction:column;align-items:center;}
-  .testimonials-sec .eyebrow-lbl{margin-bottom:48px;}
-  .testi-track{position:relative;width:100%;max-width:920px;}
-  .testi-slide{display:none;flex-direction:column;align-items:center;}
-  .testi-slide.is-active{display:flex;animation:testiIn .6s cubic-bezier(.22,1,.36,1);}
-  @keyframes testiIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-  @media (prefers-reduced-motion:reduce){.testi-slide.is-active{animation:none;}}
-  .testi-quote{font-family:var(--font-display);font-style:italic;font-weight:400;
-    font-size:clamp(21px,2.6vw,32px);line-height:1.48;color:var(--ink);
-    max-width:900px;margin:0 0 36px;}
-  /* editorial attribution: small plain portrait, name and role directly beneath — no frame */
-  .testi-avatar-wrap{width:64px;height:64px;margin-bottom:12px;border-radius:50%;overflow:hidden;}
+  /* IN THEIR WORDS — a row of cards that runs off the right edge, swiped or stepped with the arrows below.
+     --testi-g lines the heading and first card up with the page's 1180px column. Nav hides itself when every card fits. */
+  .testimonials-sec{--testi-g:max(32px, calc((100vw - 1180px) / 2 + 32px));
+    position:relative;width:100vw;margin-left:calc(50% - 50vw);padding:96px 0 88px;overflow:hidden;}
+  .testimonials-sec::before{content:'';position:absolute;top:0;left:var(--testi-g);right:var(--testi-g);height:1px;background:var(--line);}   /* the section rule stays on the column; only the cards run wide */
+  .testi-head{font-family:var(--font-display);font-weight:400;font-size:clamp(34px,4.2vw,56px);line-height:1.08;letter-spacing:-.018em;
+    color:var(--ink);margin:0 0 40px;padding:0 var(--testi-g);}
+  .testi-track{display:flex;gap:20px;overflow-x:auto;padding:6px var(--testi-g);scroll-padding:0 var(--testi-g);
+    scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .testi-track::-webkit-scrollbar{display:none;}
+  .testi-track:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+  .testi-slide{flex:0 0 clamp(296px,26vw,372px);min-height:480px;box-sizing:border-box;scroll-snap-align:start;
+    display:flex;flex-direction:column;padding:32px;border-radius:20px;background:var(--paper-raised);border:1px solid var(--line);
+    transition:transform .3s cubic-bezier(.22,1,.36,1),border-color .25s ease;}
+  @media (hover:hover){ .testi-slide:hover{transform:translateY(-4px);border-color:color-mix(in srgb, var(--accent) 45%, var(--line));} }
+  .testi-eyebrow{font-family:var(--font-mono);font-size:11px;font-weight:500;line-height:1.5;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px;}
+  .testi-quote{margin:0 0 28px;}
+  .testi-lead{display:block;font-family:var(--font-display);font-weight:500;font-size:clamp(22px,1.75vw,25px);line-height:1.2;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px;}
+  .testi-rest{display:block;font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--ink-soft);}
+  .testi-person{margin-top:auto;display:flex;align-items:center;gap:14px;}
+  .testi-avatar-wrap{width:64px;height:64px;flex-shrink:0;border-radius:50%;overflow:hidden;}
   .testi-avatar{display:block;width:100%;height:100%;object-fit:cover;background:var(--paper);}
-  .testi-name{font-family:var(--font-body);font-weight:800;font-size:18px;
-    letter-spacing:-.005em;color:var(--ink);}
-  .testi-title{font-family:var(--font-body);font-size:14px;color:var(--ink-soft);margin-top:3px;}
-  .testi-dots{display:flex;gap:9px;margin-top:56px;}
-  .testi-dot{width:7px;height:7px;border-radius:50%;background:var(--line);
-    border:none;padding:0;cursor:pointer;transition:background .25s ease,transform .25s ease;}
-  .testi-dot.is-active{background:var(--accent);transform:scale(1.3);}
-  .testimonials-sec[data-count="1"] .testi-dots,
-  .testimonials-sec[data-count="1"] .testi-nav{display:none;}
-  .testi-nav{position:absolute;top:50%;transform:translateY(-50%);
-    width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  .testi-name{font-family:var(--font-body);font-weight:700;font-size:16px;letter-spacing:-.005em;color:var(--ink);}
+  .testi-title{font-family:var(--font-body);font-size:13.5px;line-height:1.35;color:var(--ink-soft);margin-top:2px;}
+  .testi-navrow{display:flex;justify-content:flex-end;gap:10px;margin-top:22px;padding:0 var(--testi-g);}
+  .testi-navrow.is-static{display:none;}
+  .testi-nav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;
     background:var(--paper-raised);border:1px solid var(--line);color:var(--ink);
-    cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;z-index:2;}
+    cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease,opacity .2s ease;}
   .testi-nav svg{width:17px;height:17px;}
-  .testi-nav:hover{background:var(--violet);color:#fff;border-color:var(--violet);}
-  .testi-nav--prev{left:24px;}
-  .testi-nav--next{right:24px;}
+  .testi-nav:hover:not(:disabled){background:var(--violet);color:#fff;border-color:var(--violet);}
+  .testi-nav:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .testi-nav:disabled{opacity:.38;cursor:default;}
+  @media (max-width:560px){ .testimonials-sec{--testi-g:20px;} }   /* same breakpoint as .wrap's gutter */
   @media (max-width:760px){
-    .testi-nav{display:none;}
-    .testimonials-sec{min-height:auto;padding:64px 24px;}
-    .testi-avatar-wrap{width:56px;height:56px;}
-    .testi-name{font-size:16.5px;}
+    .testimonials-sec{padding:64px 0;}
+    .testi-head{margin-bottom:28px;}
+    .testi-track{gap:14px;}
+    .testi-slide{flex-basis:min(80vw,330px);min-height:440px;padding:24px;}
+    .testi-lead{font-size:21px;}
+    .testi-navrow{justify-content:flex-start;}   /* clear of the floating ORBIT button */
   }
-  @media (max-width:480px){
-    .testi-inner{transform:translateY(-18px);}
-  }
+  @media (prefers-reduced-motion:reduce){ .testi-slide{transition:none;} .testi-slide:hover{transform:none;} }
 
   /* closing */
   .closing{text-align:center;}
@@ -4691,44 +4687,46 @@
     </div>
   </section>
 
-  <section class="testimonials-sec" id="testimonials" data-count="4">
-   <div class="testi-inner">
-    <div class="eyebrow-lbl">In their words</div>
-    <div class="testi-track" id="testiTrack">
-      <div class="testi-slide is-active" data-i="0">
-        <blockquote class="testi-quote">“Saiky inspires me. He thinks deeply through complex problems to ensure his solutions align perfectly with both user needs and business goals. He is a phenomenal collaborator across teams who brings boundless creativity, genuine humility, and a constant willingness to learn.”</blockquote>
-        <div class="testi-avatar-wrap"><img class="testi-avatar" src="assets/images/testimonial-gary-davis.jpg" alt="Gary Davis"></div>
-        <div class="testi-name">Gary Davis</div>
-        <div class="testi-title">Senior Manager · Design Leadership, Sourcing</div>
-      </div>
-      <div class="testi-slide" data-i="1">
-        <blockquote class="testi-quote">“Saiky is an exceptionally talented product designer who balances user needs with business outcomes. He excels at translating research into thoughtful, impactful solutions and has been a strong AI champion on the team—helping others adopt new tools and approaches. Collaborative, supportive, and always elevating the work and people around him.”</blockquote>
-        <div class="testi-avatar-wrap"><img class="testi-avatar" src="assets/images/testimonial-dhaval-gandhi.jpg" alt="Dhaval S. Gandhi"></div>
-        <div class="testi-name">Dhaval S. Gandhi</div>
-        <div class="testi-title">Staff Designer · Supply Chain and Warehouse Management</div>
-      </div>
-      <div class="testi-slide" data-i="2">
-        <blockquote class="testi-quote">“Saiki is a great design partner to work with. I worked with him on several initiatives while building an Enterprise platform at Walmart supporting Supplier Quality operations. Saiki asked a lot of great questions, pushed for clarity around the core problems being solved while not settling for the seemingly obvious easy answers. His focus on user centric thinking is evident. Given a chance I would like to work with Saiki again.”</blockquote>
-        <div class="testi-avatar-wrap"><img class="testi-avatar" src="assets/images/testimonial-siddharth-shah.jpg" alt="Siddharth Shah"></div>
-        <div class="testi-name">Siddharth Shah</div>
-        <div class="testi-title">Senior Manager, Product Management · Walmart Sourcing</div>
-      </div>
-      <div class="testi-slide" data-i="3">
-        <blockquote class="testi-quote">“Saiky's work speaks before he does. His portfolio is sharp, direct, and self-explanatory — you understand how he thinks within seconds of landing on it. What sets him apart is the craft behind it: every detail feels intentional, and he takes feedback seriously, refining without ego. Anyone who works with Saiky gets a designer who thinks deeply and ships beautifully.”</blockquote>
-        <div class="testi-avatar-wrap"><img class="testi-avatar" src="assets/images/testimonial-pink.jpg" alt="Pink"></div>
-        <div class="testi-name">Pink</div>
-        <div class="testi-title">Product Lead · Walmart Sourcing</div>
-      </div>
+  <section class="testimonials-sec" id="testimonials">
+    <h2 class="testi-head">In their words</h2>
+    <div class="testi-track" id="testiTrack" role="region" aria-label="Testimonials" tabindex="0">
+      <article class="testi-slide">
+        <div class="testi-eyebrow">Design Leadership, Sourcing</div>
+        <blockquote class="testi-quote"><span class="testi-lead">“Saiky inspires me.</span> <span class="testi-rest">He thinks deeply through complex problems to ensure his solutions align perfectly with both user needs and business goals. He is a phenomenal collaborator across teams who brings boundless creativity, genuine humility, and a constant willingness to learn.”</span></blockquote>
+        <div class="testi-person">
+          <div class="testi-avatar-wrap"><img class="testi-avatar" src="assets/images/testimonial-gary-davis.jpg" alt="Gary Davis"></div>
+          <div><div class="testi-name">Gary Davis</div><div class="testi-title">Senior Manager</div></div>
+        </div>
+      </article>
+      <article class="testi-slide">
+        <div class="testi-eyebrow">Supply Chain and Warehouse Management</div>
+        <blockquote class="testi-quote"><span class="testi-lead">“Saiky is an exceptionally talented product designer who balances user needs with business outcomes.</span> <span class="testi-rest">He excels at translating research into thoughtful, impactful solutions and has been a strong AI champion on the team—helping others adopt new tools and approaches. Collaborative, supportive, and always elevating the work and people around him.”</span></blockquote>
+        <div class="testi-person">
+          <div class="testi-avatar-wrap"><img class="testi-avatar" src="assets/images/testimonial-dhaval-gandhi.jpg" alt="Dhaval S. Gandhi"></div>
+          <div><div class="testi-name">Dhaval S. Gandhi</div><div class="testi-title">Staff Designer</div></div>
+        </div>
+      </article>
+      <article class="testi-slide">
+        <div class="testi-eyebrow">Walmart Sourcing</div>
+        <blockquote class="testi-quote"><span class="testi-lead">“Saiki is a great design partner to work with.</span> <span class="testi-rest">I worked with him on several initiatives while building an Enterprise platform at Walmart supporting Supplier Quality operations. Saiki asked a lot of great questions, pushed for clarity around the core problems being solved while not settling for the seemingly obvious easy answers. His focus on user centric thinking is evident. Given a chance I would like to work with Saiki again.”</span></blockquote>
+        <div class="testi-person">
+          <div class="testi-avatar-wrap"><img class="testi-avatar" src="assets/images/testimonial-siddharth-shah.jpg" alt="Siddharth Shah"></div>
+          <div><div class="testi-name">Siddharth Shah</div><div class="testi-title">Senior Manager, Product Management</div></div>
+        </div>
+      </article>
+      <article class="testi-slide">
+        <div class="testi-eyebrow">Walmart Sourcing</div>
+        <blockquote class="testi-quote"><span class="testi-lead">“Saiky's work speaks before he does.</span> <span class="testi-rest">His portfolio is sharp, direct, and self-explanatory — you understand how he thinks within seconds of landing on it. What sets him apart is the craft behind it: every detail feels intentional, and he takes feedback seriously, refining without ego. Anyone who works with Saiky gets a designer who thinks deeply and ships beautifully.”</span></blockquote>
+        <div class="testi-person">
+          <div class="testi-avatar-wrap"><img class="testi-avatar" src="assets/images/testimonial-pink.jpg" alt="Pink"></div>
+          <div><div class="testi-name">Pink</div><div class="testi-title">Product Lead</div></div>
+        </div>
+      </article>
     </div>
-    <div class="testi-dots" id="testiDots">
-      <button type="button" class="testi-dot is-active" data-i="0" aria-label="Testimonial 1"></button>
-      <button type="button" class="testi-dot" data-i="1" aria-label="Testimonial 2"></button>
-      <button type="button" class="testi-dot" data-i="2" aria-label="Testimonial 3"></button>
-      <button type="button" class="testi-dot" data-i="3" aria-label="Testimonial 4"></button>
+    <div class="testi-navrow" id="testiNavRow">
+      <button type="button" class="testi-nav" id="testiPrev" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button type="button" class="testi-nav" id="testiNext" aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
-   </div>
-    <button type="button" class="testi-nav testi-nav--prev" id="testiPrev" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-    <button type="button" class="testi-nav testi-nav--next" id="testiNext" aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   </section>
 
   <section class="closing" id="closing">
@@ -8669,25 +8667,31 @@ try{
 }catch(e){ console.error('[section error]', e); }
 
 try{
-/* testimonial carousel — one active slide at a time, dots + arrows,
-   built for 1-5 slides (nav/dots auto-hide via [data-count="1"] CSS) */
+/* testimonial cards — a native scroll row (swipe, trackpad, keyboard); the arrows step one card and dim at
+   each end. The About view starts hidden, so the ResizeObserver also runs when the row first gets a size. */
 (function(){
-  const sec = document.getElementById('testimonials');
-  if(!sec) return;
-  const slides = Array.from(sec.querySelectorAll('.testi-slide'));
-  const dots = Array.from(sec.querySelectorAll('.testi-dot'));
+  const track = document.getElementById('testiTrack');
+  if(!track) return;
+  const row = document.getElementById('testiNavRow');
   const prev = document.getElementById('testiPrev');
   const next = document.getElementById('testiNext');
-  if(!slides.length) return;
-  let i = 0;
-  function show(n){
-    i = (n + slides.length) % slides.length;
-    slides.forEach((s, idx)=> s.classList.toggle('is-active', idx === i));
-    dots.forEach((d, idx)=> d.classList.toggle('is-active', idx === i));
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function step(dir){
+    const card = track.querySelector('.testi-slide');
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    track.scrollBy({left: dir * (card.offsetWidth + gap), behavior: calm ? 'auto' : 'smooth'});
   }
-  if(prev) prev.addEventListener('click', ()=> show(i - 1));
-  if(next) next.addEventListener('click', ()=> show(i + 1));
-  dots.forEach(d=> d.addEventListener('click', ()=> show(parseInt(d.dataset.i, 10))));
+  function sync(){
+    const max = track.scrollWidth - track.clientWidth;
+    row.classList.toggle('is-static', max <= 2);
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max - 2;
+  }
+  prev.addEventListener('click', ()=> step(-1));
+  next.addEventListener('click', ()=> step(1));
+  track.addEventListener('scroll', sync, {passive:true});
+  if('ResizeObserver' in window) new ResizeObserver(sync).observe(track);
+  sync();
 })();
 }catch(e){ console.error('[section error]', e); }
 
