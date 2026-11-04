@@ -1960,48 +1960,55 @@
     letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);opacity:.7;}
 
   /* IN THEIR WORDS — a row of cards that runs off the right edge, swiped or stepped with the arrows below.
-     --testi-g lines the heading and first card up with the page's 1180px column. Nav hides itself when every card fits. */
-  .testimonials-sec{--testi-g:max(32px, calc((100vw - 1180px) / 2 + 32px));
+     --testi-g lines the heading and first card up with the page's 1180px column. Card width is derived from the
+     space to the screen edge, so the next card is always a deliberate half preview (phones: its blank edge only). */
+  .testimonials-sec{--testi-g:max(32px, calc((100vw - 1180px) / 2 + 32px));--testi-gap:20px;
+    --testi-w:clamp(296px, calc((100vw - var(--testi-g) - 3 * var(--testi-gap)) / 3.5), 480px);
     position:relative;width:100vw;margin-left:calc(50% - 50vw);padding:96px 0 88px;overflow:hidden;}
   .testimonials-sec::before{content:'';position:absolute;top:0;left:var(--testi-g);right:var(--testi-g);height:1px;background:var(--line);}   /* the section rule stays on the column; only the cards run wide */
   .testi-head{font-family:var(--font-display);font-weight:400;font-size:clamp(34px,4.2vw,56px);line-height:1.08;letter-spacing:-.018em;
     color:var(--ink);margin:0 0 40px;padding:0 var(--testi-g);}
-  .testi-track{display:flex;gap:20px;overflow-x:auto;padding:6px var(--testi-g);scroll-padding:0 var(--testi-g);
+  .testi-track{display:flex;gap:var(--testi-gap);overflow-x:auto;padding:0 var(--testi-g);scroll-padding:0 var(--testi-g);
     scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
   .testi-track::-webkit-scrollbar{display:none;}
   .testi-track:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
-  .testi-slide{flex:0 0 clamp(296px,26vw,372px);min-height:480px;box-sizing:border-box;scroll-snap-align:start;
-    display:flex;flex-direction:column;padding:32px;border-radius:20px;background:var(--paper-raised);border:1px solid var(--line);
-    transition:transform .3s cubic-bezier(.22,1,.36,1),border-color .25s ease;}
-  @media (hover:hover){ .testi-slide:hover{transform:translateY(-4px);border-color:color-mix(in srgb, var(--accent) 45%, var(--line));} }
+  .testi-slide{flex:0 0 var(--testi-w);min-height:480px;box-sizing:border-box;scroll-snap-align:start;
+    display:flex;flex-direction:column;padding:32px;border-radius:20px;background:var(--paper-raised);border:1px solid var(--line);}
   .testi-eyebrow{font-family:var(--font-mono);font-size:11px;font-weight:500;line-height:1.5;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px;}
   .testi-quote{margin:0 0 28px;}
   .testi-lead{display:block;font-family:var(--font-display);font-weight:500;font-size:clamp(22px,1.75vw,25px);line-height:1.2;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px;}
   .testi-rest{display:block;font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--ink-soft);}
-  .testi-person{margin-top:auto;display:flex;align-items:center;gap:14px;}
-  .testi-avatar-wrap{width:64px;height:64px;flex-shrink:0;border-radius:50%;overflow:hidden;}
+  /* one fixed-height author block: photo and name land on the same line on every card, even when a role wraps */
+  .testi-person{margin-top:auto;display:flex;align-items:flex-start;gap:14px;min-height:68px;}
+  .testi-avatar-wrap{width:56px;height:56px;flex-shrink:0;border-radius:50%;overflow:hidden;}
   .testi-avatar{display:block;width:100%;height:100%;object-fit:cover;background:var(--paper);}
-  .testi-name{font-family:var(--font-body);font-weight:700;font-size:16px;letter-spacing:-.005em;color:var(--ink);}
+  .testi-person > div:last-child{padding-top:7px;}
+  .testi-name{font-family:var(--font-body);font-weight:700;font-size:16px;line-height:1.25;letter-spacing:-.005em;color:var(--ink);}
   .testi-title{font-family:var(--font-body);font-size:13.5px;line-height:1.35;color:var(--ink-soft);margin-top:2px;}
-  .testi-navrow{display:flex;justify-content:flex-end;gap:10px;margin-top:22px;padding:0 var(--testi-g);}
+  .testi-navrow{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;padding:0 var(--testi-g);}
   .testi-navrow.is-static{display:none;}
   .testi-nav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;
     background:var(--paper-raised);border:1px solid var(--line);color:var(--ink);
-    cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease,opacity .2s ease;}
+    cursor:pointer;transition:background .2s ease,border-color .2s ease,opacity .2s ease;}
   .testi-nav svg{width:17px;height:17px;}
-  .testi-nav:hover:not(:disabled){background:var(--violet);color:#fff;border-color:var(--violet);}
+  @media (hover:hover){ .testi-nav:hover:not(:disabled){background:color-mix(in srgb, var(--accent) 10%, var(--paper-raised));border-color:color-mix(in srgb, var(--accent) 45%, var(--line));} }
   .testi-nav:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-  .testi-nav:disabled{opacity:.38;cursor:default;}
-  @media (max-width:560px){ .testimonials-sec{--testi-g:20px;} }   /* same breakpoint as .wrap's gutter */
+  .testi-nav:disabled{background:transparent;color:var(--ink-soft);opacity:.45;cursor:default;}
+  /* tablets and small laptops: two and a half cards */
+  @media (max-width:1100px){ .testimonials-sec{--testi-w:clamp(296px, calc((100vw - var(--testi-g) - 2 * var(--testi-gap)) / 2.5), 420px);} }
   @media (max-width:760px){
-    .testimonials-sec{padding:64px 0;}
+    .testimonials-sec{--testi-gap:14px;--testi-w:calc((100vw - var(--testi-g) - var(--testi-gap)) / 1.5);padding:64px 0;}
     .testi-head{margin-bottom:28px;}
-    .testi-track{gap:14px;}
-    .testi-slide{flex-basis:min(80vw,330px);min-height:440px;padding:24px;}
+    .testi-slide{min-height:440px;padding:24px;}
     .testi-lead{font-size:21px;}
     .testi-navrow{justify-content:flex-start;}   /* clear of the floating ORBIT button */
   }
-  @media (prefers-reduced-motion:reduce){ .testi-slide{transition:none;} .testi-slide:hover{transform:none;} }
+  /* phones: one card at a time. The 20px preview is narrower than the card's 24px padding, so only the blank edge
+     shows and no words are ever cut; each swipe settles one card, centred. */
+  @media (max-width:560px){
+    .testimonials-sec{--testi-g:20px;--testi-w:calc(100vw - var(--testi-g) - var(--testi-gap) - 20px);}
+    .testi-slide{scroll-snap-align:center;scroll-snap-stop:always;}
+  }
 
   /* closing */
   .closing{text-align:center;}
