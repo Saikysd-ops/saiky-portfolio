@@ -1816,17 +1816,27 @@
      mixed sizes (some tall, Reels-proportioned 9:16; some wide landscape;
      some square-ish), so real photos of varying orientation drop in
      naturally later without needing a fixed aspect ratio everywhere. */
-  .life-gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-flow:dense;
-    grid-auto-rows:130px;gap:14px;margin-top:36px;}
-  .life-tile{background:color-mix(in srgb, var(--ink) 5%, var(--paper));
-    border:1px solid var(--line);border-radius:14px;
+  /* rows are derived from the column width so a two-row tile is exactly 9:16: reels show whole */
+  .life-gallery{--life-gap:14px;--life-col:calc((min(100vw, 1180px) - 64px - 3 * var(--life-gap)) / 4);
+    display:grid;grid-template-columns:repeat(4,1fr);grid-auto-flow:dense;
+    grid-auto-rows:calc((var(--life-col) * 16 / 9 - var(--life-gap)) / 2);gap:var(--life-gap);margin-top:36px;}
+  .life-tile{position:relative;border:1px solid color-mix(in srgb, var(--ink) 8%, transparent);border-radius:16px;
     display:flex;align-items:center;justify-content:center;
-    text-align:center;padding:10px;grid-row:span 1;overflow:hidden;}
+    text-align:center;grid-row:span 1;overflow:hidden;}
   .life-tile--tall{grid-row:span 2;}
   .life-tile--wide{grid-column:span 2;}
   .life-tile span{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;
     text-transform:uppercase;color:var(--ink-soft);opacity:.6;max-width:16ch;}
   .life-tile img,.life-tile video{width:100%;height:100%;object-fit:cover;display:block;}
+  /* videos are never cropped: any shape that isn't 9:16 sits on a blurred copy of itself */
+  .life-tile:has(video){background:#17171C;background-clip:padding-box;}   /* padding-box keeps the hairline light, not dark */
+  .life-tile video{position:relative;z-index:1;object-fit:contain;}
+  .life-tile video.life-tile__bg{position:absolute;z-index:0;inset:-12%;width:124%;height:124%;max-width:none;object-fit:cover;
+    filter:blur(22px) brightness(.72);transform:scale(var(--life-zoom,1));pointer-events:none;}
+  /* two reels have black bars baked into the file. The clips hide only those bars (bands measured across each whole video,
+     content 25.3–73.0% and 34.0–65.9%); the zoom keeps the bars out of the blurred copy too */
+  .life-reel--kargil{clip-path:inset(24.8% 0 26.5% 0);}
+  .life-reel--zanskar{clip-path:inset(34.1% 0 34.2% 0);}
   .life-tile--quote{background:color-mix(in srgb, var(--violet) 7%, var(--paper));
     flex-direction:column;gap:10px;padding:18px 16px;}
   .life-tile--quote q{font-family:var(--font-display);font-style:italic;font-weight:500;
@@ -1841,9 +1851,11 @@
   :root[data-theme="dark"] .life-tile--quote q{color:#fff;}
   :root[data-theme="dark"] .life-tile--quote cite{color:#C9A8F0;}
   @media (max-width:760px){
-    .life-gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:110px;}
+    .life-gallery{--life-gap:12px;--life-col:calc((100vw - 64px - var(--life-gap)) / 2);grid-template-columns:repeat(2,1fr);}
     .life-tile--wide{grid-column:span 2;}
   }
+
+  @media (max-width:560px){ .life-gallery{--life-col:calc((100vw - 40px - var(--life-gap)) / 2);} }   /* .wrap's phone gutter */
 
   /* When I'm not designing — six windows */
   .offclock{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
@@ -4678,19 +4690,19 @@
     </div>
 
     <div class="life-gallery">
-      <div class="life-tile life-tile--tall"><video autoplay muted loop playsinline preload="metadata" aria-label="Thorong La pass, 5416m — Nepal trek reel"><source src="assets/videos/video-002-6dafdcf27698.mp4" type="video/mp4"><source src="assets/videos/video-002-a3888cf882c0.webm" type="video/webm"></video></div>
+      <div class="life-tile life-tile--tall"><video class="life-tile__bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="assets/videos/video-002-6dafdcf27698.mp4" type="video/mp4"><source src="assets/videos/video-002-a3888cf882c0.webm" type="video/webm"></video><video autoplay muted loop playsinline preload="metadata" aria-label="Thorong La pass, 5416m — Nepal trek reel"><source src="assets/videos/video-002-6dafdcf27698.mp4" type="video/mp4"><source src="assets/videos/video-002-a3888cf882c0.webm" type="video/webm"></video></div>
       <div class="life-tile"><img src="assets/images/image-023-5b1d6af49816.jpg" alt="Playing tennis on a clay court" loading="lazy"></div>
       <div class="life-tile life-tile--wide"><img src="assets/images/image-024-e667346d5e48.jpg" alt="Sitting on rocks overlooking a Himalayan valley" loading="lazy"></div>
       <div class="life-tile"><img src="assets/images/image-025-5399c4a0fbe2.jpg" alt="Standing on a rocky ridge with snow peaks behind" loading="lazy"></div>
       <div class="life-tile life-tile--tall"><video autoplay muted loop playsinline preload="metadata" aria-label="Manang mornings, mountain energy — Nepal trek reel"><source src="assets/videos/video-003-0a286f93b1f9.mp4" type="video/mp4"><source src="assets/videos/video-003-43c5a80fb71d.webm" type="video/webm"></video></div>
       <div class="life-tile"><img src="assets/images/image-026-2b4378654d9e.jpg" alt="Trekking with poles on a mountain trail" loading="lazy"></div>
-      <div class="life-tile life-tile--wide"><video autoplay muted loop playsinline preload="metadata" aria-label="Wide Himalayan valley view — trek video"><source src="assets/videos/video-004-8fc59e3a56ae.mp4" type="video/mp4"></video></div>
+      <div class="life-tile life-tile--wide"><video class="life-tile__bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="assets/videos/video-004-8fc59e3a56ae.mp4" type="video/mp4"></video><video autoplay muted loop playsinline preload="metadata" aria-label="Wide Himalayan valley view — trek video"><source src="assets/videos/video-004-8fc59e3a56ae.mp4" type="video/mp4"></video></div>
       <div class="life-tile"><img src="assets/images/image-027-f4f1a4b499c5.jpg" alt="Pointing toward the trail through a forest canyon" loading="lazy"></div>
-      <div class="life-tile life-tile--tall"><video autoplay muted loop playsinline preload="metadata" aria-label="The moment I saw it — Ladakh trek reel"><source src="assets/videos/video-005-e271579a4691.mp4" type="video/mp4"><source src="assets/videos/video-004-a4b7fd350a96.webm" type="video/webm"></video></div>
+      <div class="life-tile life-tile--tall"><video class="life-tile__bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="assets/videos/video-005-e271579a4691.mp4" type="video/mp4"><source src="assets/videos/video-004-a4b7fd350a96.webm" type="video/webm"></video><video autoplay muted loop playsinline preload="metadata" aria-label="The moment I saw it — Ladakh trek reel"><source src="assets/videos/video-005-e271579a4691.mp4" type="video/mp4"><source src="assets/videos/video-004-a4b7fd350a96.webm" type="video/webm"></video></div>
       <div class="life-tile"><img src="assets/images/image-028-39ebb2d9ad4d.jpg" alt="Close-up of a snow-covered Himalayan peak" loading="lazy"></div>
       <div class="life-tile life-tile--quote"><q>Trust the next step before you can see the whole path.</q><cite>Saiky</cite></div>
-      <div class="life-tile life-tile--tall"><video autoplay muted loop playsinline preload="metadata" aria-label="Kargil to Padum — Zanskar road trip reel"><source src="assets/videos/video-006-7dc5f2da1be4.mp4" type="video/mp4"><source src="assets/videos/video-005-f920eb642dda.webm" type="video/webm"></video></div>
-      <div class="life-tile life-tile--tall"><video autoplay muted loop playsinline preload="metadata" aria-label="Zanskar: a chapter worth living — trek reel"><source src="assets/videos/video-007-90e32bcdcb61.mp4" type="video/mp4"><source src="assets/videos/video-006-e6b2d0f97f76.webm" type="video/webm"></video></div>
+      <div class="life-tile life-tile--tall"><video class="life-tile__bg" style="--life-zoom:2.2" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="assets/videos/video-006-7dc5f2da1be4.mp4" type="video/mp4"><source src="assets/videos/video-005-f920eb642dda.webm" type="video/webm"></video><video class="life-reel--kargil" autoplay muted loop playsinline preload="metadata" aria-label="Kargil to Padum — Zanskar road trip reel"><source src="assets/videos/video-006-7dc5f2da1be4.mp4" type="video/mp4"><source src="assets/videos/video-005-f920eb642dda.webm" type="video/webm"></video></div>
+      <div class="life-tile life-tile--tall"><video class="life-tile__bg" style="--life-zoom:3.2" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="assets/videos/video-007-90e32bcdcb61.mp4" type="video/mp4"><source src="assets/videos/video-006-e6b2d0f97f76.webm" type="video/webm"></video><video class="life-reel--zanskar" autoplay muted loop playsinline preload="metadata" aria-label="Zanskar: a chapter worth living — trek reel"><source src="assets/videos/video-007-90e32bcdcb61.mp4" type="video/mp4"><source src="assets/videos/video-006-e6b2d0f97f76.webm" type="video/webm"></video></div>
     </div>
   </section>
 
