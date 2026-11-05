@@ -1750,6 +1750,11 @@
   /* video */
   .video-sec{padding-top:8px;}
   .video-sec .video-frame{aspect-ratio:16/7.2;max-height:520px;}
+  /* the closing line of "How I actually work", directly above the reel */
+  .habits-close{margin:0 0 84px;max-width:46ch;font-family:var(--font-display);font-style:italic;font-weight:400;
+    font-size:clamp(20px,2.3vw,27px);line-height:1.4;color:var(--ink);padding-top:38px;border-top:1px solid var(--line);}
+  .habits-close b{font-style:normal;font-weight:500;color:var(--accent);}
+  @media (max-width:760px){ .habits-close{font-size:19px;padding-top:28px;margin-bottom:40px;} }
   .video-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:22px;}
   .video-head h2{font-family:var(--font-display);font-weight:500;font-size:clamp(26px,3.2vw,40px);
     line-height:1.1;margin:0;color:var(--ink);letter-spacing:-.01em;}
@@ -4563,6 +4568,7 @@
   </section>
 
   <section class="video-sec" id="reel">
+    <p class="habits-close">I care less about producing more screens and more about making <b>the right thing</b> clear enough to build, use, and scale.</p>
     <div class="video-frame" id="introVideo">
       <video autoplay muted loop playsinline preload="metadata" aria-label="A short personal reel">
         <source src="assets/videos/video-001-ea4fa5afb2b0.mp4" type="video/mp4">
