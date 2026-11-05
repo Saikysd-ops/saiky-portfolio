@@ -3056,31 +3056,32 @@
   .habits-eyebrow{display:flex;align-items:center;gap:12px;color:var(--sp-ink);font-weight:500;}
   :root[data-theme="dark"] .habits-sec .habits-eyebrow.eyebrow-lbl{color:var(--sp-ink);opacity:1;}
   .habits-eyebrow::after{content:'';width:40px;height:1px;background:currentColor;}
-  .sp-head{display:grid;grid-template-columns:var(--sp-cols);align-items:end;margin-bottom:clamp(10px,2.2svh,20px);}
+  .sp-head{display:grid;grid-template-columns:var(--sp-cols);align-items:end;margin-bottom:clamp(10px,2.6svh,32px);}
   .habits-title{grid-column:1 / 3;font-family:var(--font-display);font-weight:500;font-size:clamp(30px,min(4.2vw,6.6svh),54px);line-height:1.06;letter-spacing:-.018em;color:var(--sp-ink);margin:0;white-space:nowrap;}
   .sp-lede{grid-column:3 / 5;margin:0;max-width:46ch;font-size:clamp(15px,min(1.3vw,2.1svh),18px);line-height:1.55;color:var(--ink-soft);}
-    .sp-gantt{position:relative;display:flex;flex-direction:column;gap:clamp(6px,1.45svh,13px);padding:clamp(8px,1.5svh,12px) 0 clamp(10px,1.7svh,14px);}
+    .sp-gantt{position:relative;display:flex;flex-direction:column;flex:1 1 auto;justify-content:center;gap:clamp(6px,1.6svh,20px);padding:clamp(10px,2.2svh,28px) 0;}
   .sp-guides{position:absolute;inset:0;display:grid;grid-template-columns:var(--sp-cols);}
   .sp-guides i{border-left:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
   .sp-guides i:last-child{border-right:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
-  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);height:clamp(40px,6svh,58px);box-sizing:border-box;display:flex;align-items:center;padding:0 clamp(20px,2.4svh,26px);border-radius:30px;
-    background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:clamp(15px,min(1.25vw,1.95svh),18px);font-weight:600;white-space:nowrap;transition:opacity .25s ease;}
+  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);height:clamp(32px,4.2svh,42px);box-sizing:border-box;display:flex;align-items:center;padding:0 clamp(14px,1.9svh,20px);border-radius:30px;
+    background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:clamp(13.5px,min(1.15vw,1.7svh),15px);font-weight:500;white-space:nowrap;transition:opacity .25s ease;}
   .sp-steps{position:relative;display:grid;grid-template-columns:var(--sp-cols);list-style:none;margin:0;padding:0;}
   /* the timeline: the signature gradient runs from problem to impact */
   .sp-steps::before{content:'';position:absolute;top:5px;left:0;right:0;height:2px;border-radius:2px;background:linear-gradient(90deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);transform-origin:left center;}
-  .sp-step{position:relative;padding:clamp(20px,2.8svh,26px) 28px 0 0;transition:opacity .25s ease;}
+  .sp-step{position:relative;padding:clamp(20px,3.2svh,36px) 28px 0 0;transition:opacity .25s ease;}
   .sp-step:last-child{padding-right:0;}
   .sp-step::before{content:'';position:absolute;top:0;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--sp-ink);box-shadow:0 0 0 4px var(--paper);}
   .sp-kicker{display:block;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;}
   .sp-step h3{font-family:var(--font-display);font-weight:500;font-size:clamp(18px,min(1.6vw,2.6svh),22px);line-height:1.2;letter-spacing:-.01em;color:var(--sp-ink);margin:0 0 8px;}
   .sp-step h3 .sp-amp{font-family:var(--font-body);font-weight:500;}   /* the display face's ampersand is too ornate at this size */
-  .sp-step p{margin:0;font-size:clamp(13.5px,min(1.1vw,1.75svh),15px);line-height:1.5;color:var(--ink-soft);}
+  .sp-step p{margin:0;font-size:clamp(13.5px,min(1.1vw,1.75svh),16px);line-height:1.5;color:var(--ink-soft);}
   /* hovering a bar or a step picks out its pair */
   .sp-chart[data-active="1"] [data-i]:not([data-i="1"]),.sp-chart[data-active="2"] [data-i]:not([data-i="2"]),
   .sp-chart[data-active="3"] [data-i]:not([data-i="3"]),.sp-chart[data-active="4"] [data-i]:not([data-i="4"]){opacity:.3;}
-  /* laptops and up: a compact block sized to its content; short windows tighten the spacing to keep it on one screen */
+  /* laptops and up: the section fills the window under the 72px nav, with clear space above and below; the chart takes what's left */
   @media (min-width:881px){
-    .habits-sec{padding-top:clamp(24px,5.6svh,52px);padding-bottom:clamp(24px,6.4svh,60px);scroll-margin-top:72px;}
+    .habits-sec{min-height:calc(100svh - 72px);box-sizing:border-box;display:flex;flex-direction:column;padding-top:clamp(28px,7svh,88px);padding-bottom:clamp(28px,7svh,88px);scroll-margin-top:72px;}
+    .sp-chart{flex:1 1 auto;display:flex;flex-direction:column;}
   }
   /* entrance, only once JS has armed it and motion is allowed: without either, everything is simply there */
   @media (prefers-reduced-motion:no-preference){
@@ -3095,12 +3096,12 @@
     .sp-anim.is-in .sp-step>*{opacity:1;transform:none;}
     .sp-anim.is-in .sp-step::before{transform:none;}
   }
-  @media (max-width:1000px){ .sp-bar{padding:0 18px;font-size:14.5px;} .sp-bar[data-i="4"]{margin-left:60%;width:40%;} }
+  @media (max-width:1100px){ .sp-bar[data-i="4"]{margin-left:62%;width:38%;} }
   @media (max-width:880px){
     .sp-head{display:block;margin-bottom:24px;}
     .habits-title{margin-bottom:14px;}
     .sp-gantt{padding:14px 0;gap:6px;}
-    .sp-bar{height:36px;padding:0 12px;font-size:12.5px;}
+    .sp-bar{height:30px;padding:0 10px;font-size:12px;width:calc(var(--w) + 4%);}
     .sp-bar[data-i="4"]{margin-left:var(--s);width:var(--w);}
     .sp-bar span{display:none;}   /* "Sprint 01" fits the narrowest bar; the step names follow below */
     /* the timeline turns vertical: its line runs down the left, one dot per step */
@@ -4551,10 +4552,10 @@
     <div class="sp-chart" id="spChart">
       <div class="sp-gantt" role="img" aria-label="Four sprints in sequence, each overlapping the next: Frame, Make Visible, AI Prototype and Vibe Code, Handoff, Validate and Measure.">
         <div class="sp-guides" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-        <div class="sp-bar" data-i="1" style="--s:0%;--w:25.7%">Sprint 01<span>&nbsp;— Frame</span></div>
-        <div class="sp-bar" data-i="2" style="--s:14.1%;--w:34.8%">Sprint 02<span>&nbsp;— Make Visible</span></div>
-        <div class="sp-bar" data-i="3" style="--s:35.1%;--w:40%">Sprint 03<span>&nbsp;— AI Prototype &amp; Vibe Code</span></div>
-        <div class="sp-bar" data-i="4" style="--s:63.5%;--w:36.5%">Sprint 04<span>&nbsp;— Handoff, Validate &amp; Measure</span></div>
+        <div class="sp-bar" data-i="1" style="--s:0%;--w:22.5%">Sprint 01<span>&nbsp;— Frame</span></div>
+        <div class="sp-bar" data-i="2" style="--s:14%;--w:30%">Sprint 02<span>&nbsp;— Make Visible</span></div>
+        <div class="sp-bar" data-i="3" style="--s:35%;--w:36%">Sprint 03<span>&nbsp;— AI Prototype &amp; Vibe Code</span></div>
+        <div class="sp-bar" data-i="4" style="--s:66%;--w:34%">Sprint 04<span>&nbsp;— Handoff, Validate &amp; Measure</span></div>
       </div>
 
       <ol class="sp-steps">
