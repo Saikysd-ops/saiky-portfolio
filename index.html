@@ -3051,8 +3051,8 @@
   /* HOW I ACTUALLY WORK — four overlapping sprints above a timeline. Near Black and Warm Ivory swap in dark mode so the bars
      keep their contrast. The signature gradient appears only where it means something: "impact." and the line that leads there.
      One grid runs through everything: --sp-cols sets the lede, guides, dots and step text; bars are % of the same width. */
-  .habits-sec{--sp-ink:#17171C;--sp-cols:22.5fr 23.5fr 27fr 27fr;}
-  :root[data-theme="dark"] .habits-sec{--sp-ink:#F8F7F4;}
+  .habits-sec{--sp-ink:#17171C;--sp-on:#F8F7F4;--sp-cols:22.5fr 23.5fr 27fr 27fr;}
+  :root[data-theme="dark"] .habits-sec{--sp-ink:#F8F7F4;--sp-on:#17171C;}
   .habits-eyebrow{display:flex;align-items:center;gap:12px;color:var(--sp-ink);font-weight:500;}
   :root[data-theme="dark"] .habits-sec .habits-eyebrow.eyebrow-lbl{color:var(--sp-ink);opacity:1;}
   .habits-eyebrow::after{content:'';width:40px;height:1px;background:currentColor;}
@@ -3063,14 +3063,9 @@
   .sp-guides{position:absolute;inset:clamp(10px,2svh,18px) 0 0;display:grid;grid-template-columns:var(--sp-cols);}
   .sp-guides i{border-left:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
   .sp-guides i:last-child{border-right:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
-  /* thin square bars: each sprint takes a brand colour as a soft fill, a solid start edge and a faint drafting pattern that gets denser as the work firms up */
-  .sp-bar{--sp-mix:20%;--sp-fill:color-mix(in srgb, var(--sp-c) var(--sp-mix), var(--paper));--sp-pat:color-mix(in srgb, var(--sp-c) 28%, transparent);position:relative;margin-left:var(--s);width:var(--w);height:clamp(26px,3.3svh,32px);box-sizing:border-box;display:flex;align-items:center;padding:0 clamp(10px,1.4svh,14px);border:1px solid color-mix(in srgb, var(--sp-c) 55%, transparent);border-left:2px solid var(--sp-c);border-radius:2px;
-    background-color:var(--sp-fill);color:var(--sp-ink);font-family:var(--font-body);font-size:clamp(13px,min(1.05vw,1.6svh),14px);font-weight:500;white-space:nowrap;text-shadow:0 0 3px var(--sp-fill),0 0 3px var(--sp-fill);transition:opacity .25s ease;}
-  :root[data-theme="dark"] .sp-bar{--sp-mix:30%;}
-  .sp-bar[data-i="1"]{--sp-c:#7546D8;background-image:radial-gradient(circle,color-mix(in srgb, var(--sp-c) 55%, transparent) .8px,transparent 1.1px);background-size:7px 7px;}
-  .sp-bar[data-i="2"]{--sp-c:#A65CCB;background-image:repeating-linear-gradient(135deg,var(--sp-pat) 0 1px,transparent 1px 7px);}
-  .sp-bar[data-i="3"]{--sp-c:#C54879;background-image:linear-gradient(var(--sp-pat) 1px,transparent 1px),linear-gradient(90deg,var(--sp-pat) 1px,transparent 1px);background-size:7px 7px;}
-  .sp-bar[data-i="4"]{--sp-c:#E46B5D;background-image:repeating-linear-gradient(90deg,var(--sp-pat) 0 1px,transparent 1px 4px);}
+  /* thin square bars, solid ink */
+  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);height:clamp(26px,3.3svh,32px);box-sizing:border-box;display:flex;align-items:center;padding:0 clamp(10px,1.4svh,14px);border-radius:2px;
+    background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:clamp(13px,min(1.05vw,1.6svh),14px);font-weight:500;white-space:nowrap;transition:opacity .25s ease;}
   .sp-steps{position:relative;display:grid;grid-template-columns:var(--sp-cols);list-style:none;margin:0;padding:0;}
   /* the timeline: the signature gradient runs from problem to impact */
   .sp-steps::before{content:'';position:absolute;top:5px;left:0;right:0;height:2px;border-radius:2px;background:linear-gradient(90deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);transform-origin:left center;}
