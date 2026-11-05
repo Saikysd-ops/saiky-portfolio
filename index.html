@@ -3098,8 +3098,9 @@
   /* laptops and up: set breathing room above and below */
   @media (min-width:881px){
     .habits-sec{min-height:calc(100svh - 72px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(40px,7svh,72px);padding-bottom:clamp(40px,7svh,72px);scroll-margin-top:72px;}   /* fills the window under the nav; spare room becomes equal space above and below */
-    .sp-head{margin-bottom:clamp(28px,6.5svh,72px);}   /* clear air between the header and the timeline */
+    .sp-head{margin-bottom:80px;}   /* clear air between the header and the timeline */
   }
+  @media (min-width:881px) and (max-height:700px){ .sp-head{margin-bottom:clamp(28px,10svh,72px);} }   /* very short windows: just enough less to still fit */
   /* entrance, only once JS has armed it and motion is allowed: without either, everything is simply there */
   @media (prefers-reduced-motion:no-preference){
     .sp-anim .sp-bar{clip-path:inset(0 100% 0 0);transition:clip-path .9s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
