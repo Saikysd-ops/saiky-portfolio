@@ -3044,39 +3044,68 @@
   :root[data-theme="dark"] #loader .l-cairn .s3{background:#F5F5F5;}
 
   /* HOW I ACTUALLY WORK — four overlapping sprints above a timeline. Near Black and Warm Ivory swap in dark mode so the bars
-     keep their contrast; the signature gradient is on "impact." only. Bars and guides are placed as % of the section width. */
-  .habits-sec{--sp-ink:#17171C;--sp-on:#F8F7F4;}
+     keep their contrast. The signature gradient appears only where it means something: "impact." and the line that leads there.
+     One grid runs through everything: --sp-cols sets the lede, guides, dots and step text; bars are % of the same width. */
+  .habits-sec{--sp-ink:#17171C;--sp-on:#F8F7F4;--sp-cols:24.2fr 25.7fr 27.3fr 22.8fr;}
   :root[data-theme="dark"] .habits-sec{--sp-ink:#F8F7F4;--sp-on:#17171C;}
   .habits-eyebrow{display:flex;align-items:center;gap:12px;color:var(--sp-ink);font-weight:500;}
   :root[data-theme="dark"] .habits-sec .habits-eyebrow.eyebrow-lbl{color:var(--sp-ink);opacity:1;}
   .habits-eyebrow::after{content:'';width:40px;height:1px;background:currentColor;}
-  .sp-head{display:flex;align-items:center;gap:clamp(28px,3.4vw,44px);margin-bottom:40px;}
-  .habits-title{flex-shrink:0;font-family:var(--font-display);font-weight:500;font-size:clamp(30px,3.4vw,46px);line-height:1.08;letter-spacing:-.015em;color:var(--sp-ink);margin:0;}
-  .sp-lede{margin:0;padding-left:clamp(28px,3.4vw,44px);border-left:1px solid color-mix(in srgb, var(--sp-ink) 28%, transparent);max-width:44ch;font-size:16px;line-height:1.6;color:var(--ink-soft);}
-  .sp-gantt{position:relative;display:flex;flex-direction:column;gap:6px;padding:14px 0;}
-  .sp-guide{position:absolute;top:0;bottom:0;left:var(--x);border-left:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
-  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);min-height:44px;box-sizing:border-box;display:flex;align-items:center;padding:0 24px;border-radius:999px;
-    background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:15.5px;font-weight:600;white-space:nowrap;}
-  .sp-steps{position:relative;display:grid;grid-template-columns:24.2fr 25.7fr 27.3fr 22.8fr;list-style:none;margin:22px 0 0;padding:0;}
-  .sp-steps::before{content:'';position:absolute;top:6px;left:0;right:0;height:1px;background:color-mix(in srgb, var(--sp-ink) 45%, transparent);}
-  .sp-step{position:relative;padding:44px 28px 0 0;}
+  .sp-head{display:grid;grid-template-columns:var(--sp-cols);align-items:end;margin-bottom:clamp(16px,3svh,44px);}
+  .habits-title{grid-column:1 / 3;font-family:var(--font-display);font-weight:500;font-size:clamp(30px,min(4.2vw,6.6svh),58px);line-height:1.06;letter-spacing:-.018em;color:var(--sp-ink);margin:0;padding-right:24px;}
+  .sp-lede{grid-column:3 / 5;margin:0;max-width:46ch;font-size:clamp(15px,min(1.3vw,2.1svh),18px);line-height:1.55;color:var(--ink-soft);}
+  .sp-chart{display:flex;flex-direction:column;}
+  .sp-gantt{position:relative;flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.3svh,26px);padding:clamp(10px,1.9svh,30px) 0;}
+  .sp-guides{position:absolute;inset:0;display:grid;grid-template-columns:var(--sp-cols);}
+  .sp-guides i{border-left:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
+  .sp-guides i:last-child{border-right:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
+  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);height:clamp(40px,6svh,84px);box-sizing:border-box;display:flex;align-items:center;padding:0 clamp(20px,2.4svh,32px);border-radius:999px;
+    background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:clamp(15px,min(1.25vw,1.95svh),19px);font-weight:600;white-space:nowrap;transition:opacity .25s ease;}
+  .sp-steps{position:relative;display:grid;grid-template-columns:var(--sp-cols);list-style:none;margin:0;padding:0;}
+  /* the timeline: the signature gradient runs from problem to impact */
+  .sp-steps::before{content:'';position:absolute;top:5px;left:0;right:0;height:2px;border-radius:2px;background:linear-gradient(90deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);transform-origin:left center;}
+  .sp-step{position:relative;padding:clamp(22px,3.4svh,44px) 28px 0 0;transition:opacity .25s ease;}
   .sp-step:last-child{padding-right:0;}
-  .sp-step::before{content:'';position:absolute;top:0;left:24%;width:13px;height:13px;border-radius:50%;background:var(--sp-ink);}
-  .sp-step h3{font-family:var(--font-display);font-weight:500;font-size:21px;line-height:1.2;letter-spacing:-.01em;color:var(--sp-ink);margin:0 0 10px;}
-  .sp-step p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-soft);}
+  .sp-step::before{content:'';position:absolute;top:0;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--sp-ink);box-shadow:0 0 0 4px var(--paper);}
+  .sp-kicker{display:block;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;}
+  .sp-step h3{font-family:var(--font-display);font-weight:500;font-size:clamp(18px,min(1.6vw,2.6svh),23px);line-height:1.2;letter-spacing:-.01em;color:var(--sp-ink);margin:0 0 8px;}
+  .sp-step h3 .sp-amp{font-family:var(--font-body);font-weight:500;}   /* the display face's ampersand is too ornate at this size */
+  .sp-step p{margin:0;font-size:clamp(13.5px,min(1.1vw,1.75svh),16px);line-height:1.5;color:var(--ink-soft);}
+  /* hovering a bar or a step picks out its pair */
+  .sp-chart[data-active="1"] [data-i]:not([data-i="1"]),.sp-chart[data-active="2"] [data-i]:not([data-i="2"]),
+  .sp-chart[data-active="3"] [data-i]:not([data-i="3"]),.sp-chart[data-active="4"] [data-i]:not([data-i="4"]){opacity:.3;}
+  /* laptops and up: the section fills the window under the 72px nav */
+  @media (min-width:881px){
+    .habits-sec{min-height:calc(100svh - 72px);box-sizing:border-box;display:flex;flex-direction:column;padding-top:clamp(24px,4.6svh,72px);padding-bottom:clamp(24px,4.6svh,72px);scroll-margin-top:72px;}
+    .sp-chart{flex:1 1 auto;}
+  }
+  /* entrance, only once JS has armed it and motion is allowed: without either, everything is simply there */
+  @media (prefers-reduced-motion:no-preference){
+    .sp-anim .sp-bar{clip-path:inset(0 100% 0 0 round 999px);transition:clip-path .9s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
+    .sp-anim .sp-bar:nth-of-type(2){transition-delay:.12s,0s;} .sp-anim .sp-bar:nth-of-type(3){transition-delay:.24s,0s;}
+    .sp-anim .sp-bar:nth-of-type(4){transition-delay:.36s,0s;} .sp-anim .sp-bar:nth-of-type(5){transition-delay:.48s,0s;}
+    .sp-anim .sp-steps::before{transform:scaleX(0);transition:transform 1.3s cubic-bezier(.22,1,.36,1) .3s;}
+    .sp-anim .sp-step>*{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1);transition-delay:calc(.45s + var(--n) * .12s);}
+    .sp-anim .sp-step::before{transform:scale(0);transition:transform .4s cubic-bezier(.22,1,.36,1);transition-delay:calc(.4s + var(--n) * .22s);}
+    .sp-anim.is-in .sp-bar{clip-path:inset(0 0 0 0 round 999px);}
+    .sp-anim.is-in .sp-steps::before{transform:none;}
+    .sp-anim.is-in .sp-step>*{opacity:1;transform:none;}
+    .sp-anim.is-in .sp-step::before{transform:none;}
+  }
   @media (max-width:1000px){ .sp-bar{padding:0 18px;font-size:14.5px;} }
   @media (max-width:880px){
-    .sp-head{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:28px;}
-    .sp-lede{padding-left:0;border-left:0;}
-    /* the timeline turns vertical: its line runs down the left, one dot per step */
-    .sp-steps{grid-template-columns:1fr;gap:28px;margin-top:28px;}
-    .sp-steps::before{top:6px;bottom:6px;left:6px;right:auto;width:1px;height:auto;}
-    .sp-step,.sp-step:last-child{padding:0 0 0 34px;}
-    .sp-step::before{top:5px;left:0;}
-  }
-  @media (max-width:880px){
-    .sp-bar{min-height:36px;padding:0 12px;font-size:12.5px;}
+    .sp-head{display:block;margin-bottom:24px;}
+    .habits-title{padding-right:0;margin-bottom:14px;}
+    .sp-gantt{padding:14px 0;gap:6px;}
+    .sp-bar{height:36px;padding:0 12px;font-size:12.5px;}
     .sp-bar span{display:none;}   /* "Sprint 01" fits the narrowest bar; the step names follow below */
+    /* the timeline turns vertical: its line runs down the left, one dot per step */
+    .sp-steps{grid-template-columns:1fr;gap:28px;margin-top:24px;}
+    .sp-steps::before{top:6px;bottom:6px;left:5px;right:auto;width:2px;height:auto;background:linear-gradient(180deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);transform-origin:center top;}
+    .sp-anim .sp-steps::before{transform:scaleY(0);}
+    .sp-step,.sp-step:last-child{padding:0 0 0 34px;}
+    .sp-step::before{top:4px;left:0;}
+    .sp-step h3{font-size:21px;} .sp-step p{font-size:15px;}
   }
 
   .om-thumb{background:linear-gradient(150deg, #3E7FD6 0%, #2E5EA8 100%);}
@@ -4515,20 +4544,22 @@
       <p class="sp-lede">A practical, AI-assisted design process that connects problem framing, collaboration, rapid prototyping and measurable outcomes.</p>
     </div>
 
-    <div class="sp-gantt" role="img" aria-label="Four sprints in sequence, each overlapping the next: Frame, Make Visible, AI Prototype and Vibe Code, Handoff and Measure.">
-      <i class="sp-guide" style="--x:0"></i><i class="sp-guide" style="--x:24.2%"></i><i class="sp-guide" style="--x:46.4%"></i><i class="sp-guide" style="--x:66.2%"></i><i class="sp-guide" style="--x:79.7%"></i><i class="sp-guide" style="--x:calc(100% - 1px)"></i>
-      <div class="sp-bar" style="--s:0%;--w:25.7%">Sprint 01<span>&nbsp;— Frame</span></div>
-      <div class="sp-bar" style="--s:14.1%;--w:34.8%">Sprint 02<span>&nbsp;— Make Visible</span></div>
-      <div class="sp-bar" style="--s:35.1%;--w:43.3%">Sprint 03<span>&nbsp;— AI Prototype &amp; Vibe Code</span></div>
-      <div class="sp-bar" style="--s:66.4%;--w:33.6%">Sprint 04<span>&nbsp;— Handoff &amp; Measure</span></div>
-    </div>
+    <div class="sp-chart" id="spChart">
+      <div class="sp-gantt" role="img" aria-label="Four sprints in sequence, each overlapping the next: Frame, Make Visible, AI Prototype and Vibe Code, Handoff and Measure.">
+        <div class="sp-guides" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="sp-bar" data-i="1" style="--s:0%;--w:25.7%">Sprint 01<span>&nbsp;— Frame</span></div>
+        <div class="sp-bar" data-i="2" style="--s:14.1%;--w:34.8%">Sprint 02<span>&nbsp;— Make Visible</span></div>
+        <div class="sp-bar" data-i="3" style="--s:35.1%;--w:43.3%">Sprint 03<span>&nbsp;— AI Prototype &amp; Vibe Code</span></div>
+        <div class="sp-bar" data-i="4" style="--s:66.4%;--w:33.6%">Sprint 04<span>&nbsp;— Handoff &amp; Measure</span></div>
+      </div>
 
-    <ol class="sp-steps">
-      <li class="sp-step"><h3>Frame</h3><p>Understand the problem, users, business constraints and opportunities before jumping into solutions.</p></li>
-      <li class="sp-step"><h3>Make Visible</h3><p>Share early concepts, flows and design directions. Bring stakeholders in, challenge assumptions and align on decisions.</p></li>
-      <li class="sp-step"><h3>AI Prototype &amp; Vibe Code</h3><p>Use AI-assisted tools and vibe coding to turn ideas into functional prototypes. Experiment with interactions and validate experiences early.</p></li>
-      <li class="sp-step"><h3>Handoff &amp; Measure</h3><p>Hand over prototypes, interaction logic, design specifications and decisions to engineering. After release, track user and business impact.</p></li>
-    </ol>
+      <ol class="sp-steps">
+        <li class="sp-step" data-i="1" style="--n:0"><span class="sp-kicker">Sprint 01</span><h3>Frame</h3><p>Understand the problem, users, business constraints and opportunities before jumping into solutions.</p></li>
+        <li class="sp-step" data-i="2" style="--n:1"><span class="sp-kicker">Sprint 02</span><h3>Make Visible</h3><p>Share early concepts, flows and design directions. Bring stakeholders in, challenge assumptions and align on decisions.</p></li>
+        <li class="sp-step" data-i="3" style="--n:2"><span class="sp-kicker">Sprint 03</span><h3>AI Prototype <span class="sp-amp">&amp;</span> Vibe Code</h3><p>Use AI-assisted tools and vibe coding to turn ideas into functional prototypes. Experiment with interactions and validate experiences early.</p></li>
+        <li class="sp-step" data-i="4" style="--n:3"><span class="sp-kicker">Sprint 04</span><h3>Handoff <span class="sp-amp">&amp;</span> Measure</h3><p>Hand over prototypes, interaction logic, design specifications and decisions to engineering. After release, track user and business impact.</p></li>
+      </ol>
+    </div>
   </section>
 
   <section class="video-sec" id="reel">
@@ -8635,6 +8666,24 @@ try{
   edge();
   prev.addEventListener('click', ()=> track.scrollBy({left:-step(), behavior:'smooth'}));
   next.addEventListener('click', ()=> track.scrollBy({left:step(), behavior:'smooth'}));
+})();
+}catch(e){ console.error('[section error]', e); }
+
+try{
+/* sprint timeline — plays its entrance once, when it first scrolls into view (the About view starts hidden, so this
+   also waits for that), and pairs each bar with its step on hover. */
+(function(){
+  const sec = document.querySelector('.habits-sec'), chart = document.getElementById('spChart');
+  if(!sec || !chart) return;
+  if('IntersectionObserver' in window && matchMedia('(prefers-reduced-motion: no-preference)').matches){
+    sec.classList.add('sp-anim');
+    const io = new IntersectionObserver(es=>{ if(es[0].isIntersecting){ sec.classList.add('is-in'); io.disconnect(); } }, {threshold:.2});
+    io.observe(chart);
+  }
+  if(matchMedia('(hover: hover)').matches){
+    chart.addEventListener('mouseover', e=>{ const t = e.target.closest('[data-i]'); if(t) chart.dataset.active = t.dataset.i; else delete chart.dataset.active; });
+    chart.addEventListener('mouseleave', ()=>{ delete chart.dataset.active; });
+  }
 })();
 }catch(e){ console.error('[section error]', e); }
 
