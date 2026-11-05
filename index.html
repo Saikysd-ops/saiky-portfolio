@@ -3056,11 +3056,10 @@
   .habits-eyebrow{display:flex;align-items:center;gap:12px;color:var(--sp-ink);font-weight:500;}
   :root[data-theme="dark"] .habits-sec .habits-eyebrow.eyebrow-lbl{color:var(--sp-ink);opacity:1;}
   .habits-eyebrow::after{content:'';width:40px;height:1px;background:currentColor;}
-  .sp-head{display:grid;grid-template-columns:var(--sp-cols);align-items:end;margin-bottom:clamp(16px,3svh,44px);}
+  .sp-head{display:grid;grid-template-columns:var(--sp-cols);align-items:end;margin-bottom:clamp(10px,2.2svh,20px);}
   .habits-title{grid-column:1 / 3;font-family:var(--font-display);font-weight:500;font-size:clamp(30px,min(4.2vw,6.6svh),54px);line-height:1.06;letter-spacing:-.018em;color:var(--sp-ink);margin:0;white-space:nowrap;}
   .sp-lede{grid-column:3 / 5;margin:0;max-width:46ch;font-size:clamp(15px,min(1.3vw,2.1svh),18px);line-height:1.55;color:var(--ink-soft);}
-  .sp-chart{display:flex;flex-direction:column;}
-  .sp-gantt{position:relative;flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.45svh,16px);padding:clamp(10px,1.9svh,30px) 0;}
+    .sp-gantt{position:relative;display:flex;flex-direction:column;gap:clamp(6px,1.45svh,13px);padding:clamp(8px,1.5svh,12px) 0 clamp(10px,1.7svh,14px);}
   .sp-guides{position:absolute;inset:0;display:grid;grid-template-columns:var(--sp-cols);}
   .sp-guides i{border-left:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
   .sp-guides i:last-child{border-right:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
@@ -3069,20 +3068,19 @@
   .sp-steps{position:relative;display:grid;grid-template-columns:var(--sp-cols);list-style:none;margin:0;padding:0;}
   /* the timeline: the signature gradient runs from problem to impact */
   .sp-steps::before{content:'';position:absolute;top:5px;left:0;right:0;height:2px;border-radius:2px;background:linear-gradient(90deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);transform-origin:left center;}
-  .sp-step{position:relative;padding:clamp(22px,3.4svh,44px) 28px 0 0;transition:opacity .25s ease;}
+  .sp-step{position:relative;padding:clamp(20px,2.8svh,26px) 28px 0 0;transition:opacity .25s ease;}
   .sp-step:last-child{padding-right:0;}
   .sp-step::before{content:'';position:absolute;top:0;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--sp-ink);box-shadow:0 0 0 4px var(--paper);}
   .sp-kicker{display:block;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;}
   .sp-step h3{font-family:var(--font-display);font-weight:500;font-size:clamp(18px,min(1.6vw,2.6svh),22px);line-height:1.2;letter-spacing:-.01em;color:var(--sp-ink);margin:0 0 8px;}
   .sp-step h3 .sp-amp{font-family:var(--font-body);font-weight:500;}   /* the display face's ampersand is too ornate at this size */
-  .sp-step p{margin:0;font-size:clamp(13.5px,min(1.1vw,1.75svh),16px);line-height:1.5;color:var(--ink-soft);}
+  .sp-step p{margin:0;font-size:clamp(13.5px,min(1.1vw,1.75svh),15px);line-height:1.5;color:var(--ink-soft);}
   /* hovering a bar or a step picks out its pair */
   .sp-chart[data-active="1"] [data-i]:not([data-i="1"]),.sp-chart[data-active="2"] [data-i]:not([data-i="2"]),
   .sp-chart[data-active="3"] [data-i]:not([data-i="3"]),.sp-chart[data-active="4"] [data-i]:not([data-i="4"]){opacity:.3;}
-  /* laptops and up: the section fills the window under the 72px nav */
+  /* laptops and up: a compact block sized to its content; short windows tighten the spacing to keep it on one screen */
   @media (min-width:881px){
-    .habits-sec{min-height:calc(100svh - 72px);box-sizing:border-box;display:flex;flex-direction:column;padding-top:clamp(24px,4.6svh,72px);padding-bottom:clamp(24px,4.6svh,72px);scroll-margin-top:72px;}
-    .sp-chart{flex:1 1 auto;}
+    .habits-sec{padding-top:clamp(24px,5.6svh,52px);padding-bottom:clamp(24px,6.4svh,60px);scroll-margin-top:72px;}
   }
   /* entrance, only once JS has armed it and motion is allowed: without either, everything is simply there */
   @media (prefers-reduced-motion:no-preference){
@@ -4560,10 +4558,10 @@
       </div>
 
       <ol class="sp-steps">
-        <li class="sp-step" data-i="1" style="--n:0"><span class="sp-kicker">Sprint 01</span><h3>Frame</h3><p>Understand the problem, users, business constraints and opportunities before jumping into solutions.</p></li>
-        <li class="sp-step" data-i="2" style="--n:1"><span class="sp-kicker">Sprint 02</span><h3>Make Visible</h3><p>Share early concepts, flows and design directions. Bring stakeholders in, challenge assumptions and align on decisions.</p></li>
+        <li class="sp-step" data-i="1" style="--n:0"><span class="sp-kicker">Sprint 01</span><h3>Frame</h3><p>Understand user needs, business constraints, existing workflows and opportunities. Frame the problem before exploring solutions.</p></li>
+        <li class="sp-step" data-i="2" style="--n:1"><span class="sp-kicker">Sprint 02</span><h3>Make Visible</h3><p>Make ideas tangible through concepts, flows and design directions. Challenge assumptions, involve stakeholders and align on product decisions.</p></li>
         <li class="sp-step" data-i="3" style="--n:2"><span class="sp-kicker">Sprint 03</span><h3>AI Prototype <span class="sp-amp">&amp;</span> Vibe Code</h3><p>Use AI-assisted tools and vibe coding to turn concepts into working prototypes. Test interactions, explore possibilities and validate ideas before engineering handoff.</p></li>
-        <li class="sp-step" data-i="4" style="--n:3"><span class="sp-kicker">Sprint 04</span><h3>Handoff, Validate <span class="sp-amp">&amp;</span> Measure</h3><p>Hand over prototypes, interaction logic, design specifications and decisions to engineering. Validate what ships, then track user and business impact.</p></li>
+        <li class="sp-step" data-i="4" style="--n:3"><span class="sp-kicker">Sprint 04</span><h3>Handoff, Validate <span class="sp-amp">&amp;</span> Measure</h3><p>Partner with engineering to translate prototypes, interaction logic and design decisions into production. Validate implementation, then track user and business impact.</p></li>
       </ol>
     </div>
   </section>
