@@ -3060,12 +3060,12 @@
   .habits-title{grid-column:1 / 3;font-family:var(--font-display);font-weight:500;font-size:clamp(30px,min(4.2vw,6.6svh),54px);line-height:1.06;letter-spacing:-.018em;color:var(--sp-ink);margin:0;white-space:nowrap;}
   .sp-lede{grid-column:3 / 5;margin:0;max-width:46ch;font-size:clamp(15px,min(1.3vw,2.1svh),18px);line-height:1.55;color:var(--ink-soft);}
   .sp-chart{display:flex;flex-direction:column;}
-  .sp-gantt{position:relative;flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.3svh,26px);padding:clamp(10px,1.9svh,30px) 0;}
+  .sp-gantt{position:relative;flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.45svh,16px);padding:clamp(10px,1.9svh,30px) 0;}
   .sp-guides{position:absolute;inset:0;display:grid;grid-template-columns:var(--sp-cols);}
   .sp-guides i{border-left:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
   .sp-guides i:last-child{border-right:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
-  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);height:clamp(40px,5.8svh,84px);box-sizing:border-box;display:flex;align-items:center;padding:0 clamp(20px,2.4svh,32px);border-radius:999px;
-    background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:clamp(15px,min(1.25vw,1.95svh),19px);font-weight:600;white-space:nowrap;transition:opacity .25s ease;}
+  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);height:clamp(40px,6svh,58px);box-sizing:border-box;display:flex;align-items:center;padding:0 clamp(20px,2.4svh,26px);border-radius:30px;
+    background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:clamp(15px,min(1.25vw,1.95svh),18px);font-weight:600;white-space:nowrap;transition:opacity .25s ease;}
   .sp-steps{position:relative;display:grid;grid-template-columns:var(--sp-cols);list-style:none;margin:0;padding:0;}
   /* the timeline: the signature gradient runs from problem to impact */
   .sp-steps::before{content:'';position:absolute;top:5px;left:0;right:0;height:2px;border-radius:2px;background:linear-gradient(90deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);transform-origin:left center;}
@@ -3086,23 +3086,24 @@
   }
   /* entrance, only once JS has armed it and motion is allowed: without either, everything is simply there */
   @media (prefers-reduced-motion:no-preference){
-    .sp-anim .sp-bar{clip-path:inset(0 100% 0 0 round 999px);transition:clip-path .9s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
+    .sp-anim .sp-bar{clip-path:inset(0 100% 0 0 round 30px);transition:clip-path .9s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
     .sp-anim .sp-bar:nth-of-type(2){transition-delay:.12s,0s;} .sp-anim .sp-bar:nth-of-type(3){transition-delay:.24s,0s;}
     .sp-anim .sp-bar:nth-of-type(4){transition-delay:.36s,0s;} .sp-anim .sp-bar:nth-of-type(5){transition-delay:.48s,0s;}
     .sp-anim .sp-steps::before{transform:scaleX(0);transition:transform 1.3s cubic-bezier(.22,1,.36,1) .3s;}
     .sp-anim .sp-step>*{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1);transition-delay:calc(.45s + var(--n) * .12s);}
     .sp-anim .sp-step::before{transform:scale(0);transition:transform .4s cubic-bezier(.22,1,.36,1);transition-delay:calc(.4s + var(--n) * .22s);}
-    .sp-anim.is-in .sp-bar{clip-path:inset(0 0 0 0 round 999px);}
+    .sp-anim.is-in .sp-bar{clip-path:inset(0 0 0 0 round 30px);}
     .sp-anim.is-in .sp-steps::before{transform:none;}
     .sp-anim.is-in .sp-step>*{opacity:1;transform:none;}
     .sp-anim.is-in .sp-step::before{transform:none;}
   }
-  @media (max-width:1000px){ .sp-bar{padding:0 18px;font-size:14.5px;} }
+  @media (max-width:1000px){ .sp-bar{padding:0 18px;font-size:14.5px;} .sp-bar[data-i="4"]{margin-left:60%;width:40%;} }
   @media (max-width:880px){
     .sp-head{display:block;margin-bottom:24px;}
     .habits-title{margin-bottom:14px;}
     .sp-gantt{padding:14px 0;gap:6px;}
     .sp-bar{height:36px;padding:0 12px;font-size:12.5px;}
+    .sp-bar[data-i="4"]{margin-left:var(--s);width:var(--w);}
     .sp-bar span{display:none;}   /* "Sprint 01" fits the narrowest bar; the step names follow below */
     /* the timeline turns vertical: its line runs down the left, one dot per step */
     .sp-steps{grid-template-columns:1fr;gap:28px;margin-top:24px;}
@@ -4554,8 +4555,8 @@
         <div class="sp-guides" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
         <div class="sp-bar" data-i="1" style="--s:0%;--w:25.7%">Sprint 01<span>&nbsp;— Frame</span></div>
         <div class="sp-bar" data-i="2" style="--s:14.1%;--w:34.8%">Sprint 02<span>&nbsp;— Make Visible</span></div>
-        <div class="sp-bar" data-i="3" style="--s:35.1%;--w:43.3%">Sprint 03<span>&nbsp;— AI Prototype &amp; Vibe Code</span></div>
-        <div class="sp-bar" data-i="4" style="--s:60%;--w:40%">Sprint 04<span>&nbsp;— Handoff, Validate &amp; Measure</span></div>
+        <div class="sp-bar" data-i="3" style="--s:35.1%;--w:40%">Sprint 03<span>&nbsp;— AI Prototype &amp; Vibe Code</span></div>
+        <div class="sp-bar" data-i="4" style="--s:63.5%;--w:36.5%">Sprint 04<span>&nbsp;— Handoff, Validate &amp; Measure</span></div>
       </div>
 
       <ol class="sp-steps">
