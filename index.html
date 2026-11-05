@@ -3064,7 +3064,7 @@
   .sp-guides i{border-left:1px dotted color-mix(in srgb, var(--sp-ink) 20%, transparent);}
   .sp-guides i:last-child{border-right:1px dotted color-mix(in srgb, var(--sp-ink) 20%, transparent);}
   /* thin square bars, solid ink */
-  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);height:clamp(26px,3.3svh,32px);box-sizing:border-box;display:flex;align-items:center;padding:0 clamp(10px,1.4svh,14px);border-radius:2px;
+  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);height:clamp(32px,3.6svh,36px);box-sizing:border-box;display:flex;align-items:center;padding:0 14px;border-radius:2px;
     background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:clamp(13px,min(1.05vw,1.6svh),14px);font-weight:500;white-space:nowrap;transition:opacity .25s ease;}
   .sp-steps{position:relative;display:grid;grid-template-columns:var(--sp-cols);grid-template-rows:repeat(3,auto);list-style:none;margin:0;padding:0;}
   /* the timeline: the signature gradient runs from problem to impact */
@@ -3095,11 +3095,10 @@
   /* hovering a bar or a step picks out its pair */
   .sp-chart[data-active="1"] [data-i]:not([data-i="1"]),.sp-chart[data-active="2"] [data-i]:not([data-i="2"]),
   .sp-chart[data-active="3"] [data-i]:not([data-i="3"]),.sp-chart[data-active="4"] [data-i]:not([data-i="4"]){opacity:.3;}
-  /* laptops and up: the section fills the window under the 72px nav, with clear space above and below; the chart takes what's left */
+  /* laptops and up: set breathing room above and below */
   @media (min-width:881px){
-    .habits-sec{min-height:calc(100svh - 72px);box-sizing:border-box;display:flex;flex-direction:column;padding-top:clamp(28px,8svh,96px);padding-bottom:clamp(56px,8svh,96px);scroll-margin-top:72px;justify-content:center;}   /* compact content, centred: whatever the window has spare becomes space above and below */
+    .habits-sec{padding-top:clamp(72px,14.5svh,116px);padding-bottom:clamp(64px,12.5svh,100px);scroll-margin-top:72px;}   /* 116px above, 100px below; eases off only on short windows */
   }
-     /* the shortest laptop windows: tighter gaps, same padding */
   /* entrance, only once JS has armed it and motion is allowed: without either, everything is simply there */
   @media (prefers-reduced-motion:no-preference){
     .sp-anim .sp-bar{clip-path:inset(0 100% 0 0);transition:clip-path .9s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
@@ -3119,9 +3118,9 @@
     .habits-title{margin-bottom:14px;}
     .sp-gantt{padding:14px 0;gap:6px;}
     .sp-guides{inset:0;}
-    .sp-bar{height:26px;padding:0 8px;font-size:12px;width:calc(var(--w) + 4%);}
+    .sp-bar{height:32px;padding:0 8px;font-size:12px;width:calc(var(--w) + 4%);}
     .sp-bar[data-i="4"]{margin-left:var(--s);width:var(--w);}
-    .sp-bar span{display:none;}   /* "Sprint 01" fits the narrowest bar; the step names follow below */
+    .sp-bar span{display:none;}   /* short names fit the narrow bars; the full titles follow below */
     /* the timeline turns vertical: its line runs down the left, one dot per step */
     .sp-steps{grid-template-columns:1fr;gap:28px;margin-top:24px;}
     .sp-steps::before{top:6px;bottom:6px;left:5px;right:auto;width:2px;height:auto;background:linear-gradient(180deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);transform-origin:center top;}
@@ -4577,16 +4576,16 @@
     <div class="sp-chart" id="spChart">
       <div class="sp-gantt" role="img" aria-label="Four sprints in sequence, each overlapping the next: Frame, Make Visible, AI Prototype and Vibe Code, Handoff, Validate and Measure.">
         <div class="sp-guides" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-        <div class="sp-bar" data-i="1" style="--s:0%;--w:22.5%">Sprint 01<span>&nbsp;— Frame</span></div>
-        <div class="sp-bar" data-i="2" style="--s:14%;--w:30%">Sprint 02<span>&nbsp;— Make Visible</span></div>
-        <div class="sp-bar" data-i="3" style="--s:35%;--w:36%">Sprint 03<span>&nbsp;— AI Prototype &amp; Vibe Code</span></div>
-        <div class="sp-bar" data-i="4" style="--s:66%;--w:34%">Sprint 04<span>&nbsp;— Handoff, Validate &amp; Measure</span></div>
+        <div class="sp-bar" data-i="1" style="--s:0%;--w:22.5%">Frame</div>
+        <div class="sp-bar" data-i="2" style="--s:14%;--w:30%">Make Visible</div>
+        <div class="sp-bar" data-i="3" style="--s:35%;--w:36%">AI Prototype<span>&nbsp;&amp; Vibe Code</span></div>
+        <div class="sp-bar" data-i="4" style="--s:66%;--w:34%">Handoff<span>, Validate &amp; Measure</span></div>
       </div>
 
       <ol class="sp-steps">
         <li class="sp-step" data-i="1" style="--n:0"><h3 id="spHead1"><span class="sp-num">01 —</span> Frame</h3><p>Understand users, business constraints and opportunities.</p>
           <div class="sp-detail"><button class="sp-more" type="button" id="spMore1" aria-expanded="false" aria-controls="spPanel1" aria-labelledby="spMore1 spHead1"><i aria-hidden="true"></i>Explore this stage</button>
-            <div class="sp-panel" id="spPanel1" role="region" aria-labelledby="spHead1"><div class="sp-panel-in"><ul><li>User research</li><li>Workflow mapping</li><li>Constraints</li><li>Problem definition</li></ul></div></div></div></li>
+            <div class="sp-panel" id="spPanel1" role="region" aria-labelledby="spHead1"><div class="sp-panel-in"><ul><li>User research</li><li>Workflow mapping</li><li>Constraint analysis</li><li>Problem definition</li></ul></div></div></div></li>
         <li class="sp-step" data-i="2" style="--n:1"><h3 id="spHead2"><span class="sp-num">02 —</span> Make Visible</h3><p>Turn problems into concepts, flows and shared decisions.</p>
           <div class="sp-detail"><button class="sp-more" type="button" id="spMore2" aria-expanded="false" aria-controls="spPanel2" aria-labelledby="spMore2 spHead2"><i aria-hidden="true"></i>Explore this stage</button>
             <div class="sp-panel" id="spPanel2" role="region" aria-labelledby="spHead2"><div class="sp-panel-in"><ul><li>Workshops</li><li>Concepts</li><li>User flows</li><li>Stakeholder alignment</li></ul></div></div></div></li>
@@ -8723,35 +8722,20 @@ try{
     chart.addEventListener('mouseover', e=>{ const t = e.target.closest('[data-i]'); if(t) chart.dataset.active = t.dataset.i; else delete chart.dataset.active; });
     chart.addEventListener('mouseleave', ()=>{ delete chart.dataset.active; });
   }
-  /* one stage open at a time. On laptops the content is centred in the window, so while a stage is open it is held
-     in place from the top: the timeline stays still and the details use the space below. */
+  /* one stage open at a time; the details push the page down, the timeline stays put */
   const btns = [...chart.querySelectorAll('.sp-more')];
   const calm = matchMedia('(prefers-reduced-motion: reduce)');
   chart.classList.add('sp-acc');
-  let unpin;
-  function release(){ sec.style.paddingTop = ''; sec.style.justifyContent = ''; }
-  function pin(){
-    clearTimeout(unpin);
-    if(innerWidth > 880 && !sec.style.paddingTop){
-      sec.style.paddingTop = (sec.firstElementChild.getBoundingClientRect().top - sec.getBoundingClientRect().top)+'px';
-      sec.style.justifyContent = 'flex-start';
-    }
-  }
   btns.forEach(btn=>btn.addEventListener('click', ()=>{
     const opening = btn.getAttribute('aria-expanded') !== 'true';
-    pin();
     btns.forEach(b=>b.setAttribute('aria-expanded', String(opening && b === btn)));
     if(opening){
       setTimeout(()=>{
         const over = btn.nextElementSibling.getBoundingClientRect().bottom + 28 - innerHeight;
         if(over > 0) scrollBy({top:over, behavior: calm.matches ? 'auto' : 'smooth'});
       }, calm.matches ? 0 : 380);
-    } else {
-      unpin = setTimeout(release, calm.matches ? 0 : 400);
     }
   }));
-  let lastW = innerWidth;
-  addEventListener('resize', ()=>{ if(innerWidth !== lastW){ lastW = innerWidth; release(); } });
 })();
 }catch(e){ console.error('[section error]', e); }
 
