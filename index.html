@@ -1608,6 +1608,14 @@
   .photo-frame img{width:100%;height:100%;object-fit:contain;display:block;
     transition:transform .5s cubic-bezier(.2,.7,.3,1);}
   .photo-frame:hover img{transform:scale(1.045);}
+  /* MacBooks 13–16": the portrait, its caption and clear space above and below all fit between the nav (72px) and the
+     window's bottom edge. The frame keeps its shape, so the photo is never cropped; the text column takes the spare width. */
+  @media (min-width:1200px) and (max-width:1800px) and (max-height:1120px){
+    .about-sec{--about-photo-h:clamp(440px, calc(100svh - 72px - 96px - 34px), 850px);padding:48px 0;scroll-margin-top:72px;}
+    .about-teaser{grid-template-columns:auto minmax(0,1fr);}
+    .about-photo{width:calc(var(--about-photo-h) * 938 / 1677);}
+    .photo-frame{height:var(--about-photo-h);width:100%;min-height:0;}
+  }
   .ph-note{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
     color:var(--ink-soft);text-align:center;padding:0 22px;line-height:1.85;}
   .photo-cap{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
