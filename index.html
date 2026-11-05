@@ -3059,7 +3059,7 @@
   .sp-head{display:grid;grid-template-columns:var(--sp-cols);align-items:end;margin-bottom:clamp(14px,2.8svh,28px);}
   .habits-title{grid-column:1 / 3;font-family:var(--font-display);font-weight:400;font-size:clamp(28px,min(2.9vw,5svh),40px);line-height:1.1;letter-spacing:-.018em;color:var(--sp-ink);margin:0;white-space:nowrap;}
   .sp-lede{grid-column:3 / 5;margin:0;max-width:46ch;font-size:clamp(15px,min(1.3vw,2.1svh),18px);line-height:1.55;color:var(--ink-soft);}
-    .sp-gantt{position:relative;display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1svh,10px);padding:clamp(10px,1.8svh,18px) 0;}
+    .sp-gantt{position:relative;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.3svh,12px);padding:clamp(10px,1.8svh,18px) 0 clamp(18px,3.6svh,36px);}
   .sp-guides{position:absolute;inset:0;display:grid;grid-template-columns:var(--sp-cols);}
   .sp-guides i{border-left:1px dotted color-mix(in srgb, var(--sp-ink) 20%, transparent);}
   .sp-guides i:last-child{border-right:1px dotted color-mix(in srgb, var(--sp-ink) 20%, transparent);}
@@ -3069,17 +3069,17 @@
   .sp-steps{position:relative;display:grid;grid-template-columns:var(--sp-cols);grid-template-rows:repeat(3,auto);list-style:none;margin:0;padding:0;}
   /* the timeline: the signature gradient runs from problem to impact */
   .sp-steps::before{content:'';position:absolute;top:5px;left:0;right:0;height:2px;border-radius:2px;background:linear-gradient(90deg, #3157D5 0%, #7546D8 38%, #C54879 72%, #E46B5D 100%);transform-origin:left center;}
-  .sp-step{position:relative;display:grid;grid-row:span 3;grid-template-rows:subgrid;padding:clamp(20px,3.2svh,36px) 22px 0 0;transition:opacity .25s ease;}   /* subgrid keeps titles, sentences and buttons level across columns */
+  .sp-step{position:relative;display:grid;grid-row:span 3;grid-template-rows:subgrid;padding:clamp(22px,3.6svh,36px) 22px 0 0;transition:opacity .25s ease;}   /* subgrid keeps titles, sentences and buttons level across columns */
   .sp-step:last-child{padding-right:0;}
   .sp-step::before{content:'';position:absolute;top:0;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--sp-ink);box-shadow:0 0 0 4px var(--paper);}
-  .sp-step h3{font-family:var(--font-display);font-weight:500;font-size:clamp(17px,min(1.3vw,2.3svh),18.5px);line-height:1.2;letter-spacing:-.01em;color:var(--sp-ink);margin:0 0 8px;}
+  .sp-step h3{font-family:var(--font-display);font-weight:500;font-size:clamp(17px,min(1.3vw,2.3svh),18.5px);line-height:1.2;letter-spacing:-.01em;color:var(--sp-ink);margin:0 0 10px;}
   .sp-step h3 .sp-num{color:var(--ink-soft);}
   .sp-step h3 .sp-amp{font-family:var(--font-body);font-weight:500;}   /* the display face's ampersand is too ornate at this size */
   .sp-step p{margin:0;font-size:clamp(13.5px,min(1.1vw,1.75svh),16px);line-height:1.5;color:var(--ink-soft);}
   /* progressive disclosure: without JS the details are simply there and the button stays hidden */
   .sp-more{display:none;align-items:center;gap:8px;margin:0;padding:6px 0;border:0;background:none;color:var(--sp-ink);font-family:var(--font-body);font-size:13.5px;font-weight:500;line-height:1.3;text-align:left;cursor:pointer;}
   .sp-acc .sp-more{display:inline-flex;}
-  .sp-detail{margin-top:clamp(6px,1.2svh,12px);}
+  .sp-detail{margin-top:clamp(8px,1.6svh,16px);}
   .sp-more:hover{text-decoration:underline;text-underline-offset:3px;}
   .sp-more:focus-visible{outline:2px solid var(--sp-ink);outline-offset:3px;border-radius:2px;}
   .sp-more i{position:relative;flex:none;width:11px;height:11px;}
@@ -3097,7 +3097,8 @@
   .sp-chart[data-active="3"] [data-i]:not([data-i="3"]),.sp-chart[data-active="4"] [data-i]:not([data-i="4"]){opacity:.3;}
   /* laptops and up: set breathing room above and below */
   @media (min-width:881px){
-    .habits-sec{padding-top:clamp(72px,14.5svh,116px);padding-bottom:clamp(64px,12.5svh,100px);scroll-margin-top:72px;}   /* 116px above, 100px below; eases off only on short windows */
+    .habits-sec{min-height:calc(100svh - 72px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(40px,7svh,72px);padding-bottom:clamp(40px,7svh,72px);scroll-margin-top:72px;}   /* fills the window under the nav; spare room becomes equal space above and below */
+    .sp-head{margin-bottom:clamp(28px,6.5svh,72px);}   /* clear air between the header and the timeline */
   }
   /* entrance, only once JS has armed it and motion is allowed: without either, everything is simply there */
   @media (prefers-reduced-motion:no-preference){
@@ -8722,20 +8723,35 @@ try{
     chart.addEventListener('mouseover', e=>{ const t = e.target.closest('[data-i]'); if(t) chart.dataset.active = t.dataset.i; else delete chart.dataset.active; });
     chart.addEventListener('mouseleave', ()=>{ delete chart.dataset.active; });
   }
-  /* one stage open at a time; the details push the page down, the timeline stays put */
+  /* one stage open at a time. On laptops the content is centred in the window, so while a stage is open it is held
+     in place from the top: the timeline stays still and the details use the space below. */
   const btns = [...chart.querySelectorAll('.sp-more')];
   const calm = matchMedia('(prefers-reduced-motion: reduce)');
   chart.classList.add('sp-acc');
+  let unpin;
+  function release(){ sec.style.paddingTop = ''; sec.style.justifyContent = ''; }
+  function pin(){
+    clearTimeout(unpin);
+    if(innerWidth > 880 && !sec.style.paddingTop){
+      sec.style.paddingTop = (sec.firstElementChild.getBoundingClientRect().top - sec.getBoundingClientRect().top)+'px';
+      sec.style.justifyContent = 'flex-start';
+    }
+  }
   btns.forEach(btn=>btn.addEventListener('click', ()=>{
     const opening = btn.getAttribute('aria-expanded') !== 'true';
+    pin();
     btns.forEach(b=>b.setAttribute('aria-expanded', String(opening && b === btn)));
     if(opening){
       setTimeout(()=>{
         const over = btn.nextElementSibling.getBoundingClientRect().bottom + 28 - innerHeight;
         if(over > 0) scrollBy({top:over, behavior: calm.matches ? 'auto' : 'smooth'});
       }, calm.matches ? 0 : 380);
+    } else {
+      unpin = setTimeout(release, calm.matches ? 0 : 400);
     }
   }));
+  let lastW = innerWidth;
+  addEventListener('resize', ()=>{ if(innerWidth !== lastW){ lastW = innerWidth; release(); } });
 })();
 }catch(e){ console.error('[section error]', e); }
 
