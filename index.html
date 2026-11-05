@@ -3043,71 +3043,40 @@
   :root[data-theme="dark"] #loader .l-cairn .s2{background:#D8D8D8;}
   :root[data-theme="dark"] #loader .l-cairn .s3{background:#F5F5F5;}
 
-  /* HOW I ACTUALLY WORK — clean 2×2 card grid.
-     Each habit is a real bordered card (not an editorial fixed-position
-     layout) so it degrades gracefully at any width instead of leaving a
-     huge dead zone between columns on wide screens. Theme-aware via the
-     site's own variables; violet used sparingly as an accent on hover. */
-  .habits-sec{background:var(--paper);}
-  .habits-eyebrow{color:var(--ink-soft);opacity:.75;}
-  .habits-title{font-family:var(--font-display);font-weight:400;font-size:clamp(28px,3.4vw,42px);
-    color:var(--ink);margin:0 0 48px;line-height:1.22;letter-spacing:-.01em;}
-
-  .habits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
-
-  .habit-card{position:relative;background:var(--paper-raised);border:1px solid var(--line);
-    border-radius:20px;padding:36px 36px 32px;
-    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, border-color .25s ease;}
-  .habit-card:hover{transform:translateY(-4px);border-color:var(--accent);
-    box-shadow:0 16px 32px -16px rgba(20,20,27,.18);}
-  :root[data-theme="dark"] .habit-card:hover{box-shadow:0 16px 32px -16px rgba(0,0,0,.5);}
-
-  .habit-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
-  .habit-num{font-family:var(--font-display);font-weight:400;font-size:36px;
-    font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1;
-    color:#D3D1D2;line-height:1;transition:color .3s ease;}
-  .habit-card:hover .habit-num{color:var(--accent);}
-
-  .habit-glyph{width:24px;height:24px;color:var(--ink-soft);opacity:.6;
-    transition:color .3s ease, opacity .3s ease;}
-  .habit-glyph svg{width:100%;height:100%;display:block;}
-  .habit-glyph--accent{color:var(--accent);opacity:.55;}
-  .habit-card:hover .habit-glyph{opacity:1;color:var(--ink);}
-  .habit-card:hover .habit-glyph--accent{color:var(--accent);opacity:1;}
-
-  /* process label → 20px → heading → 14px → paragraph, identical on every card */
-  .habit-seq{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.05em;
-    color:var(--accent);opacity:.75;margin:0 0 20px;transition:opacity .3s ease;}
-  .habit-seq i{font-style:normal;opacity:.55;margin:0 2px;}
-  .habit-card:hover .habit-seq{opacity:1;}
-
-  .habit-card h3{font-family:var(--font-display);font-weight:400;font-size:23px;
-    color:var(--ink);margin:0 0 14px;line-height:1;}
-  .habit-card p{font-size:14.5px;line-height:1.7;color:var(--ink-soft);
-    margin:0;min-height:5.1em;transition:color .3s ease;}
-  .habit-card:hover p{color:var(--ink);}
-
-  .habit-reveal{font-family:var(--font-display);font-style:italic;font-size:14.5px;
-    color:var(--accent) !important;margin:14px 0 0 !important;min-height:0 !important;
-    opacity:0;transform:translateY(-4px);
-    transition:opacity .3s ease, transform .3s ease;}
-  .habit-card:hover .habit-reveal{opacity:1;transform:translateY(0);}
-
-  /* one closing line under the four habits */
-  .habits-close{margin:48px 0 0;max-width:46ch;
-    font-family:var(--font-display);font-style:italic;font-weight:400;
-    font-size:clamp(20px,2.3vw,27px);line-height:1.4;color:var(--ink);
-    padding-top:38px;border-top:1px solid var(--line);}
-  .habits-close b{font-style:normal;font-weight:500;color:var(--accent);}
-
-  @media (max-width:760px){
-    .habits-grid{grid-template-columns:1fr;}
-    .habit-card{padding:30px 28px 26px;}
-    .habit-card p{min-height:0;}
-    .habits-close{font-size:19px;padding-top:28px;margin-top:34px;}
+  /* HOW I ACTUALLY WORK — four overlapping sprints above a timeline. Near Black and Warm Ivory swap in dark mode so the bars
+     keep their contrast; the signature gradient is on "impact." only. Bars and guides are placed as % of the section width. */
+  .habits-sec{--sp-ink:#17171C;--sp-on:#F8F7F4;}
+  :root[data-theme="dark"] .habits-sec{--sp-ink:#F8F7F4;--sp-on:#17171C;}
+  .habits-eyebrow{display:flex;align-items:center;gap:12px;color:var(--sp-ink);font-weight:500;}
+  :root[data-theme="dark"] .habits-sec .habits-eyebrow.eyebrow-lbl{color:var(--sp-ink);opacity:1;}
+  .habits-eyebrow::after{content:'';width:40px;height:1px;background:currentColor;}
+  .sp-head{display:flex;align-items:center;gap:clamp(28px,3.4vw,44px);margin-bottom:40px;}
+  .habits-title{flex-shrink:0;font-family:var(--font-display);font-weight:500;font-size:clamp(30px,3.4vw,46px);line-height:1.08;letter-spacing:-.015em;color:var(--sp-ink);margin:0;}
+  .sp-lede{margin:0;padding-left:clamp(28px,3.4vw,44px);border-left:1px solid color-mix(in srgb, var(--sp-ink) 28%, transparent);max-width:44ch;font-size:16px;line-height:1.6;color:var(--ink-soft);}
+  .sp-gantt{position:relative;display:flex;flex-direction:column;gap:6px;padding:14px 0;}
+  .sp-guide{position:absolute;top:0;bottom:0;left:var(--x);border-left:1px dotted color-mix(in srgb, var(--sp-ink) 30%, transparent);}
+  .sp-bar{position:relative;margin-left:var(--s);width:var(--w);min-height:44px;box-sizing:border-box;display:flex;align-items:center;padding:0 24px;border-radius:999px;
+    background:var(--sp-ink);color:var(--sp-on);font-family:var(--font-body);font-size:15.5px;font-weight:600;white-space:nowrap;}
+  .sp-steps{position:relative;display:grid;grid-template-columns:24.2fr 25.7fr 27.3fr 22.8fr;list-style:none;margin:22px 0 0;padding:0;}
+  .sp-steps::before{content:'';position:absolute;top:6px;left:0;right:0;height:1px;background:color-mix(in srgb, var(--sp-ink) 45%, transparent);}
+  .sp-step{position:relative;padding:44px 28px 0 0;}
+  .sp-step:last-child{padding-right:0;}
+  .sp-step::before{content:'';position:absolute;top:0;left:24%;width:13px;height:13px;border-radius:50%;background:var(--sp-ink);}
+  .sp-step h3{font-family:var(--font-display);font-weight:500;font-size:21px;line-height:1.2;letter-spacing:-.01em;color:var(--sp-ink);margin:0 0 10px;}
+  .sp-step p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-soft);}
+  @media (max-width:1000px){ .sp-bar{padding:0 18px;font-size:14.5px;} }
+  @media (max-width:880px){
+    .sp-head{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:28px;}
+    .sp-lede{padding-left:0;border-left:0;}
+    /* the timeline turns vertical: its line runs down the left, one dot per step */
+    .sp-steps{grid-template-columns:1fr;gap:28px;margin-top:28px;}
+    .sp-steps::before{top:6px;bottom:6px;left:6px;right:auto;width:1px;height:auto;}
+    .sp-step,.sp-step:last-child{padding:0 0 0 34px;}
+    .sp-step::before{top:5px;left:0;}
   }
-  @media (prefers-reduced-motion:reduce){
-    .habit-card,.habit-num,.habit-glyph,.habit-seq,.habit-card p,.habit-reveal{transition:none;}
+  @media (max-width:880px){
+    .sp-bar{min-height:36px;padding:0 12px;font-size:12.5px;}
+    .sp-bar span{display:none;}   /* "Sprint 01" fits the narrowest bar; the step names follow below */
   }
 
   .om-thumb{background:linear-gradient(150deg, #3E7FD6 0%, #2E5EA8 100%);}
@@ -4541,65 +4510,25 @@
 
   <section class="habits-sec">
     <div class="eyebrow-lbl habits-eyebrow">How I actually work</div>
-    <h2 class="habits-title">Four habits that shape<br>everything I ship.</h2>
-
-    <div class="habits-grid">
-
-      <div class="habit-card">
-        <div class="habit-card-top">
-          <div class="habit-num">01</div>
-          <div class="habit-glyph">
-            <svg viewBox="0 0 28 28" fill="none"><path d="M10 10c0-2.2 1.8-4 4-4s4 1.8 4 4c0 2.6-2.4 3-3.6 4.6-.5.7-.4 1.6-.4 2.4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="14" cy="21.5" r=".9" fill="currentColor"/></svg>
-          </div>
-        </div>
-        <div class="habit-seq">WHY? <i>→</i> WHO? <i>→</i> WHAT IF?</div>
-        <h3>Frame</h3>
-        <p>I don't jump straight into solutions. I start by understanding why the problem exists, who it affects, what constraints matter, and what happens if we don't solve it.</p>
-        <p class="habit-reveal">Frame the problem before framing the solution.</p>
-      </div>
-
-      <div class="habit-card">
-        <div class="habit-card-top">
-          <div class="habit-num">02</div>
-          <div class="habit-glyph">
-            <svg viewBox="0 0 28 28" fill="none"><circle cx="6" cy="14" r="1.6" stroke="currentColor" stroke-width="1.1"/><circle cx="14" cy="8" r="1.6" stroke="currentColor" stroke-width="1.1"/><circle cx="22" cy="14" r="1.6" stroke="currentColor" stroke-width="1.1"/><path d="M7.5 13.2 12.5 9M15.5 9 20.5 13.2" stroke="currentColor" stroke-width="1"/></svg>
-          </div>
-        </div>
-        <div class="habit-seq">ROUGH <i>→</i> SHARE <i>→</i> REFINE</div>
-        <h3>Make visible</h3>
-        <p>I share rough flows, concepts, and prototypes early so teams can react, challenge, and shape the direction before it becomes expensive to change.</p>
-        <p class="habit-reveal">Make thinking visible while it is still cheap to change.</p>
-      </div>
-
-      <div class="habit-card">
-        <div class="habit-card-top">
-          <div class="habit-num">03</div>
-          <div class="habit-glyph habit-glyph--accent">
-            <svg viewBox="0 0 28 28" fill="none"><path d="M14 5v4M14 19v4M5 14h4M19 14h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="14" cy="14" r="3" stroke="currentColor" stroke-width="1.1"/></svg>
-          </div>
-        </div>
-        <div class="habit-seq">PROMPT <i>→</i> PROTOTYPE <i>→</i> LEARN</div>
-        <h3>Prototype</h3>
-        <p>I use AI-assisted tools to turn ideas into working prototypes, test interactions early, and learn faster. The goal isn't to replace design thinking—it's to make ideas tangible sooner.</p>
-        <p class="habit-reveal">Turn ideas into something real enough to test.</p>
-      </div>
-
-      <div class="habit-card">
-        <div class="habit-card-top">
-          <div class="habit-num">04</div>
-          <div class="habit-glyph">
-            <svg viewBox="0 0 28 28" fill="none"><circle cx="5" cy="14" r="1.6" stroke="currentColor" stroke-width="1.1"/><path d="M6.6 14h6.8" stroke="currentColor" stroke-width="1.1"/><rect x="13.4" y="10.6" width="6.8" height="6.8" rx="1.2" stroke="currentColor" stroke-width="1.1"/><path d="M20.2 14h2.2" stroke="currentColor" stroke-width="1.1"/><circle cx="24" cy="14" r="1.6" stroke="currentColor" stroke-width="1.1"/></svg>
-          </div>
-        </div>
-        <div class="habit-seq">USER <i>→</i> SYSTEM <i>→</i> OUTCOME</div>
-        <h3>Measure</h3>
-        <p>Good design should change something for the better. I think beyond screens and consider the impact on users, the business, and the teams building and scaling the product.</p>
-        <p class="habit-reveal">Design beyond the screen. Measure what changes.</p>
-      </div>
-
+    <div class="sp-head">
+      <h2 class="habits-title">A design sprint from<br>problem to <span class="case-gradient">impact.</span></h2>
+      <p class="sp-lede">A practical, AI-assisted design process that connects problem framing, collaboration, rapid prototyping and measurable outcomes.</p>
     </div>
 
-    <p class="habits-close">I care less about producing more screens and more about making <b>the right thing</b> clear enough to build, use, and scale.</p>
+    <div class="sp-gantt" role="img" aria-label="Four sprints in sequence, each overlapping the next: Frame, Make Visible, AI Prototype and Vibe Code, Handoff and Measure.">
+      <i class="sp-guide" style="--x:0"></i><i class="sp-guide" style="--x:24.2%"></i><i class="sp-guide" style="--x:46.4%"></i><i class="sp-guide" style="--x:66.2%"></i><i class="sp-guide" style="--x:79.7%"></i><i class="sp-guide" style="--x:calc(100% - 1px)"></i>
+      <div class="sp-bar" style="--s:0%;--w:25.7%">Sprint 01<span>&nbsp;— Frame</span></div>
+      <div class="sp-bar" style="--s:14.1%;--w:34.8%">Sprint 02<span>&nbsp;— Make Visible</span></div>
+      <div class="sp-bar" style="--s:35.1%;--w:43.3%">Sprint 03<span>&nbsp;— AI Prototype &amp; Vibe Code</span></div>
+      <div class="sp-bar" style="--s:66.4%;--w:33.6%">Sprint 04<span>&nbsp;— Handoff &amp; Measure</span></div>
+    </div>
+
+    <ol class="sp-steps">
+      <li class="sp-step"><h3>Frame</h3><p>Understand the problem, users, business constraints and opportunities before jumping into solutions.</p></li>
+      <li class="sp-step"><h3>Make Visible</h3><p>Share early concepts, flows and design directions. Bring stakeholders in, challenge assumptions and align on decisions.</p></li>
+      <li class="sp-step"><h3>AI Prototype &amp; Vibe Code</h3><p>Use AI-assisted tools and vibe coding to turn ideas into functional prototypes. Experiment with interactions and validate experiences early.</p></li>
+      <li class="sp-step"><h3>Handoff &amp; Measure</h3><p>Hand over prototypes, interaction logic, design specifications and decisions to engineering. After release, track user and business impact.</p></li>
+    </ol>
   </section>
 
   <section class="video-sec" id="reel">
