@@ -7424,8 +7424,6 @@
 :root[data-theme="dark"] .adaptive-stone.s2{fill:#D8D8D8;}
 :root[data-theme="dark"] .adaptive-stone.s3{fill:#F5F5F5;}
 :root[data-theme="dark"] .kicker{color:#BC80CC;}
-:root[data-theme="dark"] .tag{color:#BC80CC;}
-:root[data-theme="dark"] .nav-sample a.active{color:#BC80CC;}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -7625,19 +7623,72 @@ h3{font-size:18px;line-height:1.2}
 .plex{font-family:"IBM Plex Mono",monospace}
 .type-display{font-size:56px;line-height:1}
 .type-body{font-size:18px;line-height:1.55;max-width:560px}
-.scale{display:grid;gap:8px;margin-top:18px}
-.scale-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:12px 0}
-.scale-row span:first-child{font:12px "IBM Plex Mono",monospace;color:var(--slate)}
-.web-system{margin-top:40px;padding:24px;background:var(--card);border:1px solid var(--line)}
-.ui-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
-.btn{border:0;border-radius:999px;padding:14px 22px;font-weight:700;font-family:"Satoshi";font-size:14px}
-.btn-primary{background:var(--aubergine);color:#fff}
-.btn-primary:hover{background:var(--plum)}
-.btn-secondary{background:var(--card);color:var(--ink);border:1.5px solid var(--ink);box-shadow:4px 4px 0 var(--aubergine);transform:translate(-2px,-2px);}
-.tag{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.08em;color:var(--aubergine);background:var(--lilac);padding:8px 10px;border-radius:999px}
-.nav-sample{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:14px 0}
-.nav-sample a{color:var(--slate);text-decoration:none;font-size:14px}
-.nav-sample a.active{color:var(--aubergine);font-weight:700}
+/* 06 / Typography + Web — a calmer scale, typefaces in a row, and live copies of the site's real components */
+.ws-scale .kicker{margin-top:20px}
+.ws-rows{margin-top:14px;border-top:1px solid var(--line)}
+.ws-row{display:grid;grid-template-columns:72px 1fr auto;align-items:center;gap:16px;min-height:58px;border-bottom:1px solid var(--line)}
+.ws-k{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--slate)}
+.ws-aa{line-height:1;color:var(--ink)}
+.ws-v{font:500 15px "Satoshi",sans-serif;color:var(--ink);font-variant-numeric:tabular-nums}
+.ws-faces{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}
+.ws-faces div{display:flex;flex-direction:column;gap:8px}
+.ws-faces b{font-size:18px;font-weight:600}
+.ws-app{margin-top:48px;padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--card);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ws-app-head{grid-column:1 / -1;display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:8px}
+.ws-app-title{font-family:"Fraunces",Georgia,serif;font-size:28px;font-weight:500;letter-spacing:-.02em;margin-top:10px}
+.ws-app-head p{max-width:32ch;text-align:right}
+.ws-tile{min-width:0;padding:22px 24px 20px;border:1px solid var(--line);border-radius:14px;background:var(--paper);display:flex;flex-direction:column}
+.ws-tile .type-label{margin-bottom:18px}
+.ws-tile-nav{grid-column:1 / -1}
+.ws-spec{margin-top:auto;padding-top:18px;font:11.5px/1.6 "IBM Plex Mono",monospace;color:var(--slate)}
+.ws-note{grid-column:1 / -1;margin-top:6px}
+/* top nav */
+.ws-nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 18px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.ws-logo{font-size:15px;letter-spacing:.12em;font-weight:600}
+.ws-links{display:flex;gap:28px}
+.ws-links a{position:relative;font:400 15px "Satoshi",sans-serif;color:var(--slate);text-decoration:none;transition:color .2s ease}
+.ws-links a:hover,.ws-links a.is-current{color:var(--ink)}
+.ws-links a::after{content:'';position:absolute;left:-11px;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:var(--aubergine);opacity:0;transform:translateY(-8px) scale(.4);pointer-events:none}
+.ws-links a.is-current::after{opacity:1;transform:none}
+.ws-links a:hover::after,.ws-links a:focus-visible::after{animation:wsDot .6s cubic-bezier(.3,.7,.4,1) forwards}
+@keyframes wsDot{0%{opacity:0;transform:translateY(-10px) scale(.4)}45%{opacity:1;transform:translateY(2px) scale(1.12,.86)}70%{transform:translateY(-3px) scale(.96,1.04)}88%{transform:translateY(.5px) scale(1)}100%{opacity:1;transform:none}}
+.ws-links a:focus-visible{outline:2px solid var(--aubergine);outline-offset:4px;border-radius:2px}
+.ws-hi{font:600 15px "Satoshi",sans-serif;padding:10px 22px;border-radius:999px;background:var(--card);color:var(--ink);border:1.5px solid var(--ink);display:inline-flex;align-items:center;gap:7px;cursor:pointer;transition:background .25s ease,border-color .25s ease,color .25s ease,transform .25s ease}
+.ws-hi:hover{background:var(--aubergine);border-color:var(--aubergine);color:#fff;transform:translateY(-1px)}
+.ws-hi:focus-visible{outline:3px solid var(--aubergine);outline-offset:2px}
+.ws-bob{display:inline-block;animation:wsBob 1.8s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes wsBob{0%,100%{transform:translateX(-1px)}50%{transform:translateX(3px)}}
+/* buttons */
+.ws-btns{display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:6px 6px 0 0}
+.ws-btn{font:700 14px "Satoshi",sans-serif;min-height:46px;padding:0 8px 0 24px;border-radius:999px;display:inline-flex;align-items:center;gap:12px;cursor:pointer;white-space:nowrap;border:1.5px solid;transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s ease,background .2s ease}
+.ws-btn-primary{background:var(--aubergine);color:#fff;border-color:#86579A;--orb-bg:#fff;--orb-ink:var(--aubergine)}
+.ws-btn-primary:hover{background:var(--plum);border-color:#93649F;transform:translate(-4px,-4px);box-shadow:6px 6px 0 #36184D}
+.ws-btn-outline{background:transparent;color:var(--aubergine);border-color:var(--aubergine);--orb-bg:var(--aubergine);--orb-ink:#fff}
+.ws-btn-outline:hover{background:var(--lilac);color:var(--plum);transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--plum);--orb-bg:var(--plum)}
+.ws-btn:active{transform:none;box-shadow:none}
+.ws-btn:focus-visible{outline:3px solid var(--aubergine);outline-offset:3px}
+.ws-orb{position:relative;width:30px;height:30px;display:grid;place-items:center;flex:none}
+.ws-orb::before{content:'';position:absolute;inset:0;border-radius:50%;background:var(--orb-bg);transform:scale(.3);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.ws-orb svg{position:relative;width:13px;height:13px;color:var(--orb-ink);opacity:0;transform:scale(.4) rotate(-45deg);transition:opacity .2s ease .05s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.ws-btn:hover .ws-orb::before,.ws-btn:focus-visible .ws-orb::before{transform:scale(1)}
+.ws-btn:hover .ws-orb svg,.ws-btn:focus-visible .ws-orb svg{opacity:1;transform:none}
+@media (hover:none){ .ws-orb::before{transform:scale(1)} .ws-orb svg{opacity:1;transform:none} }
+/* hashtag chips */
+.ws-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ws-chip{font:500 12px "IBM Plex Mono",monospace;letter-spacing:.02em;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--slate);cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease}
+.ws-chip:hover{background:var(--lilac);border-color:transparent;color:var(--aubergine);transform:translateY(-1px)}
+.ws-chip[aria-pressed="true"]{background:var(--aubergine);border-color:var(--aubergine);color:#fff}
+.ws-chip:focus-visible{outline:2px solid var(--aubergine);outline-offset:2px}
+:root[data-theme="dark"] .ws-links a::after{background:#BC80CC}
+:root[data-theme="dark"] .ws-hi:hover{background:#5B2A68;border-color:#5B2A68}
+:root[data-theme="dark"] .ws-btn-primary:hover{box-shadow:6px 6px 0 #BC80CC}
+:root[data-theme="dark"] .ws-btn-outline{color:#C79BD6;border-color:#BC80CC;--orb-bg:#BC80CC;--orb-ink:#17171C}
+:root[data-theme="dark"] .ws-btn-outline:hover{color:#F1EAF7;box-shadow:6px 6px 0 #BC80CC;--orb-bg:#BC80CC}
+:root[data-theme="dark"] .ws-chip:hover{color:#BC80CC}
+:root[data-theme="dark"] .ws-chip[aria-pressed="true"]{background:#5B2A68;border-color:#5B2A68;color:#F1EAF7}
+@media (prefers-reduced-motion:reduce){ .ws-bob{animation:none} .ws-links a:hover::after{animation:none;opacity:1;transform:none} .ws-orb::before,.ws-orb svg,.ws-btn,.ws-chip,.ws-hi{transition:none} }
+@media (max-width:900px){ .ws-app{grid-template-columns:minmax(0,1fr);padding:22px} .ws-app-head{flex-direction:column;align-items:start} .ws-app-head p{text-align:left} .ws-faces{grid-template-columns:1fr;gap:18px} }
+@media (max-width:640px){ .ws-app{padding:18px} .ws-tile{padding:18px} .ws-nav{flex-wrap:wrap} .ws-nav{gap:14px;padding:14px} .ws-links{gap:16px;order:3;width:100%;padding-left:11px;flex-wrap:wrap} .ws-links a{font-size:14px} .ws-row{grid-template-columns:60px 1fr auto} }
 .guideline-list{display:grid;gap:10px;margin-top:16px}
 .guideline-list div{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
 .copyright{margin-top:28px;margin-bottom:56px;font:12px/1.6 "IBM Plex Mono",monospace;color:var(--slate)}
@@ -8150,43 +8201,66 @@ h3{font-size:18px;line-height:1.2}
         <div class="satoshi" style="font-size:32px;line-height:1.05;font-weight:500">Designing systems people can use.</div>
         <p class="small muted" style="margin-top:12px">Satoshi · 400–700 · navigation, body, buttons, cards, UI.</p>
       </div>
-      <div class="type-specimen">
+      <div class="type-specimen" style="border-bottom:none">
         <div class="type-label">03 · System / Metadata</div>
         <div class="plex" style="font-size:24px;line-height:1.25">#PRODUCTDESIGN · 10+ YEARS · 04 MARKETS</div>
         <p class="small muted" style="margin-top:12px">IBM Plex Mono · 400–600 · labels, tags, dates, metadata, technical moments.</p>
       </div>
-      <div class="type-specimen" style="border-bottom:none">
-        <div class="type-label">Typeface personality</div>
-        <div class="guideline-list" style="margin-top:14px;gap:14px">
-          <div><b class="fraunces" style="font-size:16px;font-weight:600">Fraunces</b><span class="small muted"> — editorial, warm, a little literary. Used where the brand needs to feel human and considered, not manufactured.</span></div>
-          <div><b class="satoshi" style="font-size:16px;font-weight:600">Satoshi</b><span class="small muted"> — clean, geometric, quietly confident. Does the actual work: interface, body copy, buttons — never competes with Fraunces for attention.</span></div>
-          <div><b class="plex" style="font-size:16px;font-weight:600">IBM Plex Mono</b><span class="small muted"> — precise and systematic. Signals "this is structural, not prose" — metadata, tags, technical detail.</span></div>
-        </div>
-      </div>
     </div>
 
-    <div>
+    <div class="ws-scale">
       <div class="kicker">Recommended web scale</div>
-      <div class="scale">
-        <div class="scale-row"><span>DISPLAY</span><b class="fraunces" style="font-size:42px">64 / 72 / 88 px</b></div>
-        <div class="scale-row"><span>H1</span><b class="fraunces" style="font-size:34px">48 / 56 / 64 px</b></div>
-        <div class="scale-row"><span>H2</span><b class="fraunces" style="font-size:28px">32 / 40 px</b></div>
-        <div class="scale-row"><span>BODY</span><b class="satoshi" style="font-size:18px">16 / 18 / 20 px</b></div>
-        <div class="scale-row"><span>LABEL</span><b class="plex" style="font-size:12px">12 / 14 px</b></div>
-        <div class="scale-row"><span>MICRO</span><b class="plex" style="font-size:12px">10 / 12 px</b></div>
-      </div>
-
-      <div class="web-system">
-        <div class="kicker">Website application</div>
-        <div class="nav-sample"><b class="mono">SAIKY DESAI</b><div style="display:flex;gap:18px"><a class="active" href="#">Work</a><a href="#">About</a><a href="#">Résumé</a></div></div>
-        <div class="ui-row">
-          <button class="btn btn-primary">Explore the work ↓</button>
-          <button class="btn btn-secondary">More about me →</button>
-          <span class="tag">#ENTERPRISEUX</span>
-        </div>
-        <p class="small muted" style="margin-top:16px">Keep the interface restrained; let the gradient appear in “Complexity” / “Clarity”, key editorial moments and selected highlights.</p>
+      <div class="ws-rows">
+        <div class="ws-row"><span class="ws-k">Display</span><span class="ws-aa fraunces" style="font-size:40px">Aa</span><span class="ws-v">64 / 72 / 88 px</span></div>
+        <div class="ws-row"><span class="ws-k">H1</span><span class="ws-aa fraunces" style="font-size:32px">Aa</span><span class="ws-v">48 / 56 / 64 px</span></div>
+        <div class="ws-row"><span class="ws-k">H2</span><span class="ws-aa fraunces" style="font-size:26px">Aa</span><span class="ws-v">32 / 40 px</span></div>
+        <div class="ws-row"><span class="ws-k">Body</span><span class="ws-aa satoshi" style="font-size:18px">Aa</span><span class="ws-v">16 / 18 / 20 px</span></div>
+        <div class="ws-row"><span class="ws-k">Label</span><span class="ws-aa plex" style="font-size:14px">AA</span><span class="ws-v">12 / 14 px</span></div>
+        <div class="ws-row"><span class="ws-k">Micro</span><span class="ws-aa plex" style="font-size:11px">AA</span><span class="ws-v">10 / 12 px</span></div>
       </div>
     </div>
+  </div>
+
+  <div class="ws-faces">
+    <div><b class="fraunces">Fraunces</b><span class="small muted">Editorial, warm, a little literary. Used where the brand needs to feel human and considered, not manufactured.</span></div>
+    <div><b class="satoshi">Satoshi</b><span class="small muted">Clean, geometric, quietly confident. Does the actual work: interface, body copy, buttons — never competes with Fraunces for attention.</span></div>
+    <div><b class="plex">IBM Plex Mono</b><span class="small muted">Precise and systematic. Signals "this is structural, not prose" — metadata, tags, technical detail.</span></div>
+  </div>
+
+  <div class="ws-app">
+    <div class="ws-app-head">
+      <div><div class="kicker">Website application</div><h3 class="ws-app-title">Live components</h3></div>
+      <p class="small muted">The same components as saiky.in — hover, focus and click to try them.</p>
+    </div>
+
+    <div class="ws-tile ws-tile-nav">
+      <div class="type-label">Top navigation</div>
+      <div class="ws-nav" role="navigation" aria-label="Navigation sample">
+        <b class="ws-logo plex">SAIKY DESAI</b>
+        <div class="ws-links"><a href="#" onclick="event.preventDefault();this.parentNode.querySelectorAll('a').forEach(function(x){x.classList.remove('is-current');x.removeAttribute('aria-current')});this.classList.add('is-current');this.setAttribute('aria-current','page')">Work</a><a href="#" onclick="event.preventDefault();this.parentNode.querySelectorAll('a').forEach(function(x){x.classList.remove('is-current');x.removeAttribute('aria-current')});this.classList.add('is-current');this.setAttribute('aria-current','page')">About</a><a href="#" class="is-current" aria-current="page" onclick="event.preventDefault();this.parentNode.querySelectorAll('a').forEach(function(x){x.classList.remove('is-current');x.removeAttribute('aria-current')});this.classList.add('is-current');this.setAttribute('aria-current','page')">Brand</a><a href="#" onclick="event.preventDefault();this.parentNode.querySelectorAll('a').forEach(function(x){x.classList.remove('is-current');x.removeAttribute('aria-current')});this.classList.add('is-current');this.setAttribute('aria-current','page')">Résumé</a></div>
+        <button class="ws-hi" type="button">Get in touch <span class="ws-bob" aria-hidden="true">→</span></button>
+      </div>
+      <p class="ws-spec">Satoshi 15 · Slate links, Ink on hover · a 5 px dot drops in beside the hovered link and stays on the current page · CTA fills Aubergine on hover</p>
+    </div>
+
+    <div class="ws-tile">
+      <div class="type-label">Buttons</div>
+      <div class="ws-btns">
+        <button class="ws-btn ws-btn-primary" type="button">Explore the work <span class="ws-orb" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="ws-btn ws-btn-outline" type="button">More about me <span class="ws-orb" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      </div>
+      <p class="ws-spec">Pill · Satoshi 700 · a small dot grows into a circle carrying the arrow · hover lifts 4 px with a hard offset shadow · press settles flat</p>
+    </div>
+
+    <div class="ws-tile">
+      <div class="type-label">Hashtag chips</div>
+      <div class="ws-chips" role="group" aria-label="Hashtag chips sample">
+        <button class="ws-chip" type="button" onclick="this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true')" aria-pressed="true">#ProductDesign</button><button class="ws-chip" type="button" onclick="this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true')" aria-pressed="false">#EnterpriseUX</button><button class="ws-chip" type="button" onclick="this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true')" aria-pressed="false">#AI</button><button class="ws-chip" type="button" onclick="this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true')" aria-pressed="false">#VibeCoding</button><button class="ws-chip" type="button" onclick="this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true')" aria-pressed="false">#ContentCreator</button>
+      </div>
+      <p class="ws-spec">IBM Plex Mono 12 · quiet outline at rest · Lilac on hover · Aubergine when selected</p>
+    </div>
+
+    <p class="small muted ws-note">Keep the interface restrained; let the gradient appear in “Complexity” / “Clarity”, key editorial moments and selected highlights.</p>
   </div>
 
   <div class="guideline-list">
