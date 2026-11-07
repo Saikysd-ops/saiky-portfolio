@@ -932,9 +932,14 @@
     filter:saturate(.85);}   /* the brand stops, a touch calmer on the dark band */
   .philosophy .pv-support{max-width:30em;margin:clamp(22px,2.6vw,32px) 0 0;font-size:clamp(15px,1.2vw,17px);line-height:1.6;color:var(--ink-soft);}
   .pv-more{display:inline-flex;align-items:center;gap:12px;margin-top:clamp(22px,2.6vw,30px);font-size:15px;font-weight:500;color:var(--ink);text-decoration:none;}
-  .pv-more .pv-arrow{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid rgba(248,247,244,.4);
-    font-size:16px;line-height:1;transition:transform .35s cubic-bezier(.22,.61,.36,1),background-color .25s ease,color .25s ease,border-color .25s ease;}
-  .pv-more:hover .pv-arrow{transform:translateX(4px);background:#F8F7F4;border-color:#F8F7F4;color:#17171C;}
+  /* same orb as the site's CTAs: a small dot at rest, on hover/focus it grows into a circle carrying the arrow */
+  .pv-orb{position:relative;flex:none;width:30px;height:30px;display:grid;place-items:center;}
+  .pv-orb::before{content:'';position:absolute;inset:0;border-radius:50%;background:#F8F7F4;transform:scale(.3);transition:transform .45s cubic-bezier(.2,.8,.2,1);}
+  .pv-orb svg{position:relative;width:13px;height:13px;color:#17171C;opacity:0;transform:scale(.4) rotate(-45deg);transition:opacity .2s ease .05s,transform .45s cubic-bezier(.2,.8,.2,1);}
+  .pv-more:hover .pv-orb::before,.pv-more:focus-visible .pv-orb::before{transform:scale(1);}
+  .pv-more:hover .pv-orb svg,.pv-more:focus-visible .pv-orb svg{opacity:1;transform:none;}
+  @media (hover:none){ .pv-orb::before{transform:scale(1);} .pv-orb svg{opacity:1;transform:none;} }
+  @media (prefers-reduced-motion:reduce){ .pv-orb::before,.pv-orb svg{transition:none;} }
   .pv-more:focus-visible{outline:2px solid #A65CCB;outline-offset:4px;border-radius:20px;}
   @media (min-width:1200px){ .philosophy .pv-headline span{white-space:nowrap;} }
   @media (max-width:860px){ .philosophy .pv-card{grid-template-columns:1fr;row-gap:36px;} .philosophy .pv-venn{width:100%;max-width:450px;margin:8px auto 0;} }
@@ -3944,7 +3949,7 @@
         <div class="pv-eyebrow">Systems · Data · Products</div>
         <h2 class="pv-headline"><span>Complexity is where</span> <span class="pv-grad">I&nbsp;do my best work.</span></h2>
         <p class="pv-support">I untangle workflows, turn complex data into signals, and build products that create clarity without losing depth.</p>
-        <a class="pv-more" href="#brand" data-brand-anchor="digital-expression">Know more <span class="pv-arrow" aria-hidden="true">→</span></a>
+        <a class="pv-more" href="#brand" data-brand-anchor="digital-expression">Know more <span class="pv-orb" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
       <div class="pv-right">
         <svg class="pv-venn" viewBox="0 0 640 600" style="overflow:visible" role="img" aria-label="Systems, Data and Products overlap, with decisions at the centre">
