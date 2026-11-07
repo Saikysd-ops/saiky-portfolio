@@ -1790,7 +1790,8 @@
   /* the closing line of "How I actually work", directly above the reel */
   .habits-close{margin:0 0 84px;max-width:46ch;font-family:var(--font-display);font-style:italic;font-weight:400;
     font-size:clamp(20px,2.3vw,27px);line-height:1.4;color:var(--ink);padding-top:38px;border-top:1px solid var(--line);}
-  .habits-close b{font-style:normal;font-weight:500;color:var(--accent);}
+  .habits-close b{font-style:normal;font-weight:500;color:var(--accent);background:linear-gradient(90deg,#3157D5 0%,#7546D8 38%,#C54879 72%,#E46B5D 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.12em;}   /* brand gradient, same stops as the home headline */
   @media (max-width:760px){ .habits-close{font-size:19px;padding-top:28px;margin-bottom:40px;} }
   .video-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:22px;}
   .video-head h2{font-family:var(--font-display);font-weight:500;font-size:clamp(26px,3.2vw,40px);
