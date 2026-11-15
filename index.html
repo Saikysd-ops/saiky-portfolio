@@ -1595,22 +1595,32 @@
     font-family:var(--font-mono);font-size:11.5px;color:var(--ink-soft);}
   .foot2-sep{display:inline-block;width:1px;height:11px;background:var(--line);
     margin:0 10px;vertical-align:middle;}
+  /* footer layout (calmer, editorial): identity gets the wide first column, links sit in tidy columns,
+     Up sits top-right with the column labels, the © bar carries the hairline beneath it, then the name. */
+  .site-foot--v2{margin-top:0;border-top:0;padding-top:clamp(8px,1.5vw,24px);}   /* the UX-laws ruler above is the divider */
+  .foot2-tagline{margin:0 0 clamp(32px,3.5vw,48px);}
+  .foot2-grid{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) auto;gap:32px;padding-bottom:clamp(48px,5vw,72px);}
+  .foot2-brand .foot-lockup{margin-bottom:18px;}
+  .foot2-up{align-self:start;}
+  .foot2-bar{border-top:0;border-bottom:1px solid var(--line);padding:0 0 16px;}
+  .foot2-copy{display:flex;justify-content:space-between;flex:1 1 100%;min-width:0;gap:16px;}   /* © on the left, place on the right */
+  .foot2-copy .foot2-sep{flex:1;visibility:hidden;margin:0;}   /* the separator becomes the spacer between the two ends */
+  .foot-wordmark{margin-top:clamp(20px,2.2vw,32px);}
+  @media (max-width:760px){
+    .foot2-grid{grid-template-columns:1fr 1fr;gap:32px 24px;}
+    .foot2-brand{grid-column:1 / -1;}
+    .foot2-up{grid-column:1 / -1;}
+  }
   /* closing wordmark: the name set edge to edge in Fraunces (the Brand book display face), cropped at the
-     bottom edge so only the top of the "y" tail shows, ending in a small breathing brand dot.
+     bottom edge so only the top of the "y" tail shows, ending in a small brand dot.
      Size and crop height are fitted in JS so the text fills the viewport minus the gutters. */
-  .foot-wordmark{position:relative;width:100vw;margin-left:calc(50% - 50vw);padding:0 var(--fwm-gutter);margin-top:-32px;
+  .foot-wordmark{position:relative;width:100vw;margin-left:calc(50% - 50vw);padding:0 var(--fwm-gutter);
     --fwm-gutter:clamp(16px,2vw,32px);box-sizing:border-box;overflow:hidden;user-select:none;}
   .fwm-text{position:relative;display:inline-block;white-space:nowrap;font-family:'Fraunces',Georgia,serif;font-weight:300;
     font-variation-settings:'opsz' 144;font-size:17vw;line-height:1;letter-spacing:-.04em;color:var(--ink);}
   .fwm-dot{position:relative;display:inline-block;width:.06em;height:.06em;border-radius:50%;background:var(--violet);
     margin-left:.04em;vertical-align:baseline;}
-  .fwm-dot::after{content:'';position:absolute;inset:0;border-radius:50%;border:1px solid currentColor;color:var(--violet);opacity:0;}
-  .foot-wordmark.is-in .fwm-dot{animation:fwmBreath 3.2s ease-in-out 1.4s infinite;}
-  .foot-wordmark.is-in .fwm-dot::after{animation:fwmRing 3.2s ease-out 1.4s infinite;}
-  @keyframes fwmBreath{0%,100%{scale:1;}50%{scale:.78;}}
-  @keyframes fwmRing{0%{opacity:.55;transform:scale(1);}70%,100%{opacity:0;transform:scale(2.6);}}
   :root[data-theme="dark"] .fwm-dot{background:var(--accent);}
-  :root[data-theme="dark"] .fwm-dot::after{color:var(--accent);}
   /* reveal: letters rise from below in sequence when the name scrolls into view; the dot lands last */
   .fwm-ch{display:inline-block;white-space:pre;}
   .foot-wordmark.is-armed .fwm-ch,.foot-wordmark.is-armed .fwm-dot{transform:translateY(115%);opacity:0;}
@@ -1619,9 +1629,8 @@
     transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .5s ease;transition-delay:calc(var(--i) * 45ms);}
   .foot-wordmark.is-in .fwm-dot{transform:none;opacity:1;
     transition:transform .7s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms + 250ms),opacity .3s ease calc(var(--i) * 45ms + 250ms);}
-  @media (prefers-reduced-motion:reduce){ .foot-wordmark.is-armed .fwm-ch,.foot-wordmark.is-armed .fwm-dot{transform:none;opacity:1;transition:none;} .foot-wordmark .fwm-dot,.foot-wordmark .fwm-dot::after{animation:none!important;} }
+  @media (prefers-reduced-motion:reduce){ .foot-wordmark.is-armed .fwm-ch,.foot-wordmark.is-armed .fwm-dot{transform:none;opacity:1;transition:none;} }
   @media (max-width:760px){
-    .foot2-grid{grid-template-columns:1fr;gap:24px;}
     .foot2-bar{padding-bottom:24px;}
   }
 
@@ -4308,7 +4317,6 @@
               </svg>
               <span class="foot-dot"></span>
             </div>
-            <div class="foot2-name">SAIKY DESAI</div>
             <div class="foot2-role">Senior Product Designer</div>
             <div class="foot2-role2">Enterprise AI <span class="foot2-role-dot"></span> Decision Systems</div>
           </div>
@@ -4431,7 +4439,6 @@
               </svg>
               <span class="foot-dot"></span>
             </div>
-            <div class="foot2-name">SAIKY DESAI</div>
             <div class="foot2-role">Senior Product Designer</div>
             <div class="foot2-role2">Enterprise AI <span class="foot2-role-dot"></span> Decision Systems</div>
           </div>
@@ -4719,7 +4726,6 @@
               </svg>
               <span class="foot-dot"></span>
             </div>
-            <div class="foot2-name">SAIKY DESAI</div>
             <div class="foot2-role">Senior Product Designer</div>
             <div class="foot2-role2">Enterprise AI <span class="foot2-role-dot"></span> Decision Systems</div>
           </div>
@@ -10263,7 +10269,8 @@ setActive(0); startRotation();
       if(win.ResizeObserver){ new win.ResizeObserver(function(){ var keep=zone<0?2:zone; measure(); target=x=clamp(zoneCenter(keep)); paint(); }).observe(track); }
       layout();
     }
-    function init(){ document.querySelectorAll('footer.site-foot--v2').forEach(function(f){ if(!f.querySelector('.uxr')) build(f); }); }
+    function init(){ document.querySelectorAll('footer.site-foot--v2').forEach(function(f){ var p=f.previousElementSibling; if(f.querySelector('.uxr')||(p&&p.classList.contains('uxr'))) return; build(f);
+      var u=f.querySelector('.uxr'); if(u) f.parentNode.insertBefore(u,f); }); }   /* the ruler is the break between the page and the footer */
     if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
     window.uxRulerMount=function(host,win){ if(host&&!host.querySelector('.uxr')) build(host,win); };
   })();
