@@ -1595,6 +1595,15 @@
     font-family:var(--font-mono);font-size:11.5px;color:var(--ink-soft);}
   .foot2-sep{display:inline-block;width:1px;height:11px;background:var(--line);
     margin:0 10px;vertical-align:middle;}
+  /* closing wordmark: the name set edge to edge across the viewport in Satoshi, ending in the brand dot.
+     Size is fitted in JS (fitWordmark) so the text exactly fills the viewport minus the gutters. */
+  .foot-wordmark{width:100vw;margin-left:calc(50% - 50vw);padding:clamp(8px,1.5vw,20px) var(--fwm-gutter) clamp(10px,1.6vw,24px);
+    --fwm-gutter:clamp(16px,2vw,32px);box-sizing:border-box;overflow:hidden;user-select:none;}
+  .fwm-text{display:inline-block;white-space:nowrap;font-family:'Satoshi',sans-serif;font-weight:700;
+    font-size:17.4vw;line-height:.86;letter-spacing:-.055em;color:var(--ink);padding-bottom:.14em;}
+  .fwm-dot{display:inline-block;width:.15em;height:.15em;border-radius:50%;background:var(--violet);
+    margin-left:.04em;vertical-align:baseline;}
+  :root[data-theme="dark"] .fwm-dot{background:var(--accent);}
   @media (max-width:760px){
     .foot2-grid{grid-template-columns:1fr;gap:24px;}
     .foot2-bar{padding-bottom:24px;}
@@ -4313,6 +4322,7 @@
         <div class="foot2-bar">
           <span class="foot2-copy">© 2026 Saiky Desai<span class="foot2-sep"></span>Built in Bengaluru 🇮🇳</span>
         </div>
+        <div class="foot-wordmark" aria-hidden="true"><span class="fwm-text">Saiky Desai<span class="fwm-dot"></span></span></div>
   </footer>
 </div>
 
@@ -4435,6 +4445,7 @@
         <div class="foot2-bar">
           <span class="foot2-copy">© 2026 Saiky Desai<span class="foot2-sep"></span>Built in Bengaluru 🇮🇳</span>
         </div>
+        <div class="foot-wordmark" aria-hidden="true"><span class="fwm-text">Saiky Desai<span class="fwm-dot"></span></span></div>
   </footer>
 </div>
 
@@ -4722,6 +4733,7 @@
         <div class="foot2-bar">
           <span class="foot2-copy">© 2026 Saiky Desai<span class="foot2-sep"></span>Built in Bengaluru 🇮🇳</span>
         </div>
+        <div class="foot-wordmark" aria-hidden="true"><span class="fwm-text">Saiky Desai<span class="fwm-dot"></span></span></div>
   </footer>
 </div>
 </div>
@@ -10536,6 +10548,29 @@ setActive(0); startRotation();
   const restLater=()=>setTimeout(rest,reduce?0:1900);
   if(drawn) restLater(); else { const iv=setInterval(()=>{ if(drawn){ clearInterval(iv); restLater(); } },200); }
   if(mq.addEventListener) mq.addEventListener('change',()=>{ build(); rest(); });
+})();
+</script>
+<script>
+/* fit the footer wordmark to the viewport width */
+(function(){
+  function fit(){
+    document.querySelectorAll('.foot-wordmark').forEach(function(w){
+      if(w.parentNode&&w.parentNode.lastElementChild!==w) w.parentNode.appendChild(w);   /* keep it the last thing on the page, below the UX-laws ruler */
+      var t=w.querySelector('.fwm-text'); if(!t||!w.offsetParent) return;
+      var cs=getComputedStyle(w), avail=w.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+      t.style.fontSize='100px'; var tw=t.getBoundingClientRect().width;
+      if(tw>0) t.style.fontSize=(100*avail/tw)+'px';
+    });
+  }
+  var raf; function q(){ cancelAnimationFrame(raf); raf=requestAnimationFrame(fit); }
+  window.addEventListener('resize',q);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(q);
+  window.addEventListener('load',q);
+  /* views switch by toggling visibility, so re-fit whenever the body class / hash changes */
+  new MutationObserver(q).observe(document.body,{attributes:true,attributeFilter:['class']});
+  window.addEventListener('hashchange',function(){ setTimeout(q,50); });
+  document.addEventListener('click',function(){ setTimeout(q,60); });
+  q();
 })();
 </script>
 </body>
