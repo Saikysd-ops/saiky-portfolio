@@ -1605,7 +1605,8 @@
   .foot2-bar{border-top:0;border-bottom:1px solid var(--line);padding:0 0 16px;}
   .foot2-copy{display:flex;justify-content:space-between;flex:1 1 100%;min-width:0;gap:16px;}   /* © on the left, place on the right */
   .foot2-copy .foot2-sep{flex:1;visibility:hidden;margin:0;}   /* the separator becomes the spacer between the two ends */
-  .foot-wordmark{margin-top:clamp(20px,2.2vw,32px);}
+  .foot-wordmark{margin-top:clamp(4px,.5vw,8px);}   /* sits close under the © hairline; the face's own ascender space does the rest */
+  @media (max-width:700px){ .foot-wordmark{--fwm-gutter:22px;} }   /* a touch smaller on phones, more breathing room at the edges */
   @media (max-width:760px){
     .foot2-grid{grid-template-columns:1fr 1fr;gap:32px 24px;}
     .foot2-brand{grid-column:1 / -1;}
@@ -10585,7 +10586,7 @@ setActive(0); startRotation();
       if(tw>0) t.style.fontSize=(100*avail/tw)+'px';
       /* crop: the block ends a little below the baseline, so the "y" tail is cut and only hinted at */
       var d=t.querySelector('.fwm-dot'), fz=parseFloat(t.style.fontSize);
-      if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+fz*.075)+'px';
+      if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+fz*(innerWidth<700?.12:.075))+'px';   /* phones show a little more of the y so it still reads */
       ql();
     });
   }
