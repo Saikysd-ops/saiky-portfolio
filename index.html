@@ -1613,6 +1613,32 @@
     .foot2-brand{grid-column:1 / -1;}
     .foot2-up{grid-column:1 / -1;}
   }
+  /* premium footer: a full-bleed brand panel (lilac + faint dot grid; deep plum-ink in dark), large editorial links,
+     generous rhythm. Links keep their hairline + gradient-sweep hover. */
+  .site-foot--v2{position:relative;isolation:isolate;padding-top:clamp(56px,6vw,96px);}
+  .site-foot--v2::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:-1;
+    border-radius:clamp(20px,2.4vw,36px) clamp(20px,2.4vw,36px) 0 0;
+    background:radial-gradient(circle,rgba(91,42,104,.16) 1px,transparent 1.2px) 0 0/22px 22px,#F1EAF7;}
+  :root[data-theme="dark"] .site-foot--v2::before{background:radial-gradient(circle,rgba(241,234,247,.07) 1px,transparent 1.2px) 0 0/22px 22px,
+    color-mix(in srgb,#452064 22%,#17171C);}
+  .site-foot--v2 .foot2-tagline{font-size:clamp(22px,2vw,28px);color:var(--ink);opacity:.72;margin-bottom:clamp(40px,4.5vw,64px);}
+  .site-foot--v2 .foot2-lbl{font-size:11px;margin-bottom:clamp(18px,2vw,26px);}
+  .site-foot--v2 .foot2-link{font-size:clamp(20px,1.85vw,28px);font-weight:500;letter-spacing:-.02em;line-height:1.15;margin:0;padding:5px 0 7px;gap:12px;}
+  .site-foot--v2 .foot2-link svg{width:clamp(16px,1.3vw,20px);height:clamp(16px,1.3vw,20px);}
+  .site-foot--v2 .foot2-link::after{opacity:0;}   /* hairline only appears with the hover sweep: calmer at rest */
+  .site-foot--v2 .foot2-link::before{bottom:1px;}
+  .site-foot--v2 .foot2-role,.site-foot--v2 .foot2-role2{font-size:15px;line-height:1.55;}
+  .site-foot--v2 .foot2-brand .foot-lockup{margin-bottom:20px;}
+  .site-foot--v2 .foot-mark{width:38px;}
+  .site-foot--v2 .foot-dot{left:34px;top:4px;width:7px;height:7px;}
+  .site-foot--v2 .foot2-grid{padding-bottom:clamp(64px,7vw,112px);gap:40px;}
+  .site-foot--v2 .foot2-bar{font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-bottom-color:color-mix(in srgb,var(--ink) 14%,transparent);}
+  :root[data-theme="dark"] .site-foot--v2 .foot2-up{background:transparent;}
+  .site-foot--v2 .foot2-up{background:transparent;}
+  @media (max-width:760px){
+    .site-foot--v2 .foot2-link{font-size:22px;}
+    .site-foot--v2 .foot2-grid{gap:36px 24px;}
+  }
   /* closing wordmark: the name set edge to edge in Fraunces (the Brand book display face), cropped at the
      bottom edge so only the top of the "y" tail shows, ending in a small brand dot.
      Size and crop height are fitted in JS so the text fills the viewport minus the gutters. */
