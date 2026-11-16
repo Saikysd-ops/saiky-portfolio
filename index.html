@@ -2924,6 +2924,29 @@
   .case-more-body li::before{content:'';position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.7;}
   .case-more-body li b{color:var(--ink);font-weight:600;}
   @media (prefers-reduced-motion:reduce){ .case-more[open] .case-more-body{animation:none;} .case-more summary i,.case-more summary i::after{transition:none;} }
+  /* Prototype validation: finding → decision read as a pair; quotes as a three-up evidence row */
+  #cs-validation .vl-grid{margin-top:32px;}
+  .vl-card{display:flex;flex-direction:column;padding:28px 28px 26px;}
+  .vl-card h3{font-size:20px;line-height:1.3;margin:6px 0 20px;}
+  .vl-arrow{color:var(--accent);font-family:var(--font-body);}
+  .vl-row{display:grid;grid-template-columns:82px minmax(0,1fr);gap:14px;padding:12px 0;border-top:1px solid var(--line);}
+  .vl-row p{margin:0;font-size:13.5px;line-height:1.55;color:var(--ink-soft);}
+  .vl-k{font-family:var(--font-mono);font-size:10px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);opacity:.8;padding-top:3px;}
+  .vl-row--decision{margin-top:auto;}
+  .vl-row--decision p{color:var(--ink);}
+  .vl-row--decision .vl-k{color:var(--accent);opacity:1;}
+  .vl-quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:40px 0 44px;border-top:1px solid var(--line);}
+  .vl-quote{margin:0;padding:26px 28px 6px 0;display:flex;flex-direction:column;}
+  .vl-quote+.vl-quote{padding-left:28px;border-left:1px solid var(--line);}
+  .vl-quote::before{content:'';width:24px;height:2px;border-radius:2px;background:var(--accent);opacity:.7;margin-bottom:16px;}   /* the quote text carries its own marks */
+  .vl-quote .case-quote{font-size:clamp(16.5px,1.35vw,19px);line-height:1.5;margin:0;quotes:none;}
+  .vl-quote .case-quote-attr{margin-top:auto;padding-top:18px;}
+  @media (max-width:900px){
+    .vl-quotes{grid-template-columns:1fr;}
+    .vl-quote,.vl-quote+.vl-quote{padding:22px 0 18px;border-left:0;}
+    .vl-quote+.vl-quote{border-top:1px solid var(--line);}
+  }
+  @media (max-width:640px){ .vl-card{padding:22px 20px;} .vl-row{grid-template-columns:1fr;gap:4px;} }
   /* At a glance: calm one-line pillars, decisions in the case-study card grid, rationale + scope in one framed disclosure group */
   .case-triple--short{gap:0;border-top:1px solid var(--line);}
   .case-triple--short>div{padding:22px 28px 4px 0;}
@@ -5114,18 +5137,17 @@
         <div class="case-bridge-lbl">The key decision</div>
         <p class="case-p" style="margin:0"><b>Make the score an entry point into evidence</b>, not a verdict on its own.</p>
       </div>
-      <div class="case-cardgrid case-cardgrid--2">
-        <div class="case-card"><div class="case-tag">Iteration 01 / Identity</div><h3>Logo → useful identity</h3><p><b>Finding:</b> Most users did not value logos in long supplier lists.<br><br><b>Decision:</b> Prioritize supplier identity, address/location and useful metadata.</p></div>
-        <div class="case-card"><div class="case-tag">Iteration 02 / Risk</div><h3>Unsettled terminology → clear mental model</h3><p><b>Finding:</b> "Risk" was the most understood label; higher risk was expected to be worse.<br><br><b>Decision:</b> Keep Risk and make direction/severity explicit.</p></div>
-        <div class="case-card"><div class="case-tag">Iteration 03 / Score</div><h3>Score → evidence</h3><p><b>Finding:</b> Scores supported shortlisting, but users wanted metrics, commentary and category relevance.<br><br><b>Decision:</b> Treat the score as an entry point into deeper evidence.</p></div>
-        <div class="case-card"><div class="case-tag">Iteration 04 / Context</div><h3>Structured data → structured + human knowledge</h3><p><b>Finding:</b> Prior contacts and factory-visit history influenced confidence.<br><br><b>Decision:</b> Preserve paths to qualitative supplier context where available.</p></div>
+      <div class="case-cardgrid case-cardgrid--2 vl-grid">
+        <div class="case-card vl-card"><div class="case-tag">Iteration 01 / Identity</div><h3>Logo <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> useful identity</h3><div class="vl-row"><b class="vl-k">Finding:</b><p>Most users did not value logos in long supplier lists.</p></div><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Prioritize supplier identity, address/location and useful metadata.</p></div></div>
+        <div class="case-card vl-card"><div class="case-tag">Iteration 02 / Risk</div><h3>Unsettled terminology <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> clear mental model</h3><div class="vl-row"><b class="vl-k">Finding:</b><p>"Risk" was the most understood label; higher risk was expected to be worse.</p></div><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Keep Risk and make direction/severity explicit.</p></div></div>
+        <div class="case-card vl-card"><div class="case-tag">Iteration 03 / Score</div><h3>Score <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> evidence</h3><div class="vl-row"><b class="vl-k">Finding:</b><p>Scores supported shortlisting, but users wanted metrics, commentary and category relevance.</p></div><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Treat the score as an entry point into deeper evidence.</p></div></div>
+        <div class="case-card vl-card"><div class="case-tag">Iteration 04 / Context</div><h3>Structured data <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> structured + human knowledge</h3><div class="vl-row"><b class="vl-k">Finding:</b><p>Prior contacts and factory-visit history influenced confidence.</p></div><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Preserve paths to qualitative supplier context where available.</p></div></div>
       </div>
-      <blockquote class="case-quote">"We have a Teams chat. I can ask, 'Does anyone know this supplier?' and it saves a whole bunch of time."</blockquote>
-      <div class="case-quote-attr">Sourcing Manager · General Merchandise</div>
-      <blockquote class="case-quote">"I like the bottom metrics details — that shows where they fall on that risk and what the commentary is."</blockquote>
-      <div class="case-quote-attr">Merch Director · Outdoors</div>
-      <blockquote class="case-quote">"I like to see the graph first because that shows me a timeline too of how those metrics have changed, and if I wanted to double-click into that, I can scroll down and see the actual numbers there."</blockquote>
-      <div class="case-quote-attr">Sourcing Manager · Health &amp; Wellness</div>
+      <div class="vl-quotes">
+        <figure class="vl-quote"><blockquote class="case-quote">"We have a Teams chat. I can ask, 'Does anyone know this supplier?' and it saves a whole bunch of time."</blockquote><figcaption class="case-quote-attr">Sourcing Manager · General Merchandise</figcaption></figure>
+        <figure class="vl-quote"><blockquote class="case-quote">"I like the bottom metrics details — that shows where they fall on that risk and what the commentary is."</blockquote><figcaption class="case-quote-attr">Merch Director · Outdoors</figcaption></figure>
+        <figure class="vl-quote"><blockquote class="case-quote">"I like to see the graph first because that shows me a timeline too of how those metrics have changed, and if I wanted to double-click into that, I can scroll down and see the actual numbers there."</blockquote><figcaption class="case-quote-attr">Sourcing Manager · Health &amp; Wellness</figcaption></figure>
+      </div>
       <div class="case-cardgrid case-cardgrid--2">
         <div class="case-mock-cell">
           <div class="case-tag">Prototype tested</div>
