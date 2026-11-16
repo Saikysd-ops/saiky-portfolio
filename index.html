@@ -1617,12 +1617,21 @@
      from the section above (the contact clock sat almost touching it) and a little breathing space below */
   .uxr.uxr--prefoot{margin-top:calc(var(--uxr-d) * .5 + clamp(44px,4.5vw,72px));margin-bottom:clamp(64px,6vw,96px);}
   @media (max-width:640px){ .uxr.uxr--prefoot{margin-top:calc(var(--uxr-d) * .5 + 40px);margin-bottom:56px;} }
-  /* premium footer: a full-bleed brand panel (lilac + faint dot grid; deep plum-ink in dark), large editorial links,
+  /* premium footer: a full-bleed brand panel (Near Black + faint dot grid; deep plum-ink in dark), large editorial links,
      generous rhythm. Links keep their hairline + gradient-sweep hover. */
   .site-foot--v2{position:relative;isolation:isolate;padding-top:clamp(56px,6vw,96px);}
   .site-foot--v2::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:-1;
     border-radius:clamp(20px,2.4vw,36px) clamp(20px,2.4vw,36px) 0 0;
-    background:radial-gradient(circle,rgba(91,42,104,.16) 1px,transparent 1.2px) 0 0/22px 22px,#F1EAF7;}
+    background:radial-gradient(circle,rgba(248,247,244,.06) 1px,transparent 1.2px) 0 0/22px 22px,#17171C;}
+  /* Near Black panel (light theme): the footer borrows the site's own dark-theme tokens so text, lines and accents
+     keep the same contrast they have in dark mode */
+  :root:not([data-theme="dark"]) .site-foot--v2{--ink:#F8F7F4;--ink-soft:#A6A3AD;--line:rgba(248,247,244,.14);--accent:#BC80CC;color:var(--ink);}
+  :root:not([data-theme="dark"]) .site-foot--v2 .foot-mark .f1{fill:#BDBDBD;}
+  :root:not([data-theme="dark"]) .site-foot--v2 .foot-mark .f2{fill:#D8D8D8;}
+  :root:not([data-theme="dark"]) .site-foot--v2 .foot-mark .f3{fill:#F5F5F5;}
+  :root:not([data-theme="dark"]) .site-foot--v2 .foot-dot,:root:not([data-theme="dark"]) .site-foot--v2 .fwm-dot,
+  :root:not([data-theme="dark"]) .site-foot--v2 .foot2-role-dot{background:var(--accent);}
+  :root:not([data-theme="dark"]) .site-foot--v2 .foot2-up:hover,:root:not([data-theme="dark"]) .site-foot--v2 .foot2-up:focus-visible{background:#F1EAF7;border-color:#F1EAF7;color:#452064;}
   :root[data-theme="dark"] .site-foot--v2::before{background:radial-gradient(circle,rgba(241,234,247,.07) 1px,transparent 1.2px) 0 0/22px 22px,
     color-mix(in srgb,#452064 22%,#17171C);}
   .site-foot--v2 .foot2-tagline{font-size:clamp(22px,2vw,28px);color:var(--ink);opacity:.72;margin-bottom:clamp(40px,4.5vw,64px);}
