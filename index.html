@@ -1679,9 +1679,9 @@
   .foot-wordmark{position:relative;width:100vw;margin-left:calc(50% - 50vw);padding:0 var(--fwm-gutter);
     --fwm-gutter:clamp(16px,2vw,32px);box-sizing:border-box;overflow:hidden;user-select:none;}
   .fwm-text{position:relative;display:inline-block;white-space:nowrap;font-family:'Fraunces',Georgia,serif;font-weight:300;
-    font-variation-settings:'opsz' 144;font-size:17vw;line-height:1;letter-spacing:-.04em;color:var(--ink);}
-  .fwm-dot{position:relative;display:inline-block;width:.06em;height:.06em;border-radius:50%;background:var(--violet);
-    margin-left:.04em;vertical-align:baseline;}
+    font-variation-settings:'opsz' 144;font-size:17vw;line-height:1;letter-spacing:-.012em;color:var(--ink);text-transform:uppercase;}   /* all caps: optical size 144 + near-neutral tracking (caps need air, not -4%) */
+  .fwm-dot{position:relative;display:inline-block;width:.07em;height:.07em;border-radius:50%;background:var(--violet);
+    margin-left:.05em;vertical-align:baseline;}
   :root[data-theme="dark"] .fwm-dot{background:var(--accent);}
   /* reveal: letters rise from below in sequence when the name scrolls into view; the dot lands last */
   .fwm-ch{display:inline-block;white-space:pre;}
@@ -1691,7 +1691,20 @@
     transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .5s ease;transition-delay:calc(var(--i) * 45ms);}
   .foot-wordmark.is-in .fwm-dot{transform:none;opacity:1;
     transition:transform .7s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms + 250ms),opacity .3s ease calc(var(--i) * 45ms + 250ms);}
-  @media (prefers-reduced-motion:reduce){ .foot-wordmark.is-armed .fwm-ch,.foot-wordmark.is-armed .fwm-dot{transform:none;opacity:1;transition:none;} }
+  /* the dot breathes, slowly and quietly, once the name has landed */
+  .foot-wordmark.is-in .fwm-dot{animation:fwmDot 3.6s ease-in-out 1.6s infinite;}
+  @keyframes fwmDot{0%,100%{scale:1;opacity:1;}50%{scale:.72;opacity:.7;}}
+  /* masking, like the hero portrait: a soft circle follows the cursor and reveals the name in Gold (#C49A45),
+     the brand swatch that complements aubergine */
+  @property --fwm-r{syntax:'<length>';inherits:true;initial-value:0px;}
+  .foot-wordmark{--fwm-r:0px;--fwm-x:50%;--fwm-y:50%;transition:--fwm-r .5s cubic-bezier(.2,.8,.2,1);}
+  .foot-wordmark.is-hover{--fwm-r:clamp(80px,9vw,160px);}
+  .fwm-reveal{position:absolute;left:0;top:0;width:100%;height:100%;color:#C49A45;pointer-events:none;white-space:nowrap;
+    -webkit-mask-image:radial-gradient(circle var(--fwm-r) at var(--fwm-x) var(--fwm-y),#000 97%,transparent 100%);
+    mask-image:radial-gradient(circle var(--fwm-r) at var(--fwm-x) var(--fwm-y),#000 97%,transparent 100%);
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
+  .fwm-reveal .fwm-dot{background:#C49A45 !important;}
+  @media (prefers-reduced-motion:reduce){ .foot-wordmark.is-armed .fwm-ch,.foot-wordmark.is-armed .fwm-dot{transform:none;opacity:1;transition:none;} .foot-wordmark .fwm-dot{animation:none !important;} .foot-wordmark{transition:none;} }
   @media (max-width:760px){
     .foot2-bar{padding-bottom:24px;}
   }
@@ -10744,7 +10757,7 @@ setActive(0); startRotation();
       if(tw>0) t.style.fontSize=(100*avail/tw)+'px';
       /* crop: the block ends a little below the baseline, so the "y" tail is cut and only hinted at */
       var d=t.querySelector('.fwm-dot'), fz=parseFloat(t.style.fontSize);
-      if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+fz*(innerWidth<700?.12:.075))+'px';   /* phones show a little more of the y so it still reads */
+      if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+fz*.05)+'px';   /* caps sit right on the bottom edge */
       ql();
     });
   }
@@ -10755,6 +10768,13 @@ setActive(0); startRotation();
     t.removeChild(t.firstChild);
     txt.split('').forEach(function(c,i){ var sp=document.createElement('span'); sp.className='fwm-ch'; sp.style.setProperty('--i',i); sp.textContent=c; t.insertBefore(sp,dot); });
     dot.style.setProperty('--i',txt.length);
+    /* gold copy for the cursor mask (same letters, so it rises with the original) */
+    var rv=document.createElement('span'); rv.className='fwm-reveal'; rv.setAttribute('aria-hidden','true'); rv.innerHTML=t.innerHTML; t.appendChild(rv);
+    if(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+      w.addEventListener('pointerenter',function(){ w.classList.add('is-hover'); });
+      w.addEventListener('pointerleave',function(){ w.classList.remove('is-hover'); });
+      w.addEventListener('pointermove',function(e){ var r=t.getBoundingClientRect(); w.style.setProperty('--fwm-x',(e.clientX-r.left)+'px'); w.style.setProperty('--fwm-y',(e.clientY-r.top)+'px'); });
+    }
     w.classList.add('is-armed');
     if(!('IntersectionObserver' in window)){ w.classList.add('is-in'); return; }
     new IntersectionObserver(function(es){ es.forEach(function(e){
@@ -10762,15 +10782,16 @@ setActive(0); startRotation();
       else if(!e.isIntersecting) w.classList.remove('is-in');   /* re-arm once it's fully off screen */
     }); },{threshold:[0,.35]}).observe(w);
   });
-  /* the fixed ORBIT launcher sits in the bottom-right corner, over the dot: as the name scrolls in, the
-     launcher is pushed up just enough to clear the dot, so it reads as the name making room for itself */
+  /* the fixed ORBIT launcher docks to the footer's "Built in Bengaluru" row as it scrolls into view:
+     centred on that line where there's margin beside it, otherwise sitting just above it */
   var lr; function lift(){ lr=0;
     var L=document.querySelector('.orbit-launcher'); if(!L) return;
     var w=[].find.call(document.querySelectorAll('.foot-wordmark'),function(x){return x.offsetParent;});
-    var d=w&&w.querySelector('.fwm-dot'), up=0;
-    if(d){ var r=w.getBoundingClientRect(), top=r.top+d.offsetTop+w.querySelector('.fwm-text').offsetTop;
-      top=r.top+w.querySelector('.fwm-text').offsetTop+parseFloat(w.querySelector('.fwm-text').style.fontSize||0)*.2;   /* clear the whole name (cap height), not just the dot, at every width */
-      up=Math.max(0,Math.min(innerHeight*.45,(innerHeight-16)-(top-14))); }
+    var bar=w&&w.parentNode.querySelector('.foot2-bar'), up=0;
+    if(bar){ var c=bar.querySelector('.foot2-copy')||bar, cr=c.getBoundingClientRect(), br=bar.getBoundingClientRect(), h=L.offsetHeight||48;
+      var nat=innerHeight-16-h/2, room=innerWidth-cr.right>=h+24;
+      var target=room?(cr.top+cr.height/2):(br.top-12-h/2);
+      up=Math.max(0,Math.min(innerHeight*.8,nat-target)); }
     L.style.translate=up?('0 '+(-up)+'px'):''; }
   function ql(){ if(!lr) lr=requestAnimationFrame(lift); }
   window.addEventListener('scroll',ql,{passive:true}); window.addEventListener('resize',ql);
