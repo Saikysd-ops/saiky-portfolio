@@ -2924,6 +2924,23 @@
   .case-more-body li::before{content:'';position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.7;}
   .case-more-body li b{color:var(--ink);font-weight:600;}
   @media (prefers-reduced-motion:reduce){ .case-more[open] .case-more-body{animation:none;} .case-more summary i,.case-more summary i::after{transition:none;} }
+  /* At a glance: one-line pillars, four compact decisions, rationale + scope behind disclosure */
+  .case-triple--short h3{font-size:clamp(17px,1.5vw,20px);line-height:1.35;margin:10px 0 0;}
+  .case-dec4{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);}
+  .case-dec4 li{padding:18px 22px 6px 0;}
+  .case-dec4 li+li{padding-left:22px;border-left:1px solid var(--line);}
+  .case-dec4-k{display:block;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .case-dec4 p{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink);}
+  .case-more--wide{margin-top:28px;}
+  .case-more--wide + .case-more--wide{margin-top:0;}
+  .case-more--wide summary{font-size:11px;padding:16px 0 14px;}
+  .case-more--wide .case-more-body{padding:4px 0 24px;}
+  .case-more-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:14px;}
+  .case-more-grid h4{margin:0 0 10px;font-family:var(--font-body);font-size:13.5px;font-weight:600;color:var(--ink);}
+  .case-more-list{max-width:52ch;}
+  .case-more-list li{font-size:13.5px;}
+  @media (max-width:1024px){ .case-dec4,.case-more-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .case-dec4 li:nth-child(3){padding-left:0;border-left:0;} .case-dec4 li:nth-child(n+3){border-top:1px solid var(--line);} }
+  @media (max-width:640px){ .case-dec4,.case-more-grid{grid-template-columns:1fr;} .case-dec4 li,.case-dec4 li+li{padding:14px 0 6px;border-left:0;} .case-dec4 li+li{border-top:1px solid var(--line);} }
   .case-contrib{font-size:15.5px;line-height:1.7;color:var(--ink-soft);max-width:66ch;margin:40px 0 0;padding-left:16px;border-left:2px solid var(--accent);}
   .case-contrib b{color:var(--ink);font-weight:600;}
 
@@ -4871,18 +4888,60 @@
 
     <section class="case-sec" id="cs-glance">
       <div class="case-num">01 / At a glance</div>
-      <h2 class="case-h2">A supplier lookup problem became an enterprise decision system.</h2>
-      <div class="case-triple">
-        <div><div class="case-tag">Business</div><h3>One trusted starting point</h3><p>Bring supplier information, performance and risk into a shared evaluation experience.</p></div>
-        <div><div class="case-tag">Experience</div><h3>Less manual synthesis</h3><p>Connect discovery, evaluation, comparison and monitoring instead of making associates reconstruct the story.</p></div>
-        <div><div class="case-tag">Platform</div><h3>Foundation for intelligence</h3><p>Establish the structure for capabilities, Supplier Insights, semantic search and proactive recommendations.</p></div>
+      <h2 class="case-h2">From fragmented supplier data to enterprise decision intelligence.</h2>
+      <div class="case-triple case-triple--short">
+        <div><div class="case-tag">Business</div><h3>One trusted starting point for supplier performance, risk and capability.</h3></div>
+        <div><div class="case-tag">Experience</div><h3>Connect discovery, evaluation and monitoring in one experience.</h3></div>
+        <div><div class="case-tag">Platform</div><h3>A shared intelligence layer supporting existing Walmart workflows.</h3></div>
       </div>
-          <div class="case-decisions" aria-labelledby="csDecH">
-        <div class="case-tag" id="csDecH">Three key decisions</div>
-        <div class="case-dec-row case-dec-head" aria-hidden="true"><span>Problem</span><span>Design decision</span><span>Intended value</span></div>
-        <div class="case-dec-row"><p><i>Problem</i>Supplier signals came from many systems — onboarding (VIP), internal tools (AMA, GSE) and a legacy Informix database.</p><p><i>Design decision</i><b>Build a decision layer on top of existing supplier data</b>, not another supplier database.</p><p><i>Intended value</i>One trusted starting point to find, understand, evaluate and monitor suppliers.</p></div>
-        <div class="case-dec-row"><p><i>Problem</i>Teams applied inconsistent evaluation criteria.</p><p><i>Design decision</i><b>Structure evaluation around Performance, Risk and Capability</b>, rather than one supplier-health score.</p><p><i>Intended value</i>Clearer, consistent criteria for comparing and ranking suppliers.</p></div>
-        <div class="case-dec-row"><p><i>Problem</i>A score alone did not create confidence.</p><p><i>Design decision</i><b>Make scores explainable</b> — score → drivers → trend → calculation → context.</p><p><i>Intended value</i>Associates can understand a score without the calculation being hidden.</p></div>
+
+      <div class="case-decisions" aria-labelledby="csDecH">
+        <div class="case-tag" id="csDecH">Key design decisions</div>
+        <ol class="case-dec4">
+          <li><span class="case-dec4-k">01 / Unify</span><p>Build a decision layer on existing supplier data, not another database.</p></li>
+          <li><span class="case-dec4-k">02 / Structure</span><p>Evaluate suppliers across Performance, Risk and Capability.</p></li>
+          <li><span class="case-dec4-k">03 / Explain</span><p>Make scores transparent through drivers, trends and supporting context.</p></li>
+          <li><span class="case-dec4-k">04 / Simplify</span><p>Reveal essential information first, with deeper details available on demand.</p></li>
+        </ol>
+
+        <details class="case-more case-more--wide">
+          <summary><span>Explore the design rationale</span><i aria-hidden="true"></i></summary>
+          <div class="case-more-body">
+            <p>Supporting context for the four design decisions.</p>
+            <div class="case-more-grid">
+              <div><h4>01 — Data integration</h4><ul>
+                <li><b>VIP:</b> supplier onboarding signals.</li>
+                <li><b>AMA and GSE:</b> internal supplier information.</li>
+                <li><b>Informix:</b> legacy supplier data.</li>
+                <li><b>Supplier Matrix:</b> unified intelligence layer.</li></ul></div>
+              <div><h4>02 — Evaluation framework</h4><ul>
+                <li><b>Performance:</b> supplier performance against Walmart expectations.</li>
+                <li><b>Risk:</b> financial health and external risk indicators.</li>
+                <li><b>Capability:</b> manufacturing, product and business capabilities.</li></ul></div>
+              <div><h4>03 — Score transparency</h4><ul>
+                <li>Performance score and D&amp;B rating.</li>
+                <li>Score drivers and supporting metrics.</li>
+                <li>Historical trends and calculation context.</li></ul></div>
+              <div><h4>04 — Progressive disclosure</h4><ul>
+                <li>Supplier overview and key signals first.</li>
+                <li>Detailed performance and financial metrics on demand.</li>
+                <li>Supporting trends and deeper supplier information when required.</li></ul></div>
+            </div>
+          </div>
+        </details>
+
+        <details class="case-more case-more--wide">
+          <summary><span>Inside Phase 1 — Product scope</span><i aria-hidden="true"></i></summary>
+          <div class="case-more-body">
+            <ul class="case-more-list">
+              <li><b>12K active Walmart US suppliers</b></li>
+              <li>Search, filter and sort across supplier views.</li>
+              <li>Performance scores and D&amp;B ratings.</li>
+              <li>Supplier profiles and evaluation details.</li>
+              <li>Watchlists and supplier score-change alerts.</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </section>
 
