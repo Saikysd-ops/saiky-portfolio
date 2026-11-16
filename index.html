@@ -1597,6 +1597,7 @@
     margin:0 10px;vertical-align:middle;}
   /* footer layout (calmer, editorial): identity gets the wide first column, links sit in tidy columns,
      Up sits top-right with the column labels, the © bar carries the hairline beneath it, then the name. */
+  .case-exp-inset{display:block;width:100%;max-width:380px;height:auto;margin-top:22px;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px -18px rgba(23,23,27,.35);}   /* small companion screen under a detail's copy */
   .site-foot--v2{margin-top:0;border-top:0;padding-top:clamp(8px,1.5vw,24px);}   /* the UX-laws ruler above is the divider */
   .foot2-tagline{margin:0 0 clamp(32px,3.5vw,48px);}
   .foot2-grid{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) auto;gap:32px;padding-bottom:clamp(48px,5vw,72px);}
@@ -5116,19 +5117,29 @@
     <section class="case-sec case-sec--dark" id="cs-inside">
       <div class="case-num">10 / Inside the interface</div>
       <h2 class="case-h2">The details that make the decision model trustworthy, not just visible.</h2>
-      <p class="case-p">Fourteen moments from the shipped product — discovery, explainability, monitoring and the calculations underneath every score.</p>
+      <p class="case-p">Seventeen moments from the shipped product — discovery, explainability, monitoring and the calculations underneath every score.</p>
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
           <div class="case-tag">01 · Discovery</div>
           <h3 class="case-h3" style="margin-top:10px">Save suppliers to watchlists</h3>
           <p class="case-p">Every supplier card supports pinning and adding to named watchlists — like &ldquo;Top performers&rdquo; or &ldquo;Q2 priority fashion&rdquo; — so a shortlist survives past a single session.</p>
         </div>
-        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-030-edd113e84684.jpg" alt="Supplier Listing — grid view with the watchlist picker open"></div></div></div>
+        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-131-f01d29054fe1.jpg" alt="Supplier management — adding a supplier card to named watchlists"></div></div></div>
       </div>
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
           <div class="case-tag">02 · Discovery</div>
+          <h3 class="case-h3" style="margin-top:10px">Open and manage watchlists</h3>
+          <p class="case-p">The Watchlist menu in the toolbar opens any saved list in one step, and Manage watchlist lets teams rename or remove lists as priorities change.</p>
+          <img class="case-exp-inset" src="assets/images/image-132-5f4bcfe85fdb.jpg" alt="Manage watchlist dialog — rename or delete each saved list" loading="lazy">
+        </div>
+        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-130-3c778497b9b7.jpg" alt="Supplier management — Watchlist menu open with saved lists, Manage watchlist and New watchlist"></div></div></div>
+      </div>
+
+      <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
+        <div class="case-exp-copy">
+          <div class="case-tag">03 · Discovery</div>
           <h3 class="case-h3" style="margin-top:10px">Filter across risk, market and origin</h3>
           <p class="case-p">Filters cover D&amp;B risk band, private label status, channel, market and country of origin, each showing a live result count before it's applied.</p>
         </div>
@@ -5137,7 +5148,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">03 · Evaluate</div>
+          <div class="case-tag">04 · Evaluate</div>
           <h3 class="case-h3" style="margin-top:10px">Explain what a score means</h3>
           <p class="case-p">Every score carries its own definition, last-updated date and rating scale, so a number is never presented without the context to interpret it.</p>
         </div>
@@ -5146,7 +5157,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">04 · Evaluate</div>
+          <div class="case-tag">05 · Evaluate</div>
           <h3 class="case-h3" style="margin-top:10px">Same pattern for D&amp;B rating</h3>
           <p class="case-p">The D&amp;B supplier rating gets the identical explainability treatment — definition, scale and freshness — reinforcing one consistent pattern across every metric.</p>
         </div>
@@ -5155,7 +5166,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">05 · Monitor</div>
+          <div class="case-tag">06 · Monitor</div>
           <h3 class="case-h3" style="margin-top:10px">Surface what improved</h3>
           <p class="case-p">When a score changes, the card explains why: previous vs. current value, the delta, and the top contributors behind the move.</p>
         </div>
@@ -5164,7 +5175,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">06 · Monitor</div>
+          <div class="case-tag">07 · Monitor</div>
           <h3 class="case-h3" style="margin-top:10px">Flag deteriorating risk early</h3>
           <p class="case-p">The same change-detection pattern applies to risk. A D&amp;B rating that moves the wrong direction is called out immediately, with the reason attached.</p>
         </div>
@@ -5173,7 +5184,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">07 · Understand</div>
+          <div class="case-tag">08 · Understand</div>
           <h3 class="case-h3" style="margin-top:10px">Capability, broken into dimensions</h3>
           <p class="case-p">Capability is not one opaque score — it's manufacturing depth, product breadth and operational readiness, each independently rated and explained.</p>
         </div>
@@ -5182,7 +5193,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">08 · Understand</div>
+          <div class="case-tag">09 · Understand</div>
           <h3 class="case-h3" style="margin-top:10px">Performance at the category level</h3>
           <p class="case-p">The same supplier can perform differently by category. This view breaks financial, operational and quality metrics down category by category.</p>
         </div>
@@ -5191,7 +5202,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">09 · Discover</div>
+          <div class="case-tag">10 · Discover</div>
           <h3 class="case-h3" style="margin-top:10px">AI-suggested similar suppliers</h3>
           <p class="case-p">When a supplier doesn't fit, the system proposes comparable options using portfolio and risk signals — with the reasoning shown alongside each match.</p>
         </div>
@@ -5200,7 +5211,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">10 · Discover</div>
+          <div class="case-tag">11 · Discover</div>
           <h3 class="case-h3" style="margin-top:10px">Compare matches, then shortlist them</h3>
           <p class="case-p">"Compare all" opens the suggested suppliers side by side against the same score columns as the main list, so the comparison is apples-to-apples — then the selected rows go straight to a watchlist.</p>
         </div>
@@ -5209,7 +5220,16 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">11 · Evaluate</div>
+          <div class="case-tag">12 · Understand</div>
+          <h3 class="case-h3" style="margin-top:10px">Associated vendors in one place</h3>
+          <p class="case-p">A supplier record expands into its associated vendors — status, vendor number, origin, performance and risk for each — so related entities are reviewed together, not hunted down separately.</p>
+        </div>
+        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-135-380f657c4a54.jpg" alt="Supplier profile — associated vendors table, similar suppliers and D&amp;B tab"></div></div></div>
+      </div>
+
+      <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
+        <div class="case-exp-copy">
+          <div class="case-tag">13 · Evaluate</div>
           <h3 class="case-h3" style="margin-top:10px">Calculations, not just numbers</h3>
           <p class="case-p">Every metric can be expanded into its full definition — formula, weighting and a worked example — for teams who need to audit, not just trust, the score.</p>
         </div>
@@ -5218,7 +5238,7 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">12 · Discovery</div>
+          <div class="case-tag">14 · Discovery</div>
           <h3 class="case-h3" style="margin-top:10px">Select and compare across rows</h3>
           <p class="case-p">The table view supports multi-row selection, so a sourcing manager can shortlist several suppliers side by side and act on them together — pin, star or add to a watchlist in one pass.</p>
         </div>
@@ -5227,20 +5247,29 @@
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">13 · Evaluate</div>
-          <h3 class="case-h3" style="margin-top:10px">One supplier, every score, one page</h3>
-          <p class="case-p">The full supplier profile brings performance, D&amp;B rating and capability into a single quarterly trend, with each metric's own definition available inline rather than in a separate report.</p>
+          <div class="case-tag">15 · Understand</div>
+          <h3 class="case-h3" style="margin-top:10px">Who the supplier is, not just how it scores</h3>
+          <p class="case-p">The profile also holds the company record — legal entity, parent company, D-U-N-S number, every factory address and the right contact for each role — so teams know who they are dealing with.</p>
         </div>
-        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-042-083c32041409.jpg" alt="Supplier profile — performance score trend, financial and category breakdown for Ridgeline Apparel Co"></div></div></div>
+        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-133-498b98a5a6fd.jpg" alt="Supplier profile — company overview, headquarters and factory addresses, and contacts by role"></div></div></div>
       </div>
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
         <div class="case-exp-copy">
-          <div class="case-tag">14 · Evaluate</div>
+          <div class="case-tag">16 · Evaluate</div>
+          <h3 class="case-h3" style="margin-top:10px">One supplier, every score, one page</h3>
+          <p class="case-p">The full supplier profile brings performance, D&amp;B rating and capability into a single quarterly trend, with each metric's own definition available inline rather than in a separate report.</p>
+        </div>
+        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-134-74b0398a9041.jpg" alt="Supplier profile for Ridgeline Apparel Co — score trend, financial, operational, quality and category performance"></div></div></div>
+      </div>
+
+      <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
+        <div class="case-exp-copy">
+          <div class="case-tag">17 · Evaluate</div>
           <h3 class="case-h3" style="margin-top:10px">Risk, with the underlying signals</h3>
           <p class="case-p">The same profile's D&amp;B tab exposes the SSI, SER, Paydex and credit indicators feeding the rating — plus a plain-language commentary explaining why the risk classification changed.</p>
         </div>
-        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-043-7f90fa564182.jpg" alt="Supplier profile — D&amp;B risk tab with SSI, SER, Paydex and commentary"></div></div></div>
+        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-136-3b6cafaa70f4.jpg" alt="Supplier profile — score trend and D&amp;B tab with SSI, SER, Paydex and commentary"></div></div></div>
       </div>
     </section>
 
