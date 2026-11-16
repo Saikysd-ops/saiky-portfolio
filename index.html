@@ -1621,7 +1621,6 @@
      generous rhythm. Links keep their hairline + gradient-sweep hover. */
   .site-foot--v2{position:relative;isolation:isolate;padding-top:clamp(56px,6vw,96px);}
   .site-foot--v2::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:-1;
-    border-radius:clamp(20px,2.4vw,36px) clamp(20px,2.4vw,36px) 0 0;
     background:radial-gradient(circle,rgba(248,247,244,.06) 1px,transparent 1.2px) 0 0/22px 22px,#17171C;}
   /* Near Black panel (light theme): the footer borrows the site's own dark-theme tokens so text, lines and accents
      keep the same contrast they have in dark mode */
@@ -1661,10 +1660,13 @@
   @media (prefers-reduced-motion:reduce){ .site-foot--v2 .foot2-up,.site-foot--v2 .foot2-link svg.foot2-ext{transition:none;transform:none!important;} }
   /* footer: three equal columns; "Back to top ↑" lives under Identity as a footer link (same underline sweep) */
   .site-foot--v2 .foot2-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  /* Identity on the left edge, Explore centred, Social's block flush to the right edge (lines up with "Built in Bengaluru") */
+  .site-foot--v2 .foot2-grid>.foot2-col:nth-child(2){justify-self:center;}
+  .site-foot--v2 .foot2-grid>.foot2-col:nth-child(3){justify-self:end;}
   .site-foot--v2 .foot2-top{margin-top:clamp(24px,2.6vw,36px);background:none;border:0;cursor:pointer;font-family:var(--font-body);text-align:left;}
   .site-foot--v2 .foot2-top:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px;}
   .site-foot--v2 .foot2-link:hover svg.foot2-top-arrow,.site-foot--v2 .foot2-link:focus-visible svg.foot2-top-arrow{transform:translateY(-3px);}
-  @media (max-width:760px){ .site-foot--v2 .foot2-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .site-foot--v2 .foot2-brand{grid-column:1 / -1;} }
+  @media (max-width:760px){ .site-foot--v2 .foot2-grid>.foot2-col:nth-child(2),.site-foot--v2 .foot2-grid>.foot2-col:nth-child(3){justify-self:start;} .site-foot--v2 .foot2-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .site-foot--v2 .foot2-brand{grid-column:1 / -1;} }
   @media (max-width:420px){ .site-foot--v2 .foot2-bar{font-size:9.5px;letter-spacing:.03em;} .site-foot--v2 .foot2-copy{white-space:nowrap;gap:10px;} }
   @media (max-width:760px){
     .site-foot--v2 .foot2-link{font-size:22px;}
