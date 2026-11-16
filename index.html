@@ -1613,6 +1613,10 @@
     .foot2-brand{grid-column:1 / -1;}
     .foot2-up{grid-column:1 / -1;}
   }
+  /* the UX-laws ruler before the footer: its orb rises ~half its diameter above the line, so give it real room
+     from the section above (the contact clock sat almost touching it) and a little breathing space below */
+  .uxr.uxr--prefoot{margin-top:calc(var(--uxr-d) * .5 + clamp(44px,4.5vw,72px));margin-bottom:clamp(64px,6vw,96px);}
+  @media (max-width:640px){ .uxr.uxr--prefoot{margin-top:calc(var(--uxr-d) * .5 + 40px);margin-bottom:56px;} }
   /* premium footer: a full-bleed brand panel (lilac + faint dot grid; deep plum-ink in dark), large editorial links,
      generous rhythm. Links keep their hairline + gradient-sweep hover. */
   .site-foot--v2{position:relative;isolation:isolate;padding-top:clamp(56px,6vw,96px);}
@@ -10419,7 +10423,7 @@ setActive(0); startRotation();
       layout();
     }
     function init(){ document.querySelectorAll('footer.site-foot--v2').forEach(function(f){ var p=f.previousElementSibling; if(f.querySelector('.uxr')||(p&&p.classList.contains('uxr'))) return; build(f);
-      var u=f.querySelector('.uxr'); if(u) f.parentNode.insertBefore(u,f); }); }   /* the ruler is the break between the page and the footer */
+      var u=f.querySelector('.uxr'); if(u){ f.parentNode.insertBefore(u,f); u.classList.add('uxr--prefoot'); } }); }   /* the ruler is the break between the page and the footer */
     if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
     window.uxRulerMount=function(host,win){ if(host&&!host.querySelector('.uxr')) build(host,win); };
   })();
