@@ -1643,9 +1643,10 @@
   .site-foot--v2 .foot2-up:hover .stb-label,.site-foot--v2 .foot2-up:focus-visible .stb-label{transform:translateY(-8px) scale(.6);}
   .site-foot--v2 .foot2-up:hover .stb-arrow,.site-foot--v2 .foot2-up:focus-visible .stb-arrow{transform:none;}
   /* external-link arrow on social links, as in the reference: nudges up-right on hover */
-  .site-foot--v2 .foot2-link svg.foot2-ext{width:.74em;height:.74em;margin-left:-5px;color:currentColor;transition:transform .3s cubic-bezier(.2,.8,.2,1);}
-  .site-foot--v2 .foot2-link:hover svg.foot2-ext,.site-foot--v2 .foot2-link:focus-visible svg.foot2-ext{transform:translate(2px,-2px);color:currentColor;}
+  .site-foot--v2 .foot2-link svg.foot2-ext{width:.56em;height:.56em;margin-left:-4px;color:currentColor;opacity:.45;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease;}   /* supports the label, doesn't compete */
+  .site-foot--v2 .foot2-link:hover svg.foot2-ext,.site-foot--v2 .foot2-link:focus-visible svg.foot2-ext{transform:translate(2px,-2px);color:currentColor;opacity:1;}
   @media (prefers-reduced-motion:reduce){ .site-foot--v2 .foot2-up,.site-foot--v2 .foot2-link svg.foot2-ext{transition:none;transform:none!important;} }
+  @media (max-width:420px){ .site-foot--v2 .foot2-bar{font-size:9.5px;letter-spacing:.03em;} .site-foot--v2 .foot2-copy{white-space:nowrap;gap:10px;} }
   @media (max-width:760px){
     .site-foot--v2 .foot2-link{font-size:22px;}
     .site-foot--v2 .foot2-grid{gap:36px 24px;}
@@ -10758,8 +10759,8 @@ setActive(0); startRotation();
     var w=[].find.call(document.querySelectorAll('.foot-wordmark'),function(x){return x.offsetParent;});
     var d=w&&w.querySelector('.fwm-dot'), up=0;
     if(d){ var r=w.getBoundingClientRect(), top=r.top+d.offsetTop+w.querySelector('.fwm-text').offsetTop;
-      if(innerWidth<700) top=r.top+w.querySelector('.fwm-text').offsetTop+parseFloat(w.querySelector('.fwm-text').style.fontSize||0)*.2;   /* phones: clear the whole name */
-      up=Math.max(0,Math.min(160,(innerHeight-16)-(top-14))); }
+      top=r.top+w.querySelector('.fwm-text').offsetTop+parseFloat(w.querySelector('.fwm-text').style.fontSize||0)*.2;   /* clear the whole name (cap height), not just the dot, at every width */
+      up=Math.max(0,Math.min(innerHeight*.45,(innerHeight-16)-(top-14))); }
     L.style.translate=up?('0 '+(-up)+'px'):''; }
   function ql(){ if(!lr) lr=requestAnimationFrame(lift); }
   window.addEventListener('scroll',ql,{passive:true}); window.addEventListener('resize',ql);
