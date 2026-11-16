@@ -1659,6 +1659,12 @@
   .site-foot--v2 .foot2-link svg.foot2-ext{width:.56em;height:.56em;margin-left:-4px;color:currentColor;opacity:.45;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease;}   /* supports the label, doesn't compete */
   .site-foot--v2 .foot2-link:hover svg.foot2-ext,.site-foot--v2 .foot2-link:focus-visible svg.foot2-ext{transform:translate(2px,-2px);color:currentColor;opacity:1;}
   @media (prefers-reduced-motion:reduce){ .site-foot--v2 .foot2-up,.site-foot--v2 .foot2-link svg.foot2-ext{transition:none;transform:none!important;} }
+  /* footer: three equal columns; "Back to top ↑" lives under Identity as a footer link (same underline sweep) */
+  .site-foot--v2 .foot2-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .site-foot--v2 .foot2-top{margin-top:clamp(24px,2.6vw,36px);background:none;border:0;cursor:pointer;font-family:var(--font-body);text-align:left;}
+  .site-foot--v2 .foot2-top:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px;}
+  .site-foot--v2 .foot2-link:hover svg.foot2-top-arrow,.site-foot--v2 .foot2-link:focus-visible svg.foot2-top-arrow{transform:translateY(-3px);}
+  @media (max-width:760px){ .site-foot--v2 .foot2-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .site-foot--v2 .foot2-brand{grid-column:1 / -1;} }
   @media (max-width:420px){ .site-foot--v2 .foot2-bar{font-size:9.5px;letter-spacing:.03em;} .site-foot--v2 .foot2-copy{white-space:nowrap;gap:10px;} }
   @media (max-width:760px){
     .site-foot--v2 .foot2-link{font-size:22px;}
@@ -4458,6 +4464,7 @@
             </div>
             <div class="foot2-role">Senior Product Designer</div>
             <div class="foot2-role2">Enterprise AI <span class="foot2-role-dot"></span> Decision Systems</div>
+            <button class="foot2-link foot2-top" data-scroll-top type="button"><span class="foot2-label">Back to top</span><svg class="foot2-ext foot2-top-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
 
           <div class="foot2-col">
@@ -4475,11 +4482,6 @@
             <a class="foot2-link" href="https://dribbble.com/saikysd" target="_blank" rel="noopener"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M2 7 Q9 9 16 6" stroke="currentColor" stroke-width="1.2"/><path d="M4 15 Q9 8 15 13" stroke="currentColor" stroke-width="1.2"/></svg><span class="foot2-label">Dribbble</span><svg class="foot2-ext" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             <a class="foot2-link" href="https://www.instagram.com/saiky__desai/" target="_blank" rel="noopener"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="1" y="1" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="13.2" cy="4.8" r="1" fill="currentColor"/></svg><span class="foot2-label">Instagram</span><svg class="foot2-ext" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-
-          <button class="foot2-up" data-scroll-top aria-label="Back to top" type="button">
-            <span class="stb-label">Up</span>
-            <svg class="stb-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10 V2 M2.5 5.5 L6 2 L9.5 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
       </div>
 
         <div class="foot2-bar">
@@ -4580,6 +4582,7 @@
             </div>
             <div class="foot2-role">Senior Product Designer</div>
             <div class="foot2-role2">Enterprise AI <span class="foot2-role-dot"></span> Decision Systems</div>
+            <button class="foot2-link foot2-top" data-scroll-top type="button"><span class="foot2-label">Back to top</span><svg class="foot2-ext foot2-top-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
 
           <div class="foot2-col">
@@ -4597,11 +4600,6 @@
             <a class="foot2-link" href="https://dribbble.com/saikysd" target="_blank" rel="noopener"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M2 7 Q9 9 16 6" stroke="currentColor" stroke-width="1.2"/><path d="M4 15 Q9 8 15 13" stroke="currentColor" stroke-width="1.2"/></svg><span class="foot2-label">Dribbble</span><svg class="foot2-ext" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             <a class="foot2-link" href="https://www.instagram.com/saiky__desai/" target="_blank" rel="noopener"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="1" y="1" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="13.2" cy="4.8" r="1" fill="currentColor"/></svg><span class="foot2-label">Instagram</span><svg class="foot2-ext" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-
-          <button class="foot2-up" data-scroll-top aria-label="Back to top" type="button">
-            <span class="stb-label">Up</span>
-            <svg class="stb-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10 V2 M2.5 5.5 L6 2 L9.5 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
       </div>
 
         <div class="foot2-bar">
@@ -4867,6 +4865,7 @@
             </div>
             <div class="foot2-role">Senior Product Designer</div>
             <div class="foot2-role2">Enterprise AI <span class="foot2-role-dot"></span> Decision Systems</div>
+            <button class="foot2-link foot2-top" data-scroll-top type="button"><span class="foot2-label">Back to top</span><svg class="foot2-ext foot2-top-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
 
           <div class="foot2-col">
@@ -4884,11 +4883,6 @@
             <a class="foot2-link" href="https://dribbble.com/saikysd" target="_blank" rel="noopener"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M2 7 Q9 9 16 6" stroke="currentColor" stroke-width="1.2"/><path d="M4 15 Q9 8 15 13" stroke="currentColor" stroke-width="1.2"/></svg><span class="foot2-label">Dribbble</span><svg class="foot2-ext" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             <a class="foot2-link" href="https://www.instagram.com/saiky__desai/" target="_blank" rel="noopener"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="1" y="1" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="13.2" cy="4.8" r="1" fill="currentColor"/></svg><span class="foot2-label">Instagram</span><svg class="foot2-ext" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-
-          <button class="foot2-up" data-scroll-top aria-label="Back to top" type="button">
-            <span class="stb-label">Up</span>
-            <svg class="stb-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10 V2 M2.5 5.5 L6 2 L9.5 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
       </div>
 
         <div class="foot2-bar">
