@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=General+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Sacramento&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=General+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Sacramento&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,301,400,401,500,501,600,601,700,701,900,901&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -364,6 +364,33 @@
   @media (max-height:680px){ #view-home .scroll-cue{display:none;} }
   /* ===== section 2: selected impact ===== */
   /* experience at a glance: a full-width band (edge to edge of the viewport) in a soft brand-lilac tint */
+  /* nav logo: Space Grotesk 700 for the SAIKY DESAI wordmark */
+  .logo .logo-tx{font-family:'Space Grotesk',var(--font-body);font-weight:700;letter-spacing:.06em;}
+  /* skills + industries marquee above "Experience at scale": two quiet rows drifting in opposite directions,
+     each item followed by a tiny orbit (a ring with a lilac body travelling on it). Pauses on hover; static with reduced motion. */
+  .skills-mq{position:relative;width:100vw;margin-left:calc(50% - 50vw);padding:clamp(28px,3.4vw,48px) 0;overflow:hidden;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+  .mq-row{overflow:hidden;}
+  .mq-row+.mq-row{margin-top:clamp(10px,1.2vw,18px);}
+  .mq-track{display:flex;width:max-content;animation:mqMove var(--mq-dur,60s) linear infinite;}
+  .mq-row--b .mq-track{--mq-dur:72s;animation-direction:reverse;}
+  .skills-mq:hover .mq-track{animation-play-state:paused;}
+  .mq-group{display:flex;align-items:center;list-style:none;margin:0;padding:0;flex:none;}
+  .mq-group li{display:flex;align-items:center;white-space:nowrap;font-family:var(--font-body);font-weight:500;letter-spacing:.01em;line-height:1.1;}
+  .mq-row--a li{font-size:clamp(22px,2.6vw,40px);color:var(--ink);}
+  .mq-row--b li{font-size:clamp(15px,1.45vw,22px);color:var(--ink-soft);letter-spacing:.06em;}
+  .mq-orb{flex:none;width:.7em;height:.7em;margin:0 .85em;overflow:visible;}
+  .mq-orb circle:first-child{fill:none;stroke:currentColor;stroke-width:1.3;opacity:.4;}
+  .mq-sat{transform-box:view-box;transform-origin:10px 10px;animation:mqSat 5s linear infinite;}
+  .mq-sat circle{fill:var(--accent);}
+  .mq-row--b .mq-sat{animation-duration:7s;animation-direction:reverse;}
+  @keyframes mqMove{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @keyframes mqSat{to{transform:rotate(360deg);}}
+  @media (prefers-reduced-motion:reduce){
+    .mq-track,.mq-sat{animation:none;}
+    .mq-track{width:auto;} .mq-group[aria-hidden="true"]{display:none;} .mq-group{flex-wrap:wrap;row-gap:10px;padding:0 24px;}
+  }
   .home-proof{position:relative;isolation:isolate;padding:80px 0 72px;--band:#1E1826;
     --ink:#F4F2F6;--ink-soft:#ABA4B4;--line:rgba(255,255,255,.12);color:var(--ink);}
   :root[data-theme="dark"] .home-proof{--band:#1A1620;}
@@ -4060,6 +4087,11 @@
     </button>
   </section>
 
+  <section class="skills-mq" aria-label="Skills and industries">
+    <div class="mq-row mq-row--a" role="group" aria-label="Skills and tools"><div class="mq-track"><ul class="mq-group"><li>VS CODE DEVELOPMENT<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>AI-POWERED PROTOTYPING<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>UX/UI DESIGN<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>FIGMA<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>FIGJAM<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>FIGMA AGENT<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>BRAND IDENTITY<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>PRODUCT STRATEGY<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>ENTERPRISE UX<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>COMPLEX DATA VISUALISATION<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li></ul><ul class="mq-group" aria-hidden="true"><li>VS CODE DEVELOPMENT<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>AI-POWERED PROTOTYPING<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>UX/UI DESIGN<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>FIGMA<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>FIGJAM<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>FIGMA AGENT<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>BRAND IDENTITY<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>PRODUCT STRATEGY<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>ENTERPRISE UX<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>COMPLEX DATA VISUALISATION<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li></ul></div></div>
+    <div class="mq-row mq-row--b" role="group" aria-label="Industries"><div class="mq-track"><ul class="mq-group"><li>IoT &amp; CONNECTED DEVICES<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>SUPPLY CHAIN MANAGEMENT<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>SOURCING &amp; SUPPLIER ECOSYSTEMS<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>FINANCE &amp; LENDING<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>GEO-FENCING &amp; NAVIGATION<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>B2B SAAS<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>PHARMACEUTICAL<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>INSURANCE<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>ENTERPRISE TECHNOLOGY<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li></ul><ul class="mq-group" aria-hidden="true"><li>IoT &amp; CONNECTED DEVICES<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>SUPPLY CHAIN MANAGEMENT<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>SOURCING &amp; SUPPLIER ECOSYSTEMS<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>FINANCE &amp; LENDING<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>GEO-FENCING &amp; NAVIGATION<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>B2B SAAS<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>PHARMACEUTICAL<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>INSURANCE<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li><li>ENTERPRISE TECHNOLOGY<svg class="mq-orb" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><g class="mq-sat"><circle cx="16.5" cy="10" r="2.6"/></g></svg></li></ul></div></div>
+  </section>
+
   <section class="home-proof" aria-labelledby="proofH">
     <div class="proof-play" id="proofPlay" aria-hidden="true"><canvas></canvas></div>
     <h2 class="proof-k" id="proofH">Experience at scale</h2>
@@ -7606,7 +7638,7 @@
 <title>Saiky Desai — Brand Guidelines</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
 <style>
 :root {
@@ -7746,7 +7778,7 @@ h3{font-size:18px;line-height:1.2}
 }
 .logo-box{flex-shrink:0}
 .wordmark{
-  font:700 22px/1 "IBM Plex Mono",monospace;letter-spacing:.12em
+  font:700 22px/1 "Space Grotesk",sans-serif;letter-spacing:.06em
 }
 .logo-box{
   display:flex;align-items:center;gap:20px
@@ -7867,7 +7899,7 @@ h3{font-size:18px;line-height:1.2}
 .ws-note{grid-column:1 / -1;margin-top:6px}
 /* top nav */
 .ws-nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 18px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
-.ws-logo{font-size:15px;letter-spacing:.12em;font-weight:600}
+.ws-logo,.ws-logo.plex{font-family:"Space Grotesk",sans-serif;font-size:15px;letter-spacing:.06em;font-weight:700}
 .ws-links{display:flex;gap:28px}
 .ws-links a{position:relative;font:400 15px "Satoshi",sans-serif;color:var(--slate);text-decoration:none;transition:color .2s ease}
 .ws-links a:hover,.ws-links a.is-current{color:var(--ink)}
