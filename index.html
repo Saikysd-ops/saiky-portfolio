@@ -380,10 +380,16 @@
   .skills-mq.is-paused .mq-track{animation-play-state:paused;}
   .mq-group{display:flex;align-items:center;list-style:none;margin:0;padding:0;flex:none;}
   .mq-group li{display:flex;align-items:center;white-space:nowrap;font-family:var(--font-body);line-height:1.1;}
-  .mq-row--a li{font-size:clamp(20px,2.3vw,36px);font-weight:500;letter-spacing:-.005em;}
-  .mq-row--b li{font-size:clamp(13px,1.15vw,17px);font-weight:500;letter-spacing:.08em;}
+  .mq-row--a li{font-size:clamp(17px,1.9vw,30px);font-weight:700;letter-spacing:0;}
+  .mq-row--b li{font-size:clamp(12px,1.05vw,15px);font-weight:700;letter-spacing:.08em;}
   .mq-shape{flex:none;width:.5em;height:.5em;margin:0 1.1em;overflow:visible;}
-  .mq-row--a .mq-shape rect{fill:none;stroke:currentColor;stroke-width:1.2;}
+  /* black strip only: solid diamonds cycling through the brand's expressive swatches */
+  .mq-row--a .mq-shape rect{fill:#7546D8;stroke:none;}
+  .mq-row--a li:nth-child(5n+2) .mq-shape rect{fill:#A65CCB;}
+  .mq-row--a li:nth-child(5n+3) .mq-shape rect{fill:#C54879;}
+  .mq-row--a li:nth-child(5n+4) .mq-shape rect{fill:#E46B5D;}
+  .mq-row--a li:nth-child(5n+5) .mq-shape rect{fill:#C49A45;}
+  .mq-row--a .mq-shape{width:.55em;height:.55em;}
   .mq-row--b .mq-shape{width:.55em;height:.55em;margin:0 1.4em;}
   .mq-row--b .mq-shape circle{fill:#5B2A68;}
   :root[data-theme="dark"] .mq-row--b .mq-shape circle{fill:#BC80CC;}
