@@ -10874,82 +10874,110 @@ setActive(0); startRotation();
 })();
 </script>
 <script>
-/* footer wordmark as an interactive particle field: dots assemble into SAIKY DESAI when it scrolls in,
-   scatter away from the cursor and spring home; dots near the cursor take the brand gradient (ivory at rest). */
+/* footer wordmark as an interactive particle field.
+   Intro: when the footer comes into view, a cloud of very fine dots eases (left-to-right stagger) into SAIKY DESAI.
+   Live: dots scatter from the cursor and spring home; dots near the cursor take the brand gradient (ivory at rest).
+   Rendering writes pixels straight into an ImageData buffer, so tens of thousands of tiny dots stay smooth. */
 (function(){
   if(!window.matchMedia||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var GOLD=[196,154,69];
   function rgb(c){ var m=c.match(/\d+(\.\d+)?/g)||[0,0,0]; return [+m[0],+m[1],+m[2]]; }
+  var STOPS=[[117,70,216],[166,92,203],[197,72,121],[228,107,93]];   /* Violet → Orchid → Rose → Coral */
+  function grad(u){ u=Math.max(0,Math.min(1,u)); var v=u*(STOPS.length-1), i=Math.min(STOPS.length-2,Math.floor(v)), f=v-i, a=STOPS[i], b=STOPS[i+1];
+    return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f]; }
+  function ease(t){ return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }   /* easeInOutCubic */
   function setup(w){
     var t=w.querySelector('.fwm-text'); if(!t) return;
     var cv=document.createElement('canvas'); cv.className='fwm-canvas'; cv.setAttribute('aria-hidden','true'); w.appendChild(cv);
     var ctx=cv.getContext('2d'); if(!ctx) return;
-    var P=[], dpr=1, W=0, H=0, raf=0, mx=-1e4, my=-1e4, inView=false, R=120, ink=[248,247,244], acc=[188,128,204], idle=0;
+    var N=0, HX,HY,X,Y,VX,VY,G,SX,SY,DL,DU,CR,CG,CB,AC;   /* typed arrays: home, pos, vel, glow, start, delay, duration, hot colour, accent flag */
+    var dpr=1,W=0,H=0,BW=0,BH=0,img=null,buf=null,raf=0,mx=-1e4,my=-1e4,inView=false,R=120,ink=[248,247,244],acc=[188,128,204],idle=0,
+        mode='live',t0=0,tEnd=0,dot=1;
     function build(){
       var r=w.getBoundingClientRect(); if(!r.width||!r.height) return;
-      dpr=Math.min(window.devicePixelRatio||1,2); W=r.width; H=r.height;
-      cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+      dpr=Math.min(window.devicePixelRatio||1,2); W=r.width; H=r.height; BW=Math.round(W*dpr); BH=Math.round(H*dpr);
+      cv.width=BW; cv.height=BH; img=ctx.createImageData(BW,BH); buf=new Uint32Array(img.data.buffer);
       var cs=getComputedStyle(t), fz=parseFloat(t.style.fontSize)||parseFloat(cs.fontSize);
-      ink=rgb(cs.color); var d0=t.querySelector('.fwm-dot'); acc=d0?rgb(getComputedStyle(d0).backgroundColor):acc;
-      /* rasterise the letters exactly where the DOM lays them out */
-      var off=document.createElement('canvas'); off.width=Math.ceil(W); off.height=Math.ceil(H);
-      var o=off.getContext('2d'); o.fillStyle='#000'; o.textBaseline='alphabetic';
-      o.font=cs.fontWeight+' '+fz+'px '+cs.fontFamily;
-      var tr=t.getBoundingClientRect(), d=t.querySelector('.fwm-dot');
-      var base=t.offsetTop+d.offsetTop+d.offsetHeight;   /* the dot sits on the baseline */
-      [].forEach.call(t.querySelectorAll(':scope > .fwm-ch'),function(ch){
-        o.fillText(ch.textContent.toUpperCase(), t.offsetLeft+ch.offsetLeft, base);
-      });
-      var gap=Math.max(2,Math.round(fz/115)), img=o.getImageData(0,0,off.width,off.height).data;   /* very fine grid: lots of tiny dots */
-      var old=P; P=[];
-      for(var y=0;y<off.height;y+=gap){ for(var x=0;x<off.width;x+=gap){
-        if(img[(y*off.width+x)*4+3]>128){ var q=mk(x,y,0); P.push(q); }
+      ink=rgb(cs.color); var d=t.querySelector('.fwm-dot'); if(d) acc=rgb(getComputedStyle(d).backgroundColor);
+      /* rasterise the letters (2× supersampled) exactly where the DOM lays them out */
+      var SS=2, off=document.createElement('canvas'); off.width=Math.ceil(W*SS); off.height=Math.ceil(H*SS);
+      var o=off.getContext('2d'); o.scale(SS,SS); o.fillStyle='#000'; o.textBaseline='alphabetic'; o.font=cs.fontWeight+' '+fz+'px '+cs.fontFamily;
+      var base=t.offsetTop+d.offsetTop+d.offsetHeight;
+      [].forEach.call(t.querySelectorAll(':scope > .fwm-ch'),function(ch){ o.fillText(ch.textContent.toUpperCase(), t.offsetLeft+ch.offsetLeft, base); });
+      var px=o.getImageData(0,0,off.width,off.height).data, ow=off.width;
+      var gap=Math.max(1.3,fz/175);   /* CSS px between dots: very fine */
+      var hx=[],hy=[],ac=[];
+      for(var y=gap/2;y<H;y+=gap){ for(var x=gap/2;x<W;x+=gap){
+        if(px[((Math.round(y*SS))*ow+Math.round(x*SS))*4+3]>128){ hx.push(x+(Math.random()-.5)*gap*.35); hy.push(y+(Math.random()-.5)*gap*.35); ac.push(0); }
       }}
-      /* the brand dot, as a small disc of accent particles */
       var dcx=t.offsetLeft+d.offsetLeft+d.offsetWidth/2, dcy=t.offsetTop+d.offsetTop+d.offsetHeight/2, dr=d.offsetWidth/2;
-      for(var yy=-dr;yy<=dr;yy+=gap*.8){ for(var xx=-dr;xx<=dr;xx+=gap*.8){ if(xx*xx+yy*yy<=dr*dr) P.push(mk(dcx+xx,dcy+yy,1)); } }
-      R=Math.max(60,fz*.42); P.size=Math.max(1,gap*.55);
-      P.forEach(function(p){ if(!p.a){ p.c=grad(p.hx/W); p.k=this_k; } else { p.k=NB; } });
-      P.sort(function(a,b){ return (a.k||0)-(b.k||0); });
-      if(!old.length){ scatter(); } else { P.forEach(function(p){ p.x=p.hx; p.y=p.hy; }); }
-      w.classList.add('is-particles'); kick();
+      for(var yy=-dr;yy<=dr;yy+=gap){ for(var xx=-dr;xx<=dr;xx+=gap){ if(xx*xx+yy*yy<=dr*dr){ hx.push(dcx+xx); hy.push(dcy+yy); ac.push(1); } } }
+      N=hx.length; HX=new Float32Array(hx); HY=new Float32Array(hy); AC=new Uint8Array(ac);
+      X=new Float32Array(HX); Y=new Float32Array(HY); VX=new Float32Array(N); VY=new Float32Array(N); G=new Float32Array(N);
+      SX=new Float32Array(N); SY=new Float32Array(N); DL=new Float32Array(N); DU=new Float32Array(N);
+      CR=new Uint8Array(N); CG=new Uint8Array(N); CB=new Uint8Array(N);
+      for(var i=0;i<N;i++){ var c=AC[i]?acc:grad(HX[i]/W); CR[i]=c[0]; CG[i]=c[1]; CB[i]=c[2]; }
+      R=Math.max(56,fz*.4); dot=dpr>=2?2:1;
+      w.classList.add('is-particles');
+      if(inView) intro(); else draw(1);
     }
-    function mk(x,y,a){ return {hx:x,hy:y,x:x,y:y,vx:0,vy:0,a:a,g:0}; }
-    /* brand expressive swatches across the name: Violet → Orchid → Rose → Coral (quantised so frames batch by colour) */
-    var STOPS=[[117,70,216],[166,92,203],[197,72,121],[228,107,93]], NB=32;
-    function grad(u){ var q=Math.max(0,Math.min(NB-1,Math.floor(u*NB))), v=q/(NB-1)*(STOPS.length-1), i=Math.min(STOPS.length-2,Math.floor(v)), f=v-i, a=STOPS[i], b=STOPS[i+1];
-      this_k=q; return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f]; }
-    var this_k=0;
-    function scatter(){ P.forEach(function(p){ p.x=p.hx+(Math.random()-.5)*W*.5; p.y=H+Math.random()*H*1.2; p.vx=0; p.vy=0; }); idle=0; }
-    function frame(){
-      raf=0; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
-      var moving=false, s=P.size||2, R2=R*R, last=-2;
-      for(var i=0;i<P.length;i++){ var p=P[i];
-        var dx=p.x-mx, dy=p.y-my, d2=dx*dx+dy*dy;
-        if(d2<R2){ var d=Math.sqrt(d2)||1, f=(1-d/R)*9; p.vx+=dx/d*f; p.vy+=dy/d*f; p.g=Math.min(1,p.g+.25); } else p.g*=.9;
-        p.vx+=(p.hx-p.x)*.06; p.vy+=(p.hy-p.y)*.06; p.vx*=.8; p.vy*=.8; p.x+=p.vx; p.y+=p.vy;
-        if(Math.abs(p.vx)+Math.abs(p.vy)>.05||p.g>.02) moving=true;
-        /* at rest every letter dot is ivory (the dot stays lilac); under the cursor the dots take the brand gradient */
-        var base=p.a?acc:ink, hot=p.a?acc:(p.c||ink), g=p.g;
-        if(g>.03){ ctx.fillStyle='rgb('+Math.round(base[0]+(hot[0]-base[0])*g)+','+Math.round(base[1]+(hot[1]-base[1])*g)+','+Math.round(base[2]+(hot[2]-base[2])*g)+')'; last=-1; }
-        else if(last!==(p.a?1:0)){ ctx.fillStyle='rgb('+base[0]+','+base[1]+','+base[2]+')'; last=p.a?1:0; }
-        ctx.fillRect(p.x-s/2,p.y-s/2,s,s);
+    function intro(){
+      if(!N) return; mode='intro'; t0=performance.now(); tEnd=0;
+      for(var i=0;i<N;i++){
+        SX[i]=Math.random()*W; SY[i]=H*(.15+Math.random()*1.1);          /* a soft cloud filling the band, weighted low */
+        DL[i]=(HX[i]/W)*420+Math.random()*380;                            /* left-to-right sweep, gently staggered */
+        DU[i]=1300+Math.random()*700; tEnd=Math.max(tEnd,DL[i]+DU[i]);
+        X[i]=SX[i]; Y[i]=SY[i]; VX[i]=VY[i]=0; G[i]=0;
       }
+      kick();
+    }
+    function put(x,y,r,g,b){
+      var ix=(x*dpr)|0, iy=(y*dpr)|0; if(ix<0||iy<0||ix>=BW-1||iy>=BH-1) return;
+      var v=(255<<24)|(b<<16)|(g<<8)|r, k=iy*BW+ix; buf[k]=v; if(dot>1){ buf[k+1]=v; buf[k+BW]=v; buf[k+BW+1]=v; }
+    }
+    function draw(fade){
+      buf.fill(0);
+      for(var i=0;i<N;i++){
+        var br=AC[i]?acc[0]:ink[0], bg=AC[i]?acc[1]:ink[1], bb=AC[i]?acc[2]:ink[2], g=G[i];
+        if(g>.02){ br+= (CR[i]-br)*g; bg+=(CG[i]-bg)*g; bb+=(CB[i]-bb)*g; }
+        var f=fade===1?1:fade[i];
+        put(X[i],Y[i],(br*f)|0,(bg*f)|0,(bb*f)|0);
+      }
+      ctx.putImageData(img,0,0);
+    }
+    var FADE=null;
+    function frame(now){
+      raf=0; if(!N) return;
+      if(mode==='intro'){
+        var el=now-t0; if(!FADE||FADE.length!==N) FADE=new Float32Array(N);
+        for(var i=0;i<N;i++){ var p=Math.max(0,Math.min(1,(el-DL[i])/DU[i])), e=ease(p);
+          X[i]=SX[i]+(HX[i]-SX[i])*e; Y[i]=SY[i]+(HY[i]-SY[i])*e; FADE[i]=.18+.82*e; }
+        draw(FADE);
+        if(el>=tEnd){ mode='live'; for(var j=0;j<N;j++){ X[j]=HX[j]; Y[j]=HY[j]; } draw(1); }
+        if(inView) raf=requestAnimationFrame(frame); return;
+      }
+      var moving=false, R2=R*R;
+      for(var i2=0;i2<N;i2++){
+        var dx=X[i2]-mx, dy=Y[i2]-my, d2=dx*dx+dy*dy;
+        if(d2<R2){ var d=Math.sqrt(d2)||1, f=(1-d/R)*8; VX[i2]+=dx/d*f; VY[i2]+=dy/d*f; G[i2]=Math.min(1,G[i2]+.22); } else if(G[i2]>0) G[i2]*=.9;
+        VX[i2]+=(HX[i2]-X[i2])*.055; VY[i2]+=(HY[i2]-Y[i2])*.055; VX[i2]*=.8; VY[i2]*=.8; X[i2]+=VX[i2]; Y[i2]+=VY[i2];
+        if(!moving&&(VX[i2]>.04||VX[i2]<-.04||VY[i2]>.04||VY[i2]<-.04||G[i2]>.02)) moving=true;
+      }
+      draw(1);
       if(moving||mx>-1e3) idle=0; else idle++;
-      if(inView&&idle<30) raf=requestAnimationFrame(frame);   /* stop once settled; restart on input */
+      if(inView&&idle<20) raf=requestAnimationFrame(frame);
     }
     function kick(){ idle=0; if(!raf&&inView) raf=requestAnimationFrame(frame); }
     w.addEventListener('pointermove',function(e){ var r=w.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; kick(); });
     w.addEventListener('pointerleave',function(){ mx=my=-1e4; kick(); });
     w.addEventListener('touchmove',function(e){ var r=w.getBoundingClientRect(), q=e.touches[0]; mx=q.clientX-r.left; my=q.clientY-r.top; kick(); },{passive:true});
     w.addEventListener('touchend',function(){ mx=my=-1e4; kick(); });
-    w.addEventListener('fwmfit',function(){ build(); });
+    var sizeKey='';
+    w.addEventListener('fwmfit',function(){ var r=w.getBoundingClientRect(), k=Math.round(r.width)+'x'+Math.round(r.height)+'@'+t.style.fontSize; if(k===sizeKey&&N) return; sizeKey=k; build(); });   /* only rebuild when the size really changes (body-class churn from the cursor re-runs fit) */
     new IntersectionObserver(function(es){ es.forEach(function(e){
       var was=inView; inView=e.isIntersecting;
-      if(inView&&!was){ if(!P.length) build(); scatter(); kick(); }
-    }); },{threshold:.2}).observe(w);
-    /* theme switch: recolour */
-    new MutationObserver(function(){ setTimeout(function(){ var cs=getComputedStyle(t); ink=rgb(cs.color); var d0=t.querySelector('.fwm-dot'); if(d0) acc=rgb(getComputedStyle(d0).backgroundColor); kick(); },50); })
+      if(inView&&!was){ if(!N) build(); else intro(); }
+    }); },{threshold:.25}).observe(w);
+    new MutationObserver(function(){ setTimeout(function(){ ink=rgb(getComputedStyle(t).color); var d=t.querySelector('.fwm-dot'); if(d){ acc=rgb(getComputedStyle(d).backgroundColor); for(var i=0;i<N;i++) if(AC[i]){CR[i]=acc[0];CG[i]=acc[1];CB[i]=acc[2];} } if(N&&mode==='live') draw(1); },50); })
       .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   }
   function init(){ document.querySelectorAll('.foot-wordmark').forEach(setup); }
