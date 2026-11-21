@@ -883,6 +883,8 @@
   /* reserve two label lines so a wrapping label on one card doesn't push its
      divider higher than the other card's in the same row */
   .work-stats .lbl{font-size:11px;line-height:1.4;color:var(--ink-soft);opacity:.7;min-height:2.8em;}
+  /* small "Target" tag beside a projected number (pre-launch work) */
+  .num-tag{display:inline-block;vertical-align:middle;margin-left:8px;transform:translateY(-.15em);padding:3px 7px;border-radius:999px;font-family:var(--font-mono);font-size:9.5px;font-weight:500;line-height:1;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb, var(--accent) 40%, transparent);}
   .work-stats-2x2{grid-template-columns:repeat(2,1fr);row-gap:22px;}
   /* a goal, not a measured result: the same quiet tag as the homepage's Business OKRs label */
   .okr-mini{display:table;font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
@@ -4306,9 +4308,9 @@
         <p class="mini-flow">Alert → Insight → Recommendation → Action</p>
         <p class="opp">From inventory gaps → to explainable recommendations and action.</p>
         <div class="stat-grid work-stats">
-          <div class="stat"><div class="num">Target</div><div class="lbl">70% less context switching</div></div>
+          <div class="stat"><div class="num">70%<span class="num-tag">Target</span></div><div class="lbl">Less context switching</div></div>
           <div class="stat"><div class="num">Direct</div><div class="lbl">Path to order creation</div></div>
-          <div class="stat"><div class="num">Top Tasks</div><div class="lbl">Scintilla recommendations</div></div>
+          <div class="stat"><div class="num">Top Tasks</div><div class="lbl">Scintilla recommendations on Supplier One</div></div>
         </div>
           <p class="work-note">Pre-launch · Integrated with Supplier One</p>
         </div>
@@ -7141,7 +7143,8 @@
         <div class="case-card"><div class="case-card-lbl">Target · 3 months</div><div class="case-card-num">50%</div><div class="case-card-copy">Suppliers taking at least one action.</div></div>
         <div class="case-card"><div class="case-card-lbl">Target · Primary signal</div><div class="case-card-num">&gt;25%</div><div class="case-card-copy">Recommendation action rate — opened recommendations that lead to activation.</div></div>
       </div>
-      <div class="case-cardgrid case-cardgrid--2" style="margin-top:1px">
+      <div class="case-cardgrid case-cardgrid--3" style="margin-top:1px">
+        <div class="case-card"><div class="case-card-lbl">Target · Context switching</div><div class="case-card-num">70%</div><div class="case-card-copy">Less context switching between insight and order creation.</div></div>
         <div class="case-card"><div class="case-card-lbl">Success measure · Time to action</div><div class="case-card-num">↓</div><div class="case-card-copy">Recommendation → replenishment.</div></div>
         <div class="case-card"><div class="case-card-lbl">Success measure · Business impact</div><div class="case-card-num">↑</div><div class="case-card-copy">Improve in-stock performance and protect sales.</div></div>
       </div>
