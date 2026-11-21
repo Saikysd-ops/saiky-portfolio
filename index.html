@@ -10823,7 +10823,7 @@ setActive(0); startRotation();
       if(tw>0) t.style.fontSize=(100*avail/tw)+'px';
       /* crop: the block ends a little below the baseline, so the "y" tail is cut and only hinted at */
       var d=t.querySelector('.fwm-dot'), fz=parseFloat(t.style.fontSize);
-      if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+fz*.05)+'px';   /* caps sit right on the bottom edge */
+      if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+Math.max(fz*.14,20))+'px';   /* full letters, with a little room below so nothing is clipped */
       try{ w.dispatchEvent(new Event('fwmfit')); }catch(e){}
       ql();
     });
@@ -10926,8 +10926,9 @@ setActive(0); startRotation();
     function prog(){ var r=w.getBoundingClientRect(); return Math.max(0,Math.min(1,(innerHeight-r.top)/Math.max(1,r.height))); }
     function seed(){
       for(var i=0;i<N;i++){
-        SX[i]=Math.random()*W; SY[i]=H*(.2+Math.random()*1.05);      /* soft cloud in the band, weighted low */
-        DL[i]=(HX[i]/W)*.2+Math.random()*.12;                         /* left-to-right sweep, slight stagger */
+        SX[i]=HX[i]+(Math.random()-.5)*H*.08;                          /* simple, clean rise: each dot starts just below its home */
+        SY[i]=Math.min(H-2,HY[i]+H*(.18+Math.random()*.14));          /* ...and never outside the frame, so nothing looks cut */
+        DL[i]=(HX[i]/W)*.25+Math.random()*.05;                         /* gentle left-to-right sweep */
       }
     }
     function intro(){ if(!N) return; mode='intro'; target=prog(); kick(); }
@@ -10952,7 +10953,7 @@ setActive(0); startRotation();
         target=prog(); var df=target-cur; cur=Math.abs(df)<.002?target:cur+df*.28;
         if(!FADE||FADE.length!==N) FADE=new Float32Array(N);
         for(var i=0;i<N;i++){ var p=Math.max(0,Math.min(1,(cur-DL[i])/.68)), e=ease(p);
-          X[i]=SX[i]+(HX[i]-SX[i])*e; Y[i]=SY[i]+(HY[i]-SY[i])*e; FADE[i]=.18+.82*e; VX[i]=VY[i]=0; }
+          X[i]=SX[i]+(HX[i]-SX[i])*e; Y[i]=SY[i]+(HY[i]-SY[i])*e; FADE[i]=e; VX[i]=VY[i]=0; }
         draw(FADE);
         if(cur>=.999){ mode='live'; for(var j=0;j<N;j++){ X[j]=HX[j]; Y[j]=HY[j]; } draw(1); return; }
         if(inView&&cur!==target) raf=requestAnimationFrame(frame); return;
