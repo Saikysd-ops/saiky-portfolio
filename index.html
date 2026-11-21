@@ -10958,14 +10958,16 @@ setActive(0); startRotation();
         if(cur>=.999){ mode='live'; for(var j=0;j<N;j++){ X[j]=HX[j]; Y[j]=HY[j]; } draw(1); return; }
         if(inView&&cur!==target) raf=requestAnimationFrame(frame); return;
       }
-      /* hover = a smooth lens: dots ease outward from the cursor in proportion to their distance (zero at the centre,
-         zero at the rim), so the letters bulge gently with no holes or cracks; the gradient glow fades with the same falloff */
-      var moving=false, R2=R*R, LENS=.38;
+      /* hover = smooth mouse-repel: every dot within R is pushed straight away from the cursor by h·(1-d/R)²,
+         which opens a clean round clearing (radius h) and packs the dots into a soft ring around it — the mapping never
+         lets dots cross, so there are no streaks or cracks. Dots ease to that target and spring home when the cursor leaves;
+         displaced dots take the brand gradient. */
+      var moving=false, R2=R*R, HOLE=R*.42;
       for(var i2=0;i2<N;i2++){
         var dx=HX[i2]-mx, dy=HY[i2]-my, d2=dx*dx+dy*dy, tx=HX[i2], ty=HY[i2], gt=0;
-        if(d2<R2){ var d=Math.sqrt(d2), k=1-d/R, s=k*k*(3-2*k); tx+=dx*LENS*s; ty+=dy*LENS*s; gt=s; }
+        if(d2<R2){ var d=Math.sqrt(d2)||.001, k=1-d/R, push=HOLE*k*k; tx+=dx/d*push; ty+=dy/d*push; gt=k*(2-k); }
         var ex=tx-X[i2], ey=ty-Y[i2], eg=gt-G[i2];
-        X[i2]+=ex*.2; Y[i2]+=ey*.2; G[i2]+=eg*.16;
+        X[i2]+=ex*.16; Y[i2]+=ey*.16; G[i2]+=eg*.14;
         if(!moving&&(ex>.05||ex<-.05||ey>.05||ey<-.05||eg>.01||eg<-.01)) moving=true;
       }
       draw(1);
