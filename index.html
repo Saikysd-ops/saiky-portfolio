@@ -1743,6 +1743,9 @@
     transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .5s ease;transition-delay:calc(var(--i) * 45ms);}
   .foot-wordmark.is-in .fwm-dot{transform:none;opacity:1;
     transition:transform .7s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms + 250ms),opacity .3s ease calc(var(--i) * 45ms + 250ms);}
+  /* particle wordmark: the canvas draws the name as a dot field; the DOM text stays for layout and as the no-JS / reduced-motion fallback */
+  .fwm-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;display:block;}
+  .foot-wordmark.is-particles .fwm-text{visibility:hidden;}
   /* the dot breathes, slowly and quietly, once the name has landed */
   .foot-wordmark.is-in .fwm-dot{animation:fwmDot 3.6s ease-in-out 1.6s infinite;}
   @keyframes fwmDot{0%,100%{scale:1;opacity:1;}50%{scale:.72;opacity:.7;}}
@@ -10821,6 +10824,7 @@ setActive(0); startRotation();
       /* crop: the block ends a little below the baseline, so the "y" tail is cut and only hinted at */
       var d=t.querySelector('.fwm-dot'), fz=parseFloat(t.style.fontSize);
       if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+fz*.05)+'px';   /* caps sit right on the bottom edge */
+      try{ w.dispatchEvent(new Event('fwmfit')); }catch(e){}
       ql();
     });
   }
@@ -10867,6 +10871,80 @@ setActive(0); startRotation();
   window.addEventListener('hashchange',function(){ setTimeout(q,50); });
   document.addEventListener('click',function(){ setTimeout(q,60); });
   q();
+})();
+</script>
+<script>
+/* footer wordmark as an interactive particle field: dots assemble into SAIKY DESAI when it scrolls in,
+   scatter away from the cursor and spring home; dots near the cursor glow Gold (#C49A45). */
+(function(){
+  if(!window.matchMedia||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var GOLD=[196,154,69];
+  function rgb(c){ var m=c.match(/\d+(\.\d+)?/g)||[0,0,0]; return [+m[0],+m[1],+m[2]]; }
+  function setup(w){
+    var t=w.querySelector('.fwm-text'); if(!t) return;
+    var cv=document.createElement('canvas'); cv.className='fwm-canvas'; cv.setAttribute('aria-hidden','true'); w.appendChild(cv);
+    var ctx=cv.getContext('2d'); if(!ctx) return;
+    var P=[], dpr=1, W=0, H=0, raf=0, mx=-1e4, my=-1e4, inView=false, R=120, ink=[248,247,244], acc=[188,128,204], idle=0;
+    function build(){
+      var r=w.getBoundingClientRect(); if(!r.width||!r.height) return;
+      dpr=Math.min(window.devicePixelRatio||1,2); W=r.width; H=r.height;
+      cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+      var cs=getComputedStyle(t), fz=parseFloat(t.style.fontSize)||parseFloat(cs.fontSize);
+      ink=rgb(cs.color); var d0=t.querySelector('.fwm-dot'); acc=d0?rgb(getComputedStyle(d0).backgroundColor):acc;
+      /* rasterise the letters exactly where the DOM lays them out */
+      var off=document.createElement('canvas'); off.width=Math.ceil(W); off.height=Math.ceil(H);
+      var o=off.getContext('2d'); o.fillStyle='#000'; o.textBaseline='alphabetic';
+      o.font=cs.fontWeight+' '+fz+'px '+cs.fontFamily;
+      var tr=t.getBoundingClientRect(), d=t.querySelector('.fwm-dot');
+      var base=t.offsetTop+d.offsetTop+d.offsetHeight;   /* the dot sits on the baseline */
+      [].forEach.call(t.querySelectorAll(':scope > .fwm-ch'),function(ch){
+        o.fillText(ch.textContent.toUpperCase(), t.offsetLeft+ch.offsetLeft, base);
+      });
+      var gap=Math.max(3,Math.round(fz/60)), img=o.getImageData(0,0,off.width,off.height).data;
+      var old=P; P=[];
+      for(var y=0;y<off.height;y+=gap){ for(var x=0;x<off.width;x+=gap){
+        if(img[(y*off.width+x)*4+3]>128) P.push(mk(x,y,0));
+      }}
+      /* the brand dot, as a small disc of accent particles */
+      var dcx=t.offsetLeft+d.offsetLeft+d.offsetWidth/2, dcy=t.offsetTop+d.offsetTop+d.offsetHeight/2, dr=d.offsetWidth/2;
+      for(var yy=-dr;yy<=dr;yy+=gap*.8){ for(var xx=-dr;xx<=dr;xx+=gap*.8){ if(xx*xx+yy*yy<=dr*dr) P.push(mk(dcx+xx,dcy+yy,1)); } }
+      R=Math.max(60,fz*.42); P.size=Math.max(1.2,gap*.42);
+      if(!old.length){ scatter(); } else { P.forEach(function(p){ p.x=p.hx; p.y=p.hy; }); }
+      w.classList.add('is-particles'); kick();
+    }
+    function mk(x,y,a){ return {hx:x,hy:y,x:x,y:y,vx:0,vy:0,a:a,g:0}; }
+    function scatter(){ P.forEach(function(p){ p.x=p.hx+(Math.random()-.5)*W*.5; p.y=H+Math.random()*H*1.2; p.vx=0; p.vy=0; }); idle=0; }
+    function frame(){
+      raf=0; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+      var moving=false, s=P.size||2, R2=R*R;
+      for(var i=0;i<P.length;i++){ var p=P[i];
+        var dx=p.x-mx, dy=p.y-my, d2=dx*dx+dy*dy;
+        if(d2<R2){ var d=Math.sqrt(d2)||1, f=(1-d/R)*9; p.vx+=dx/d*f; p.vy+=dy/d*f; p.g=Math.min(1,p.g+.25); } else p.g*=.9;
+        p.vx+=(p.hx-p.x)*.06; p.vy+=(p.hy-p.y)*.06; p.vx*=.8; p.vy*=.8; p.x+=p.vx; p.y+=p.vy;
+        if(Math.abs(p.vx)+Math.abs(p.vy)>.05||p.g>.02) moving=true;
+        var c=p.a?acc:ink, g=p.g;
+        ctx.fillStyle='rgb('+Math.round(c[0]+(GOLD[0]-c[0])*g)+','+Math.round(c[1]+(GOLD[1]-c[1])*g)+','+Math.round(c[2]+(GOLD[2]-c[2])*g)+')';
+        ctx.fillRect(p.x-s/2,p.y-s/2,s,s);
+      }
+      if(moving||mx>-1e3) idle=0; else idle++;
+      if(inView&&idle<30) raf=requestAnimationFrame(frame);   /* stop once settled; restart on input */
+    }
+    function kick(){ idle=0; if(!raf&&inView) raf=requestAnimationFrame(frame); }
+    w.addEventListener('pointermove',function(e){ var r=w.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; kick(); });
+    w.addEventListener('pointerleave',function(){ mx=my=-1e4; kick(); });
+    w.addEventListener('touchmove',function(e){ var r=w.getBoundingClientRect(), q=e.touches[0]; mx=q.clientX-r.left; my=q.clientY-r.top; kick(); },{passive:true});
+    w.addEventListener('touchend',function(){ mx=my=-1e4; kick(); });
+    w.addEventListener('fwmfit',function(){ build(); });
+    new IntersectionObserver(function(es){ es.forEach(function(e){
+      var was=inView; inView=e.isIntersecting;
+      if(inView&&!was){ if(!P.length) build(); scatter(); kick(); }
+    }); },{threshold:.2}).observe(w);
+    /* theme switch: recolour */
+    new MutationObserver(function(){ setTimeout(function(){ var cs=getComputedStyle(t); ink=rgb(cs.color); var d0=t.querySelector('.fwm-dot'); if(d0) acc=rgb(getComputedStyle(d0).backgroundColor); kick(); },50); })
+      .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  }
+  function init(){ document.querySelectorAll('.foot-wordmark').forEach(setup); }
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(init); else window.addEventListener('load',init);
 })();
 </script>
 </body>
