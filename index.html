@@ -1749,17 +1749,6 @@
   .foot-wordmark.is-in .fwm-dot{transform:none;opacity:1;
     transition:transform .7s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms + 250ms),opacity .3s ease calc(var(--i) * 45ms + 250ms);}
   /* particle wordmark: the canvas draws the name as a dot field; the DOM text stays for layout and as the no-JS / reduced-motion fallback */
-  /* the loader's eye between SAIKY and DESAI — same lilac lids, soft iris ring and white pupil; it keeps blinking */
-  .fwm-gap{position:relative;display:inline-block;width:1.34em;height:.7em;}   /* sits on the baseline, cap-height tall */
-  .fwm-eye{position:absolute;left:50%;top:50%;width:1.2em;height:.6em;transform:translate(-50%,-50%);overflow:visible;visibility:visible;}
-  .fwm-reveal .fwm-eye,.foot-wordmark.is-particles .fwm-eye{display:none;}   /* with particles on, the eye is drawn in dots */
-  .fe-lid{fill:none;stroke:#BC80CC;stroke-width:4;stroke-linejoin:round;}
-  .fe-iris{fill:none;stroke:rgba(255,255,255,.55);stroke-width:3;}
-  .fe-pupil{fill:#FFFFFF;transform-origin:80px 40px;animation:feLook 3.6s cubic-bezier(.45,0,.55,1) infinite;}
-  .fe-lidshape{transform-origin:80px 40px;animation:feBlink 3.6s cubic-bezier(.45,0,.55,1) infinite;}
-  @keyframes feBlink{0%,62%{transform:scaleY(1);}72%{transform:scaleY(.05);}82%,100%{transform:scaleY(1);}}
-  @keyframes feLook{0%,14%{transform:translateX(0);}24%,38%{transform:translateX(-6px);}48%,58%{transform:translateX(0);}86%,94%{transform:translateX(6px);}100%{transform:translateX(0);}}
-  @media (prefers-reduced-motion:reduce){ .fe-lidshape,.fe-pupil{animation:none;} }
   .fwm-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;display:block;}
   .foot-wordmark.is-particles .fwm-text{visibility:hidden;}
   /* the dot breathes, slowly and quietly, once the name has landed */
@@ -10844,20 +10833,12 @@ setActive(0); startRotation();
       ql();
     });
   }
-  var fwmEyeN=0;
   /* split the name into letters and play the rise-from-below reveal each time it scrolls into view */
   document.querySelectorAll('.foot-wordmark').forEach(function(w){
     var t=w.querySelector('.fwm-text'), dot=t&&t.querySelector('.fwm-dot'); if(!t||!dot) return;
     var txt=t.firstChild&&t.firstChild.nodeType===3?t.firstChild.nodeValue:''; if(!txt) return;
     t.removeChild(t.firstChild);
-    txt.split('').forEach(function(c,i){ var sp=document.createElement('span'); sp.className='fwm-ch'; sp.style.setProperty('--i',i);
-      if(c===' '){   /* the loader's eye sits in the gap between SAIKY and DESAI: open, blink, open… with a slow glance */
-        var id='fwmEye'+(++fwmEyeN); sp.className='fwm-ch fwm-gap';
-        sp.innerHTML='<svg class="fwm-eye" viewBox="0 0 160 80" aria-hidden="true"><defs><clipPath id="'+id+'"><path class="fe-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></clipPath></defs>'+
-          '<g clip-path="url(#'+id+')"><circle class="fe-iris" cx="80" cy="40" r="25"/><circle class="fe-pupil" cx="80" cy="40" r="8"/></g>'+
-          '<path class="fe-lid fe-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></svg>';
-      } else sp.textContent=c;
-      t.insertBefore(sp,dot); });
+    txt.split('').forEach(function(c,i){ var sp=document.createElement('span'); sp.className='fwm-ch'; sp.style.setProperty('--i',i); sp.textContent=c; t.insertBefore(sp,dot); });
     dot.style.setProperty('--i',txt.length);
     /* gold copy for the cursor mask (same letters, so it rises with the original) */
     var rv=document.createElement('span'); rv.className='fwm-reveal'; rv.setAttribute('aria-hidden','true'); rv.innerHTML=t.innerHTML; t.appendChild(rv);
@@ -10915,7 +10896,7 @@ setActive(0); startRotation();
     var ctx=cv.getContext('2d'); if(!ctx) return;
     var N=0, HX,HY,X,Y,VX,VY,G,SX,SY,DL,DU,CR,CG,CB,AC;   /* typed arrays: home, pos, vel, glow, start, delay, duration, hot colour, accent flag */
     var dpr=1,W=0,H=0,BW=0,BH=0,img=null,buf=null,raf=0,mx=-1e4,my=-1e4,inView=false,R=120,ink=[248,247,244],acc=[188,128,204],idle=0,
-        mode='live',t0=0,tEnd=0,dot=1,EK,OX,OY,E0=0,E1=0,ECX=0,ECY=0,EW=0;
+        mode='live',t0=0,tEnd=0,dot=1;
     function build(){
       var r=w.getBoundingClientRect(); if(!r.width||!r.height) return;
       dpr=Math.min(window.devicePixelRatio||1,2); W=r.width; H=r.height; BW=Math.round(W*dpr); BH=Math.round(H*dpr);
@@ -10933,40 +10914,16 @@ setActive(0); startRotation();
       for(var y=gap/2;y<H;y+=gap){ for(var x=gap/2;x<W;x+=gap){
         if(px[((Math.round(y*SS))*ow+Math.round(x*SS))*4+3]>128){ hx.push(x+(Math.random()-.5)*gap*.35); hy.push(y+(Math.random()-.5)*gap*.35); ac.push(0); }
       }}
-      /* the loader's eye in the gap, drawn in the same fine dots: lids + iris ring ivory, pupil lilac.
-         Path = the loader's almond (viewBox 160×80) mapped onto the gap; dots keep their offset from the eye's centre so
-         the eye can blink (scale Y) and the pupil can glance (shift X) every frame. */
-      var gp=t.querySelector('.fwm-gap'), ek=[], ox=[], oy=[]; E0=E1=hx.length;
-      for(var q0=0;q0<hx.length;q0++){ ek.push(0); ox.push(0); oy.push(0); }
-      if(gp){
-        ECX=t.offsetLeft+gp.offsetLeft+gp.offsetWidth/2; ECY=t.offsetTop+gp.offsetTop+gp.offsetHeight/2; EW=gp.offsetWidth*.43; ECX+=fz*.035;   /* optical centre: the Y's open diagonal reads as extra space on the left */ var eh=EW*.5;
-        /* hairline eye: lids and iris ring traced as one continuous row of dots (1px, sharp); pupil a solid lilac disc */
-        var sx=EW/74, sy=eh/25.5, st=.7;
-        var addE=function(x,y,kd){ hx.push(x); hy.push(y); ac.push(kd===3?1:0); ek.push(kd); ox.push(x-ECX); oy.push(y-ECY); };
-        var bez=function(p0,p1,p2,p3,u){ var v=1-u; return v*v*v*p0+3*v*v*u*p1+3*v*u*u*p2+u*u*u*p3; };
-        [[-74,-46,46,74,0,-34,-34,0],[-74,-46,46,74,0,34,34,0]].forEach(function(c){
-          var px0=null,py0=null;
-          for(var u=0;u<=1.0001;u+=.0005){ var X0=ECX+bez(c[0],c[1],c[2],c[3],u)*sx, Y0=ECY+bez(c[4],c[5],c[6],c[7],u)*sy;
-            if(px0===null||Math.hypot(X0-px0,Y0-py0)>=st){ addE(X0,Y0,1); px0=X0; py0=Y0; } } });
-        var inAlm=function(x,y){ var dx=(x-ECX)/sx; if(dx<=-74||dx>=74) return false;   /* almond half-height at this x */
-          var lo=0,hi=1; for(var k2=0;k2<22;k2++){ var m=(lo+hi)/2; if(bez(-74,-46,46,74,m)<dx) lo=m; else hi=m; }
-          return Math.abs(y-ECY)/sy < -bez(0,-34,-34,0,lo)-1.2; };
-        var ir=eh*.96, nI=Math.ceil(2*Math.PI*ir/st);
-        for(var a2=0;a2<nI;a2++){ var th=a2/nI*2*Math.PI, X1=ECX+Math.cos(th)*ir, Y1=ECY+Math.sin(th)*ir; if(inAlm(X1,Y1)) addE(X1,Y1,2); }
-        var pr=eh*.33;
-        for(var y3=-pr;y3<=pr;y3+=gap) for(var x3=-pr;x3<=pr;x3+=gap) if(x3*x3+y3*y3<=pr*pr) addE(ECX+x3,ECY+y3,3);
-        E1=hx.length;
-      }
       var dcx=t.offsetLeft+d.offsetLeft+d.offsetWidth/2, dcy=t.offsetTop+d.offsetTop+d.offsetHeight/2, dr=d.offsetWidth/2;
-      for(var yy=-dr;yy<=dr;yy+=gap){ for(var xx=-dr;xx<=dr;xx+=gap){ if(xx*xx+yy*yy<=dr*dr){ hx.push(dcx+xx); hy.push(dcy+yy); ac.push(1); ek.push(0); ox.push(0); oy.push(0); } } }
-      N=hx.length; EK=new Uint8Array(ek); OX=new Float32Array(ox); OY=new Float32Array(oy); HX=new Float32Array(hx); HY=new Float32Array(hy); AC=new Uint8Array(ac);
+      for(var yy=-dr;yy<=dr;yy+=gap){ for(var xx=-dr;xx<=dr;xx+=gap){ if(xx*xx+yy*yy<=dr*dr){ hx.push(dcx+xx); hy.push(dcy+yy); ac.push(1); } } }
+      N=hx.length; HX=new Float32Array(hx); HY=new Float32Array(hy); AC=new Uint8Array(ac);
       X=new Float32Array(HX); Y=new Float32Array(HY); VX=new Float32Array(N); VY=new Float32Array(N); G=new Float32Array(N);
       SX=new Float32Array(N); SY=new Float32Array(N); DL=new Float32Array(N); DU=new Float32Array(N);
       CR=new Uint8Array(N); CG=new Uint8Array(N); CB=new Uint8Array(N);
       for(var i=0;i<N;i++){ var c=AC[i]?acc:grad(HX[i]/W); CR[i]=c[0]; CG[i]=c[1]; CB[i]=c[2]; }
       R=Math.max(56,fz*.4); dot=dpr>=2?2:1;
       w.classList.add('is-particles'); seed();
-      target=prog(); cur=target; mode=cur>=.999?'live':'intro'; if(mode==='live'){ X.set(HX); Y.set(HY); draw(1); } kick();
+      target=prog(); cur=target; mode=cur>=.999?'live':'intro'; if(mode==='live') draw(1); kick();
     }
     /* scroll-linked entrance: 0 when the name's top meets the bottom of the screen, 1 when the whole name is in view
        (i.e. when you reach the end of the page) — so it is always fully formed as your scroll finishes */
@@ -11003,7 +10960,7 @@ setActive(0); startRotation();
         for(var i=0;i<N;i++){ var p=Math.max(0,Math.min(1,(cur-DL[i])/.68)), e=ease(p);
           X[i]=SX[i]+(HX[i]-SX[i])*e; Y[i]=SY[i]+(HY[i]-SY[i])*e; FADE[i]=e; VX[i]=VY[i]=0; }
         draw(FADE);
-        if(cur>=.999){ mode='live'; for(var j=0;j<N;j++){ X[j]=HX[j]; Y[j]=HY[j]; } draw(1); if(E1>E0) kick(); return; }
+        if(cur>=.999){ mode='live'; for(var j=0;j<N;j++){ X[j]=HX[j]; Y[j]=HY[j]; } draw(1); return; }
         if(inView&&cur!==target) raf=requestAnimationFrame(frame); return;
       }
       /* hover = smooth mouse-repel: every dot within R is pushed straight away from the cursor by h·(1-d/R)²,
@@ -11012,12 +10969,6 @@ setActive(0); startRotation();
          displaced dots take the brand gradient. */
       /* continuous flow while the cursor is on it: the clearing breathes, the ring swirls gently back and forth (a smooth twist, so dots never cross) and each dot shimmers a hair */
       var T=performance.now()/1000, BR=1+.12*Math.sin(T*2.4), SW=.55*Math.sin(T*1.1), moving=false, R2=R*R, HOLE=R*.42;
-      if(E1>E0){   /* the eye: the loader's rhythm — open, blink, open; the pupil glances left, back, right, back */
-        var ph=(T%3.6)/3.6, bl=ph<.62?1:ph<.72?1-.95*ease((ph-.62)/.1):ph<.82?.05+.95*ease((ph-.72)/.1):1;
-        var lk=ph<.14?0:ph<.24?-ease((ph-.14)/.1):ph<.38?-1:ph<.48?-1+ease((ph-.38)/.1):ph<.58?0:ph<.86?ease((ph-.58)/.28):ph<.94?1:1-ease((ph-.94)/.06);
-        lk*=EW*.07;
-        for(var e=E0;e<E1;e++){ HX[e]=ECX+OX[e]+(EK[e]===3?lk:0); HY[e]=ECY+OY[e]*bl; }
-      }
       for(var i2=0;i2<N;i2++){
         var dx=HX[i2]-mx, dy=HY[i2]-my, d2=dx*dx+dy*dy, tx=HX[i2], ty=HY[i2], gt=0;
         if(d2<R2){ var d=Math.sqrt(d2)||.001, k=1-d/R, kk=k*k, push=HOLE*kk*BR, sc=(d+push)/d, an=SW*kk, ca=Math.cos(an), sa=Math.sin(an); tx=mx+(dx*ca-dy*sa)*sc+Math.sin(T*2.2+i2*1.7)*k*.8; ty=my+(dx*sa+dy*ca)*sc+Math.cos(T*1.9+i2*2.3)*k*.8; gt=k*(2-k); }
@@ -11027,7 +10978,7 @@ setActive(0); startRotation();
       }
       draw(1);
       if(moving||mx>-1e3) idle=0; else idle++;
-      if(inView&&(idle<20||E1>E0)) raf=requestAnimationFrame(frame);   /* the eye keeps the field alive */
+      if(inView&&idle<20) raf=requestAnimationFrame(frame);
     }
     function kick(){ idle=0; if(!raf&&inView) raf=requestAnimationFrame(frame); }
     w.addEventListener('pointermove',function(e){ var r=w.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; kick(); });
