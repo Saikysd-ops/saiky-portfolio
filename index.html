@@ -756,6 +756,11 @@
     background:radial-gradient(rgba(91,42,104,.11) 1px,transparent 1.2px) 0 0/22px 22px,#F3EFF5;}
   :root[data-theme="dark"] #view-home .impact::before{background:radial-gradient(rgba(188,128,204,.12) 1px,transparent 1.2px) 0 0/22px 22px,#18171C;}
   #view-home .interlude + .impact{padding-top:76px;}
+  #view-home .interlude-q{position:relative;}
+  .iq-canvas{position:absolute;pointer-events:none;display:block;}
+  .interlude-q,.interlude-q span{transition:none !important;}
+  .interlude-q .iq-w{color:inherit;}   /* word wrappers keep their line's colour (line 2 stays soft) */
+  .interlude-q.is-particles,.interlude-q.is-particles span{color:transparent;}   /* the real text stays for screen readers / selection; dots draw it */
   #view-home .impact{padding-bottom:64px;}
   .impact-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:48px;align-items:stretch;margin-bottom:36px;}   /* equal halves; the illustration takes the copy's height */
   @media (max-width:880px){ .impact-top{grid-template-columns:1fr;gap:20px;margin-bottom:28px;} }   /* phones and tablets: illustration under the copy */
@@ -4134,7 +4139,7 @@
   </section>
 
   <section class="interlude" aria-label="Clarity at scale">
-    <p class="interlude-q">At scale, clarity isn't a visual choice.<br><span>It's how teams make better decisions.</span></p>
+    <p class="interlude-q">At scale, clarity isn't a visual choice. <br><span>It's how teams make better decisions.</span></p>
   </section>
 
   <section class="impact">
@@ -10991,6 +10996,106 @@ setActive(0); startRotation();
   }
   function init(){ document.querySelectorAll('.foot-wordmark').forEach(setup); }
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(init); else window.addEventListener('load',init);
+})();
+</script>
+<script>
+/* "At scale, clarity…" interlude drawn as fine particles, like the footer name:
+   it forms as the section scrolls up into view, and dots part smoothly around the cursor in the brand gradient.
+   The real text stays in the DOM (transparent) for screen readers, search and selection. */
+(function(){
+  if(!window.matchMedia||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var q=document.querySelector('#view-home .interlude-q'); if(!q) return;
+  var STOPS=[[117,70,216],[166,92,203],[197,72,121],[228,107,93]];   /* Violet → Orchid → Rose → Coral */
+  function grad(u){ u=Math.max(0,Math.min(1,u)); var v=u*(STOPS.length-1), i=Math.min(STOPS.length-2,Math.floor(v)), f=v-i, a=STOPS[i], b=STOPS[i+1];
+    return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f]; }
+  function ease(t){ return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }
+  /* split into word spans so each word is rasterised exactly where the browser lays it out */
+  (function split(el){ [].slice.call(el.childNodes).forEach(function(n){
+    if(n.nodeType===3){ var f=document.createDocumentFragment(); n.nodeValue.split(/(\s+)/).forEach(function(p){ if(!p) return;
+      if(/^\s+$/.test(p)) f.appendChild(document.createTextNode(p)); else { var sp=document.createElement('span'); sp.className='iq-w'; sp.textContent=p; f.appendChild(sp); } });
+      el.replaceChild(f,n); }
+    else if(n.nodeType===1&&n.tagName!=='BR') split(n); }); })(q);
+  var cv=document.createElement('canvas'); cv.className='iq-canvas'; cv.setAttribute('aria-hidden','true'); q.appendChild(cv);
+  var ctx=cv.getContext('2d'); if(!ctx) return;
+  var M=48, N=0, HA, HX,HY,X,Y,G,SX,SY,DL,CR,CG,CB,HR,HG,HB, dpr=1,W=0,H=0,BW=0,BH=0,img,buf,raf=0,mx=-1e4,my=-1e4,R=60,dot=1,
+      inView=false, mode='intro', cur=0, target=0, idle=0, key='';
+  /* 0 when the line's top meets the bottom of the screen, 1 once its centre reaches ~62% down the screen */
+  function prog(){ var r=q.getBoundingClientRect(); return Math.max(0,Math.min(1,(innerHeight-r.top)/(innerHeight*.38+r.height*.5))); }
+  function build(){
+    var qr=q.getBoundingClientRect(); if(!qr.width||!qr.height) return;
+    var k=Math.round(qr.width)+'x'+Math.round(qr.height)+(document.documentElement.getAttribute('data-theme')||''); if(k===key&&N) return; key=k;
+    q.classList.remove('is-particles');   /* read the real colours */
+    dpr=Math.min(window.devicePixelRatio||1,2); W=qr.width+2*M; H=qr.height+2*M; BW=Math.round(W*dpr); BH=Math.round(H*dpr);
+    cv.style.left=cv.style.top=(-M)+'px'; cv.style.width=W+'px'; cv.style.height=H+'px'; cv.width=BW; cv.height=BH;
+    img=ctx.createImageData(BW,BH); buf=new Uint32Array(img.data.buffer);
+    var SS=2, off=document.createElement('canvas'); off.width=Math.ceil(W*SS); off.height=Math.ceil(H*SS);
+    var o=off.getContext('2d'); o.scale(SS,SS); o.textBaseline='alphabetic';
+    var fz=16;
+    [].forEach.call(q.querySelectorAll('.iq-w'),function(sp){
+      var cs=getComputedStyle(sp), r=sp.getBoundingClientRect(); fz=parseFloat(cs.fontSize);
+      o.font=cs.fontStyle+' '+cs.fontWeight+' '+cs.fontSize+' '+cs.fontFamily; o.fillStyle=cs.color; try{ o.letterSpacing=cs.letterSpacing; }catch(e){}
+      var m=o.measureText(sp.textContent), asc=m.fontBoundingBoxAscent||fz*.8, des=m.fontBoundingBoxDescent||fz*.2;
+      o.fillText(sp.textContent, r.left-qr.left+M, r.top-qr.top+M+(r.height-asc-des)/2+asc);
+    });
+    /* one dot per CSS pixel, edge to edge, with the glyph's own coverage as alpha: crisp and solid at rest, particles in motion */
+    var px=o.getImageData(0,0,off.width,off.height).data, ow=off.width, gap=1;
+    var hx=[],hy=[],cr=[],cg=[],cb=[],ha=[];
+    for(var y=gap/2;y<H;y+=gap) for(var x=gap/2;x<W;x+=gap){ var j=((Math.round(y*SS))*ow+Math.round(x*SS))*4;
+      if(px[j+3]>24){ hx.push(x); hy.push(y); cr.push(px[j]); cg.push(px[j+1]); cb.push(px[j+2]); ha.push(px[j+3]); } }
+    N=hx.length; HX=new Float32Array(hx); HY=new Float32Array(hy); HR=new Uint8Array(cr); HG=new Uint8Array(cg); HB=new Uint8Array(cb); HA=new Uint8Array(ha);
+    X=new Float32Array(HX); Y=new Float32Array(HY); G=new Float32Array(N); SX=new Float32Array(N); SY=new Float32Array(N); DL=new Float32Array(N);
+    CR=new Uint8Array(N); CG=new Uint8Array(N); CB=new Uint8Array(N);
+    for(var i=0;i<N;i++){ var c=grad(HX[i]/W); CR[i]=c[0]; CG[i]=c[1]; CB[i]=c[2];
+      SX[i]=HX[i]+(Math.random()-.5)*fz*1.2; SY[i]=Math.min(H-1,HY[i]+fz*(.5+Math.random()*.6)); DL[i]=(HX[i]/W)*.25+(HY[i]/H)*.05+Math.random()*.05; }
+    R=Math.max(44,fz*1.6); dot=dpr>=2?2:1;
+    q.classList.add('is-particles');
+    target=prog(); cur=target; mode=cur>=.999?'live':'intro'; if(mode==='live') draw(null); else frame();
+  }
+  function draw(F){
+    buf.fill(0);
+    for(var i=0;i<N;i++){
+      var a=(F?F[i]:1)*HA[i]; if(a<3) continue;
+      var r=HR[i],g=HG[i],b=HB[i],gl=G[i]; if(gl>.02){ r+=(CR[i]-r)*gl; g+=(CG[i]-g)*gl; b+=(CB[i]-b)*gl; }
+      var ix=(X[i]*dpr)|0, iy=(Y[i]*dpr)|0; if(ix<0||iy<0||ix>=BW-1||iy>=BH-1) continue;
+      var v=((a|0)<<24)|(b<<16)|(g<<8)|r, k=iy*BW+ix; buf[k]=v; if(dot>1){ buf[k+1]=v; buf[k+BW]=v; buf[k+BW+1]=v; }
+    }
+    ctx.putImageData(img,0,0);
+  }
+  var FADE=null;
+  function frame(){
+    raf=0; if(!N) return;
+    if(mode==='intro'){
+      target=prog(); var df=target-cur; cur=Math.abs(df)<.002?target:cur+df*.28;
+      if(!FADE||FADE.length!==N) FADE=new Float32Array(N);
+      for(var i=0;i<N;i++){ var e=ease(Math.max(0,Math.min(1,(cur-DL[i])/.62))); X[i]=SX[i]+(HX[i]-SX[i])*e; Y[i]=SY[i]+(HY[i]-SY[i])*e; FADE[i]=e; }
+      draw(FADE);
+      if(cur>=.999){ mode='live'; X.set(HX); Y.set(HY); draw(null); return; }
+      if(inView&&cur!==target) raf=requestAnimationFrame(frame); return;
+    }
+    var moving=false, R2=R*R, HOLE=R*.42;
+    for(var i2=0;i2<N;i2++){
+      var dx=HX[i2]-mx, dy=HY[i2]-my, d2=dx*dx+dy*dy, tx=HX[i2], ty=HY[i2], gt=0;
+      if(d2<R2){ var d=Math.sqrt(d2)||.001, k=1-d/R, push=HOLE*k*k; tx+=dx/d*push; ty+=dy/d*push; gt=k*(2-k); }
+      var ex=tx-X[i2], ey=ty-Y[i2], eg=gt-G[i2]; X[i2]+=ex*.16; Y[i2]+=ey*.16; G[i2]+=eg*.14;
+      if(!moving&&(ex>.05||ex<-.05||ey>.05||ey<-.05||eg>.01||eg<-.01)) moving=true;
+    }
+    draw(null);
+    if(moving||mx>-1e3) idle=0; else idle++;
+    if(inView&&idle<20) raf=requestAnimationFrame(frame);
+  }
+  function kick(){ idle=0; if(!raf&&inView) raf=requestAnimationFrame(frame); }
+  var sec=q.parentNode;
+  function pt(x,y){ var r=q.getBoundingClientRect(); mx=x-r.left+M; my=y-r.top+M; kick(); }
+  sec.addEventListener('pointermove',function(e){ if(e.pointerType==='mouse') pt(e.clientX,e.clientY); });
+  sec.addEventListener('pointerleave',function(){ mx=my=-1e4; kick(); });
+  window.addEventListener('scroll',function(){ if(!N||!inView) return; if(mode==='live'&&prog()<.98){ mode='intro'; cur=1; mx=my=-1e4; G.fill(0); } if(mode==='intro') kick(); },{passive:true});
+  var rt; function rebuild(){ clearTimeout(rt); rt=setTimeout(function(){ if(q.offsetParent) build(); },120); }
+  window.addEventListener('resize',rebuild);
+  new MutationObserver(function(){ key=''; rebuild(); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  new MutationObserver(rebuild).observe(document.body,{attributes:true,attributeFilter:['class']});
+  new IntersectionObserver(function(es){ es.forEach(function(e){ var was=inView; inView=e.isIntersecting;
+    if(inView&&!was){ if(!N) build(); else kick(); } }); },{threshold:0}).observe(sec);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(rebuild);
 })();
 </script>
 </body>
