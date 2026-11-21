@@ -10875,7 +10875,7 @@ setActive(0); startRotation();
 </script>
 <script>
 /* footer wordmark as an interactive particle field.
-   Intro: when the footer comes into view, a cloud of very fine dots eases (left-to-right stagger) into SAIKY DESAI.
+   Intro (scroll-linked): a cloud of very fine dots eases into SAIKY DESAI as you scroll, fully formed when you reach the end.
    Live: dots scatter from the cursor and spring home; dots near the cursor take the brand gradient (ivory at rest).
    Rendering writes pixels straight into an ImageData buffer, so tens of thousands of tiny dots stay smooth. */
 (function(){
@@ -10917,19 +10917,20 @@ setActive(0); startRotation();
       CR=new Uint8Array(N); CG=new Uint8Array(N); CB=new Uint8Array(N);
       for(var i=0;i<N;i++){ var c=AC[i]?acc:grad(HX[i]/W); CR[i]=c[0]; CG[i]=c[1]; CB[i]=c[2]; }
       R=Math.max(56,fz*.4); dot=dpr>=2?2:1;
-      w.classList.add('is-particles');
-      if(inView) intro(); else draw(1);
+      w.classList.add('is-particles'); seed();
+      target=prog(); cur=target; mode=cur>=.999?'live':'intro'; if(mode==='live') draw(1); kick();
     }
-    function intro(){
-      if(!N) return; mode='intro'; t0=performance.now(); tEnd=0;
+    /* scroll-linked entrance: 0 when the name's top meets the bottom of the screen, 1 when the whole name is in view
+       (i.e. when you reach the end of the page) — so it is always fully formed as your scroll finishes */
+    var cur=0, target=0;
+    function prog(){ var r=w.getBoundingClientRect(); return Math.max(0,Math.min(1,(innerHeight-r.top)/Math.max(1,r.height))); }
+    function seed(){
       for(var i=0;i<N;i++){
-        SX[i]=Math.random()*W; SY[i]=H*(.15+Math.random()*1.1);          /* a soft cloud filling the band, weighted low */
-        DL[i]=(HX[i]/W)*420+Math.random()*380;                            /* left-to-right sweep, gently staggered */
-        DU[i]=1300+Math.random()*700; tEnd=Math.max(tEnd,DL[i]+DU[i]);
-        X[i]=SX[i]; Y[i]=SY[i]; VX[i]=VY[i]=0; G[i]=0;
+        SX[i]=Math.random()*W; SY[i]=H*(.2+Math.random()*1.05);      /* soft cloud in the band, weighted low */
+        DL[i]=(HX[i]/W)*.2+Math.random()*.12;                         /* left-to-right sweep, slight stagger */
       }
-      kick();
     }
+    function intro(){ if(!N) return; mode='intro'; target=prog(); kick(); }
     function put(x,y,r,g,b){
       var ix=(x*dpr)|0, iy=(y*dpr)|0; if(ix<0||iy<0||ix>=BW-1||iy>=BH-1) return;
       var v=(255<<24)|(b<<16)|(g<<8)|r, k=iy*BW+ix; buf[k]=v; if(dot>1){ buf[k+1]=v; buf[k+BW]=v; buf[k+BW+1]=v; }
@@ -10948,12 +10949,13 @@ setActive(0); startRotation();
     function frame(now){
       raf=0; if(!N) return;
       if(mode==='intro'){
-        var el=now-t0; if(!FADE||FADE.length!==N) FADE=new Float32Array(N);
-        for(var i=0;i<N;i++){ var p=Math.max(0,Math.min(1,(el-DL[i])/DU[i])), e=ease(p);
-          X[i]=SX[i]+(HX[i]-SX[i])*e; Y[i]=SY[i]+(HY[i]-SY[i])*e; FADE[i]=.18+.82*e; }
+        target=prog(); var df=target-cur; cur=Math.abs(df)<.002?target:cur+df*.28;
+        if(!FADE||FADE.length!==N) FADE=new Float32Array(N);
+        for(var i=0;i<N;i++){ var p=Math.max(0,Math.min(1,(cur-DL[i])/.68)), e=ease(p);
+          X[i]=SX[i]+(HX[i]-SX[i])*e; Y[i]=SY[i]+(HY[i]-SY[i])*e; FADE[i]=.18+.82*e; VX[i]=VY[i]=0; }
         draw(FADE);
-        if(el>=tEnd){ mode='live'; for(var j=0;j<N;j++){ X[j]=HX[j]; Y[j]=HY[j]; } draw(1); }
-        if(inView) raf=requestAnimationFrame(frame); return;
+        if(cur>=.999){ mode='live'; for(var j=0;j<N;j++){ X[j]=HX[j]; Y[j]=HY[j]; } draw(1); return; }
+        if(inView&&cur!==target) raf=requestAnimationFrame(frame); return;
       }
       var moving=false, R2=R*R;
       for(var i2=0;i2<N;i2++){
@@ -10969,6 +10971,7 @@ setActive(0); startRotation();
     function kick(){ idle=0; if(!raf&&inView) raf=requestAnimationFrame(frame); }
     w.addEventListener('pointermove',function(e){ var r=w.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; kick(); });
     w.addEventListener('pointerleave',function(){ mx=my=-1e4; kick(); });
+    window.addEventListener('scroll',function(){ if(!N||!inView) return; var t2=prog(); if(mode==='live'&&t2<.98){ mode='intro'; cur=1; } if(mode==='intro') kick(); },{passive:true});
     w.addEventListener('touchmove',function(e){ var r=w.getBoundingClientRect(), q=e.touches[0]; mx=q.clientX-r.left; my=q.clientY-r.top; kick(); },{passive:true});
     w.addEventListener('touchend',function(){ mx=my=-1e4; kick(); });
     var sizeKey='';
@@ -10976,7 +10979,7 @@ setActive(0); startRotation();
     new IntersectionObserver(function(es){ es.forEach(function(e){
       var was=inView; inView=e.isIntersecting;
       if(inView&&!was){ if(!N) build(); else intro(); }
-    }); },{threshold:.25}).observe(w);
+    }); },{threshold:0}).observe(w);
     new MutationObserver(function(){ setTimeout(function(){ ink=rgb(getComputedStyle(t).color); var d=t.querySelector('.fwm-dot'); if(d){ acc=rgb(getComputedStyle(d).backgroundColor); for(var i=0;i<N;i++) if(AC[i]){CR[i]=acc[0];CG[i]=acc[1];CB[i]=acc[2];} } if(N&&mode==='live') draw(1); },50); })
       .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   }
