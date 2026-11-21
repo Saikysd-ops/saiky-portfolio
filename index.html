@@ -1749,6 +1749,17 @@
   .foot-wordmark.is-in .fwm-dot{transform:none;opacity:1;
     transition:transform .7s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms + 250ms),opacity .3s ease calc(var(--i) * 45ms + 250ms);}
   /* particle wordmark: the canvas draws the name as a dot field; the DOM text stays for layout and as the no-JS / reduced-motion fallback */
+  /* the loader's eye between SAIKY and DESAI — same lilac lids, soft iris ring and white pupil; it keeps blinking */
+  .fwm-gap{position:relative;display:inline-block;width:.74em;height:.7em;}   /* sits on the baseline, cap-height tall */
+  .fwm-eye{position:absolute;left:50%;top:50%;width:.6em;height:.3em;transform:translate(-50%,-50%);overflow:visible;visibility:visible;}
+  .fwm-reveal .fwm-eye{display:none;}
+  .fe-lid{fill:none;stroke:#BC80CC;stroke-width:4;stroke-linejoin:round;}
+  .fe-iris{fill:none;stroke:rgba(255,255,255,.55);stroke-width:3;}
+  .fe-pupil{fill:#FFFFFF;transform-origin:80px 40px;animation:feLook 3.6s cubic-bezier(.45,0,.55,1) infinite;}
+  .fe-lidshape{transform-origin:80px 40px;animation:feBlink 3.6s cubic-bezier(.45,0,.55,1) infinite;}
+  @keyframes feBlink{0%,62%{transform:scaleY(1);}72%{transform:scaleY(.05);}82%,100%{transform:scaleY(1);}}
+  @keyframes feLook{0%,14%{transform:translateX(0);}24%,38%{transform:translateX(-6px);}48%,58%{transform:translateX(0);}86%,94%{transform:translateX(6px);}100%{transform:translateX(0);}}
+  @media (prefers-reduced-motion:reduce){ .fe-lidshape,.fe-pupil{animation:none;} }
   .fwm-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;display:block;}
   .foot-wordmark.is-particles .fwm-text{visibility:hidden;}
   /* the dot breathes, slowly and quietly, once the name has landed */
@@ -10833,12 +10844,20 @@ setActive(0); startRotation();
       ql();
     });
   }
+  var fwmEyeN=0;
   /* split the name into letters and play the rise-from-below reveal each time it scrolls into view */
   document.querySelectorAll('.foot-wordmark').forEach(function(w){
     var t=w.querySelector('.fwm-text'), dot=t&&t.querySelector('.fwm-dot'); if(!t||!dot) return;
     var txt=t.firstChild&&t.firstChild.nodeType===3?t.firstChild.nodeValue:''; if(!txt) return;
     t.removeChild(t.firstChild);
-    txt.split('').forEach(function(c,i){ var sp=document.createElement('span'); sp.className='fwm-ch'; sp.style.setProperty('--i',i); sp.textContent=c; t.insertBefore(sp,dot); });
+    txt.split('').forEach(function(c,i){ var sp=document.createElement('span'); sp.className='fwm-ch'; sp.style.setProperty('--i',i);
+      if(c===' '){   /* the loader's eye sits in the gap between SAIKY and DESAI: open, blink, open… with a slow glance */
+        var id='fwmEye'+(++fwmEyeN); sp.className='fwm-ch fwm-gap';
+        sp.innerHTML='<svg class="fwm-eye" viewBox="0 0 160 80" aria-hidden="true"><defs><clipPath id="'+id+'"><path class="fe-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></clipPath></defs>'+
+          '<g clip-path="url(#'+id+')"><circle class="fe-iris" cx="80" cy="40" r="25"/><circle class="fe-pupil" cx="80" cy="40" r="8"/></g>'+
+          '<path class="fe-lid fe-lidshape" d="M6 40C34 6 126 6 154 40C126 74 34 74 6 40Z"/></svg>';
+      } else sp.textContent=c;
+      t.insertBefore(sp,dot); });
     dot.style.setProperty('--i',txt.length);
     /* gold copy for the cursor mask (same letters, so it rises with the original) */
     var rv=document.createElement('span'); rv.className='fwm-reveal'; rv.setAttribute('aria-hidden','true'); rv.innerHTML=t.innerHTML; t.appendChild(rv);
