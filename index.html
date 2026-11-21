@@ -10940,20 +10940,21 @@ setActive(0); startRotation();
       for(var q0=0;q0<hx.length;q0++){ ek.push(0); ox.push(0); oy.push(0); }
       if(gp){
         ECX=t.offsetLeft+gp.offsetLeft+gp.offsetWidth/2; ECY=t.offsetTop+gp.offsetTop+gp.offsetHeight/2; EW=gp.offsetWidth*.43; ECX+=fz*.035;   /* optical centre: the Y's open diagonal reads as extra space on the left */ var eh=EW*.5;
-        var sx=EW/74, sy=eh/25.5, lw=Math.max(2,fz*.05);
-        var ec=document.createElement('canvas'); ec.width=off.width; ec.height=off.height; var e2=ec.getContext('2d'); e2.scale(SS,SS);
-        var P=function(x,y){ return [ECX+x*sx, ECY+y*sy]; };
-        var alm=function(){ e2.beginPath(); var a=P(-74,0),b1=P(-46,-34),b2=P(46,-34),c=P(74,0),d1=P(46,34),d2=P(-46,34);
-          e2.moveTo(a[0],a[1]); e2.bezierCurveTo(b1[0],b1[1],b2[0],b2[1],c[0],c[1]); e2.bezierCurveTo(d1[0],d1[1],d2[0],d2[1],a[0],a[1]); e2.closePath(); };
-        e2.save(); alm(); e2.clip();
-        e2.lineWidth=lw*.62; e2.strokeStyle='#0f0'; e2.beginPath(); e2.arc(ECX,ECY,eh*.96,0,Math.PI*2); e2.stroke();
-        e2.fillStyle='#00f'; e2.beginPath(); e2.arc(ECX,ECY,eh*.33,0,Math.PI*2); e2.fill();
-        e2.restore(); e2.lineWidth=lw; e2.lineJoin='round'; e2.strokeStyle='#f00'; alm(); e2.stroke();
-        var epx=e2.getImageData(0,0,ec.width,ec.height).data;
-        for(var y2=ECY-eh-lw;y2<ECY+eh+lw;y2+=gap) for(var x2=ECX-EW-lw;x2<ECX+EW+lw;x2+=gap){
-          var j2=((Math.round(y2*SS))*ow+Math.round(x2*SS))*4; if(epx[j2+3]<=128) continue;
-          var kd=epx[j2]>128?1:epx[j2+1]>128?2:3, jx=x2+(Math.random()-.5)*gap*.35, jy=y2+(Math.random()-.5)*gap*.35;
-          hx.push(jx); hy.push(jy); ac.push(kd===3?1:0); ek.push(kd); ox.push(jx-ECX); oy.push(jy-ECY); }
+        /* hairline eye: lids and iris ring traced as one continuous row of dots (1px, sharp); pupil a solid lilac disc */
+        var sx=EW/74, sy=eh/25.5, st=.7;
+        var addE=function(x,y,kd){ hx.push(x); hy.push(y); ac.push(kd===3?1:0); ek.push(kd); ox.push(x-ECX); oy.push(y-ECY); };
+        var bez=function(p0,p1,p2,p3,u){ var v=1-u; return v*v*v*p0+3*v*v*u*p1+3*v*u*u*p2+u*u*u*p3; };
+        [[-74,-46,46,74,0,-34,-34,0],[-74,-46,46,74,0,34,34,0]].forEach(function(c){
+          var px0=null,py0=null;
+          for(var u=0;u<=1.0001;u+=.0005){ var X0=ECX+bez(c[0],c[1],c[2],c[3],u)*sx, Y0=ECY+bez(c[4],c[5],c[6],c[7],u)*sy;
+            if(px0===null||Math.hypot(X0-px0,Y0-py0)>=st){ addE(X0,Y0,1); px0=X0; py0=Y0; } } });
+        var inAlm=function(x,y){ var dx=(x-ECX)/sx; if(dx<=-74||dx>=74) return false;   /* almond half-height at this x */
+          var lo=0,hi=1; for(var k2=0;k2<22;k2++){ var m=(lo+hi)/2; if(bez(-74,-46,46,74,m)<dx) lo=m; else hi=m; }
+          return Math.abs(y-ECY)/sy < -bez(0,-34,-34,0,lo)-1.2; };
+        var ir=eh*.96, nI=Math.ceil(2*Math.PI*ir/st);
+        for(var a2=0;a2<nI;a2++){ var th=a2/nI*2*Math.PI, X1=ECX+Math.cos(th)*ir, Y1=ECY+Math.sin(th)*ir; if(inAlm(X1,Y1)) addE(X1,Y1,2); }
+        var pr=eh*.33;
+        for(var y3=-pr;y3<=pr;y3+=gap) for(var x3=-pr;x3<=pr;x3+=gap) if(x3*x3+y3*y3<=pr*pr) addE(ECX+x3,ECY+y3,3);
         E1=hx.length;
       }
       var dcx=t.offsetLeft+d.offsetLeft+d.offsetWidth/2, dcy=t.offsetTop+d.offsetTop+d.offsetHeight/2, dr=d.offsetWidth/2;
