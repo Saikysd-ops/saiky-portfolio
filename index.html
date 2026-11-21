@@ -10967,10 +10967,11 @@ setActive(0); startRotation();
          which opens a clean round clearing (radius h) and packs the dots into a soft ring around it — the mapping never
          lets dots cross, so there are no streaks or cracks. Dots ease to that target and spring home when the cursor leaves;
          displaced dots take the brand gradient. */
-      var moving=false, R2=R*R, HOLE=R*.42;
+      /* continuous flow while the cursor is on it: the clearing breathes, the ring swirls gently back and forth (a smooth twist, so dots never cross) and each dot shimmers a hair */
+      var T=performance.now()/1000, BR=1+.12*Math.sin(T*2.4), SW=.55*Math.sin(T*1.1), moving=false, R2=R*R, HOLE=R*.42;
       for(var i2=0;i2<N;i2++){
         var dx=HX[i2]-mx, dy=HY[i2]-my, d2=dx*dx+dy*dy, tx=HX[i2], ty=HY[i2], gt=0;
-        if(d2<R2){ var d=Math.sqrt(d2)||.001, k=1-d/R, push=HOLE*k*k; tx+=dx/d*push; ty+=dy/d*push; gt=k*(2-k); }
+        if(d2<R2){ var d=Math.sqrt(d2)||.001, k=1-d/R, kk=k*k, push=HOLE*kk*BR, sc=(d+push)/d, an=SW*kk, ca=Math.cos(an), sa=Math.sin(an); tx=mx+(dx*ca-dy*sa)*sc+Math.sin(T*2.2+i2*1.7)*k*.8; ty=my+(dx*sa+dy*ca)*sc+Math.cos(T*1.9+i2*2.3)*k*.8; gt=k*(2-k); }
         var ex=tx-X[i2], ey=ty-Y[i2], eg=gt-G[i2];
         X[i2]+=ex*.16; Y[i2]+=ey*.16; G[i2]+=eg*.14;
         if(!moving&&(ex>.05||ex<-.05||ey>.05||ey<-.05||eg>.01||eg<-.01)) moving=true;
@@ -11072,10 +11073,11 @@ setActive(0); startRotation();
       if(cur>=.999){ mode='live'; X.set(HX); Y.set(HY); draw(null); return; }
       if(inView&&cur!==target) raf=requestAnimationFrame(frame); return;
     }
-    var moving=false, R2=R*R, HOLE=R*.42;
+    /* continuous flow while the cursor is on it: the clearing breathes, the ring swirls gently back and forth (a smooth twist, so dots never cross) and each dot shimmers a hair */
+      var T=performance.now()/1000, BR=1+.12*Math.sin(T*2.4), SW=.55*Math.sin(T*1.1), moving=false, R2=R*R, HOLE=R*.42;
     for(var i2=0;i2<N;i2++){
       var dx=HX[i2]-mx, dy=HY[i2]-my, d2=dx*dx+dy*dy, tx=HX[i2], ty=HY[i2], gt=0;
-      if(d2<R2){ var d=Math.sqrt(d2)||.001, k=1-d/R, push=HOLE*k*k; tx+=dx/d*push; ty+=dy/d*push; gt=k*(2-k); }
+      if(d2<R2){ var d=Math.sqrt(d2)||.001, k=1-d/R, kk=k*k, push=HOLE*kk*BR, sc=(d+push)/d, an=SW*kk, ca=Math.cos(an), sa=Math.sin(an); tx=mx+(dx*ca-dy*sa)*sc+Math.sin(T*2.2+i2*1.7)*k*.8; ty=my+(dx*sa+dy*ca)*sc+Math.cos(T*1.9+i2*2.3)*k*.8; gt=k*(2-k); }
       var ex=tx-X[i2], ey=ty-Y[i2], eg=gt-G[i2]; X[i2]+=ex*.16; Y[i2]+=ey*.16; G[i2]+=eg*.14;
       if(!moving&&(ex>.05||ex<-.05||ey>.05||ey<-.05||eg>.01||eg<-.01)) moving=true;
     }
