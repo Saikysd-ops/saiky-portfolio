@@ -10823,7 +10823,7 @@ setActive(0); startRotation();
       if(tw>0) t.style.fontSize=(100*avail/tw)+'px';
       /* crop: the block ends a little below the baseline, so the "y" tail is cut and only hinted at */
       var d=t.querySelector('.fwm-dot'), fz=parseFloat(t.style.fontSize);
-      if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+Math.max(fz*.14,20))+'px';   /* full letters, with a little room below so nothing is clipped */
+      if(d&&fz) w.style.height=(t.offsetTop+d.offsetTop+d.offsetHeight+fz*.02)+'px';   /* flush to the bottom: just enough for the round letters' overshoot, so nothing is clipped */
       try{ w.dispatchEvent(new Event('fwmfit')); }catch(e){}
       ql();
     });
