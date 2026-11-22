@@ -3066,6 +3066,42 @@
   .case-more-body li b{color:var(--ink);font-weight:600;}
   @media (prefers-reduced-motion:reduce){ .case-more[open] .case-more-body{animation:none;} .case-more summary i,.case-more summary i::after{transition:none;} }
   /* Prototype validation: the before → after title is the hook, the decision is the outcome, the finding is evidence on demand */
+  /* WORKSHOP DISCOVERY — findings, photos from the room and the boards (justified rows: every image keeps its own ratio) */
+  .wk-findings{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:28px 0 8px;}
+  .wk-find{display:flex;flex-direction:column;padding:30px 30px 24px;border-radius:20px;background:var(--paper-raised);border:1px solid var(--line);}
+  .wk-find h3{font-family:var(--font-display);font-weight:500;font-size:clamp(20px,1.7vw,24px);line-height:1.25;letter-spacing:-.01em;margin:10px 0 16px;color:var(--ink);}
+  .wk-list{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .wk-list li{position:relative;padding-left:18px;font-size:15px;line-height:1.55;color:var(--ink-soft);}
+  .wk-list li::before{content:'';position:absolute;left:2px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.75;}
+  .wk-maps{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
+  .wk-maps span{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-right:2px;}
+  .wk-maps b,.wk-jtag{font-family:var(--font-mono);font-size:10.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);
+    padding:6px 10px;border-radius:999px;background:color-mix(in srgb, var(--accent) 9%, transparent);}
+  .wk-jtag{display:inline-block;margin-top:14px;align-self:flex-start;}
+  .wk-gallery{margin:36px 0 12px;}
+  .wk-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:26px 0 12px;}
+  .wk-gallery .wk-label:first-child{margin-top:0;}
+  .wk-row{display:flex;gap:12px;}
+  .wk-row + .wk-row{margin-top:12px;}
+  .wk-fig{flex:var(--ar) 1 0;min-width:0;margin:0;}
+  .wk-zoom{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;border-radius:14px;overflow:hidden;}
+  .wk-zoom img{display:block;width:100%;aspect-ratio:var(--ar);object-fit:cover;border-radius:14px;border:1px solid var(--line);transition:transform .5s cubic-bezier(.22,1,.36,1);}
+  @media (hover:hover){ .wk-zoom:hover img{transform:scale(1.025);} }
+  .wk-zoom:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .wk-fig figcaption{margin-top:10px;font-size:12.5px;line-height:1.45;color:var(--ink-soft);}
+  .wk-row--synth{max-width:540px;}
+  .wk-lb{position:fixed;inset:0;z-index:700;display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px);background:rgba(23,23,28,.86);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:zoom-out;}
+  .wk-lb.is-open{display:flex;animation:baFade .25s ease;}
+  .wk-lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);}
+  .wk-lb button{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(23,23,28,.6);color:#F8F7F4;font-size:22px;line-height:1;cursor:pointer;}
+  @media (max-width:760px){
+    .wk-findings{grid-template-columns:1fr;}
+    .wk-find{padding:24px 22px 20px;}
+    .wk-row{flex-wrap:wrap;}
+    .wk-row:not(.wk-row--4):not(.wk-row--synth) .wk-fig{flex-basis:100%;}
+    .wk-row--4 .wk-fig,.wk-row--synth .wk-fig{flex:1 1 calc(50% - 6px);}
+  }
   #cs-validation .vl-grid{margin-top:32px;}
   /* prototype tested → iteration after research: one frame, Listing / Details tabs, a Before / After switch */
   .ba{margin:8px 0 52px;}
@@ -5243,6 +5279,48 @@
         <div class="case-card"><div class="case-card-lbl">Rapid concepts</div><div class="case-card-num">20</div><div class="case-card-copy">AI-enabled concept screens generated.</div></div>
       </div>
 
+      <div class="wk-findings">
+        <article class="wk-find">
+          <div class="case-tag">Finding 01</div>
+          <h3>Data Collection &amp; Assessment</h3>
+          <ul class="wk-list">
+            <li>Internal teams need more reliable and centralized supplier data to drive better decision-making.</li>
+            <li>Collecting, storing, and accessing supplier information in one place is a recurring need.</li>
+            <li>Suppliers believe Job 2 (data-driven assessment) will actually lead to more business opportunities than Job 1 (basic onboarding).</li>
+          </ul>
+          <div class="wk-maps"><span>Informs</span><b>Job 02 · Assess</b><b>Need 01 · Centralize supplier context</b></div>
+        </article>
+        <article class="wk-find">
+          <div class="case-tag">Finding 02</div>
+          <h3>Capability Visibility</h3>
+          <ul class="wk-list">
+            <li>Suppliers are expected to provide detailed information about their item and operational capabilities.</li>
+            <li>There's a strong need to understand supplier capabilities at both the product and item levels, enabling better cost and pricing negotiations.</li>
+          </ul>
+          <div class="wk-maps"><span>Informs</span><b>Job 01 · Understand</b><b>Need 02 · Reveal capability</b></div>
+        </article>
+      </div>
+
+      <div class="wk-gallery">
+        <div class="wk-label">In the room · Supplier Management Discovery Workshop, August 2025</div>
+        <div class="wk-row">
+          <figure class="wk-fig" style="--ar:2.18"><button type="button" class="wk-zoom" aria-label="Enlarge: Workshop participants mapping sticky notes onto job boards along a glass wall"><img src="assets/images/image-145-workshop-session-board.jpg" alt="Workshop participants mapping sticky notes onto job boards along a glass wall" loading="lazy"></button></figure>
+          <figure class="wk-fig" style="--ar:1.79"><button type="button" class="wk-zoom" aria-label="Enlarge: Participants sketching concepts at a table"><img src="assets/images/image-146-workshop-session-sketching.jpg" alt="Participants sketching concepts at a table" loading="lazy"></button></figure>
+          <figure class="wk-fig" style="--ar:2.58"><button type="button" class="wk-zoom" aria-label="Enlarge: Participants reviewing the job boards together"><img src="assets/images/image-147-workshop-session-review.jpg" alt="Participants reviewing the job boards together" loading="lazy"></button></figure>
+        </div>
+        <div class="wk-label">From the boards</div>
+        <div class="wk-row">
+          <figure class="wk-fig" style="--ar:1.42"><button type="button" class="wk-zoom" aria-label="Enlarge: Job To Be Done 5 board — find a supplier who matches my needs who may not be currently approved as Walmart ready, covered in sticky notes"><img src="assets/images/image-138-workshop-jtbd-board.jpg" alt="Job To Be Done 5 board — find a supplier who matches my needs who may not be currently approved as Walmart ready, covered in sticky notes" loading="lazy"></button><figcaption>Job To Be Done 5 — find a supplier who matches my needs</figcaption></figure>
+          <figure class="wk-fig" style="--ar:0.81"><button type="button" class="wk-zoom" aria-label="Enlarge: Experience concept poster for JTBD 4 — a supplier capability search sketch"><img src="assets/images/image-148-workshop-concept-poster.jpg" alt="Experience concept poster for JTBD 4 — a supplier capability search sketch" loading="lazy"></button><figcaption>Experience concept poster · JTBD 4</figcaption></figure>
+        </div>
+        <div class="wk-row wk-row--4">
+          <figure class="wk-fig" style="--ar:0.75"><button type="button" class="wk-zoom" aria-label="Enlarge: Sticky notes: need ability to leverage current suppliers across banners and markets; includes looking at current suppliers; sourcing goals and commitments should be considered"><img src="assets/images/image-139-workshop-notes-current-suppliers.jpg" alt="Sticky notes: need ability to leverage current suppliers across banners and markets; includes looking at current suppliers; sourcing goals and commitments should be considered" loading="lazy"></button></figure>
+          <figure class="wk-fig" style="--ar:0.75"><button type="button" class="wk-zoom" aria-label="Enlarge: Sticky notes: assessment tool or scorecard to help inform Supplier Matrix; a Supplier Matrix framework to guide sourcing managers and categorize suppliers into strategic groups"><img src="assets/images/image-140-workshop-notes-matrix-framework.jpg" alt="Sticky notes: assessment tool or scorecard to help inform Supplier Matrix; a Supplier Matrix framework to guide sourcing managers and categorize suppliers into strategic groups" loading="lazy"></button></figure>
+          <figure class="wk-fig" style="--ar:0.75"><button type="button" class="wk-zoom" aria-label="Enlarge: Sticky notes: centralized assessment data enables well-informed sourcing decisions; know if a supplier is verified; data-driven decisions"><img src="assets/images/image-143-workshop-notes-centralized-assessment.jpg" alt="Sticky notes: centralized assessment data enables well-informed sourcing decisions; know if a supplier is verified; data-driven decisions" loading="lazy"></button></figure>
+          <figure class="wk-fig" style="--ar:0.75"><button type="button" class="wk-zoom" aria-label="Enlarge: Sticky notes: reduce the effort needed to search through a long list of suppliers; reduce overall time needed to find a supplier; Walmart readiness"><img src="assets/images/image-144-workshop-notes-search-effort.jpg" alt="Sticky notes: reduce the effort needed to search through a long list of suppliers; reduce overall time needed to find a supplier; Walmart readiness" loading="lazy"></button></figure>
+        </div>
+      </div>
+
       <blockquote class="case-quote">"Supplier Matrix really helps reduce the grunt work here."</blockquote>
       <div class="case-quote-attr">Workshop synthesis · Existing supplier capabilities</div>
     </section>
@@ -5251,10 +5329,16 @@
       <div class="case-num">05 / Profile-relevant jobs</div>
       <h2 class="case-h2">Four profile-relevant jobs emerged from discovery.</h2>
       <div class="case-cardgrid case-cardgrid--4">
-        <div class="case-card"><div class="case-card-eyebrow">01 / Understand</div><h3>What is possible?</h3><p>Explore the capabilities of existing and potential suppliers.</p></div>
-        <div class="case-card"><div class="case-card-eyebrow">02 / Assess</div><h3>Is this supplier viable?</h3><p>Use centralized assessment, readiness, capability, risk and performance context.</p></div>
+        <div class="case-card"><div class="case-card-eyebrow">01 / Understand</div><h3>What is possible?</h3><p>Explore the capabilities of existing and potential suppliers.</p><span class="wk-jtag" title="Finding 02 · Capability Visibility">From Finding 02</span></div>
+        <div class="case-card"><div class="case-card-eyebrow">02 / Assess</div><h3>Is this supplier viable?</h3><p>Use centralized assessment, readiness, capability, risk and performance context.</p><span class="wk-jtag" title="Finding 01 · Data Collection &amp; Assessment">From Finding 01</span></div>
         <div class="case-card"><div class="case-card-eyebrow">03 / Shortlist</div><h3>Who should I prioritize?</h3><p>Rank suppliers more consistently using cost, history, reliability and business context.</p></div>
         <div class="case-card"><div class="case-card-eyebrow">04 / Discover</div><h3>Where else can I look?</h3><p>Develop the supplier pool when existing options cannot meet the need.</p></div>
+      </div>
+
+      <div class="wk-label" style="margin-top:28px">From the synthesis board</div>
+      <div class="wk-row wk-row--synth">
+        <figure class="wk-fig" style="--ar:0.93"><button type="button" class="wk-zoom" aria-label="Enlarge: Synthesis note under “Figure out what is possible with our existing/potential suppliers”: explore capabilities of suppliers we’re currently working with — Supplier Matrix really helps reduce the grunt work here"><img src="assets/images/image-142-workshop-synthesis-capabilities.jpg" alt="Synthesis note under “Figure out what is possible with our existing/potential suppliers”: explore capabilities of suppliers we’re currently working with — Supplier Matrix really helps reduce the grunt work here" loading="lazy"></button><figcaption>Job 01 · What is possible?</figcaption></figure>
+        <figure class="wk-fig" style="--ar:0.84"><button type="button" class="wk-zoom" aria-label="Enlarge: Synthesis note under “Shortlist + prioritize”: decide and use criteria for ranking suppliers (mostly cost, history, reliability) — Supplier Matrix helps build consistency here"><img src="assets/images/image-141-workshop-synthesis-shortlist.jpg" alt="Synthesis note under “Shortlist + prioritize”: decide and use criteria for ranking suppliers (mostly cost, history, reliability) — Supplier Matrix helps build consistency here" loading="lazy"></button><figcaption>Job 03 · Who should I prioritize?</figcaption></figure>
       </div>
 
       <div class="case-cardgrid case-cardgrid--2" style="margin-top:20px">
@@ -11187,6 +11271,18 @@ setActive(0); startRotation();
   });
   show(0);
 }); })();
+</script>
+<script>
+/* workshop photos: click to view full size */
+(function(){ var zs=document.querySelectorAll('.wk-zoom'); if(!zs.length) return;
+  var lb=document.createElement('div'); lb.className='wk-lb'; lb.setAttribute('role','dialog'); lb.setAttribute('aria-modal','true'); lb.setAttribute('aria-label','Workshop photo');
+  lb.innerHTML='<img alt=""><button type="button" aria-label="Close">&times;</button>'; document.body.appendChild(lb);
+  var im=lb.querySelector('img'), last=null;
+  function close(){ lb.classList.remove('is-open'); document.documentElement.style.overflow=''; if(last) last.focus(); }
+  zs.forEach(function(z){ z.addEventListener('click',function(){ var i=z.querySelector('img'); im.src=i.currentSrc||i.src; im.alt=i.alt; last=z;
+    lb.classList.add('is-open'); document.documentElement.style.overflow='hidden'; lb.querySelector('button').focus(); }); });
+  lb.addEventListener('click',close); document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&lb.classList.contains('is-open')) close(); });
+})();
 </script>
 </body>
 </html>
