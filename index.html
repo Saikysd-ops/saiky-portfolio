@@ -3070,26 +3070,40 @@
   /* prototype tested → iteration after research: one frame, Listing / Details tabs, a Before / After switch */
   .ba{margin:8px 0 52px;}
   .ba-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;}
-  .ba-tabs,.ba-toggle{display:inline-flex;padding:4px;border-radius:999px;border:1px solid var(--line);background:var(--paper-raised);}
-  .ba-tab,.ba-tg{appearance:none;border:0;background:transparent;cursor:pointer;border-radius:999px;padding:9px 18px;
+  .ba-tabs{display:inline-flex;padding:4px;border-radius:999px;border:1px solid var(--line);background:var(--paper-raised);}
+  .ba-tab{appearance:none;border:0;background:transparent;cursor:pointer;border-radius:999px;padding:9px 18px;
     font-family:var(--font-body);font-size:14px;line-height:1;color:var(--ink-soft);transition:background .25s ease,color .25s ease;}
   .ba-tab[aria-selected="true"]{background:var(--ink);color:var(--paper);}
-  .ba-tg{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:10px 16px;}
-  .ba-tg[aria-pressed="true"]{background:color-mix(in srgb, var(--accent) 12%, var(--paper-raised));color:var(--accent);}
-  @media (hover:hover){ .ba-tab:not([aria-selected="true"]):hover,.ba-tg:not([aria-pressed="true"]):hover{color:var(--ink);} }
-  .ba-tab:focus-visible,.ba-tg:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .ba-hint{font-family:var(--font-mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);}
   .ba-slide{display:none;} .ba-slide.is-on{display:block;animation:baIn .45s cubic-bezier(.22,1,.36,1);}
   .ba .shotbox-desktop{margin:0;}
-  .ba .ba-crop{max-height:min(640px,72vh);}
-  .ba[data-v="before"] .ba-after,.ba[data-v="after"] .ba-before{display:none;}
-  .ba .ba-crop .ba-v{animation:baFade .4s ease;}
-  .ba-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
-  .ba-count{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink-soft);}
-  .ba-nav{display:flex;gap:10px;}
+  /* the compare: iteration underneath, prototype on top clipped to the handle position */
+  .ba-cmp{position:relative;--pos:50%;}
+  .ba .ba-crop{max-height:min(640px,72vh);cursor:ew-resize;}
+  .ba-layers{position:relative;line-height:0;}
+  .ba-after-img{display:block;width:100%;height:auto;}
+  .ba-before-layer{position:absolute;inset:0;background:#fff;clip-path:inset(0 calc(100% - var(--pos)) 0 0);}
+  .ba-before-layer img{display:block;width:100%;height:auto;}
+  .ba-ui{position:absolute;inset:0;pointer-events:none;border-radius:9px;overflow:hidden;}
+  .ba-chip{position:absolute;top:12px;padding:7px 11px;border-radius:999px;font-family:var(--font-mono);font-size:10.5px;line-height:1;letter-spacing:.07em;text-transform:uppercase;
+    color:#F8F7F4;background:rgba(23,23,28,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity .25s ease;}
+  .ba-chip--l{left:12px;} .ba-chip--r{right:22px;background:rgba(91,42,104,.88);}
+  .ba-cmp.is-l .ba-chip--l,.ba-cmp.is-r .ba-chip--r{opacity:0;}   /* a chip fades when its side is nearly closed */
+  .ba-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:44px;margin-left:-22px;pointer-events:auto;cursor:ew-resize;touch-action:none;outline:none;}
+  .ba-handle::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(23,23,28,.12),0 0 12px rgba(23,23,28,.25);}
+  .ba-knob{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff;color:#17171C;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px -4px rgba(23,23,28,.35),0 0 0 1px rgba(23,23,28,.08);transition:transform .2s ease;}
+  .ba-knob svg{width:20px;height:20px;}
+  .ba-handle:hover .ba-knob,.ba-cmp.is-drag .ba-knob{transform:scale(1.08);}
+  .ba-handle:focus-visible .ba-knob{box-shadow:0 0 0 3px var(--accent),0 6px 18px -4px rgba(23,23,28,.35);}
+  .ba-caps{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:14px;}
+  .ba-caps .case-caption{margin:0;text-align:left;}
+  .ba-caps .case-caption b{display:block;font-family:var(--font-mono);font-size:10.5px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);margin-bottom:4px;}
+  .ba-caps .case-caption:last-child{text-align:right;}
   @keyframes baIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
   @keyframes baFade{from{opacity:0;}to{opacity:1;}}
-  @media (prefers-reduced-motion:reduce){ .ba-slide.is-on,.ba .ba-crop .ba-v{animation:none;} }
-  @media (max-width:640px){ .ba-bar{flex-direction:column;align-items:stretch;} .ba-tabs,.ba-toggle{display:flex;} .ba-tab,.ba-tg{flex:1;padding-left:8px;padding-right:8px;} .ba-tg{font-size:10px;} }
+  @media (prefers-reduced-motion:reduce){ .ba-slide.is-on{animation:none;} }
+  @media (max-width:640px){ .ba-bar{flex-direction:column;align-items:stretch;} .ba-tabs{display:flex;} .ba-tab{flex:1;} .ba-hint{text-align:center;} .ba-chip{display:none;} .ba-caps{grid-template-columns:1fr;gap:12px;} .ba-caps .case-caption:last-child{text-align:left;} }
   .vl-card{position:relative;display:flex;flex-direction:column;padding:34px 34px 20px;transition:background .25s ease;}
   .vl-card:hover{background:color-mix(in srgb, var(--accent) 3%, var(--paper-raised));}
   .vl-card .case-tag{margin-bottom:12px;}
@@ -5322,39 +5336,43 @@
         <figure class="vl-qcard"><blockquote class="vl-qtext">“I like the bottom metrics details — that shows where they fall on that risk and what the commentary is.”</blockquote><figcaption class="testi-person vl-qperson"><span class="vl-qmono" aria-hidden="true">MD</span><span><span class="testi-name">Merch Director</span><span class="testi-title">Outdoors</span></span></figcaption></figure>
         <figure class="vl-qcard"><blockquote class="vl-qtext">“I like to see the graph first because that shows me a timeline too of how those metrics have changed, and if I wanted to double-click into that, I can scroll down and see the actual numbers there.”</blockquote><figcaption class="testi-person vl-qperson"><span class="vl-qmono" aria-hidden="true">SM</span><span><span class="testi-name">Sourcing Manager</span><span class="testi-title">Health &amp; Wellness</span></span></figcaption></figure>
       </div>
-      <div class="ba" data-ba data-v="before">
+      <div class="ba" data-ba>
         <div class="ba-bar">
           <div class="ba-tabs" role="tablist" aria-label="Screen">
             <button class="ba-tab" role="tab" aria-selected="true" data-slide="0">Listing page</button>
             <button class="ba-tab" role="tab" aria-selected="false" data-slide="1">Details page</button>
           </div>
-          <div class="ba-toggle" role="group" aria-label="Version">
-            <button class="ba-tg" aria-pressed="true" data-v="before">Prototype tested</button>
-            <button class="ba-tg" aria-pressed="false" data-v="after">Iteration after research</button>
-          </div>
+          <span class="ba-hint">Drag the handle to compare</span>
         </div>
         <div class="ba-slide is-on" data-i="0">
-          <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop ba-crop">
-            <img class="ba-v ba-before" src="assets/images/image-022-d45e8f54032f.png" alt="Supplier listing — early prototype tested with participants">
-            <img class="ba-v ba-after" src="assets/images/image-030-edd113e84684.jpg" alt="Supplier listing — after research, card view with Vendor Number and D&amp;B rating">
-          </div></div>
-          <div class="case-caption ba-v ba-before">Supplier list, card view — the version shown in the 30-minute sessions.</div>
-          <div class="case-caption ba-v ba-after">Vendor Number and D&amp;B rating added to each card, with a direct path to watchlist.</div>
+          <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div>
+            <div class="ba-cmp" style="--pos:50%">
+              <div class="shotbox-crop ba-crop"><div class="ba-layers">
+                <img class="ba-after-img" src="assets/images/image-030-edd113e84684.jpg" alt="Supplier listing — after research, card view with Vendor Number and D&amp;B rating" draggable="false">
+                <div class="ba-before-layer"><img src="assets/images/image-022-d45e8f54032f.png" alt="Supplier listing — early prototype tested with participants" draggable="false"></div>
+              </div></div>
+              <div class="ba-ui">
+                <span class="ba-chip ba-chip--l">Prototype tested</span><span class="ba-chip ba-chip--r">Iteration after research</span>
+                <div class="ba-handle" role="slider" tabindex="0" aria-label="Drag to compare the tested prototype with the iteration after research" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span class="ba-knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></svg></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ba-caps"><p class="case-caption"><b>Prototype tested</b>Supplier list, card view — the version shown in the 30-minute sessions.</p><p class="case-caption"><b>Iteration after research</b>Vendor Number and D&amp;B rating added to each card, with a direct path to watchlist.</p></div>
         </div>
         <div class="ba-slide" data-i="1">
-          <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop ba-crop">
-            <img class="ba-v ba-before" src="assets/images/image-023-d943f97b157e.png" alt="Supplier profile — early prototype tested with participants">
-            <img class="ba-v ba-after" src="assets/images/image-024-88e52f51226a.png" alt="Supplier profile — after research, with Performance, D&amp;B and Capability tabs">
-          </div></div>
-          <div class="case-caption ba-v ba-before">Supplier profile — the three-score, single-page layout tested.</div>
-          <div class="case-caption ba-v ba-after">Vendor Number replaces Supplier ID; Performance, D&amp;B and Capability split into tabs with evidence underneath.</div>
-        </div>
-        <div class="ba-foot">
-          <span class="ba-count" aria-live="polite">01 / 04</span>
-          <div class="ba-nav">
-            <button class="testi-nav ba-prev" aria-label="Previous view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
-            <button class="testi-nav ba-next" aria-label="Next view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+          <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div>
+            <div class="ba-cmp" style="--pos:50%">
+              <div class="shotbox-crop ba-crop"><div class="ba-layers">
+                <img class="ba-after-img" src="assets/images/image-024-88e52f51226a.png" alt="Supplier profile — after research, with Performance, D&amp;B and Capability tabs" draggable="false">
+                <div class="ba-before-layer"><img src="assets/images/image-023-d943f97b157e.png" alt="Supplier profile — early prototype tested with participants" draggable="false"></div>
+              </div></div>
+              <div class="ba-ui">
+                <span class="ba-chip ba-chip--l">Prototype tested</span><span class="ba-chip ba-chip--r">Iteration after research</span>
+                <div class="ba-handle" role="slider" tabindex="0" aria-label="Drag to compare the tested prototype with the iteration after research" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span class="ba-knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></svg></span></div>
+              </div>
+            </div>
           </div>
+          <div class="ba-caps"><p class="case-caption"><b>Prototype tested</b>Supplier profile — the three-score, single-page layout tested.</p><p class="case-caption"><b>Iteration after research</b>Vendor Number replaces Supplier ID; Performance, D&amp;B and Capability split into tabs with evidence underneath.</p></div>
         </div>
       </div>
 
@@ -11145,22 +11163,29 @@ setActive(0); startRotation();
 })();
 </script>
 <script>
-/* before / after slideshow (Supplier Matrix · prototype validation): 4 views = 2 screens × before / after */
+/* before / after compare (Supplier Matrix · prototype validation): Listing / Details tabs, and a drag handle on each screen —
+   the tested prototype on the left, the iteration after research on the right */
 (function(){ document.querySelectorAll('[data-ba]').forEach(function(ba){
-  var slides=ba.querySelectorAll('.ba-slide'), tabs=ba.querySelectorAll('.ba-tab'), tgs=ba.querySelectorAll('.ba-tg'), cnt=ba.querySelector('.ba-count'), i=0, v='before';
-  function show(ni,nv){ i=ni; v=nv; ba.setAttribute('data-v',v);
-    slides.forEach(function(sl,k){ sl.classList.toggle('is-on',k===i); });
-    tabs.forEach(function(t,k){ t.setAttribute('aria-selected',k===i?'true':'false'); t.tabIndex=k===i?0:-1; });
-    tgs.forEach(function(t){ t.setAttribute('aria-pressed',t.dataset.v===v?'true':'false'); });
-    var c=slides[i].querySelector('.ba-crop'); if(c) c.scrollTop=0;
-    if(cnt) cnt.textContent='0'+(i*2+(v==='after'?2:1))+' / 0'+(slides.length*2); }
-  function step(d){ var n=i*2+(v==='after'?1:0)+d, m=slides.length*2; n=(n+m)%m; show(Math.floor(n/2), n%2?'after':'before'); }
-  tabs.forEach(function(t,k){ t.addEventListener('click',function(){ show(k,'before'); });
-    t.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ e.preventDefault(); var n=(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length; show(n,v); tabs[n].focus(); } }); });
-  tgs.forEach(function(t){ t.addEventListener('click',function(){ show(i,t.dataset.v); }); });
-  ba.querySelector('.ba-prev').addEventListener('click',function(){ step(-1); });
-  ba.querySelector('.ba-next').addEventListener('click',function(){ step(1); });
-  show(0,'before');
+  var slides=ba.querySelectorAll('.ba-slide'), tabs=ba.querySelectorAll('.ba-tab');
+  function show(i){ slides.forEach(function(sl,k){ sl.classList.toggle('is-on',k===i); });
+    tabs.forEach(function(t,k){ t.setAttribute('aria-selected',k===i?'true':'false'); t.tabIndex=k===i?0:-1; }); }
+  tabs.forEach(function(t,k){ t.addEventListener('click',function(){ show(k); });
+    t.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ e.preventDefault(); var n=(k+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length; show(n); tabs[n].focus(); } }); });
+  ba.querySelectorAll('.ba-cmp').forEach(function(c){
+    var h=c.querySelector('.ba-handle'), crop=c.querySelector('.ba-crop'), pos=50, drag=false;
+    function set(p){ pos=Math.max(0,Math.min(100,p)); c.style.setProperty('--pos',pos+'%'); h.setAttribute('aria-valuenow',Math.round(pos));
+      c.classList.toggle('is-l',pos<14); c.classList.toggle('is-r',pos>86); }
+    function at(e){ var r=crop.getBoundingClientRect(); set((e.clientX-r.left)/Math.max(1,crop.clientWidth)*100); }
+    function down(e){ if(e.pointerType==='mouse'&&e.button!==0) return; if(e.currentTarget===crop&&e.pointerType!=='mouse') return;   /* touch: drag by the handle, so the frame still scrolls */
+      if(e.currentTarget===crop&&e.offsetX>crop.clientWidth) return;   /* the scrollbar */
+      drag=true; c.classList.add('is-drag'); try{ e.currentTarget.setPointerCapture(e.pointerId); }catch(_){} at(e); e.preventDefault(); }
+    function move(e){ if(drag) at(e); }
+    function up(){ drag=false; c.classList.remove('is-drag'); }
+    [h,crop].forEach(function(el){ el.addEventListener('pointerdown',down); el.addEventListener('pointermove',move); el.addEventListener('pointerup',up); el.addEventListener('pointercancel',up); });
+    h.addEventListener('keydown',function(e){ var d={ArrowLeft:-5,ArrowRight:5,Home:-100,End:100}[e.key]; if(d===undefined) return; e.preventDefault(); set(e.key==='Home'?0:e.key==='End'?100:pos+d); });
+    set(50);
+  });
+  show(0);
 }); })();
 </script>
 </body>
