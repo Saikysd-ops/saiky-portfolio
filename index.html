@@ -3104,6 +3104,29 @@
     .wk-row:not(.wk-row--4):not(.wk-row--synth) .wk-fig{flex-basis:100%;}
     .wk-row--4 .wk-fig,.wk-row--synth .wk-fig{flex:1 1 calc(50% - 6px);}
   }
+  /* SUPPLIER INSIGHTS v2 — prototype video, two decision paths, full-height flow screens */
+  .si-shot{margin:8px 0 32px;}
+  .si-shot + .si-shot{margin-top:-8px;}
+  .si-shot .shotbox-crop{max-height:none;}
+  .si-shot .case-caption{text-align:left;}
+  .si-video video{display:block;width:100%;height:auto;border-radius:9px;background:#000;cursor:auto;}
+  .si-paths{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px;}
+  .si-pathcard{display:flex;flex-direction:column;gap:10px;padding:28px 28px 24px;border-radius:20px;background:var(--paper-raised);border:1px solid var(--line);
+    color:inherit;text-decoration:none;transition:border-color .25s ease,transform .25s ease;}
+  @media (hover:hover){ .si-pathcard:hover{border-color:color-mix(in srgb, var(--accent) 45%, var(--line));transform:translateY(-2px);} }
+  .si-pathcard h3{font-family:var(--font-display);font-weight:500;font-size:clamp(20px,1.7vw,24px);line-height:1.25;margin:4px 0 0;color:var(--ink);}
+  .si-pathcard p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-soft);}
+  .si-pathcard-steps{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:10.5px;line-height:1.7;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);}
+  .si-path-badge{align-self:flex-start;display:inline-block;font-family:var(--font-mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);padding:6px 11px;border-radius:999px;background:color-mix(in srgb, var(--accent) 10%, transparent);}
+  .si-path{margin:40px 0 8px;padding:40px 0 8px;border-top:1px solid var(--line);}
+  .si-path-title{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,3.4vw,44px);line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin:16px 0 12px;}
+  .si-path-sub{margin:0 0 22px;font-size:16px;line-height:1.6;color:var(--ink-soft);max-width:62ch;}
+  .si-path-steps{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+  .si-path-steps span{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);padding:7px 11px;border-radius:999px;border:1px solid var(--line);}
+  .si-path-steps span + span::before{content:'→';margin-right:8px;color:var(--accent);}
+  .si-path + .si-shot{margin-top:24px;}
+  @media (max-width:760px){ .si-paths{grid-template-columns:1fr;} .si-pathcard{padding:22px 20px 20px;} }
   #cs-validation .vl-grid{margin-top:32px;}
   /* iterations: one at a time — a quiet step list on the left, the selected iteration on the right */
   .it{display:grid;grid-template-columns:220px minmax(0,1fr);margin-top:32px;border:1px solid var(--line);border-radius:20px;background:var(--paper-raised);overflow:hidden;}
@@ -7367,6 +7390,7 @@
     <nav class="case-jumpnav" id="caseJumpnavSupplierInsights">
       <div class="case-jump-group">
         <a class="case-jump-item" href="#si-overview"><i></i>Overview</a>
+        <a class="case-jump-item" href="#si-video"><i></i>Prototype walkthrough</a>
       </div>
       <div class="case-jump-group">
         <div class="case-jump-lbl">The problem</div>
@@ -7374,20 +7398,21 @@
         <a class="case-jump-item" href="#si-decision"><i></i>02 · Decision</a>
       </div>
       <div class="case-jump-group">
-        <div class="case-jump-lbl">The intelligence</div>
-        <a class="case-jump-item" href="#si-intelligence"><i></i>03 · Intelligence</a>
-        <a class="case-jump-item" href="#si-evaluation"><i></i>04 · Compare suppliers</a>
-        <a class="case-jump-item" href="#si-recommendation"><i></i>05 · Continuity plan</a>
+        <div class="case-jump-lbl">Path A · Mitigate</div>
+        <a class="case-jump-item" href="#si-a-plan"><i></i>03 · Recovery plan</a>
+        <a class="case-jump-item" href="#si-a-execute"><i></i>04 · Execute &amp; monitor</a>
       </div>
       <div class="case-jump-group">
-        <div class="case-jump-lbl">Execution &amp; feedback</div>
-        <a class="case-jump-item" href="#si-execution"><i></i>06 · Review &amp; decide</a>
-        <a class="case-jump-item" href="#si-approval"><i></i>07 · Approval</a>
-        <a class="case-jump-item" href="#si-execute"><i></i>08 · Execute</a>
-        <a class="case-jump-item" href="#si-monitor"><i></i>09 · Monitor</a>
-        <a class="case-jump-item" href="#si-feedback"><i></i>10 · Continuous feedback</a>
+        <div class="case-jump-lbl">Path B · Alternatives</div>
+        <a class="case-jump-item" href="#si-intelligence"><i></i>05 · Intelligence</a>
+        <a class="case-jump-item" href="#si-evaluation"><i></i>06 · Compare suppliers</a>
+        <a class="case-jump-item" href="#si-execution"><i></i>07 · Decide volume</a>
+        <a class="case-jump-item" href="#si-recommendation"><i></i>08 · Sourcing plan</a>
+        <a class="case-jump-item" href="#si-execute"><i></i>09 · Execute</a>
+        <a class="case-jump-item" href="#si-monitor"><i></i>10 · Monitor</a>
       </div>
       <div class="case-jump-group">
+        <a class="case-jump-item" href="#si-feedback"><i></i>11 · Continuous feedback</a>
         <a class="case-jump-item" href="#si-outcome"><i></i>Outcome</a>
       </div>
     </nav>
@@ -7441,25 +7466,91 @@
 
     <div class="sv-gated-content is-locked" id="siGatedContent">
 
+    <section class="case-sec" id="si-video">
+      <div class="case-num">Prototype walkthrough</div>
+      <h2 class="case-h2">Both paths, end to end, in the working prototype.</h2>
+      <p class="case-p">From the signal in Top recommended actions, through a recovery plan with Northwind, to comparing alternatives and shifting volume to Supplier B.</p>
+      <div class="si-shot si-video" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div>
+          <video class="si-video-el" controls playsinline preload="none" poster="assets/images/surety-v2-00-top-recommended-actions.jpg" aria-label="Supplier Insights prototype walkthrough — mitigate with the current supplier, then evaluate alternative suppliers">
+            <source src="assets/videos/video-009-supplier-insights-prototype.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="case-caption">Prototype recording · 2:10</div>
+      </div>
+    </section>
+
     <section class="case-sec" id="si-signal">
       <div class="case-num">01 / Signal &amp; business impact</div>
       <h2 class="case-h2">A supplier is quietly slipping, and the cost is already measurable.</h2>
       <div class="case-step-stat">95% → 78% OTD · $2.4M exposure</div>
       <p class="case-p">Surety watches on-time delivery, performance, cost and risk together, and raises one prioritized signal the moment the pattern looks like continuity risk — translated immediately into business terms, so a dip in a metric reads as sales exposure, units at risk and the size of the supply gap, not another number on a dashboard.</p>
-      <div style="max-width:1100px;margin:8px 0 32px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-plan-01-signal-impact.jpg" alt="Step 1, Signal and business impact — Northwind Textiles flagged high priority, on-time delivery dropped 17 points from 95% to 78% driven by port delays and capacity constraints; business impact shows a $2.4M potential sales impact over 6 months, 120K units and 14 items affected, and a 17% supply gap"></div></div>
+      <p class="case-p">It starts in <b>Top recommended actions</b> — what changed, why, and the recommended next step for each priority supplier — and opens into Supplier continuity planning.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-00-top-recommended-actions.jpg" alt="Top recommended actions — Critical (7) and Opportunities (9) tabs; cards for Pacific Rim Textiles, Delta Fresh Produce and Meridian Electronics, each with revenue exposure, a performance drop, a “Why” explanation and a Review action" loading="lazy"></div></div>
+        <div class="case-caption">Entry point — Top recommended actions.</div>
+      </div>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-a1-signal-choose-mitigate.jpg" alt="Supplier continuity planning — Northwind Textiles flagged high priority: on-time delivery 78% (down 17 pp), performance 84/100, D&amp;B SER 5/9 worsened; business impact of $2.4M sales over 6 months, 120K units, 17% supply gap; Choose a response with Mitigate with current supplier selected" loading="lazy"></div></div>
+        <div class="case-caption">Signal &amp; business impact, then Choose a response.</div>
       </div>
     </section>
 
     <section class="case-sec" id="si-decision">
       <div class="case-num">02 / Decision</div>
       <h2 class="case-h2">What should happen next?</h2>
-      <div class="case-step-stat">Recover Northwind, or shift the volume?</div>
-      <p class="case-p">Two responses, not one verdict — mitigate the current supplier, or protect continuity with a qualified alternative. Surety never recommends abandoning Northwind; it makes the cost of each path visible and lets the merchant choose.</p>
+      <div class="case-step-stat">Mitigate with current supplier · Evaluate alternative suppliers</div>
+      <p class="case-p">Two responses, not one verdict — mitigate the current supplier, or protect continuity with a qualified alternative. Surety never recommends abandoning Northwind; it makes the cost of each path visible and lets the merchant choose. You can pursue both; each is planned and tracked separately.</p>
+      <div class="si-paths">
+        <a class="si-pathcard" href="#si-path-a" data-jump="si-path-a"><span class="si-path-badge">Path A</span><h3>Mitigate with current supplier</h3><p>Recovery plan, corrective actions, milestones</p><span class="si-pathcard-steps">5 steps · Signal &amp; impact → Choose response → Review, save &amp; submit → Execute actions → Monitor &amp; track</span></a>
+        <a class="si-pathcard" href="#si-path-b" data-jump="si-path-b"><span class="si-path-badge">Path B</span><h3>Evaluate alternative suppliers</h3><p>Compare suppliers, validate capacity, plan volume shift</p><span class="si-pathcard-steps">7 steps · Signal &amp; impact → Choose response → Compare suppliers → Review &amp; decide volume → Review, save &amp; submit → Execute actions → Monitor &amp; track</span></a>
+      </div>
     </section>
 
+    <div class="si-path" id="si-path-a">
+      <div class="si-path-badge">Path A</div>
+      <h2 class="si-path-title">Mitigate with current supplier</h2>
+      <p class="si-path-sub">Recovery plan, corrective actions, milestones — work with Northwind to address the root cause and recover delivery performance.</p>
+      <div class="si-path-steps"><span>Signal &amp; impact</span><span>Choose response</span><span>Review, save &amp; submit</span><span>Execute actions</span><span>Monitor &amp; track</span></div>
+    </div>
+
+    <section class="case-sec" id="si-a-plan">
+      <div class="case-num">03 / Review, save &amp; submit plan</div>
+      <h2 class="case-h2">A recovery plan with Northwind, not a vague intention.</h2>
+      <div class="case-step-stat">Target OTD ≥ 95% · review in 4 weeks</div>
+      <p class="case-p">Create the recovery plan, address the root cause (port delays, capacity), target OTD ≥ 95%, assign an owner and agree the SLA, and set a checkpoint to review progress in 4 weeks. The plan is saved, then routed to GM / GMM for approval — and its actions only appear once it's approved, generated from the approved plan rather than a generic checklist.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-a2-review-save-plan.jpg" alt="Review, save and submit plan — Recovery plan, mitigate with Northwind: create supplier recovery plan, address root cause (port delays, capacity), target OTD at least 95%, assign an owner and agree the SLA, set checkpoints to review progress in 4 weeks; Save continuity plan; Execute actions appear once the plan is approved" loading="lazy"></div></div>
+      </div>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-a3-approval-summary.jpg" alt="Approval summary — recovery target OTD at least 95%, review in 4 weeks; approvers GM/GMM; approval route GM / GMM not started; Back and Submit for approval" loading="lazy"></div></div>
+        <div class="case-caption">Approval summary — routed to GM / GMM.</div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="si-a-execute">
+      <div class="case-num">04 / Execute &amp; monitor</div>
+      <h2 class="case-h2">Each recovery action is confirmed, then tracked to the target.</h2>
+      <div class="case-step-stat">78% → ≥ 95% on-time delivery</div>
+      <p class="case-p">Once approved, every action is marked done as it happens — share the plan and confirm the owner, agree corrective actions, milestones and SLA, set OTD checkpoints, notify affected stakeholders, review progress in 4 weeks. Monitor &amp; track then follows Northwind's on-time delivery from recovery plan created, through root cause addressed, to OTD ≥ 95% sustained.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-a4-execute-monitor.jpg" alt="Execute actions and Monitor and track — Recovery plan Northwind with three actions done and two to mark done; Mitigating with Northwind: on-time delivery 78% against a 95% target, review in 4 weeks, progress at root cause addressed" loading="lazy"></div></div>
+      </div>
+    </section>
+
+    <div class="si-path" id="si-path-b">
+      <div class="si-path-badge">Path B</div>
+      <h2 class="si-path-title">Evaluate alternative suppliers</h2>
+      <p class="si-path-sub">Compare suppliers, validate capacity, plan volume shift — protect continuity while Northwind’s issue is addressed.</p>
+      <div class="si-path-steps"><span>Signal &amp; impact</span><span>Choose response</span><span>Compare suppliers</span><span>Review &amp; decide volume</span><span>Review, save &amp; submit</span><span>Execute actions</span><span>Monitor &amp; track</span></div>
+    </div>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-b1-choose-evaluate.jpg" alt="Supplier continuity planning with Evaluate alternative suppliers selected — the step tracker expands to seven steps: signal and impact, choose response, compare suppliers, review and decide volume, review save and submit, execute actions, monitor and track" loading="lazy"></div></div>
+        <div class="case-caption">Choosing Evaluate alternative suppliers expands the plan to seven steps.</div>
+      </div>
+
     <section class="case-sec case-sec--dark" id="si-intelligence">
-      <div class="case-num">03 / Intelligence</div>
+      <div class="case-num">05 / Intelligence</div>
       <h2 class="case-h2">Connect performance, quality, risk, capacity and timing.</h2>
       <div class="case-step-stat">On-time delivery · Performance score · <button type="button" class="term-trigger" data-popover="cpmu">CPMU</button> · D&amp;B risk · <button type="button" class="term-trigger" data-popover="auc">AUC change</button> · <button type="button" class="term-trigger" data-popover="tts">time to shift</button> · <button type="button" class="term-trigger" data-popover="ttr">time to recover</button></div>
       <p class="case-p">Seven signals that used to live in five different views, now evaluated together — so ranking an alternative is a system judgment, not a manual spreadsheet exercise.</p>
@@ -7499,67 +7590,62 @@
     </section>
 
     <section class="case-sec" id="si-evaluation">
-      <div class="case-num">04 / Compare alternative suppliers</div>
+      <div class="case-num">06 / Compare alternative suppliers</div>
       <h2 class="case-h2">Northwind vs. qualified alternatives.</h2>
       <div class="case-step-stat">Supplier B — 98% OTD · 25% capacity · lower CPMU</div>
-      <p class="case-p">Ranked against the current supplier, not just listed next to it — Supplier B can cover the full 17% gap with stronger delivery, a more favorable D&amp;B risk profile and a 6-week transition, at a directional cost premium still to be confirmed.</p>
-      <div style="max-width:1100px;margin:8px 0 32px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-plan-02-compare-suppliers.jpg" alt="Step 2, Compare alternative suppliers — Northwind (current) vs Supplier B (recommended, full 25% capacity) vs Supplier C (partial 15% capacity), across on-time delivery, performance score, CPMU, D&amp;B risk, time to shift and time to recover, with a 'Why Supplier B' rationale summary"></div></div>
-      </div>
-    </section>
-
-    <section class="case-sec case-sec--dark" id="si-recommendation">
-      <div class="case-num">05 / Build continuity plan</div>
-      <h2 class="case-h2">Every option comes with an actual plan, not just a recommendation.</h2>
-      <div class="case-step-stat">A — mitigate with Northwind · B — shift to Supplier B (recommended)</div>
-      <p class="case-p">AI proposes the path and the concrete next actions for each — it never switches suppliers, reallocates purchase orders or commits to a negotiation on its own. The merchant reviews the plan and owns the final action.</p>
-      <div style="max-width:1100px;margin:8px 0 32px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-plan-04-build-continuity-plan.jpg" alt="Step 4, Build continuity plan — Option A: mitigate with Northwind, with a recovery-plan checklist targeting OTD 95% reviewed in 4 weeks; Option B: use Supplier B for continuity (recommended), covering the 17% supply gap with a 6-week time to shift, plus a Save mitigation plan action"></div></div>
+      <p class="case-p">Up to five qualified suppliers, ranked against the current supplier rather than just listed next to it. Supplier B can cover the full 17% gap with stronger on-time delivery, lower CPMU and a more favorable D&amp;B risk profile; commercial terms and final cost impact still need to be confirmed before commitment.</p>
+      <p class="case-p">It also flags what the ranking alone would miss — a <b>timing gap</b>: Supplier B's 6-week time to shift lands after the selected POs are needed, so interim coverage has to be planned until the shift completes.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-b2-compare-suppliers.jpg" alt="Compare alternative suppliers — 3 of 5 alternatives selected: Northwind (current), Supplier B (recommended), Supplier C and Pacific Rim Textiles across gap coverage, capacity, on-time delivery, performance score, CPMU, D&amp;B risk, AUC change, time to shift and time to recover; a timing-gap warning and a Why Supplier B rationale" loading="lazy"></div></div>
       </div>
     </section>
 
     <section class="case-sec" id="si-execution">
-      <div class="case-num">06 / Review impacted items &amp; decide volume</div>
+      <div class="case-num">07 / Review impacted items &amp; decide volume</div>
       <h2 class="case-h2">120K units → selected POs → action.</h2>
-      <div class="case-step-stat">75,000 units selected · 2 of 4 purchase orders</div>
-      <p class="case-p">Merchant / Operations reviews exactly what's affected, decides how much volume to move, and only then executes — Surety checks that Supplier B can actually absorb the selected volume before the shift can be confirmed.</p>
-      <div style="max-width:1100px;margin:8px 0 32px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-plan-03-review-decide-volume.jpg" alt="Step 3, Review impacted items and decide volume — Purchase orders impacted table with 2 of 4 rows selected (75,000 units, $525K value), each with a status and a per-order recommendation, and a Confirm volume action"></div></div>
+      <div class="case-step-stat">120K units affected · 4 purchase orders</div>
+      <p class="case-p">Merchant / Operations reviews exactly what's affected and decides the volume to move — every PO shows its need-by date, status, a recommendation, and whether Supplier B's 6-week timing will need a bridge — then confirms the volume before anything else happens.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-b3-review-decide-volume.jpg" alt="Review impacted items and decide volume — purchase orders impacted: 120K units across 4 POs; three rows selected for reallocation to Supplier B, one kept with Northwind to monitor; Supplier B timing column shows days after need-by and that a bridge is needed; Confirm volume" loading="lazy"></div></div>
       </div>
     </section>
 
-    <section class="case-sec" id="si-approval">
-      <div class="case-num">07 / Submit for approval</div>
-      <h2 class="case-h2">The plan still needs a second set of eyes.</h2>
-      <div class="case-step-stat">GMM → DMM sign-off</div>
-      <p class="case-p">Before anything executes, the full plan — response, volume and estimated impact — routes through the standard approval chain. Surety assembles the summary; it doesn't skip the review.</p>
-      <div style="max-width:1100px;margin:8px 0 32px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-plan-05-submit-approval.jpg" alt="Step 5, Submit for approval — plan summary table showing response (mitigate with Northwind), volume to shift (75,000 units, 2 POs), estimated sales impact covered ($2.4M over 6 months), and a GMM to DMM approval workflow, both not started"></div></div>
+    <section class="case-sec" id="si-recommendation">
+      <div class="case-num">08 / Review, save &amp; submit plan</div>
+      <h2 class="case-h2">Every option comes with an actual plan, not just a recommendation.</h2>
+      <div class="case-step-stat">Alternative sourcing plan — Supplier B (recommended) · GM / GMM → DM / DMM</div>
+      <p class="case-p">The plan spells out the move — reallocate the confirmed units, validate capacity (25% available), review CPMU and quality, review the AUC trend and confirm commercial terms, the 6-week time to shift, and interim coverage for POs needed before the shift completes. AI proposes the path and the next actions; it never switches suppliers or reallocates purchase orders on its own. The plan routes through GM / GMM, then DM / DMM.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-b4-review-save-plan.jpg" alt="Review, save and submit plan — Alternative sourcing plan with Supplier B, recommended: reallocate units, validate capacity, review CPMU and quality, review AUC trend and confirm commercial terms, time to shift 6 weeks, plan interim coverage; Save continuity plan" loading="lazy"></div></div>
+      </div>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-b5-approval-summary.jpg" alt="Approval summary — reallocation, remaining with Northwind, time to shift 6 weeks, coverage risk, sales impact $2.4M over 6 months, approvers GM/GMM then DM/DMM, both not started; Back and Submit for approval" loading="lazy"></div></div>
+        <div class="case-caption">Approval summary — GM / GMM → DM / DMM.</div>
       </div>
     </section>
 
     <section class="case-sec" id="si-execute">
-      <div class="case-num">08 / Execute actions</div>
+      <div class="case-num">09 / Execute actions</div>
       <h2 class="case-h2">Only after approval does anything actually move.</h2>
-      <div class="case-step-stat">3 actions · POs reallocated on confirmation</div>
-      <p class="case-p">Once approved, Surety tracks the specific actions the plan requires — moving purchase orders, notifying the new supplier, updating allocation — and confirms each one instead of assuming the plan executed itself.</p>
-      <div style="max-width:900px;margin:8px 0 32px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-plan-06-execute-actions.jpg" alt="Step 6, Execute actions — checklist moving selected purchase orders to Supplier B, notifying Supplier B and confirming capacity hold, and updating allocation and notifying merchandising, with a Move selected POs action"></div></div>
+      <div class="case-step-stat">5 actions · POs move only after validation</div>
+      <p class="case-p">Confirm Supplier B's capacity and effective dates, validate the selected POs, allocation and commercial terms, initiate the authorized PO change, notify everyone affected, and track fulfillment against the plan. “Move selected POs” stays unavailable until PO and commercial validation is complete.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-b6-execute-actions.jpg" alt="Execute actions — Alternative sourcing Supplier B: confirm capacity and effective dates done; validate POs, allocation and commercial terms; initiate the authorized PO change with a Move selected POs action that stays unavailable until validation; notify suppliers and stakeholders; track fulfillment" loading="lazy"></div></div>
       </div>
     </section>
 
     <section class="case-sec" id="si-monitor">
-      <div class="case-num">09 / Monitor</div>
+      <div class="case-num">10 / Monitor &amp; track</div>
       <h2 class="case-h2">Did the response actually work?</h2>
-      <div class="case-step-stat">78% → 95% recovery target</div>
-      <p class="case-p">Tracked on both sides of the decision — Northwind's own delivery recovery if mitigating, or Supplier B's delivery, quality and PO execution if volume shifted.</p>
-      <div style="max-width:1100px;margin:8px 0 32px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-plan-07-monitor-track.jpg" alt="Step 7, Monitor and track — two side-by-side progress cards: if mitigating Northwind, on-time delivery at 78% against a 95% target, review in 4 weeks, with recovery-plan-created marked complete; if reallocating to Supplier B, on-time delivery at 98% up from 78%, in progress, with capacity validated and POs moved marked complete"></div></div>
+      <div class="case-step-stat">Supplier B 98% OTD · vs 78% with Northwind</div>
+      <p class="case-p">The shift is tracked from capacity validated, through POs moved, to continuity confirmed — with Supplier B's on-time delivery baseline held against Northwind's. When both paths are active, both are tracked.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/surety-v2-b7-monitor-track.jpg" alt="Monitor and track — Reallocating to Supplier B, in progress: Supplier B on-time delivery baseline 98% vs 78% with Northwind; milestones capacity validated, POs moved, continuity confirmed" loading="lazy"></div></div>
       </div>
     </section>
 
     <section class="case-sec case-sec--dark" id="si-feedback">
-      <div class="case-num">10 / Continuous feedback</div>
+      <div class="case-num">11 / Continuous feedback</div>
       <h2 class="case-h2">New signal → reassess → act.</h2>
       <div class="case-step-stat" style="font-family:var(--font-mono);font-size:15px;letter-spacing:.02em;font-weight:500">Detect → Evaluate → Recommend → Decide → Execute → Monitor → Reassess</div>
       <p class="case-p">The loop feeds back into step one — Surety doesn't stop watching once a decision is made; new signals reopen the same path rather than starting a fresh investigation.</p>
@@ -11348,6 +11434,11 @@ setActive(0); startRotation();
   tabs.forEach(function(t,k){ t.addEventListener('click',function(){ show(k); });
     t.addEventListener('keydown',function(e){ var d={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key]; if(!d) return; e.preventDefault(); show((k+d+tabs.length)%tabs.length,true); }); });
 }); })();
+</script>
+<script>
+/* Supplier Insights path cards: scroll to the path without touching the hash (the hash drives view routing) */
+document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('[data-jump]'); if(!a) return;
+  var t=document.getElementById(a.getAttribute('data-jump')); if(!t) return; e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); });
 </script>
 </body>
 </html>
