@@ -3067,17 +3067,41 @@
   @media (prefers-reduced-motion:reduce){ .case-more[open] .case-more-body{animation:none;} .case-more summary i,.case-more summary i::after{transition:none;} }
   /* Prototype validation: the before → after title is the hook, the decision is the outcome, the finding is evidence on demand */
   #cs-validation .vl-grid{margin-top:32px;}
-  .vl-card{position:relative;display:flex;flex-direction:column;padding:30px 30px 18px;transition:background .25s ease;}
+  /* prototype tested → iteration after research: one frame, Listing / Details tabs, a Before / After switch */
+  .ba{margin:8px 0 52px;}
+  .ba-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;}
+  .ba-tabs,.ba-toggle{display:inline-flex;padding:4px;border-radius:999px;border:1px solid var(--line);background:var(--paper-raised);}
+  .ba-tab,.ba-tg{appearance:none;border:0;background:transparent;cursor:pointer;border-radius:999px;padding:9px 18px;
+    font-family:var(--font-body);font-size:14px;line-height:1;color:var(--ink-soft);transition:background .25s ease,color .25s ease;}
+  .ba-tab[aria-selected="true"]{background:var(--ink);color:var(--paper);}
+  .ba-tg{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:10px 16px;}
+  .ba-tg[aria-pressed="true"]{background:color-mix(in srgb, var(--accent) 12%, var(--paper-raised));color:var(--accent);}
+  @media (hover:hover){ .ba-tab:not([aria-selected="true"]):hover,.ba-tg:not([aria-pressed="true"]):hover{color:var(--ink);} }
+  .ba-tab:focus-visible,.ba-tg:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .ba-slide{display:none;} .ba-slide.is-on{display:block;animation:baIn .45s cubic-bezier(.22,1,.36,1);}
+  .ba .shotbox-desktop{margin:0;}
+  .ba .ba-crop{max-height:min(640px,72vh);}
+  .ba[data-v="before"] .ba-after,.ba[data-v="after"] .ba-before{display:none;}
+  .ba .ba-crop .ba-v{animation:baFade .4s ease;}
+  .ba-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
+  .ba-count{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink-soft);}
+  .ba-nav{display:flex;gap:10px;}
+  @keyframes baIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  @keyframes baFade{from{opacity:0;}to{opacity:1;}}
+  @media (prefers-reduced-motion:reduce){ .ba-slide.is-on,.ba .ba-crop .ba-v{animation:none;} }
+  @media (max-width:640px){ .ba-bar{flex-direction:column;align-items:stretch;} .ba-tabs,.ba-toggle{display:flex;} .ba-tab,.ba-tg{flex:1;padding-left:8px;padding-right:8px;} .ba-tg{font-size:10px;} }
+  .vl-card{position:relative;display:flex;flex-direction:column;padding:34px 34px 20px;transition:background .25s ease;}
   .vl-card:hover{background:color-mix(in srgb, var(--accent) 3%, var(--paper-raised));}
   .vl-card .case-tag{margin-bottom:12px;}
-  .vl-card h3{font-size:clamp(20px,1.7vw,24px);line-height:1.25;letter-spacing:-.01em;margin:0 0 22px;max-width:22ch;}
+  .vl-card h3{font-size:clamp(20px,1.7vw,24px);line-height:1.25;letter-spacing:-.01em;margin:0 0 26px;max-width:22ch;min-height:2.5em;}   /* two-line slot: decisions line up across a row */
   .vl-arrow{color:var(--accent);font-family:var(--font-body);font-weight:300;}
-  .vl-row--decision{margin-top:auto;display:grid;grid-template-columns:82px minmax(0,1fr);gap:14px;padding:16px 0 16px 16px;
-    border-left:2px solid var(--accent);background:color-mix(in srgb, var(--accent) 5%, transparent);border-radius:0 10px 10px 0;}
-  .vl-row--decision p{margin:0;font-size:14.5px;line-height:1.5;color:var(--ink);padding-right:14px;}
+  .vl-row--decision{margin-top:0;display:grid;grid-template-columns:82px minmax(0,1fr);gap:14px;padding:18px 0 4px;
+    border-top:1px solid var(--line);}   /* calm: a hairline, no tinted box or side bar */
+  .vl-row--decision p{margin:0;font-size:15px;line-height:1.55;color:var(--ink);padding-right:8px;}
+  .vl-row--decision{margin-bottom:14px;}
   .vl-k{font-family:var(--font-mono);font-size:10px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);padding-top:3px;}
   .vl-row--decision .vl-k{color:var(--accent);}
-  .vl-more{margin-top:8px;}
+  .vl-more{margin-top:auto;border-top:1px dashed color-mix(in srgb, var(--line) 80%, transparent);}
   .vl-more summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0 6px;cursor:pointer;}
   .vl-more summary::-webkit-details-marker{display:none;}
   .vl-more summary .vl-k{padding-top:0;transition:color .2s ease;}
@@ -3092,18 +3116,18 @@
   .vl-more p{margin:0;padding:2px 0 10px;font-size:13.5px;line-height:1.6;color:var(--ink-soft);max-width:52ch;}
   .vl-more[open] p{animation:caseMore .35s cubic-bezier(.22,1,.36,1);}
   @media (prefers-reduced-motion:reduce){ .vl-more[open] p{animation:none;} .vl-more summary i,.vl-more summary i::after{transition:none;} }
-  .vl-quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:40px 0 44px;border-top:1px solid var(--line);}
-  .vl-quote{margin:0;padding:26px 28px 6px 0;display:flex;flex-direction:column;}
-  .vl-quote+.vl-quote{padding-left:28px;border-left:1px solid var(--line);}
-  .vl-quote::before{content:'';width:24px;height:2px;border-radius:2px;background:var(--accent);opacity:.7;margin-bottom:16px;}   /* the quote text carries its own marks */
-  .vl-quote .case-quote{font-size:clamp(16.5px,1.35vw,19px);line-height:1.5;margin:0;quotes:none;}
-  .vl-quote .case-quote-attr{margin-top:auto;padding-top:18px;}
-  @media (max-width:900px){
-    .vl-quotes{grid-template-columns:1fr;}
-    .vl-quote,.vl-quote+.vl-quote{padding:22px 0 18px;border-left:0;}
-    .vl-quote+.vl-quote{border-top:1px solid var(--line);}
-  }
-  @media (max-width:640px){ .vl-card{padding:24px 20px 14px;} .vl-row--decision{grid-template-columns:1fr;gap:6px;} }
+  /* participant quotes — the same card language as "In their words" on About */
+  .vl-quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:40px 0 48px;}
+  .vl-qcard{margin:0;display:flex;flex-direction:column;padding:30px 30px 26px;border-radius:20px;background:var(--paper-raised);border:1px solid var(--line);}
+  .vl-qtext{margin:0 0 28px;font-family:var(--font-display);font-weight:400;font-size:clamp(17px,1.3vw,19px);line-height:1.45;letter-spacing:-.005em;color:var(--ink);}
+  .vl-qperson{margin-top:auto;min-height:0;align-items:center;}
+  .vl-qperson > span:last-child{display:flex;flex-direction:column;padding-top:0;}
+  .vl-qmono{width:44px;height:44px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--accent);
+    background:color-mix(in srgb, var(--accent) 9%, var(--paper-raised));}
+  .vl-qperson .testi-name{font-size:15px;} .vl-qperson .testi-title{font-size:13px;}
+  @media (max-width:900px){ .vl-quotes{grid-template-columns:1fr;gap:14px;} .vl-qcard{padding:24px 22px 22px;} }
+  @media (max-width:640px){ .vl-card{padding:26px 22px 14px;} .vl-card h3{min-height:0;} .vl-row--decision{grid-template-columns:1fr;gap:6px;} }
   /* At a glance: calm one-line pillars, decisions in the case-study card grid, rationale + scope in one framed disclosure group */
   .case-triple--short{gap:0;border-top:1px solid var(--line);}
   .case-triple--short>div{padding:22px 28px 4px 0;}
@@ -5294,36 +5318,43 @@
         <div class="case-card vl-card"><div class="case-tag">Iteration 04 / Context</div><h3>Structured data <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> structured + human knowledge</h3><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Preserve paths to qualitative supplier context where available.</p></div><details class="vl-more"><summary><b class="vl-k">Finding:</b><i aria-hidden="true"></i></summary><p>Prior contacts and factory-visit history influenced confidence.</p></details></div>
       </div>
       <div class="vl-quotes">
-        <figure class="vl-quote"><blockquote class="case-quote">"We have a Teams chat. I can ask, 'Does anyone know this supplier?' and it saves a whole bunch of time."</blockquote><figcaption class="case-quote-attr">Sourcing Manager · General Merchandise</figcaption></figure>
-        <figure class="vl-quote"><blockquote class="case-quote">"I like the bottom metrics details — that shows where they fall on that risk and what the commentary is."</blockquote><figcaption class="case-quote-attr">Merch Director · Outdoors</figcaption></figure>
-        <figure class="vl-quote"><blockquote class="case-quote">"I like to see the graph first because that shows me a timeline too of how those metrics have changed, and if I wanted to double-click into that, I can scroll down and see the actual numbers there."</blockquote><figcaption class="case-quote-attr">Sourcing Manager · Health &amp; Wellness</figcaption></figure>
+        <figure class="vl-qcard"><blockquote class="vl-qtext">“We have a Teams chat. I can ask, 'Does anyone know this supplier?' and it saves a whole bunch of time.”</blockquote><figcaption class="testi-person vl-qperson"><span class="vl-qmono" aria-hidden="true">SM</span><span><span class="testi-name">Sourcing Manager</span><span class="testi-title">General Merchandise</span></span></figcaption></figure>
+        <figure class="vl-qcard"><blockquote class="vl-qtext">“I like the bottom metrics details — that shows where they fall on that risk and what the commentary is.”</blockquote><figcaption class="testi-person vl-qperson"><span class="vl-qmono" aria-hidden="true">MD</span><span><span class="testi-name">Merch Director</span><span class="testi-title">Outdoors</span></span></figcaption></figure>
+        <figure class="vl-qcard"><blockquote class="vl-qtext">“I like to see the graph first because that shows me a timeline too of how those metrics have changed, and if I wanted to double-click into that, I can scroll down and see the actual numbers there.”</blockquote><figcaption class="testi-person vl-qperson"><span class="vl-qmono" aria-hidden="true">SM</span><span><span class="testi-name">Sourcing Manager</span><span class="testi-title">Health &amp; Wellness</span></span></figcaption></figure>
       </div>
-      <div class="case-cardgrid case-cardgrid--2">
-        <div class="case-mock-cell">
-          <div class="case-tag">Prototype tested</div>
-          <div class="shotbox-desktop" style="margin-top:14px">
-            <div class="shotbox-browserbar"><i></i><i></i><i></i></div>
-            <div class="shotbox-crop"><img src="assets/images/image-022-d45e8f54032f.png" alt="Supplier listing — early prototype tested with participants"></div>
+      <div class="ba" data-ba data-v="before">
+        <div class="ba-bar">
+          <div class="ba-tabs" role="tablist" aria-label="Screen">
+            <button class="ba-tab" role="tab" aria-selected="true" data-slide="0">Listing page</button>
+            <button class="ba-tab" role="tab" aria-selected="false" data-slide="1">Details page</button>
           </div>
-          <div class="case-caption">Supplier list, card view — the version shown in the 30-minute sessions.</div>
-          <div class="shotbox-desktop" style="margin-top:22px">
-            <div class="shotbox-browserbar"><i></i><i></i><i></i></div>
-            <div class="shotbox-crop"><img src="assets/images/image-023-d943f97b157e.png" alt="Supplier profile — early prototype tested with participants"></div>
+          <div class="ba-toggle" role="group" aria-label="Version">
+            <button class="ba-tg" aria-pressed="true" data-v="before">Prototype tested</button>
+            <button class="ba-tg" aria-pressed="false" data-v="after">Iteration after research</button>
           </div>
-          <div class="case-caption">Supplier profile — the three-score, single-page layout tested.</div>
         </div>
-        <div class="case-mock-cell">
-          <div class="case-tag">Iteration after research</div>
-          <div class="shotbox-desktop" style="margin-top:14px">
-            <div class="shotbox-browserbar"><i></i><i></i><i></i></div>
-            <div class="shotbox-crop"><img src="assets/images/image-030-edd113e84684.jpg" alt="Supplier listing — after research, card view with Vendor Number and D&B rating"></div>
+        <div class="ba-slide is-on" data-i="0">
+          <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop ba-crop">
+            <img class="ba-v ba-before" src="assets/images/image-022-d45e8f54032f.png" alt="Supplier listing — early prototype tested with participants">
+            <img class="ba-v ba-after" src="assets/images/image-030-edd113e84684.jpg" alt="Supplier listing — after research, card view with Vendor Number and D&amp;B rating">
+          </div></div>
+          <div class="case-caption ba-v ba-before">Supplier list, card view — the version shown in the 30-minute sessions.</div>
+          <div class="case-caption ba-v ba-after">Vendor Number and D&amp;B rating added to each card, with a direct path to watchlist.</div>
+        </div>
+        <div class="ba-slide" data-i="1">
+          <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop ba-crop">
+            <img class="ba-v ba-before" src="assets/images/image-023-d943f97b157e.png" alt="Supplier profile — early prototype tested with participants">
+            <img class="ba-v ba-after" src="assets/images/image-024-88e52f51226a.png" alt="Supplier profile — after research, with Performance, D&amp;B and Capability tabs">
+          </div></div>
+          <div class="case-caption ba-v ba-before">Supplier profile — the three-score, single-page layout tested.</div>
+          <div class="case-caption ba-v ba-after">Vendor Number replaces Supplier ID; Performance, D&amp;B and Capability split into tabs with evidence underneath.</div>
+        </div>
+        <div class="ba-foot">
+          <span class="ba-count" aria-live="polite">01 / 04</span>
+          <div class="ba-nav">
+            <button class="testi-nav ba-prev" aria-label="Previous view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button class="testi-nav ba-next" aria-label="Next view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
           </div>
-          <div class="case-caption">Vendor Number and D&amp;B rating added to each card, with a direct path to watchlist.</div>
-          <div class="shotbox-desktop" style="margin-top:22px">
-            <div class="shotbox-browserbar"><i></i><i></i><i></i></div>
-            <div class="shotbox-crop"><img src="assets/images/image-024-88e52f51226a.png" alt="Supplier profile — after research, with Performance, D&B and Capability tabs"></div>
-          </div>
-          <div class="case-caption">Vendor Number replaces Supplier ID; Performance, D&amp;B and Capability split into tabs with evidence underneath.</div>
         </div>
       </div>
 
@@ -11112,6 +11143,25 @@ setActive(0); startRotation();
     if(inView&&!was){ if(!N) build(); else kick(); } }); },{threshold:0}).observe(sec);
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(rebuild);
 })();
+</script>
+<script>
+/* before / after slideshow (Supplier Matrix · prototype validation): 4 views = 2 screens × before / after */
+(function(){ document.querySelectorAll('[data-ba]').forEach(function(ba){
+  var slides=ba.querySelectorAll('.ba-slide'), tabs=ba.querySelectorAll('.ba-tab'), tgs=ba.querySelectorAll('.ba-tg'), cnt=ba.querySelector('.ba-count'), i=0, v='before';
+  function show(ni,nv){ i=ni; v=nv; ba.setAttribute('data-v',v);
+    slides.forEach(function(sl,k){ sl.classList.toggle('is-on',k===i); });
+    tabs.forEach(function(t,k){ t.setAttribute('aria-selected',k===i?'true':'false'); t.tabIndex=k===i?0:-1; });
+    tgs.forEach(function(t){ t.setAttribute('aria-pressed',t.dataset.v===v?'true':'false'); });
+    var c=slides[i].querySelector('.ba-crop'); if(c) c.scrollTop=0;
+    if(cnt) cnt.textContent='0'+(i*2+(v==='after'?2:1))+' / 0'+(slides.length*2); }
+  function step(d){ var n=i*2+(v==='after'?1:0)+d, m=slides.length*2; n=(n+m)%m; show(Math.floor(n/2), n%2?'after':'before'); }
+  tabs.forEach(function(t,k){ t.addEventListener('click',function(){ show(k,'before'); });
+    t.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ e.preventDefault(); var n=(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length; show(n,v); tabs[n].focus(); } }); });
+  tgs.forEach(function(t){ t.addEventListener('click',function(){ show(i,t.dataset.v); }); });
+  ba.querySelector('.ba-prev').addEventListener('click',function(){ step(-1); });
+  ba.querySelector('.ba-next').addEventListener('click',function(){ step(1); });
+  show(0,'before');
+}); })();
 </script>
 </body>
 </html>
