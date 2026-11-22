@@ -1,0 +1,2 @@
+# raw screen recordings stay local; only the trimmed web mp4s are published
+*.mov
