@@ -10932,7 +10932,7 @@ setActive(0); startRotation();
     /* scroll-linked entrance: 0 when the name's top meets the bottom of the screen, 1 when the whole name is in view
        (i.e. when you reach the end of the page) — so it is always fully formed as your scroll finishes */
     var cur=0, target=0;
-    function prog(){ var r=w.getBoundingClientRect(); return Math.max(0,Math.min(1,(innerHeight-r.top+3)/Math.max(1,r.height*.75))); }   /* done once ~¾ of the name is on screen, so it is always complete before the scroll ends */   /* +3px: sub-pixel slack so the very end of the page always counts as fully in */
+    function prog(){ var r=w.getBoundingClientRect(); var v=(innerHeight-r.top+3)/Math.max(1,r.height); return Math.max(0,Math.min(1,(v-.35)/.65)); }   /* forms over the final stretch of scroll: starts once ~⅓ of the name is visible, complete exactly at the bottom */   /* +3px: sub-pixel slack so the very end of the page always counts as fully in */
     function seed(){
       for(var i=0;i<N;i++){
         SX[i]=HX[i]+(Math.random()-.5)*H*.08;                          /* simple, clean rise: each dot starts just below its home */
