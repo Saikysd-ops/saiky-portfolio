@@ -10899,7 +10899,7 @@ setActive(0); startRotation();
     var ctx=cv.getContext('2d'); if(!ctx) return;
     var N=0, HX,HY,X,Y,VX,VY,G,SX,SY,DL,DU,CR,CG,CB,AC;   /* typed arrays: home, pos, vel, glow, start, delay, duration, hot colour, accent flag */
     var dpr=1,W=0,H=0,BW=0,BH=0,img=null,buf=null,raf=0,mx=-1e4,my=-1e4,inView=false,R=120,ink=[248,247,244],acc=[188,128,204],idle=0,
-        mode='live',t0=0,tEnd=0,dot=1;
+        mode='live',t0=0,tEnd=0,dot=1,DR=2,PR=4;
     function build(){
       var r=w.getBoundingClientRect(); if(!r.width||!r.height) return;
       dpr=Math.min(window.devicePixelRatio||1,2); W=r.width; H=r.height; BW=Math.round(W*dpr); BH=Math.round(H*dpr);
@@ -10912,13 +10912,14 @@ setActive(0); startRotation();
       var base=t.offsetTop+d.offsetTop+d.offsetHeight;
       [].forEach.call(t.querySelectorAll(':scope > .fwm-ch'),function(ch){ o.fillText(ch.textContent.toUpperCase(), t.offsetLeft+ch.offsetLeft, base); });
       var px=o.getImageData(0,0,off.width,off.height).data, ow=off.width;
-      var gap=Math.max(1.3,fz/175);   /* CSS px between dots: very fine */
-      var hx=[],hy=[],ac=[];
-      for(var y=gap/2;y<H;y+=gap){ for(var x=gap/2;x<W;x+=gap){
-        if(px[((Math.round(y*SS))*ow+Math.round(x*SS))*4+3]>128){ hx.push(x+(Math.random()-.5)*gap*.35); hy.push(y+(Math.random()-.5)*gap*.35); ac.push(0); }
+      /* dot matrix: round dots on a regular grid (like an LED / halftone sign) — a dot wherever the letter covers the cell centre */
+      var gap=Math.max(4,fz/26); DR=gap*.38;
+      var hx=[],hy=[],ac=[], gx0=(W%gap)/2+gap/2;
+      for(var y=H-gap/2;y>0;y-=gap){ for(var x=gx0;x<W;x+=gap){   /* rows anchored to the bottom edge so the baseline row is whole */
+        if(px[((Math.round(y*SS))*ow+Math.round(x*SS))*4+3]>140){ hx.push(x); hy.push(y); ac.push(0); }
       }}
       var dcx=t.offsetLeft+d.offsetLeft+d.offsetWidth/2, dcy=t.offsetTop+d.offsetTop+d.offsetHeight/2, dr=d.offsetWidth/2;
-      for(var yy=-dr;yy<=dr;yy+=gap){ for(var xx=-dr;xx<=dr;xx+=gap){ if(xx*xx+yy*yy<=dr*dr){ hx.push(dcx+xx); hy.push(dcy+yy); ac.push(1); } } }
+      hx.push(dcx); hy.push(dcy); ac.push(1); PR=Math.max(DR*1.6,dr);   /* the full stop: one larger lilac dot */
       N=hx.length; HX=new Float32Array(hx); HY=new Float32Array(hy); AC=new Uint8Array(ac);
       X=new Float32Array(HX); Y=new Float32Array(HY); VX=new Float32Array(N); VY=new Float32Array(N); G=new Float32Array(N);
       SX=new Float32Array(N); SY=new Float32Array(N); DL=new Float32Array(N); DU=new Float32Array(N);
@@ -10945,14 +10946,17 @@ setActive(0); startRotation();
       var v=(255<<24)|(b<<16)|(g<<8)|r, k=iy*BW+ix; buf[k]=v; if(dot>1){ buf[k+1]=v; buf[k+BW]=v; buf[k+BW+1]=v; }
     }
     function draw(fade){
-      buf.fill(0);
-      for(var i=0;i<N;i++){
-        var br=AC[i]?acc[0]:ink[0], bg=AC[i]?acc[1]:ink[1], bb=AC[i]?acc[2]:ink[2], g=G[i];
-        if(g>.02){ br+= (CR[i]-br)*g; bg+=(CG[i]-bg)*g; bb+=(CB[i]-bb)*g; }
-        var f=fade===1?1:fade[i];
-        put(X[i],Y[i],(br*f)|0,(bg*f)|0,(bb*f)|0);
-      }
-      ctx.putImageData(img,0,0);
+      /* round dots: resting ivory dots go in one batched path; glowing / fading dots are filled individually */
+      ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+      var TAU=Math.PI*2; ctx.beginPath();
+      for(var i=0;i<N;i++){ if(AC[i]) continue; var f=fade===1?1:fade[i];
+        if(G[i]<=.02&&f>=.999){ ctx.moveTo(X[i]+DR,Y[i]); ctx.arc(X[i],Y[i],DR,0,TAU); } }
+      ctx.fillStyle='rgb('+ink[0]+','+ink[1]+','+ink[2]+')'; ctx.fill();
+      for(var k=0;k<N;k++){ var f2=fade===1?1:fade[k], g=G[k]; if(!AC[k]&&g<=.02&&f2>=.999) continue; if(f2<=.01) continue;
+        var br=AC[k]?acc[0]:ink[0], bg=AC[k]?acc[1]:ink[1], bb=AC[k]?acc[2]:ink[2];
+        if(g>.02){ br+=(CR[k]-br)*g; bg+=(CG[k]-bg)*g; bb+=(CB[k]-bb)*g; }
+        ctx.fillStyle='rgba('+(br|0)+','+(bg|0)+','+(bb|0)+','+f2.toFixed(3)+')';
+        var rr=AC[k]?PR:DR; ctx.beginPath(); ctx.arc(X[k],Y[k],rr*(fade===1?1:.6+.4*f2),0,TAU); ctx.fill(); }
     }
     var FADE=null;
     function frame(now){
