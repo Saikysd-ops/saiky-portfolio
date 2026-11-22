@@ -2655,6 +2655,10 @@
      of screens) that don't need to read at full detail size */
   .shotbox-desktop--medium{max-width:640px;margin-left:auto;margin-right:auto;}
   .shotbox-desktop--medium .shotbox-crop{max-height:390px;}
+  /* panel variant — a tall, narrow side panel shown at its natural width; the frame scrolls through the whole panel */
+  .shotbox-desktop--panel{max-width:380px;margin-left:auto;margin-right:auto;}
+  .case-shotgrid .case-shotbox--desktop .shotbox-desktop.shotbox-desktop--panel{margin:0 auto;}
+  .shotbox-desktop--panel .shotbox-crop{max-height:min(620px,72vh);overscroll-behavior:contain;}
 
   /* early-exploration sketches sit in plain bordered frames — deliberately not
      the black bezel used for finished UI, so process work reads as process
@@ -5394,7 +5398,7 @@
           <h3 class="case-h3" style="margin-top:10px">Filter across risk, market and origin</h3>
           <p class="case-p">Filters cover D&amp;B risk band, private label status, channel, market and country of origin, each showing a live result count before it's applied.</p>
         </div>
-        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--medium"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/image-031-17f3c4e6fc45.jpg" alt="Filters panel — D&amp;B supplier rating, private label, channel, market and country of origin"></div></div></div>
+        <div class="case-shotbox case-shotbox--desktop"><div class="shotbox-desktop shotbox-desktop--panel"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop" tabindex="0" aria-label="More filters panel — scroll to see every filter"><img src="assets/images/image-137-filters-panel.jpg" alt="More filters panel — D&amp;B supplier rating, private label, channel, market, country of origin and performance KPIs (annual sales, sales change, compliance score, AUC change, DRR) with Low / Mid / High presets and min–max ranges"></div></div></div>
       </div>
 
       <div class="case-cardgrid case-cardgrid--2 case-shotgrid">
