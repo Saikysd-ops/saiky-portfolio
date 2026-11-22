@@ -1570,6 +1570,66 @@
   .lab-card:hover .ls-spoke{stroke-opacity:.6;}                     /* the ecosystem connects */
   @media (prefers-reduced-motion:reduce){ .ls-sweep,.ls-card-g,.ls-link,.ls-plan-lbl,.ls-dev,.ls-diff,.ls-outer,.ls-spoke{transition:none;} }
   @media (max-width:980px){ .lab-card{flex-basis:340px;} .lab-head{grid-template-columns:1fr;gap:16px;align-items:start;} }
+
+  /* LAB CARDS v2 — three tall, equal cards (lilac / paper / ink), brand palette only:
+     Pale Lilac #F1EAF7 · Aubergine #5B2A68 · Warm Ivory #F8F7F4 · Near Black #17171C */
+  .lab-grid--lx{gap:20px;padding:12px 2px 40px;}
+  .lx{position:relative;display:flex !important;flex-direction:column;flex:0 0 calc((100% - 40px)/3);min-height:clamp(560px,44vw,640px);
+    padding:28px 28px 26px;border-radius:22px;overflow:hidden;border:1px solid transparent;scroll-snap-align:start;color:#17171C;
+    transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease;}
+  .lx[hidden]{display:none !important;}
+  .lx:hover{transform:translateY(-4px);box-shadow:0 22px 44px -24px rgba(23,23,28,.35);border-color:transparent;}
+  a.lab-card.lx--lilac{background:#F1EAF7;color:#17171C;}
+  a.lab-card.lx--paper{background:#FFFFFF;border-color:#E6E2EA;color:#17171C;}
+  a.lab-card.lx--ink{background:#17171C;color:#F8F7F4;}
+  .lx .lx-title,.lx .lx-label,.lx .lx-tags,.lx .lx-list li{color:inherit;}
+  :root[data-theme="dark"] a.lab-card.lx--ink{border-color:rgba(248,247,244,.12);}
+  :root[data-theme="dark"] a.lab-card.lx--paper{border-color:transparent;}
+  .lx-top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:42px;}
+  .lx-label{display:inline-flex;align-items:center;gap:10px;font-size:15px;line-height:1;letter-spacing:-.005em;}
+  .lx-label b{width:12px;height:12px;border-radius:50%;background:#5B2A68;}
+  .lx--ink .lx-label b{background:#F8F7F4;}
+  .lx-arrow{width:42px;height:42px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;flex:none;
+    transition:background .3s ease,color .3s ease,border-color .3s ease,transform .35s cubic-bezier(.22,1,.36,1);}
+  .lx-arrow svg{width:17px;height:17px;}
+  .lx--lilac:hover .lx-arrow{background:#5B2A68;border-color:#5B2A68;color:#F8F7F4;transform:rotate(45deg);}
+  .lx--ink:hover .lx-arrow{background:#F8F7F4;color:#17171C;transform:rotate(45deg);}
+  .lx-desc{margin:22px 0 0;font-size:15.5px;line-height:1.45;max-width:30ch;color:inherit;}
+  .lx--ink .lx-desc{color:rgba(248,247,244,.86);}
+  .lx-title{font-family:'Space Grotesk',var(--font-body);font-weight:700;text-transform:uppercase;letter-spacing:-.035em;line-height:.9;
+    font-size:clamp(38px,3.9vw,54px);margin:0;color:inherit;}
+  .lx-title--top{margin-top:22px;}
+  .lx-title--sm{font-size:clamp(28px,2.6vw,36px);line-height:.95;}
+  .lx-tags{display:flex;flex-wrap:wrap;gap:4px 0;margin:0;padding-top:16px;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent);
+    font-size:14px;line-height:1.5;}
+  .lx-tags span+span::before{content:'/';margin:0 8px;opacity:.35;}
+  .lx-foot{margin-top:auto;display:flex;flex-direction:column;gap:18px;}
+  .lx-foot .lx-title{padding-top:18px;border-top:2px solid currentColor;}
+  .lx-foot .lx-desc{margin:0;}
+  /* card 1 — a field of circles bleeding off the right edge */
+  .lx-dots{display:grid;grid-template-columns:repeat(4,1fr);width:58%;margin:24px -28px 24px auto;}
+  .lx-dots i{aspect-ratio:1;border-radius:50%;background:#5B2A68;opacity:.13;transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+  .lx-dots i.off{visibility:hidden;}
+  .lx--lilac:hover .lx-dots i{opacity:.22;}
+  .lx--lilac:hover .lx-dots i:nth-child(3n){transform:scale(.88);}
+  /* card 2 — pointer rows with hairlines and a round CTA */
+  .lx-list{list-style:none;margin:auto 0 0;padding:0;}
+  .lx-list li{padding:13px 0;border-bottom:1px solid #E6E2EA;font-size:17px;letter-spacing:-.005em;}
+  .lx-list li:first-child{border-top:1px solid #E6E2EA;}
+  .lx-orb{position:absolute;right:30px;bottom:112px;width:112px;height:112px;border-radius:50%;background:#5B2A68;color:#F8F7F4;
+    display:flex;align-items:center;justify-content:center;text-align:center;font-size:14px;font-weight:600;line-height:1.25;
+    box-shadow:0 14px 30px -14px rgba(91,42,104,.55);transition:transform .45s cubic-bezier(.22,1,.36,1);}
+  .lx--paper:hover .lx-orb{transform:scale(1.06) rotate(-4deg);}
+  .lx--paper .lx-tags{margin-top:18px;padding-top:0;border-top:0;}
+  /* card 3 — a paw print in dots, and one tall word */
+  .lx-art{position:relative;flex:1;min-height:230px;margin:22px 0 18px;}
+  .lx-paw{position:absolute;left:-4px;top:4px;width:66%;height:auto;fill:#F8F7F4;fill-opacity:.09;transition:fill-opacity .5s ease;}
+  .lx--ink:hover .lx-paw{fill-opacity:.16;}
+  .lx-vert{position:absolute;right:-8px;top:-4px;writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Grotesk',var(--font-body);font-weight:700;
+    font-size:clamp(76px,7.2vw,104px);line-height:.8;letter-spacing:-.04em;color:#F8F7F4;}
+  @media (min-width:981px){ .lab-grid--lx{overflow:visible;-webkit-mask-image:none;mask-image:none;} .lab-carousel:has(.lab-grid--lx) .lab-nav{display:none;} }
+  @media (max-width:980px){ .lx{flex-basis:min(380px,82vw);min-height:560px;} }
+  @media (prefers-reduced-motion:reduce){ .lx,.lx-arrow,.lx-orb,.lx-dots i,.lx-paw{transition:none;} }
   @media (max-width:560px){ .lab-card{flex-basis:84vw;} .lab-grid{gap:16px;} }
 
   /* stacked-stones mark */
@@ -4740,46 +4800,35 @@
       <div class="lab-carousel">
         <button type="button" class="lab-nav lab-nav--prev" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button type="button" class="lab-nav lab-nav--next" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="lab-grid">
-        <a class="lab-card" data-cat="ai" data-view="case-supplier-insights" role="link" tabindex="0">
-          <div class="lab-thumb lab-thumb--ill ls ls-ochre" aria-hidden="true"><svg class="li" viewBox="0 0 320 220">
-  <circle cx="160" cy="110" r="32" class="ls-ring"/><circle cx="160" cy="110" r="56" class="ls-ring ls-ring--on"/><circle cx="160" cy="110" r="80" class="ls-ring"/>
-  <g class="ls-sweep" style="transform-origin:160px 110px"><path d="M160 110 L153.0 30.3 A80 80 0 0 1 197.6 39.4 Z" class="ls-wedge"/></g>
-  <circle cx="84.8" cy="82.6" r="3.5" class="ls-node"/><circle cx="111.5" cy="138.0" r="3.5" class="ls-node"/><circle cx="157.2" cy="141.9" r="3.5" class="ls-node"/><circle cx="132.6" cy="185.2" r="3.5" class="ls-node"/><circle cx="208.5" cy="138.0" r="3.5" class="ls-node"/><circle cx="132.3" cy="94.0" r="3.5" class="ls-node"/>
-  <circle cx="202.9" cy="74.0" r="11" class="ls-halo"/><circle cx="202.9" cy="74.0" r="6" class="ls-key"/>
-  <text x="172.9" y="96.0" class="ls-lbl ls-lbl--key">RISK</text>
-  <path d="M210.9 68.0 C216.9 60.0 216 54 226 54" class="ls-link"/>
-  <g class="ls-card-g"><rect x="226" y="30" width="58" height="40" rx="7" class="ls-card ls-card--float"/>
-    <circle cx="237.0" cy="42.0" r="4" class="ls-accent"/><rect x="246" y="40" width="28" height="3.5" rx="1.75" class="ls-bar ls-bar--strong"/>
-    <rect x="235" y="53" width="40" height="3" rx="1.5" class="ls-bar"/><rect x="235" y="61" width="28" height="3" rx="1.5" class="ls-bar"/>
-    <text x="226" y="24" class="ls-lbl ls-plan-lbl">PLAN</text></g>
-</svg></div>
-          <div class="lab-body"><div class="lab-tag">AI POC</div><h3>Supplier Insights</h3><p>Meet Surety — an AI concept that turns a supplier risk signal into a negotiation-ready plan.</p><span class="btn btn-outline btn-small lab-cta">View case study <span class="cta-arrow">→</span></span></div>
+        <div class="lab-grid lab-grid--lx">
+        <a class="lab-card lx lx--lilac" data-cat="ai" data-view="case-supplier-insights" role="link" tabindex="0" aria-label="Supplier Insights — view case study">
+          <div class="lx-top"><span class="lx-label"><b></b>AI POC</span><span class="lx-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div>
+          <p class="lx-desc">An AI concept for Supplier Matrix. Surety turns a quiet supplier risk signal into a negotiation-ready continuity plan — AI proposes, the merchant decides.</p>
+          <div class="lx-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i></i><i></i><i></i><i class="off"></i><i></i><i></i><i></i></div>
+          <div class="lx-foot">
+            <h3 class="lx-title">Supplier<br>Insights</h3>
+            <p class="lx-tags"><span>North-star MVP</span><span>Supplier continuity</span><span>Design POC</span><span>AI ideas</span></p>
+          </div>
         </a>
-        <a class="lab-card" data-cat="vibe" data-view="case-code-puppy" role="link" tabindex="0">
-          <div class="lab-thumb lab-thumb--ill ls ls-sage" aria-hidden="true"><svg class="li" viewBox="0 0 320 220">
-  <g class="ls-dev"><circle cx="144" cy="126" r="64" class="ls-fill"/><text x="94" y="176" class="ls-lbl">DEV</text></g>
-  <circle cx="176" cy="94" r="64" class="ls-fill ls-fill--soft"/>
-  <circle cx="176" cy="94" r="64" class="ls-ring ls-ring--on"/>
-  <circle cx="218.8" cy="46.4" r="6" class="ls-accent"/>
-  <g class="ls-frame"><rect x="138" y="88" width="44" height="30" rx="5" class="ls-card ls-card--frame"/>
-    <rect x="145" y="95" width="18" height="3.5" rx="1.75" class="ls-bar ls-bar--strong"/><rect x="145" y="103" width="28" height="3" rx="1.5" class="ls-bar"/><rect x="145" y="110" width="12" height="3" rx="1.5" class="ls-bar ls-bar--acc"/></g>
-  <g class="ls-diff"><rect x="177" y="113" width="15" height="15" rx="3" class="ls-diffbox"/><text x="196" y="124" class="ls-lbl ls-lbl--key">2px</text></g>
-  <text x="232" y="50" class="ls-lbl">FIGMA</text>
-</svg></div>
-          <div class="lab-body"><div class="lab-tag">Vibe coded</div><h3>Code Puppy VQA</h3><p>AI-assisted visual QA — comparing Dev against Figma to speed up fidelity review.</p><span class="btn btn-outline btn-small lab-cta">View case study <span class="cta-arrow">→</span></span></div>
+        <a class="lab-card lx lx--paper" data-cat="vibe" data-view="case-code-puppy" role="link" tabindex="0" aria-label="Code Puppy VQA — view case study">
+          <div class="lx-top"><span class="lx-label"><b></b>Vibe coded</span></div>
+          <h3 class="lx-title lx-title--top">Code<br>Puppy<br>VQA</h3>
+          <p class="lx-desc">AI-assisted visual QA, vibe coded with the Code Puppy agent — comparing Dev against Figma to speed up fidelity review.</p>
+          <ul class="lx-list"><li>Vibe coded</li><li>Code Puppy agent</li><li>Process speed-up</li><li>Visual QA</li></ul>
+          <span class="lx-orb" aria-hidden="true">View<br>case study</span>
+          <p class="lx-tags"><span>Dev vs Figma</span><span>Fidelity review</span><span>AI-assisted</span></p>
         </a>
-        <a class="lab-card" data-cat="startup" data-view="case-onepaw" role="link" tabindex="0">
-          <div class="lab-thumb lab-thumb--ill ls ls-slate" aria-hidden="true"><svg class="li" viewBox="0 0 320 220">
-  <circle cx="160" cy="110" r="32" class="ls-ring ls-ring--on"/><circle cx="160" cy="110" r="56" class="ls-ring"/><circle cx="160" cy="110" r="80" class="ls-ring"/>
-  <line x1="160" y1="110" x2="188.0" y2="61.5" class="ls-spoke"/><line x1="160" y1="110" x2="188.0" y2="158.5" class="ls-spoke"/><line x1="160" y1="110" x2="104.0" y2="110.0" class="ls-spoke"/>
-  <g class="ls-outer" style="transform-origin:160px 110px"><circle cx="146.1" cy="31.2" r="3.5" class="ls-node"/><circle cx="221.3" cy="58.6" r="3.5" class="ls-node"/><circle cx="237.3" cy="130.7" r="3.5" class="ls-node"/><circle cx="180.7" cy="187.3" r="3.5" class="ls-node"/><circle cx="98.7" cy="161.4" r="3.5" class="ls-node"/><circle cx="84.8" cy="82.6" r="3.5" class="ls-node"/></g>
-  <circle cx="188.0" cy="61.5" r="4.0" class="ls-accent ls-accent--soft"/><circle cx="188.0" cy="158.5" r="4.0" class="ls-accent ls-accent--soft"/><circle cx="104.0" cy="110.0" r="4.0" class="ls-accent ls-accent--soft"/>
-  <circle cx="160" cy="110" r="16" class="ls-halo"/><circle cx="160.0" cy="110.0" r="9" class="ls-accent"/>
-  <text x="160" y="138" class="ls-lbl ls-lbl--acc" text-anchor="middle">MVP</text>
-  <text x="248" y="44" class="ls-lbl">VISION</text>
-</svg></div>
-          <div class="lab-body"><div class="lab-tag">0→1 Exploration</div><h3>One Paw Away</h3><p>An early-stage startup experiment — turning a broad pet-care vision into a focused MVP direction.</p><span class="btn btn-outline btn-small lab-cta">View case study <span class="cta-arrow">→</span></span></div>
+        <a class="lab-card lx lx--ink" data-cat="startup" data-view="case-onepaw" role="link" tabindex="0" aria-label="One Paw Away — view case study">
+          <div class="lx-top"><span class="lx-label"><b></b>0→1 Exploration</span><span class="lx-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div>
+          <div class="lx-art" aria-hidden="true">
+            <svg class="lx-paw" viewBox="0 0 210 190"><circle cx="71" cy="19" r="5.4"/><circle cx="84" cy="19" r="5.4"/><circle cx="97" cy="19" r="5.4"/><circle cx="110" cy="19" r="5.4"/><circle cx="123" cy="19" r="5.4"/><circle cx="136" cy="19" r="5.4"/><circle cx="45" cy="32" r="5.4"/><circle cx="71" cy="32" r="5.4"/><circle cx="84" cy="32" r="5.4"/><circle cx="97" cy="32" r="5.4"/><circle cx="110" cy="32" r="5.4"/><circle cx="123" cy="32" r="5.4"/><circle cx="136" cy="32" r="5.4"/><circle cx="162" cy="32" r="5.4"/><circle cx="32" cy="45" r="5.4"/><circle cx="45" cy="45" r="5.4"/><circle cx="58" cy="45" r="5.4"/><circle cx="84" cy="45" r="5.4"/><circle cx="97" cy="45" r="5.4"/><circle cx="123" cy="45" r="5.4"/><circle cx="136" cy="45" r="5.4"/><circle cx="149" cy="45" r="5.4"/><circle cx="162" cy="45" r="5.4"/><circle cx="175" cy="45" r="5.4"/><circle cx="32" cy="58" r="5.4"/><circle cx="45" cy="58" r="5.4"/><circle cx="58" cy="58" r="5.4"/><circle cx="149" cy="58" r="5.4"/><circle cx="162" cy="58" r="5.4"/><circle cx="175" cy="58" r="5.4"/><circle cx="45" cy="71" r="5.4"/><circle cx="162" cy="71" r="5.4"/><circle cx="71" cy="97" r="5.4"/><circle cx="84" cy="97" r="5.4"/><circle cx="97" cy="97" r="5.4"/><circle cx="110" cy="97" r="5.4"/><circle cx="123" cy="97" r="5.4"/><circle cx="136" cy="97" r="5.4"/><circle cx="58" cy="110" r="5.4"/><circle cx="71" cy="110" r="5.4"/><circle cx="84" cy="110" r="5.4"/><circle cx="97" cy="110" r="5.4"/><circle cx="110" cy="110" r="5.4"/><circle cx="123" cy="110" r="5.4"/><circle cx="136" cy="110" r="5.4"/><circle cx="149" cy="110" r="5.4"/><circle cx="58" cy="123" r="5.4"/><circle cx="71" cy="123" r="5.4"/><circle cx="84" cy="123" r="5.4"/><circle cx="97" cy="123" r="5.4"/><circle cx="110" cy="123" r="5.4"/><circle cx="123" cy="123" r="5.4"/><circle cx="136" cy="123" r="5.4"/><circle cx="149" cy="123" r="5.4"/><circle cx="58" cy="136" r="5.4"/><circle cx="71" cy="136" r="5.4"/><circle cx="84" cy="136" r="5.4"/><circle cx="97" cy="136" r="5.4"/><circle cx="110" cy="136" r="5.4"/><circle cx="123" cy="136" r="5.4"/><circle cx="136" cy="136" r="5.4"/><circle cx="149" cy="136" r="5.4"/><circle cx="71" cy="149" r="5.4"/><circle cx="84" cy="149" r="5.4"/><circle cx="97" cy="149" r="5.4"/><circle cx="110" cy="149" r="5.4"/><circle cx="123" cy="149" r="5.4"/><circle cx="136" cy="149" r="5.4"/><circle cx="149" cy="149" r="5.4"/><circle cx="71" cy="162" r="5.4"/><circle cx="84" cy="162" r="5.4"/><circle cx="97" cy="162" r="5.4"/><circle cx="110" cy="162" r="5.4"/><circle cx="123" cy="162" r="5.4"/><circle cx="136" cy="162" r="5.4"/></svg>
+            <span class="lx-vert">early</span>
+          </div>
+          <div class="lx-foot">
+            <h3 class="lx-title lx-title--sm">One Paw Away</h3>
+            <p class="lx-desc">An early-stage startup experiment — turning a broad pet-care vision into a focused MVP, leading design from zero to one.</p>
+            <p class="lx-tags"><span>0→1 exploration</span><span>Early startup</span><span>Design lead</span><span>MVP</span><span>Design leadership</span></p>
+          </div>
         </a>
         </div>
       </div>
