@@ -1387,6 +1387,7 @@
        out of the way (see .cursor-active below) rather than swelling over it.
        Matches the same element list the cursor-active JS hit-tests below. */
     a, button, .work-card, [data-view], [data-scroll], input, .c-mail, .oc, .pill-tag{cursor:pointer;}
+    .ba-cmp, .ba-cmp *{cursor:none;}   /* the compare slider keeps the single brand cursor — no second system cursor */
     .cursor-dot, .cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
       border-radius:50%;opacity:0;transition:opacity .25s ease;}
     .cursor-dot{width:12px;height:12px;background:var(--violet);
@@ -3145,7 +3146,7 @@
   .ba .shotbox-desktop{margin:0;}
   /* the compare: iteration underneath, prototype on top clipped to the handle position */
   .ba-cmp{position:relative;--pos:50%;}
-  .ba .ba-crop{max-height:min(640px,72vh);cursor:ew-resize;}
+  .ba .ba-crop{max-height:min(640px,72vh);}
   .ba-layers{position:relative;line-height:0;}
   .ba-after-img{display:block;width:100%;height:auto;}
   .ba-before-layer{position:absolute;inset:0;background:#fff;clip-path:inset(0 calc(100% - var(--pos)) 0 0);}
@@ -3155,7 +3156,7 @@
     color:#F8F7F4;background:rgba(23,23,28,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity .25s ease;}
   .ba-chip--l{left:12px;} .ba-chip--r{right:22px;background:rgba(91,42,104,.88);}
   .ba-cmp.is-l .ba-chip--l,.ba-cmp.is-r .ba-chip--r{opacity:0;}   /* a chip fades when its side is nearly closed */
-  .ba-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:44px;margin-left:-22px;pointer-events:auto;cursor:ew-resize;touch-action:none;outline:none;}
+  .ba-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:44px;margin-left:-22px;pointer-events:auto;touch-action:none;outline:none;}
   .ba-handle::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(23,23,28,.12),0 0 12px rgba(23,23,28,.25);}
   .ba-knob{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff;color:#17171C;
     display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px -4px rgba(23,23,28,.35),0 0 0 1px rgba(23,23,28,.08);transition:transform .2s ease;}
