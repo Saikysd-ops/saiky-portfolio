@@ -3103,6 +3103,36 @@
     .wk-row--4 .wk-fig,.wk-row--synth .wk-fig{flex:1 1 calc(50% - 6px);}
   }
   #cs-validation .vl-grid{margin-top:32px;}
+  /* iterations: one at a time — a quiet step list on the left, the selected iteration on the right */
+  .it{display:grid;grid-template-columns:220px minmax(0,1fr);margin-top:32px;border:1px solid var(--line);border-radius:20px;background:var(--paper-raised);overflow:hidden;}
+  .it-steps{display:flex;flex-direction:column;padding:14px;gap:4px;border-right:1px solid var(--line);}
+  .it-step{appearance:none;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;text-align:left;
+    font-family:var(--font-body);color:var(--ink-soft);transition:background .25s ease,color .25s ease;}
+  .it-n{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;opacity:.7;}
+  .it-w{font-size:15px;}
+  .it-step[aria-selected="true"]{background:color-mix(in srgb, var(--accent) 9%, transparent);color:var(--ink);}
+  .it-step[aria-selected="true"] .it-n{color:var(--accent);opacity:1;}
+  @media (hover:hover){ .it-step:not([aria-selected="true"]):hover{color:var(--ink);background:color-mix(in srgb, var(--ink) 4%, transparent);} }
+  .it-step:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+  .it-panels{padding:clamp(28px,3.4vw,48px) clamp(26px,3.6vw,56px);min-height:340px;}
+  .it-panel{display:none;max-width:620px;}
+  .it-panel.is-on{display:block;animation:baIn .45s cubic-bezier(.22,1,.36,1);}
+  .it-panel .case-tag{margin-bottom:14px;}
+  .it-panel h3{font-family:var(--font-display);font-weight:500;font-size:clamp(24px,2.3vw,32px);line-height:1.2;letter-spacing:-.015em;color:var(--ink);margin:0 0 32px;}
+  .it-panel h3 .vl-arrow{color:var(--accent);font-family:var(--font-body);font-weight:300;}
+  .it-row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--line);}
+  .it-row p{margin:0;font-size:16px;line-height:1.6;color:var(--ink-soft);}
+  .it-row--decision .vl-k{color:var(--accent);}
+  .it-row--decision p{color:var(--ink);}
+  @media (prefers-reduced-motion:reduce){ .it-panel.is-on{animation:none;} }
+  @media (max-width:760px){
+    .it{grid-template-columns:1fr;}
+    .it-steps{flex-direction:row;border-right:0;border-bottom:1px solid var(--line);padding:8px;gap:4px;}
+    .it-step{flex:1;flex-direction:column;gap:4px;padding:10px 4px;text-align:center;}
+    .it-w{font-size:13px;}
+    .it-panels{padding:26px 22px 22px;min-height:0;}
+    .it-row{grid-template-columns:1fr;gap:6px;}
+  }
   /* prototype tested → iteration after research: one frame, Listing / Details tabs, a Before / After switch */
   .ba{margin:8px 0 52px;}
   .ba-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;}
@@ -5409,11 +5439,34 @@
         <div class="case-bridge-lbl">The key decision</div>
         <p class="case-p" style="margin:0"><b>Make the score an entry point into evidence</b>, not a verdict on its own.</p>
       </div>
-      <div class="case-cardgrid case-cardgrid--2 vl-grid">
-        <div class="case-card vl-card"><div class="case-tag">Iteration 01 / Identity</div><h3>Logo <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> useful identity</h3><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Prioritize supplier identity, address/location and useful metadata.</p></div><details class="vl-more"><summary><b class="vl-k">Finding:</b><i aria-hidden="true"></i></summary><p>Most users did not value logos in long supplier lists.</p></details></div>
-        <div class="case-card vl-card"><div class="case-tag">Iteration 02 / Risk</div><h3>Unsettled terminology <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> clear mental model</h3><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Keep Risk and make direction/severity explicit.</p></div><details class="vl-more"><summary><b class="vl-k">Finding:</b><i aria-hidden="true"></i></summary><p>"Risk" was the most understood label; higher risk was expected to be worse.</p></details></div>
-        <div class="case-card vl-card"><div class="case-tag">Iteration 03 / Score</div><h3>Score <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> evidence</h3><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Treat the score as an entry point into deeper evidence.</p></div><details class="vl-more"><summary><b class="vl-k">Finding:</b><i aria-hidden="true"></i></summary><p>Scores supported shortlisting, but users wanted metrics, commentary and category relevance.</p></details></div>
-        <div class="case-card vl-card"><div class="case-tag">Iteration 04 / Context</div><h3>Structured data <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> structured + human knowledge</h3><div class="vl-row vl-row--decision"><b class="vl-k">Decision:</b><p>Preserve paths to qualitative supplier context where available.</p></div><details class="vl-more"><summary><b class="vl-k">Finding:</b><i aria-hidden="true"></i></summary><p>Prior contacts and factory-visit history influenced confidence.</p></details></div>
+      <div class="it" data-it>
+        <div class="it-steps" role="tablist" aria-label="Iterations"><button class="it-step" role="tab" id="itTab01" aria-controls="itPanel01" aria-selected="true" tabindex="0"><span class="it-n">01</span><span class="it-w">Identity</span></button><button class="it-step" role="tab" id="itTab02" aria-controls="itPanel02" aria-selected="false" tabindex="-1"><span class="it-n">02</span><span class="it-w">Risk</span></button><button class="it-step" role="tab" id="itTab03" aria-controls="itPanel03" aria-selected="false" tabindex="-1"><span class="it-n">03</span><span class="it-w">Score</span></button><button class="it-step" role="tab" id="itTab04" aria-controls="itPanel04" aria-selected="false" tabindex="-1"><span class="it-n">04</span><span class="it-w">Context</span></button></div>
+        <div class="it-panels">
+          <article class="it-panel is-on" role="tabpanel" id="itPanel01" aria-labelledby="itTab01">
+            <div class="case-tag">Iteration 01 / Identity</div>
+            <h3>Logo <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> useful identity</h3>
+            <div class="it-row"><b class="vl-k">Finding:</b><p>Most users did not value logos in long supplier lists.</p></div>
+            <div class="it-row it-row--decision"><b class="vl-k">Decision:</b><p>Prioritize supplier identity, address/location and useful metadata.</p></div>
+          </article>
+          <article class="it-panel" role="tabpanel" id="itPanel02" aria-labelledby="itTab02">
+            <div class="case-tag">Iteration 02 / Risk</div>
+            <h3>Unsettled terminology <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> clear mental model</h3>
+            <div class="it-row"><b class="vl-k">Finding:</b><p>"Risk" was the most understood label; higher risk was expected to be worse.</p></div>
+            <div class="it-row it-row--decision"><b class="vl-k">Decision:</b><p>Keep Risk and make direction/severity explicit.</p></div>
+          </article>
+          <article class="it-panel" role="tabpanel" id="itPanel03" aria-labelledby="itTab03">
+            <div class="case-tag">Iteration 03 / Score</div>
+            <h3>Score <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> evidence</h3>
+            <div class="it-row"><b class="vl-k">Finding:</b><p>Scores supported shortlisting, but users wanted metrics, commentary and category relevance.</p></div>
+            <div class="it-row it-row--decision"><b class="vl-k">Decision:</b><p>Treat the score as an entry point into deeper evidence.</p></div>
+          </article>
+          <article class="it-panel" role="tabpanel" id="itPanel04" aria-labelledby="itTab04">
+            <div class="case-tag">Iteration 04 / Context</div>
+            <h3>Structured data <span class="vl-arrow" aria-hidden="true">→</span><span class="sr-only"> to </span> structured + human knowledge</h3>
+            <div class="it-row"><b class="vl-k">Finding:</b><p>Prior contacts and factory-visit history influenced confidence.</p></div>
+            <div class="it-row it-row--decision"><b class="vl-k">Decision:</b><p>Preserve paths to qualitative supplier context where available.</p></div>
+          </article>
+        </div>
       </div>
       <div class="vl-quotes">
         <figure class="vl-qcard"><blockquote class="vl-qtext">“We have a Teams chat. I can ask, 'Does anyone know this supplier?' and it saves a whole bunch of time.”</blockquote><figcaption class="testi-person vl-qperson"><span class="vl-qmono" aria-hidden="true">SM</span><span><span class="testi-name">Sourcing Manager</span><span class="testi-title">General Merchandise</span></span></figcaption></figure>
@@ -11283,6 +11336,16 @@ setActive(0); startRotation();
     lb.classList.add('is-open'); document.documentElement.style.overflow='hidden'; lb.querySelector('button').focus(); }); });
   lb.addEventListener('click',close); document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&lb.classList.contains('is-open')) close(); });
 })();
+</script>
+<script>
+/* iterations stepper: one iteration at a time */
+(function(){ document.querySelectorAll('[data-it]').forEach(function(it){
+  var tabs=it.querySelectorAll('.it-step'), ps=it.querySelectorAll('.it-panel');
+  function show(i,focus){ tabs.forEach(function(t,k){ t.setAttribute('aria-selected',k===i?'true':'false'); t.tabIndex=k===i?0:-1; });
+    ps.forEach(function(p,k){ p.classList.toggle('is-on',k===i); }); if(focus) tabs[i].focus(); }
+  tabs.forEach(function(t,k){ t.addEventListener('click',function(){ show(k); });
+    t.addEventListener('keydown',function(e){ var d={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key]; if(!d) return; e.preventDefault(); show((k+d+tabs.length)%tabs.length,true); }); });
+}); })();
 </script>
 </body>
 </html>
