@@ -2321,6 +2321,17 @@
   .closing h2{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,4.2vw,52px);
     line-height:1.12;letter-spacing:-.015em;color:var(--ink);margin:0 0 28px;}
   .closing h2 em{font-style:italic;}
+  /* gradient words — the same brand gradient as "together." / "impact."; a hair of right padding so italic overhangs aren't clipped */
+  .gw{padding-right:.06em;margin-right:-.06em;}
+  /* closing: profile photo with a quiet online indicator */
+  .closing-avatar{position:relative;display:inline-block;width:1.05em;height:1.05em;vertical-align:-.16em;margin-right:.32em;}
+  .closing-avatar img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--paper-raised);}
+  .closing-online{position:absolute;right:-.04em;bottom:-.01em;width:.26em;height:.26em;border-radius:50%;background:color-mix(in srgb, var(--pine) 62%, #fff);
+    border:.055em solid #17171C;box-sizing:content-box;}
+  .closing-online::before{content:'';position:absolute;inset:-.055em;border-radius:50%;background:color-mix(in srgb, var(--pine) 62%, #fff);opacity:.45;animation:onlinePulse 2.6s cubic-bezier(.22,.61,.36,1) infinite;}
+  @keyframes onlinePulse{0%{transform:scale(1);opacity:.45;}70%,100%{transform:scale(2.1);opacity:0;}}
+  @media (prefers-reduced-motion:reduce){ .closing-online::before{animation:none;opacity:0;} }
+  @media (max-width:560px){ .closing-avatar{display:block;width:64px;height:64px;margin:0 auto 18px;font-size:58px;} }
   .closing .cta-row{justify-content:center;}
   .back-link{display:inline-flex;align-items:center;gap:8px;margin-top:34px;
     font-family:var(--font-mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
@@ -4431,7 +4442,7 @@
   <section class="work" id="work">
     <div class="eyebrow-lbl">Portfolio</div>
     <div class="work-head">
-      <h2>Selected work</h2>
+      <h2>Selected <span class="case-gradient gw">work</span></h2>
       <span class="work-all" data-view="work">View all work <svg class="c-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9 L9 3 M4.4 3 H9 V7.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </div>
     <p class="sub">Systems designed to make complex enterprise work simpler.</p>
@@ -4773,7 +4784,7 @@
   <div id="view-work">
     <section class="work-hero">
       <div class="eyebrow-lbl">Work</div>
-      <h1 class="work-title">Making complexity<br><em>feel simple.</em></h1>
+      <h1 class="work-title">Making complexity<br><em>feel <span class="case-gradient gw">simple.</span></em></h1>
       <p class="work-sub">A selection of products, systems and experiments shaped across fintech, AI, enterprise and everyday life.</p>
     </section>
     <section class="work all-work"><div id="workMount"></div></section>
@@ -4783,7 +4794,7 @@
       <div class="lab-head">
         <div>
           <div class="eyebrow-lbl lab-eyebrow">The lab</div>
-          <h2 class="lab-title">Prototypes, experiments<br><em>and ideas beyond the brief.</em></h2>
+          <h2 class="lab-title">Prototypes, <span class="case-gradient gw">experiments</span><br><em>and <span class="case-gradient gw">ideas</span> beyond the brief.</em></h2>
         </div>
         <p class="lab-sub">Explorations where I prototype ideas before they become products.</p>
       </div>
@@ -5059,7 +5070,7 @@
   </section>
 
   <section class="testimonials-sec" id="testimonials">
-    <h2 class="testi-head">In their words</h2>
+    <h2 class="testi-head">In their <span class="case-gradient gw">words</span></h2>
     <div class="testi-track" id="testiTrack" role="region" aria-label="Testimonials" tabindex="0">
       <article class="testi-slide">
         <div class="testi-eyebrow">Walmart</div>
@@ -5109,7 +5120,7 @@
   </section>
 
   <section class="closing" id="closing">
-    <h2>Let's make something good — <em class="case-gradient" style="font-style:italic">together.</em></h2>
+    <h2><span class="closing-avatar"><img src="assets/images/saiky-avatar.jpg" alt="Saiky Desai" width="180" height="180"><i class="closing-online" aria-hidden="true"></i><span class="sr-only">Available</span></span>Let's make something good — <em class="case-gradient" style="font-style:italic">together.</em></h2>
     <div class="cta-row">
       <button class="btn btn-primary" data-goto="contact">Get in touch <svg class="c-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9 L9 3 M4.4 3 H9 V7.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <a class="btn btn-ghost" data-book href="#book">Book a call <span class="cta-arrow">→</span></a>
