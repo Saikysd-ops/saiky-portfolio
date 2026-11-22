@@ -10932,7 +10932,7 @@ setActive(0); startRotation();
     /* scroll-linked entrance: 0 when the name's top meets the bottom of the screen, 1 when the whole name is in view
        (i.e. when you reach the end of the page) — so it is always fully formed as your scroll finishes */
     var cur=0, target=0;
-    function prog(){ var r=w.getBoundingClientRect(); return Math.max(0,Math.min(1,(innerHeight-r.top+3)/Math.max(1,r.height))); }   /* +3px: sub-pixel slack so the very end of the page always counts as fully in */
+    function prog(){ var r=w.getBoundingClientRect(); return Math.max(0,Math.min(1,(innerHeight-r.top+3)/Math.max(1,r.height*.75))); }   /* done once ~¾ of the name is on screen, so it is always complete before the scroll ends */   /* +3px: sub-pixel slack so the very end of the page always counts as fully in */
     function seed(){
       for(var i=0;i<N;i++){
         SX[i]=HX[i]+(Math.random()-.5)*H*.08;                          /* simple, clean rise: each dot starts just below its home */
@@ -10962,7 +10962,7 @@ setActive(0); startRotation();
     function frame(now){
       raf=0; if(!N) return;
       if(mode==='intro'){
-        target=prog(); var df=target-cur; cur=Math.abs(df)<.002?target:cur+df*.28;
+        target=prog(); var df=target-cur; cur=Math.abs(df)<.002?target:cur+df*.4;
         if(!FADE||FADE.length!==N) FADE=new Float32Array(N);
         for(var i=0;i<N;i++){ var p=Math.max(0,Math.min(1,(cur-DL[i])/.68)), e=ease(p);
           X[i]=SX[i]+(HX[i]-SX[i])*e; Y[i]=SY[i]+(HY[i]-SY[i])*e; FADE[i]=e; VX[i]=VY[i]=0; }
