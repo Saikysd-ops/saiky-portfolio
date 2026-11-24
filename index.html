@@ -121,7 +121,7 @@
   .tags{display:flex;gap:18px;flex-wrap:wrap;padding:6px 0 6px;border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:12px;color:var(--accent);}
   /* on the home page the design-ruler sits right below and supplies its own top border,
      so the plain hashtag divider would just double it up — every other page keeps it. */
-  body:not(.on-work):not(.on-about):not(.on-brand):not(.on-case-supplier):not(.on-case-delivery):not(.on-case-bawsala):not(.on-case-solv):not(.on-case-omni):not(.on-case-scintilla):not(.on-case-supplier-insights):not(.on-case-code-puppy):not(.on-case-onepaw) .tags{border-bottom:none;}
+  body:not(.on-work):not(.on-about):not(.on-brand):not(.on-case-supplier):not(.on-case-delivery):not(.on-case-bawsala):not(.on-case-solv):not(.on-case-omni):not(.on-case-scintilla):not(.on-case-supplier-insights):not(.on-case-code-puppy):not(.on-case-onepaw):not(.on-case-byod) .tags{border-bottom:none;}
   .tags span{opacity:.55;color:var(--ink-soft);}
   .tags .tag-secondary{opacity:.4;}
   @media (max-width:760px){
@@ -1631,7 +1631,31 @@
   .lx-paw-g > *{transition:translate .55s cubic-bezier(.22,1,.36,1);}
   .lx-vert{position:absolute;right:-8px;top:-4px;writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Grotesk',var(--font-body);font-weight:700;
     font-size:clamp(76px,7.2vw,104px);line-height:.8;letter-spacing:-.04em;color:#F8F7F4;}
-  @media (min-width:981px){ .lab-grid--lx{overflow:visible;-webkit-mask-image:none;mask-image:none;} .lab-carousel:has(.lab-grid--lx) .lab-nav{display:none;} }
+  /* card 4 — a dot spreadsheet whose mapped column flows into one Matrix node */
+  a.lab-card.lx--plum{background:#452064;color:#F8F7F4;}
+  :root[data-theme="dark"] a.lab-card.lx--plum{border-color:rgba(248,247,244,.12);}
+  .lx--plum .lx-label b{background:#F8F7F4;}
+  .lx--plum .lx-desc{color:rgba(248,247,244,.86);}
+  .lx--plum:hover .lx-arrow{background:#F8F7F4;border-color:#F8F7F4;color:#452064;transform:rotate(45deg);}
+  .lx-byod{position:relative;flex:1;display:flex;align-items:center;min-height:150px;margin:18px 0 12px;}
+  .lx-byod svg{width:100%;height:auto;overflow:visible;}
+  .lx-byod .c{fill:#F8F7F4;opacity:.22;}
+  .lx-byod .h{fill:#F8F7F4;opacity:.55;}
+  .lx-byod .m{fill:#F1EAF7;opacity:.72;transition:opacity .45s ease,translate .55s cubic-bezier(.22,1,.36,1);}
+  .lx-byod .ln{stroke:#F8F7F4;stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1.5 5;opacity:.38;transition:opacity .4s ease;}
+  .lx-byod .nd{stroke:#F8F7F4;stroke-width:1.2;opacity:.35;transition:opacity .4s ease,r .5s cubic-bezier(.22,1,.36,1);}
+  .lx-byod .nd2{stroke:#F8F7F4;stroke-width:1.4;opacity:.75;}
+  .lx-byod .ndc{fill:#F8F7F4;transition:r .5s cubic-bezier(.22,1,.36,1);}
+  .lx-byod-k{position:absolute;bottom:-4px;left:2px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(248,247,244,.55);}
+  .lx-byod-k--r{left:auto;right:4px;}
+  .lx--plum:hover .lx-byod .m{opacity:1;translate:3px 0;}
+  .lx--plum:hover .lx-byod .ln{opacity:.95;animation:lxFlow 1.1s linear infinite;}
+  .lx--plum:hover .lx-byod .nd{opacity:.7;r:24px;}
+  .lx--plum:hover .lx-byod .ndc{r:7px;}
+  @keyframes lxFlow{to{stroke-dashoffset:-13;}}
+  @media (prefers-reduced-motion:reduce){ .lx-byod *{transition:none !important;animation:none !important;} }
+  /* four cards: same card size as before — the row scrolls, arrows appear on wide screens */
+  @media (min-width:981px){ .lab-grid--lx{-webkit-mask-image:none;mask-image:none;} }
   @media (max-width:980px){ .lx{flex-basis:min(380px,82vw);min-height:560px;} }
   @media (prefers-reduced-motion:reduce){ .lx,.lx-arrow,.lx-orb,.lx-dots i,.lx-paw{transition:none;} }
   @media (max-width:560px){ .lab-card{flex-basis:84vw;} .lab-grid{gap:16px;} }
@@ -2435,6 +2459,62 @@
   body.on-case-onepaw #view-home,body.on-case-onepaw #view-work,
   body.on-case-onepaw #view-about,body.on-case-onepaw #view-brand,body.on-case-onepaw #view-case-supplier,body.on-case-onepaw #view-case-delivery,body.on-case-onepaw #view-case-bawsala,body.on-case-onepaw #view-case-solv,body.on-case-onepaw #view-case-omni,body.on-case-onepaw #view-case-scintilla,body.on-case-onepaw #view-case-supplier-insights,body.on-case-onepaw #view-case-code-puppy{display:none;}
   body.on-case-onepaw #view-case-onepaw{display:block;}
+
+  #view-case-byod{display:none;}
+  body.on-case-byod #view-home,body.on-case-byod #view-work,
+  body.on-case-byod #view-about,body.on-case-byod #view-brand,body.on-case-byod #view-case-supplier,body.on-case-byod #view-case-delivery,body.on-case-byod #view-case-bawsala,body.on-case-byod #view-case-solv,body.on-case-byod #view-case-omni,body.on-case-byod #view-case-scintilla,body.on-case-byod #view-case-supplier-insights,body.on-case-byod #view-case-code-puppy,body.on-case-byod #view-case-onepaw{display:none;}
+  body.on-case-byod #view-case-byod{display:block;}
+
+  /* CASE STUDY — Bring Your Own Data (BYOD). Reuses the case-study system; only the
+     loop, the architecture map and the evidence-label legend are new. Brand palette only. */
+  .byod-loop{position:relative;max-width:1100px;margin:8px 0 12px;}
+  .byod-loop video{display:block;width:100%;height:auto;aspect-ratio:1920/1016;object-fit:cover;background:#F8F7F4;border-radius:0 0 9px 9px;pointer-events:none;}
+  .byod-live{position:absolute;top:7px;right:14px;z-index:2;display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+  .byod-live i{width:6px;height:6px;border-radius:50%;background:#7546D8;animation:byodPulse 2.4s ease-in-out infinite;}
+  @keyframes byodPulse{0%,100%{opacity:1}50%{opacity:.25}}
+  .byod-arch{margin:32px 0 8px;max-width:980px;}
+  .byod-arch-root{display:flex;justify-content:center;}
+  .byod-node{position:relative;background:var(--paper-raised);border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+  .byod-node b{display:block;font-family:var(--font-display);font-weight:500;font-size:17px;line-height:1.3;color:var(--ink);}
+  .byod-node span{display:block;margin-top:4px;font-size:13.5px;line-height:1.45;color:var(--ink-soft);}
+  .byod-node--root{min-width:240px;text-align:center;background:#452064;border-color:#452064;}
+  .byod-node--root b{color:#F8F7F4;}
+  .byod-node--root span{color:rgba(248,247,244,.72);}
+  .byod-node--new{border-color:color-mix(in srgb, #7546D8 45%, var(--line));}
+  .byod-node em{position:absolute;top:14px;right:14px;font-style:normal;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:#7546D8;padding:3px 7px;border-radius:999px;background:color-mix(in srgb, #7546D8 11%, transparent);}
+  :root[data-theme="dark"] .byod-node em{color:#BC80CC;}
+  .byod-arch-row{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:34px;}
+  .byod-arch-row::before{content:'';position:absolute;top:0;left:50%;width:1px;height:17px;background:var(--line-strong, var(--line));}
+  .byod-arch-row::after{content:'';position:absolute;top:17px;left:16.66%;right:16.66%;height:17px;border:1px solid var(--line-strong, var(--line));border-bottom:0;border-radius:10px 10px 0 0;}
+  .byod-arch-row--2{grid-template-columns:1fr 1fr 1fr;padding-top:26px;}
+  .byod-arch-row--2::before{left:16.66%;height:26px;}
+  .byod-arch-row--2::after{display:none;}
+  .byod-arch-pair{grid-column:1 / span 2;display:grid;grid-template-columns:1fr 36px 1fr;align-items:center;gap:0;}
+  .byod-arch-pair i{font-style:normal;text-align:center;color:#7546D8;font-size:18px;}
+  .byod-arch-note{align-self:center;font-size:13.5px;line-height:1.5;color:var(--ink-soft);padding-left:6px;}
+  .byod-labels{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin:26px 0 8px;max-width:980px;}
+  .byod-labels > div{display:grid;grid-template-columns:170px 1fr;align-items:center;gap:16px;padding:13px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.5;color:var(--ink-soft);}
+  .ev{justify-self:start;display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;line-height:1;color:var(--ink);padding:6px 10px;border-radius:8px;
+    background:color-mix(in srgb, var(--ev) 13%, transparent);}
+  .ev b{color:var(--ev);font-weight:700;font-size:12px;}
+  .ev--cur{--ev:#1F6E4F;} .ev--stale{--ev:#C49A45;} .ev--unk,.ev--na{--ev:#66666E;} .ev--res{--ev:#C54879;} .ev--con{--ev:#E46B5D;} .ev--sup{--ev:#7546D8;} .ev--rev{--ev:#A65CCB;}
+  :root[data-theme="dark"] .ev--cur{--ev:#6FA878;} :root[data-theme="dark"] .ev--unk,:root[data-theme="dark"] .ev--na{--ev:#A9A9B0;}
+  #view-case-byod .case-cardgrid .case-card{min-height:128px;}
+  #view-case-byod .case-cardgrid .case-card-copy{margin-top:10px;}
+  #view-case-byod .case-cardgrid .case-card-copy b{display:block;margin-bottom:4px;color:var(--ink);font-weight:600;}
+  #view-case-byod .case-sec--dark .case-card-copy b{color:#F4F3F1;}
+  @media (max-width:760px){
+    .byod-arch-row,.byod-arch-row--2{grid-template-columns:1fr;gap:12px;padding-top:24px;}
+    .byod-arch-row::after,.byod-arch-row--2::before{display:none;}
+    .byod-arch-row::before{left:28px;height:24px;}
+    .byod-arch-pair{grid-column:auto;grid-template-columns:1fr;gap:8px;}
+    .byod-arch-pair i{transform:rotate(90deg);}
+    .byod-labels{grid-template-columns:1fr;}
+    .byod-labels > div{grid-template-columns:1fr;gap:8px;}
+    .byod-live{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){ .byod-live i{animation:none;} }
 
   .case{padding-top:32px;padding-bottom:100px;}
   .case-back{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);
@@ -4811,6 +4891,7 @@
           <button class="chip" data-filter="ai">AI POCs</button>
           <button class="chip" data-filter="vibe">Vibe coded</button>
           <button class="chip" data-filter="startup">0→1</button>
+          <button class="chip" data-filter="proto">Prototypes</button>
         </div>
       </div>
 
@@ -4844,6 +4925,15 @@
             <h3 class="lx-title lx-title--sm">One Paw Away</h3>
             <p class="lx-desc">An early-stage startup experiment — turning a broad pet-care vision into a focused MVP, leading design from zero to one.</p>
             <p class="lx-tags"><span>0→1 exploration</span><span>Early startup</span><span>Design lead</span><span>MVP</span><span>Design leadership</span></p>
+          </div>
+        </a>
+        <a class="lab-card lx lx--plum" data-cat="proto" data-view="case-byod" role="link" tabindex="0" aria-label="Bring Your Own Data — view case study">
+          <div class="lx-top"><span class="lx-label"><b></b>Working prototype</span><span class="lx-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div>
+          <h3 class="lx-title lx-title--top">Bring<br>your own<br>data</h3>
+          <div class="lx-byod" aria-hidden="true"><svg viewBox="0 0 240 120" fill="none"><g class="lx-sheet"><circle class="h" cx="14" cy="14" r="3.4"/><circle class="h" cx="29" cy="14" r="3.4"/><circle class="h" cx="44" cy="14" r="3.4"/><circle class="h" cx="59" cy="14" r="3.4"/><circle class="h" cx="74" cy="14" r="3.4"/><circle class="c" cx="14" cy="29" r="3.4"/><circle class="c" cx="29" cy="29" r="3.4"/><circle class="m" cx="44" cy="29" r="3.4" style="transition-delay:0.05s"/><circle class="c" cx="59" cy="29" r="3.4"/><circle class="c" cx="74" cy="29" r="3.4"/><circle class="c" cx="14" cy="44" r="3.4"/><circle class="c" cx="29" cy="44" r="3.4"/><circle class="m" cx="44" cy="44" r="3.4" style="transition-delay:0.10s"/><circle class="c" cx="59" cy="44" r="3.4"/><circle class="c" cx="74" cy="44" r="3.4"/><circle class="c" cx="14" cy="59" r="3.4"/><circle class="c" cx="29" cy="59" r="3.4"/><circle class="m" cx="44" cy="59" r="3.4" style="transition-delay:0.15s"/><circle class="c" cx="59" cy="59" r="3.4"/><circle class="c" cx="74" cy="59" r="3.4"/><circle class="c" cx="14" cy="74" r="3.4"/><circle class="c" cx="29" cy="74" r="3.4"/><circle class="m" cx="44" cy="74" r="3.4" style="transition-delay:0.20s"/><circle class="c" cx="59" cy="74" r="3.4"/><circle class="c" cx="74" cy="74" r="3.4"/><circle class="c" cx="14" cy="89" r="3.4"/><circle class="c" cx="29" cy="89" r="3.4"/><circle class="m" cx="44" cy="89" r="3.4" style="transition-delay:0.25s"/><circle class="c" cx="59" cy="89" r="3.4"/><circle class="c" cx="74" cy="89" r="3.4"/><circle class="c" cx="14" cy="104" r="3.4"/><circle class="c" cx="29" cy="104" r="3.4"/><circle class="m" cx="44" cy="104" r="3.4" style="transition-delay:0.30s"/><circle class="c" cx="59" cy="104" r="3.4"/><circle class="c" cx="74" cy="104" r="3.4"/></g><path class="ln" d="M90 29 C140 29 150 59 178 59"/><path class="ln" d="M90 59 L178 59"/><path class="ln" d="M90 89 C140 89 150 59 178 59"/><circle class="nd" cx="200" cy="59" r="20"/><circle class="nd2" cx="200" cy="59" r="11"/><circle class="ndc" cx="200" cy="59" r="5"/></svg><span class="lx-byod-k">file</span><span class="lx-byod-k lx-byod-k--r">matrix</span></div>
+          <div class="lx-foot">
+            <p class="lx-desc">Sourcing teams’ own spreadsheets — uploaded, mapped and steward-approved into Supplier Matrix as evidence that never overrides source-owned data.</p>
+            <p class="lx-tags"><span>Insights Workspace</span><span>Data governance</span><span>Evidence labels</span><span>Supplier Matrix</span></p>
           </div>
         </a>
         </div>
@@ -7854,6 +7944,357 @@
   </div>
 </div>
 
+<div id="view-case-byod">
+  <div class="wrap case">
+
+    <a class="case-back" data-view="work"><span class="case-back-arrow">←</span> Back to work</a>
+
+    <nav class="case-jumpnav" id="caseJumpnavByod">
+      <div class="case-jump-group">
+        <a class="case-jump-item" href="#by-overview"><i></i>Overview</a>
+        <a class="case-jump-item" href="#by-video"><i></i>Prototype walkthrough</a>
+      </div>
+      <div class="case-jump-group">
+        <div class="case-jump-lbl">The problem</div>
+        <a class="case-jump-item" href="#by-problem"><i></i>01 · Trapped data</a>
+        <a class="case-jump-item" href="#by-flow"><i></i>02 · Flow &amp; placement</a>
+        <a class="case-jump-item" href="#by-principles"><i></i>03 · Principles</a>
+      </div>
+      <div class="case-jump-group">
+        <div class="case-jump-lbl">Contribute</div>
+        <a class="case-jump-item" href="#by-workspace"><i></i>04 · Insights Workspace</a>
+        <a class="case-jump-item" href="#by-describe"><i></i>05 · Describe</a>
+        <a class="case-jump-item" href="#by-map"><i></i>06 · Map fields</a>
+        <a class="case-jump-item" href="#by-publish"><i></i>07 · Match &amp; publish</a>
+      </div>
+      <div class="case-jump-group">
+        <div class="case-jump-lbl">Use the evidence</div>
+        <a class="case-jump-item" href="#by-find"><i></i>08 · Find suppliers</a>
+        <a class="case-jump-item" href="#by-evidence"><i></i>09 · Evidence labels</a>
+        <a class="case-jump-item" href="#by-compare"><i></i>10 · Compare</a>
+        <a class="case-jump-item" href="#by-configure"><i></i>11 · Configure</a>
+        <a class="case-jump-item" href="#by-review"><i></i>12 · Strategic review</a>
+      </div>
+      <div class="case-jump-group">
+        <a class="case-jump-item" href="#by-decisions"><i></i>13 · Decisions</a>
+        <a class="case-jump-item" href="#by-pilot"><i></i>14 · Pilot &amp; roadmap</a>
+        <a class="case-jump-item" href="#by-outcome"><i></i>Outcome</a>
+      </div>
+    </nav>
+
+    <div class="case-hero" id="by-overview">
+      <div class="eyebrow-lbl">ENTERPRISE DATA · SUPPLIER MATRIX</div>
+      <h1 class="case-h1">Supplier knowledge lived in local spreadsheets. <span class="case-gradient">BYOD turns it into evidence.</span></h1>
+      <p class="case-lede">Bring Your Own Data is a new capability inside Supplier Matrix. Sourcing managers upload their own capability and sustainability data, map and match it to Matrix suppliers, and route it through steward approval. They then use it in discovery, comparison and strategic review, without it ever overriding source-owned data.</p>
+
+      <div class="case-meta">
+        <div><dt>Focus</dt><dd>Data contribution &amp; evidence</dd></div>
+        <div><dt>Product</dt><dd>Supplier Matrix</dd></div>
+        <div><dt>Type</dt><dd>Working prototype</dd></div>
+        <div><dt>Status</dt><dd>Phase 1 · in review</dd></div>
+      </div>
+      <div class="case-source-note">Built from a draft PRD as a working prototype, then taken to product and engineering to settle direction. I owned it end to end: the flow, the information architecture, upload and mapping, the evidence-label system, and the path from compare to review.</div>
+
+      <div class="case-bridge" style="margin-top:24px">
+        <div class="case-bridge-lbl">Design principle</div>
+        <p class="case-p" style="margin:0"><b>Source-owned data stays authoritative.</b> Uploaded evidence is labelled, dated and scoped. It supplements Matrix, never overrides it, and never becomes a hidden score.</p>
+      </div>
+    </div>
+
+    <div class="sv-gate" id="byodGate">
+      <div class="sv-gate-illustration">
+        <div class="sv-illustration-wrap">
+          <span class="sv-lock-pulse" aria-hidden="true"></span>
+          <img src="assets/images/image-021-a5665b4bd75f.png" alt="Shield and padlock illustration representing protected case study content">
+        </div>
+        <div class="sv-gate-illustration-note">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Your data and content are securely protected.</span>
+        </div>
+      </div>
+      <div class="sv-gate-form">
+      <div class="nda-eyebrow">[ NDA protected ]</div>
+      <h3 class="nda-title">This case study is protected under NDA.</h3>
+      <p class="nda-copy">The full screens, design process, and product rationale are available to approved reviewers. Enter your password below for the complete walkthrough.</p>
+      <div class="nda-divider-line"></div>
+      <div class="nda-input-wrap">
+        <svg class="nda-input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input class="nda-input" id="byodGateInput" type="password" placeholder="Enter access password" autocomplete="off">
+      </div>
+      <button class="btn btn-primary nda-unlock" id="byodGateUnlock">
+        <span class="nda-btn-label">Unlock</span>
+        <svg class="nda-btn-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <div class="nda-error" id="byodGateError">That password isn't quite right — please try again.</div>
+      </div>
+    </div>
+
+    <div class="sv-gated-content is-locked" id="byodGatedContent">
+
+    <section class="case-sec" id="by-video">
+      <div class="case-num">Prototype walkthrough</div>
+      <h2 class="case-h2">Upload, map, match, publish, then use it to decide.</h2>
+      <p class="case-p">The working prototype end to end. A new dataset goes from description to steward approval, then into Find suppliers, a supplier profile, Compare, Configure and a strategic review.</p>
+      <div class="byod-loop">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div>
+          <span class="byod-live" aria-hidden="true"><i></i>Live prototype</span>
+          <video id="byodLoop" muted loop playsinline preload="none" disablepictureinpicture poster="assets/images/byod-01-workspace.jpg" aria-label="Bring Your Own Data prototype: describe, upload, map and match a dataset, submit it for steward approval, then find, compare, configure and review suppliers">
+            <source src="assets/videos/video-010-byod-prototype.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-problem">
+      <div class="case-num">01 / The problem</div>
+      <h2 class="case-h2">Valuable supplier data was trapped where nobody could reuse it.</h2>
+      <p class="case-p">Sourcing teams already know a lot about their suppliers: capacity, certifications, sustainability claims, capabilities nobody else has written down. Most of it lives in local files, so every comparison starts with reconciling them by hand.</p>
+      <div class="case-compare">
+        <div class="case-compare-col">
+          <div class="case-tag">Current state</div>
+          <h3 class="case-compare-h3">Scattered and manual</h3>
+          <div class="case-row"><b>Scattered</b><span>Supplier intelligence lives across records, scorecards, risk tools, spreadsheets, notes and individual knowledge.</span></div>
+          <div class="case-row"><b>Trapped</b><span>Capability and sustainability data sits in local files and can't be reused.</span></div>
+          <div class="case-row"><b>Reconciled by hand</b><span>Teams reconcile data before they can compare candidates or prepare a supplier discussion.</span></div>
+        </div>
+        <div class="case-compare-col case-compare-col--accent">
+          <div class="case-tag">Phase 1 response</div>
+          <h3 class="case-compare-h3">One trusted place</h3>
+          <div class="case-row"><b>Evidence-aware recommendations</b><span>Permitted evidence brought together with source, freshness, scope and visible gaps.</span></div>
+          <div class="case-row"><b>An individual Insights Workspace</b><span>Upload, map, match and review your own data.</span></div>
+          <div class="case-row"><b>Discovery → comparison → review</b><span>Views that carry the evidence all the way into the analysis.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-flow">
+      <div class="case-num">02 / Flow &amp; placement</div>
+      <h2 class="case-h2">Three jobs, one product, inside Supplier Matrix rather than beside it.</h2>
+      <p class="case-p">The first question the prototype had to answer was where BYOD lives. I brought it to product and engineering as a working flow, and the answer was clear: BYOD is a new capability within the existing Supplier Matrix experience, not a separate application. Existing discovery and profile pages stay, and three new areas plug into them.</p>
+      <div class="byod-arch" aria-label="Information architecture: Supplier Matrix contains Supplier discovery, Supplier profile and the new Insights Workspace; discovery and profiles feed the new Compare suppliers, which leads to the new Supplier strategic review">
+        <div class="byod-arch-root"><div class="byod-node byod-node--root"><b>Supplier Matrix</b><span>Supplier Intelligence Platform</span></div></div>
+        <div class="byod-arch-row">
+          <div class="byod-node"><b>Supplier discovery</b><span>Existing list and table</span></div>
+          <div class="byod-node"><b>Supplier profile</b><span>Existing performance and risk pages</span></div>
+          <div class="byod-node byod-node--new"><em>New</em><b>Insights Workspace</b><span>BYOD contribution area</span></div>
+        </div>
+        <div class="byod-arch-row byod-arch-row--2">
+          <div class="byod-arch-pair">
+            <div class="byod-node byod-node--new"><em>New</em><b>Compare suppliers</b><span>From discovery or profiles</span></div>
+            <i aria-hidden="true">→</i>
+            <div class="byod-node byod-node--new"><em>New</em><b>Strategic review</b><span>Working direction &amp; rationale</span></div>
+          </div>
+          <p class="byod-arch-note">Published workspace data flows into discovery, profiles and comparison as supplemental evidence.</p>
+        </div>
+      </div>
+      <div class="case-cardgrid case-cardgrid--3" style="margin-top:36px">
+        <div class="case-card"><div class="case-card-lbl">Find suppliers</div><div class="case-card-copy"><b>Search by evidence.</b> Use capability, certification, sustainability and capacity filters, then view supplier details.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Insights Workspace</div><div class="case-card-copy"><b>Contribute evidence.</b> Add supplier-level supplemental evidence, upload a dataset, and route it through steward approval.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Supplier review</div><div class="case-card-copy"><b>Decide with context.</b> Analyze and compare evidence while source-owned data stays authoritative.</div></div>
+      </div>
+    </section>
+
+    <section class="case-sec case-sec--dark" id="by-principles">
+      <div class="case-num">03 / Product principles</div>
+      <h2 class="case-h2">Four rules that shaped every screen.</h2>
+      <div class="case-cardgrid case-cardgrid--4">
+        <div class="case-card"><div class="case-card-lbl">01</div><div class="case-card-copy"><b>No duplicate system of record.</b> Use the existing supplier identity and hierarchy foundation.</div></div>
+        <div class="case-card"><div class="case-card-lbl">02</div><div class="case-card-copy"><b>Keep unlike evidence distinct.</b> Capability, performance and risk are never collapsed into a black-box composite.</div></div>
+        <div class="case-card"><div class="case-card-lbl">03</div><div class="case-card-copy"><b>Show source, date and gaps.</b> Wherever evidence influences analysis, its provenance is visible.</div></div>
+        <div class="case-card"><div class="case-card-lbl">04</div><div class="case-card-copy"><b>Support decisions, don't automate them.</b> No automated awards, exits, escalations or negotiations.</div></div>
+      </div>
+    </section>
+
+    <div class="si-path" id="by-contribute">
+      <div class="si-path-badge">Contribute</div>
+      <h2 class="si-path-title">Insights Workspace</h2>
+      <p class="si-path-sub">A seven-step flow that turns a local file into published supplemental evidence. It is clear enough for non-technical users, and every error explains what to fix and where.</p>
+      <div class="si-path-steps"><span>Describe dataset</span><span>Upload file</span><span>Map fields</span><span>Match suppliers</span><span>Resolve exceptions</span><span>Review &amp; publish</span><span>Analyze published</span></div>
+    </div>
+
+    <section class="case-sec" id="by-workspace">
+      <div class="case-num">04 / Insights Workspace</div>
+      <h2 class="case-h2">Every dataset shows its status, version and freshness at a glance.</h2>
+      <div class="case-step-stat">Draft → Pending approval → Published · refresh expected every 90 days</div>
+      <p class="case-p">My datasets sits beside Source-owned data, so the difference between the two is always visible. A newer version waiting for approval never replaces the published one until a steward signs it off, and stale data is flagged when it passes its refresh expectation.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-01-workspace.jpg" alt="Bring your own data workspace: 4 supplemental datasets in view and 1 stale; table of datasets with status (Published, Draft, Unpublished), version, freshness (Current, Stale) and actions; New dataset button" loading="lazy"></div></div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-describe">
+      <div class="case-num">05 / Describe dataset</div>
+      <h2 class="case-h2">Before any upload: what it covers, why it exists, and who can see it.</h2>
+      <p class="case-p">Name, scope, purpose and business context come first. Scope is shown alongside every value this dataset contributes. Sensitivity (Internal, Confidential or Restricted), intended audience and refresh expectation follow, along with who can see it by SBU, market, category and team. The owner and designated data steward are set from the start.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-02-describe.jpg" alt="New dataset, step 1 of 7, Describe dataset: dataset name, scope, purpose and business context fields; owner and designated data steward; Sensitivity and refresh section below" loading="lazy"></div></div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-map">
+      <div class="case-num">06 / Map fields</div>
+      <h2 class="case-h2">Column names differ by team. Approved Matrix fields don't.</h2>
+      <div class="case-step-stat">Supplier name + as-of date required · facilities arrive in Phase 1b</div>
+      <p class="case-p">Every source column is shown with sample values and mapped to an approved Matrix field. Required identity fields are clearly marked, and you can't move on until they're mapped. The mapping is saved with the dataset version for traceability and can be reused on the next compatible upload.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-03-map-fields.jpg" alt="Map fields, step 3 of 7: source columns with sample values, each mapped to an approved Matrix field; dropdown lists Supplier name (required), Matrix supplier ID, Capability type, Product / category support, capacity fields, Certifications, Sustainability attributes, Evidence as-of date (required) and Notes" loading="lazy"></div></div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-publish">
+      <div class="case-num">07 / Match, resolve &amp; publish</div>
+      <h2 class="case-h2">Ambiguous matches go to a person, and nothing goes live without a steward.</h2>
+      <div class="case-step-stat">Matched · Needs review · Unmatched · Invalid</div>
+      <p class="case-p">Rows are matched to Matrix suppliers by ID and normalized name. When a match is ambiguous, the user confirms it, sends it to the steward or excludes it. Invalid rows explain themselves one by one: a missing name, a unit outside the controlled list, a bad date format, a duplicate. Before submitting, the review step shows how conflicts resolve. Source-owned data always wins, and a re-upload becomes a new version with the full history kept.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-04-published-version.jpg" alt="Published dataset Packaging Team Q3 2026 Capacity Update: banner noting version 3 is pending approval and shown separately; published version 2 details with source file, owner and steward, classification, visibility and Current freshness; confirmed mapping table" loading="lazy"></div></div>
+        <div class="case-caption">A published version stays live while the next one waits for approval.</div>
+      </div>
+    </section>
+
+    <div class="si-path" id="by-use">
+      <div class="si-path-badge">Use the evidence</div>
+      <h2 class="si-path-title">From discovery to a strategic review</h2>
+      <p class="si-path-sub">Published evidence shows up everywhere decisions are made, and it always says what it is.</p>
+      <div class="si-path-steps"><span>Find suppliers</span><span>Supplier profile</span><span>Compare</span><span>Configure analysis</span><span>Strategic review</span></div>
+    </div>
+
+    <section class="case-sec" id="by-find">
+      <div class="case-num">08 / Find suppliers</div>
+      <h2 class="case-h2">Search by the capability you need, not only the suppliers you already know.</h2>
+      <p class="case-p">Filters cover capability type, product and category support, location, certification, sustainability and capacity. Results use only published evidence the viewer is entitled to see. Each card keeps Performance Score and Supplier risk next to the evidence that matched, so promising candidates go straight into Compare.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-05-find-suppliers.jpg" alt="Find suppliers with the Filters panel open: Capability type and Product / category support checklists; supplier cards behind showing Performance Score, Supplier risk, details, evidence and a Compare checkbox" loading="lazy"></div></div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-evidence">
+      <div class="case-num">09 / Evidence labels</div>
+      <h2 class="case-h2">Every value says where it came from and how fresh it is.</h2>
+      <p class="case-p">On the profile's Evidence &amp; capabilities tab, each value carries its source, its as-of date and one label. Missing or stale data must never read as a good result, so each state is named explicitly. Labels never rely on colour alone.</p>
+      <div class="byod-labels">
+        <div><span class="ev ev--cur"><b>✓</b>Current</span>Within the dataset's refresh expectation.</div>
+        <div><span class="ev ev--sup"><b>↑</b>Supplemental upload</span>Uploaded BYOD evidence; never overrides source-owned data.</div>
+        <div><span class="ev ev--stale"><b>◷</b>Stale</span>Older than the dataset's refresh expectation.</div>
+        <div><span class="ev ev--rev"><b>◔</b>Needs review</span>Published but not yet independently validated.</div>
+        <div><span class="ev ev--unk"><b>i</b>Unknown</span>Provided but undated, or without a usable value.</div>
+        <div><span class="ev ev--con"><b>!</b>Conflict</span>Supplemental values disagree; steward resolution needed.</div>
+        <div><span class="ev ev--na"><b>–</b>Unavailable</span>No published evidence exists.</div>
+        <div><span class="ev ev--res"><b>⊘</b>Restricted</span>The dataset is outside your entitlements.</div>
+      </div>
+      <div class="si-shot" style="max-width:1100px;margin-top:36px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-06-evidence-profile.jpg" alt="Supplier profile, Evidence and capabilities tab: capability types, product / category support, certifications, sustainability attributes and capacity, each with its source, as-of date and a Current, Stale or Unavailable label" loading="lazy"></div></div>
+      </div>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-07-evidence-labels.jpg" alt="How to read evidence labels popover listing Current, Stale, Unknown, Unavailable, Restricted, Conflict, Supplemental upload and Needs review with their definitions" loading="lazy"></div></div>
+        <div class="case-caption">The legend is one click away, wherever labels appear.</div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-compare">
+      <div class="case-num">10 / Compare suppliers</div>
+      <h2 class="case-h2">Up to five suppliers side by side, never ranked and never combined.</h2>
+      <div class="case-step-stat">Scope differs · Units differ · Stale · Needs review</div>
+      <p class="case-p">Every comparison uses the same approved fields in a fixed order: identity, capability fit, performance and risk, sustainability and certifications, capacity, then evidence health. When values aren't truly comparable, the row says so: scores on different scopes, capacity in different units. The compared set can be added to a watchlist or saved as a shared analysis.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-08-compare.jpg" alt="Compare suppliers, 5 of 5: headquarters, Performance Score flagged Scope differs, supplier risk, capabilities, categories, certifications, sustainability and total capacity flagged Units differ, with Stale labels on individual values" loading="lazy"></div></div>
+      </div>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-09-compare-watchlist.jpg" alt="Compare suppliers with the Watchlist menu open: add compared suppliers to Strategic Suppliers Food, Compliance Watch Apparel and Textiles or Packaging Resilience Watchlist, manage watchlists or create a new one" loading="lazy"></div></div>
+        <div class="case-caption">The compared set goes to a watchlist without retyping anything.</div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-configure">
+      <div class="case-num">11 / Configure capability analysis</div>
+      <h2 class="case-h2">Weight your own capability data without touching anyone's score.</h2>
+      <p class="case-p">Different teams value capabilities differently, so the user sets the weighting for their uploaded fields, either from scratch or from a template such as Packaging sourcing assessment, Operational resilience or Innovation readiness. Performance and financial risk sit below as read-only context. They are not recalculated and not combined with the weightings.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-10-configure-analysis.jpg" alt="Configure capability analysis: selected suppliers, uploaded dataset and an analysis template dropdown; sliders weighting product and process capability, available capacity, innovation and automation, facility footprint, and sustainability and traceability; existing performance shown read-only" loading="lazy"></div></div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-review">
+      <div class="case-num">12 / Strategic review</div>
+      <h2 class="case-h2">A working direction, with a rationale and no automated action.</h2>
+      <div class="case-step-stat">Grow · Maintain · Develop · Protect · Diversify · Transition · Exit</div>
+      <p class="case-p">The review is a new, versioned Supplier Review record shared with the team, so anyone can see when a direction changed and why. Comparison context sits alongside it, with observations stated plainly: scores on different scopes, stale fields, supplemental values, values still needing review. It triggers no award, exit or negotiation, and nothing is written into the external watchlist service.</p>
+      <div class="si-shot" style="max-width:1100px">
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-11-supplier-review.jpg" alt="New supplier review: supplier selector and seven working directions (Grow, Maintain, Develop, Protect, Diversify, Transition, Exit) with descriptions; comparison context with score and risk per supplier, freshness labels and five observations" loading="lazy"></div></div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-decisions">
+      <div class="case-num">13 / Decisions</div>
+      <h2 class="case-h2">The prototype turned open questions into decisions.</h2>
+      <p class="case-p">Engineering raised the hard questions about scope, facilities, upload rules, access and review. Walking through a working flow got them answered quickly, and each answer shaped a screen.</p>
+      <div class="case-compare">
+        <div class="case-compare-col">
+          <div class="case-tag">Data &amp; governance</div>
+          <h3 class="case-compare-h3">Upload rules</h3>
+          <div class="case-row"><b>Re-upload</b><span>A new version of the same dataset. The newest approved version is active and history is kept.</span></div>
+          <div class="case-row"><b>Publishing</b><span>Contributors save drafts, and a designated data steward approves publication during the pilot.</span></div>
+          <div class="case-row"><b>Unpublishing</b><span>Removed from profiles, search, comparison and shared analyses immediately.</span></div>
+          <div class="case-row"><b>Conflicts</b><span>Source-owned data always wins. Between uploads, a precedence rule applies or the steward decides.</span></div>
+          <div class="case-row"><b>Access</b><span>Four roles (contributor, steward, consumer, admin), with restrictions applied per dataset.</span></div>
+        </div>
+        <div class="case-compare-col case-compare-col--accent">
+          <div class="case-tag">Discovery &amp; review</div>
+          <h3 class="case-compare-h3">Scope calls</h3>
+          <div class="case-row"><b>Placement</b><span>Inside Supplier Matrix, under the Supplier Intelligence Platform. Not a separate product.</span></div>
+          <div class="case-row"><b>Facilities</b><span>Moved to Phase 1b. Supplier-level upload and analysis ship first.</span></div>
+          <div class="case-row"><b>Comparison</b><span>A fixed field order and a maximum of five suppliers, to keep it readable.</span></div>
+          <div class="case-row"><b>Direction</b><span>A new versioned review record, linked to the watchlist but never written into it.</span></div>
+          <div class="case-row"><b>Sharing</b><span>A Matrix link and XLSX export first. PDF only if business users need it.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="by-pilot">
+      <div class="case-num">14 / Pilot &amp; roadmap</div>
+      <h2 class="case-h2">Pilot small, measure the workflow, then expand.</h2>
+      <p class="case-p">The pilot runs with a small sourcing cohort. Its release gate is an end-to-end walkthrough: a sourcing manager validates mapped data, and a sourcing user relies on it in discovery and strategic review without rebuilding anything by hand.</p>
+      <div class="case-cardgrid case-cardgrid--4">
+        <div class="case-card"><div class="case-card-lbl">Adoption</div><div class="case-card-copy">Active contributors, repeat use, searches, comparisons and shared analyses.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Data upload</div><div class="case-card-copy">Datasets uploaded, usable records mapped, and profiles enriched.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Workflow impact</div><div class="case-card-copy">Time spent reconciling, time from need to a credible option set, and time to prepare a review.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Decision support</div><div class="case-card-copy">Reviews completed, gaps identified, and how useful stakeholders find the output.</div></div>
+      </div>
+      <h3 class="case-h3" style="margin-top:48px">Roadmap</h3>
+      <div class="case-cardgrid case-cardgrid--5">
+        <div class="case-card"><div class="case-card-lbl">Phase 1 · Now</div><div class="case-card-copy">Data contribution, profiles, discovery, comparison and strategic review.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Phase 2</div><div class="case-card-copy">Richer qualification and trusted external intelligence.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Phase 3</div><div class="case-card-copy">Strategic supplier planning, action plans and review cadence.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Phase 4</div><div class="case-card-copy">Resilience and alternative-supplier analysis.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Phase 5</div><div class="case-card-copy">Enterprise activation, connected workflows and AI-assisted explainability.</div></div>
+      </div>
+    </section>
+
+    <section class="case-sec case-sec--statement" id="by-outcome">
+      <div class="case-num">Outcome</div>
+      <h2 class="case-h2" style="text-align:center;max-width:36ch;margin-left:auto;margin-right:auto">From spreadsheets on someone's laptop to evidence a whole team can trust.</h2>
+      <blockquote class="case-quote" style="margin-left:auto;margin-right:auto;text-align:center">"Supplemental, never authoritative."</blockquote>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:28px">
+        <span class="chip">Data contribution</span>
+        <span class="chip">Governance by design</span>
+        <span class="chip">Evidence transparency</span>
+        <span class="chip">Human-led decisions</span>
+      </div>
+      <div class="case-source-note" style="text-align:center;margin-top:24px">A working prototype with representative supplier data. Phase 1 scope is in review; this is not a shipped product.</div>
+    </section>
+
+    <section class="case-sec case-sec--statement">
+      <div class="case-footer-nav">
+        <a class="case-back" data-view="work"><span class="case-back-arrow">←</span> Back to work</a>
+        <a class="case-next" data-view="case-supplier-insights"><span class="case-next-lbl">Next</span> Supplier Insights  <span class="case-next-arrow">→</span></a>
+      </div>
+    </section>
+
+    </div>
+
+  </div>
+</div>
+
 <div id="view-case-onepaw">
   <div class="wrap case">
 
@@ -9543,7 +9984,7 @@ try{
     else if(workSection && cta){ workSection.insertBefore(grid, cta); }
   }
   function show(view, push){
-    const about = view === 'about', work = view === 'work', brand = view === 'brand', caseSupplier = view === 'case-supplier', caseDelivery = view === 'case-delivery', caseBawsala = view === 'case-bawsala', caseSolv = view === 'case-solv', caseOmni = view === 'case-omni', caseScintilla = view === 'case-scintilla', caseSupplierInsights = view === 'case-supplier-insights', caseCodePuppy = view === 'case-code-puppy', caseOnepaw = view === 'case-onepaw';
+    const about = view === 'about', work = view === 'work', brand = view === 'brand', caseSupplier = view === 'case-supplier', caseDelivery = view === 'case-delivery', caseBawsala = view === 'case-bawsala', caseSolv = view === 'case-solv', caseOmni = view === 'case-omni', caseScintilla = view === 'case-scintilla', caseSupplierInsights = view === 'case-supplier-insights', caseCodePuppy = view === 'case-code-puppy', caseOnepaw = view === 'case-onepaw', caseByod = view === 'case-byod';
     document.body.classList.toggle('on-about', about);
     document.body.classList.toggle('on-work', work);
     document.body.classList.toggle('on-brand', brand);
@@ -9556,9 +9997,10 @@ try{
     document.body.classList.toggle('on-case-supplier-insights', caseSupplierInsights);
     document.body.classList.toggle('on-case-code-puppy', caseCodePuppy);
     document.body.classList.toggle('on-case-onepaw', caseOnepaw);
+    document.body.classList.toggle('on-case-byod', caseByod);
     /* headline word-stage measures to 0 while hidden — re-fit it whenever the
        home view comes back so COMPLEXITY / CLARITY don't stay collapsed */
-    if(!about && !work && !brand && !caseSupplier && !caseDelivery && !caseBawsala && !caseSolv && !caseOmni && !caseScintilla && !caseSupplierInsights && !caseCodePuppy && !caseOnepaw && window.__resizeHeadline){
+    if(!about && !work && !brand && !caseSupplier && !caseDelivery && !caseBawsala && !caseSolv && !caseOmni && !caseScintilla && !caseSupplierInsights && !caseCodePuppy && !caseOnepaw && !caseByod && window.__resizeHeadline){
       requestAnimationFrame(()=>{ try{ window.__resizeHeadline(); }catch(e){} });
     }
     if(brand) loadBrandFrame();
@@ -9583,6 +10025,9 @@ try{
     if(caseSupplierInsights) initCaseJumpnav('caseJumpnavSupplierInsights');
     if(caseCodePuppy) initCaseJumpnav('caseJumpnavCodePuppy');
     if(caseOnepaw) initCaseJumpnav('caseJumpnavOnepaw');
+    if(caseByod) initCaseJumpnav('caseJumpnavByod');
+    if(caseByod && window.resetByodGate) window.resetByodGate();
+    if(!caseByod && window.pauseByodLoop) window.pauseByodLoop();
     if(caseCodePuppy){
       var cpVideo = document.querySelector('#cp-action video');
       if(cpVideo && !cpVideo.dataset.blobLoaded){
@@ -9625,7 +10070,7 @@ try{
     document.querySelectorAll('.navlinks a').forEach(a=>a.classList.remove('is-current'));
     const link = document.querySelector('.navlinks a[data-view="'+view+'"]');
     if(link) link.classList.add('is-current');
-    if(push !== false){ try{ history.pushState({view}, '', work ? '#work' : about ? '#about' : brand ? '#brand' : caseSupplier ? '#case-supplier-matrix' : caseDelivery ? '#case-delivery-dnd' : caseBawsala ? '#case-bawsala' : caseSolv ? '#case-solv-paylater' : caseOmni ? '#case-omni-routes' : caseScintilla ? '#case-scintilla' : caseSupplierInsights ? '#case-supplier-insights' : caseCodePuppy ? '#case-code-puppy' : caseOnepaw ? '#case-one-paw-away' : '#'); }catch(e){} }
+    if(push !== false){ try{ history.pushState({view}, '', work ? '#work' : about ? '#about' : brand ? '#brand' : caseSupplier ? '#case-supplier-matrix' : caseDelivery ? '#case-delivery-dnd' : caseBawsala ? '#case-bawsala' : caseSolv ? '#case-solv-paylater' : caseOmni ? '#case-omni-routes' : caseScintilla ? '#case-scintilla' : caseSupplierInsights ? '#case-supplier-insights' : caseCodePuppy ? '#case-code-puppy' : caseOnepaw ? '#case-one-paw-away' : caseByod ? '#case-byod' : '#'); }catch(e){} }
     /* jump instantly — smooth scrolling would animate the whole page while switching views */
     const root = document.documentElement, prev = root.style.scrollBehavior;
     root.style.scrollBehavior = 'auto';
@@ -9872,7 +10317,7 @@ try{
       else runLoader(()=>{ show('brand'); land(); });
     });
   });
-  const fromHash = ()=> location.hash === '#about' ? 'about' : location.hash === '#work' ? 'work' : location.hash === '#brand' ? 'brand' : location.hash === '#case-supplier-matrix' ? 'case-supplier' : location.hash === '#case-delivery-dnd' ? 'case-delivery' : location.hash === '#case-bawsala' ? 'case-bawsala' : location.hash === '#case-solv-paylater' ? 'case-solv' : location.hash === '#case-omni-routes' ? 'case-omni' : location.hash === '#case-scintilla' ? 'case-scintilla' : location.hash === '#case-supplier-insights' ? 'case-supplier-insights' : location.hash === '#case-code-puppy' ? 'case-code-puppy' : location.hash === '#case-one-paw-away' ? 'case-onepaw' : 'home';
+  const fromHash = ()=> location.hash === '#about' ? 'about' : location.hash === '#work' ? 'work' : location.hash === '#brand' ? 'brand' : location.hash === '#case-supplier-matrix' ? 'case-supplier' : location.hash === '#case-delivery-dnd' ? 'case-delivery' : location.hash === '#case-bawsala' ? 'case-bawsala' : location.hash === '#case-solv-paylater' ? 'case-solv' : location.hash === '#case-omni-routes' ? 'case-omni' : location.hash === '#case-scintilla' ? 'case-scintilla' : location.hash === '#case-supplier-insights' ? 'case-supplier-insights' : location.hash === '#case-code-puppy' ? 'case-code-puppy' : location.hash === '#case-one-paw-away' ? 'case-onepaw' : location.hash === '#case-byod' ? 'case-byod' : 'home';
   window.addEventListener('popstate', ()=> show(fromHash(), false));
   if(location.hash !== '' && location.hash !== '#') show(fromHash(), false);
 })();
@@ -11504,6 +11949,64 @@ setActive(0); startRotation();
 /* Supplier Insights path cards: scroll to the path without touching the hash (the hash drives view routing) */
 document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('[data-jump]'); if(!a) return;
   var t=document.getElementById(a.getAttribute('data-jump')); if(!t) return; e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); });
+</script>
+<script>
+/* ---------- INLINE NDA GATE (BYOD) + quiet prototype loop ----------
+   Same pattern as the other gates: re-locks every time the case study opens.
+   The walkthrough plays like a living screen — muted, looping, no controls —
+   and only while it is on screen. */
+(function(){
+  var BYOD_GATE_PASSWORD = "EBCtrekJuly2027"; // ← change this anytime to update the access password
+  var gate = document.getElementById('byodGate');
+  var gatedContent = document.getElementById('byodGatedContent');
+  var input = document.getElementById('byodGateInput');
+  var unlockBtn = document.getElementById('byodGateUnlock');
+  var errorEl = document.getElementById('byodGateError');
+  var vid = document.getElementById('byodLoop');
+  if(!gate || !gatedContent) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var onScreen = false;
+  function play(){
+    if(!vid || reduce || gatedContent.classList.contains('is-locked') || !onScreen) return;
+    if(vid.preload !== 'auto'){ vid.preload = 'auto'; }
+    var p = vid.play(); if(p && p.catch) p.catch(function(){});
+  }
+  if(vid){
+    if(reduce){ vid.setAttribute('controls',''); vid.style.pointerEvents = 'auto'; }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        onScreen = es[0].isIntersecting;
+        if(onScreen) play(); else vid.pause();
+      }, {threshold:.25}).observe(vid);
+    } else { onScreen = true; }
+  }
+  window.pauseByodLoop = function(){ if(vid) vid.pause(); };
+
+  function unlock(){ gatedContent.classList.remove('is-locked'); gate.style.display = 'none'; setTimeout(play, 60); }
+  function tryUnlock(){
+    if(input.value.trim().toLowerCase() === BYOD_GATE_PASSWORD.toLowerCase()){
+      errorEl.classList.remove('is-visible'); unlock();
+    } else {
+      errorEl.classList.add('is-visible');
+      gate.classList.remove('sv-gate-shake'); void gate.offsetWidth; gate.classList.add('sv-gate-shake');
+    }
+  }
+  unlockBtn.addEventListener('click', tryUnlock);
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter') tryUnlock(); });
+
+  var lockPlayed = false;
+  window.resetByodGate = function(){
+    gatedContent.classList.add('is-locked'); gate.style.display = '';
+    if(input) input.value = ''; if(errorEl) errorEl.classList.remove('is-visible');
+    gate.classList.remove('is-active'); lockPlayed = false;
+    if(vid) vid.pause();
+  };
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting && !lockPlayed){ lockPlayed = true; gate.classList.add('is-active'); } });
+    }, {threshold:.35}).observe(gate);
+  } else { gate.classList.add('is-active'); }
+})();
 </script>
 </body>
 </html>
