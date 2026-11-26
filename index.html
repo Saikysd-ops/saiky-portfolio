@@ -1637,22 +1637,21 @@
   .lx--plum .lx-label b{background:#F8F7F4;}
   .lx--plum .lx-desc{color:rgba(248,247,244,.86);}
   .lx--plum:hover .lx-arrow{background:#F8F7F4;border-color:#F8F7F4;color:#452064;transform:rotate(45deg);}
-  .lx-byod{position:relative;flex:1;display:flex;align-items:center;min-height:150px;margin:18px 0 12px;}
+  .lx-byod{position:relative;flex:1;display:flex;align-items:center;min-height:140px;margin:20px 0 14px;}
   .lx-byod svg{width:100%;height:auto;overflow:visible;}
-  .lx-byod .c{fill:#F8F7F4;opacity:.22;}
-  .lx-byod .h{fill:#F8F7F4;opacity:.55;}
-  .lx-byod .m{fill:#F1EAF7;opacity:.72;transition:opacity .45s ease,translate .55s cubic-bezier(.22,1,.36,1);}
-  .lx-byod .ln{stroke:#F8F7F4;stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1.5 5;opacity:.38;transition:opacity .4s ease;}
-  .lx-byod .nd{stroke:#F8F7F4;stroke-width:1.2;opacity:.35;transition:opacity .4s ease,r .5s cubic-bezier(.22,1,.36,1);}
-  .lx-byod .nd2{stroke:#F8F7F4;stroke-width:1.4;opacity:.75;}
-  .lx-byod .ndc{fill:#F8F7F4;transition:r .5s cubic-bezier(.22,1,.36,1);}
-  .lx-byod-k{position:absolute;bottom:-4px;left:2px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(248,247,244,.55);}
-  .lx-byod-k--r{left:auto;right:4px;}
-  .lx--plum:hover .lx-byod .m{opacity:1;translate:3px 0;}
-  .lx--plum:hover .lx-byod .ln{opacity:.95;animation:lxFlow 1.1s linear infinite;}
-  .lx--plum:hover .lx-byod .nd{opacity:.7;r:24px;}
-  .lx--plum:hover .lx-byod .ndc{r:7px;}
-  @keyframes lxFlow{to{stroke-dashoffset:-13;}}
+  .lx-byod .bf{stroke:#F8F7F4;stroke-width:1.5;stroke-linejoin:round;opacity:.7;}
+  .lx-byod .bl{stroke:#F8F7F4;stroke-width:3;stroke-linecap:round;opacity:.28;}
+  .lx-byod .bl--on{stroke:#F1EAF7;opacity:.95;}
+  .lx-byod .bt{stroke:#F8F7F4;stroke-width:1.5;stroke-linecap:round;stroke-dasharray:1.5 7;opacity:.4;}
+  .lx-byod .bd{fill:#F1EAF7;}
+  .lx-byod .br{stroke:#F8F7F4;stroke-width:1.5;opacity:.5;transform-box:fill-box;transform-origin:center;transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .4s ease;}
+  .lx-byod .bc{fill:#F8F7F4;transform-box:fill-box;transform-origin:center;transition:transform .6s cubic-bezier(.22,1,.36,1);}
+  /* hover: the highlighted row travels from the file into Matrix, and Matrix takes it in */
+  .lx--plum:hover .lx-byod .bd{animation:lxCarry 1.6s cubic-bezier(.65,0,.35,1) infinite;}
+  .lx--plum:hover .lx-byod .br{transform:scale(1.12);opacity:.85;}
+  .lx--plum:hover .lx-byod .bc{animation:lxTake 1.6s cubic-bezier(.65,0,.35,1) infinite;}
+  @keyframes lxCarry{0%{transform:translateX(0);opacity:0}12%{opacity:1}78%{transform:translateX(104px);opacity:1}88%,100%{transform:translateX(116px);opacity:0}}
+  @keyframes lxTake{0%,80%{transform:scale(1)}90%{transform:scale(1.45)}100%{transform:scale(1)}}
   @media (prefers-reduced-motion:reduce){ .lx-byod *{transition:none !important;animation:none !important;} }
   /* four cards: same card size as before — the row scrolls, arrows appear on wide screens */
   @media (min-width:981px){ .lab-grid--lx{-webkit-mask-image:none;mask-image:none;} }
@@ -4927,13 +4926,13 @@
             <p class="lx-tags"><span>0→1 exploration</span><span>Early startup</span><span>Design lead</span><span>MVP</span><span>Design leadership</span></p>
           </div>
         </a>
-        <a class="lab-card lx lx--plum" data-cat="proto" data-view="case-byod" role="link" tabindex="0" aria-label="Bring Your Own Data — view case study">
-          <div class="lx-top"><span class="lx-label"><b></b>Working prototype</span><span class="lx-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div>
+        <a class="lab-card lx lx--plum" data-cat="vibe proto" data-view="case-byod" role="link" tabindex="0" aria-label="Bring Your Own Data — view case study">
+          <div class="lx-top"><span class="lx-label"><b></b>Vibe-coded prototype</span><span class="lx-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div>
           <h3 class="lx-title lx-title--top">Bring<br>your own<br>data</h3>
-          <div class="lx-byod" aria-hidden="true"><svg viewBox="0 0 240 120" fill="none"><g class="lx-sheet"><circle class="h" cx="14" cy="14" r="3.4"/><circle class="h" cx="29" cy="14" r="3.4"/><circle class="h" cx="44" cy="14" r="3.4"/><circle class="h" cx="59" cy="14" r="3.4"/><circle class="h" cx="74" cy="14" r="3.4"/><circle class="c" cx="14" cy="29" r="3.4"/><circle class="c" cx="29" cy="29" r="3.4"/><circle class="m" cx="44" cy="29" r="3.4" style="transition-delay:0.05s"/><circle class="c" cx="59" cy="29" r="3.4"/><circle class="c" cx="74" cy="29" r="3.4"/><circle class="c" cx="14" cy="44" r="3.4"/><circle class="c" cx="29" cy="44" r="3.4"/><circle class="m" cx="44" cy="44" r="3.4" style="transition-delay:0.10s"/><circle class="c" cx="59" cy="44" r="3.4"/><circle class="c" cx="74" cy="44" r="3.4"/><circle class="c" cx="14" cy="59" r="3.4"/><circle class="c" cx="29" cy="59" r="3.4"/><circle class="m" cx="44" cy="59" r="3.4" style="transition-delay:0.15s"/><circle class="c" cx="59" cy="59" r="3.4"/><circle class="c" cx="74" cy="59" r="3.4"/><circle class="c" cx="14" cy="74" r="3.4"/><circle class="c" cx="29" cy="74" r="3.4"/><circle class="m" cx="44" cy="74" r="3.4" style="transition-delay:0.20s"/><circle class="c" cx="59" cy="74" r="3.4"/><circle class="c" cx="74" cy="74" r="3.4"/><circle class="c" cx="14" cy="89" r="3.4"/><circle class="c" cx="29" cy="89" r="3.4"/><circle class="m" cx="44" cy="89" r="3.4" style="transition-delay:0.25s"/><circle class="c" cx="59" cy="89" r="3.4"/><circle class="c" cx="74" cy="89" r="3.4"/><circle class="c" cx="14" cy="104" r="3.4"/><circle class="c" cx="29" cy="104" r="3.4"/><circle class="m" cx="44" cy="104" r="3.4" style="transition-delay:0.30s"/><circle class="c" cx="59" cy="104" r="3.4"/><circle class="c" cx="74" cy="104" r="3.4"/></g><path class="ln" d="M90 29 C140 29 150 59 178 59"/><path class="ln" d="M90 59 L178 59"/><path class="ln" d="M90 89 C140 89 150 59 178 59"/><circle class="nd" cx="200" cy="59" r="20"/><circle class="nd2" cx="200" cy="59" r="11"/><circle class="ndc" cx="200" cy="59" r="5"/></svg><span class="lx-byod-k">file</span><span class="lx-byod-k lx-byod-k--r">matrix</span></div>
+          <div class="lx-byod" aria-hidden="true"><svg viewBox="0 0 240 110" fill="none"><path class="bf" d="M16 12h34l16 16v62a8 8 0 0 1-8 8H16a8 8 0 0 1-8-8V20a8 8 0 0 1 8-8Z"/><path class="bf" d="M50 12v12a4 4 0 0 0 4 4h12"/><path class="bl" d="M20 50h30M20 62h36M20 74h24"/><path class="bl bl--on" d="M20 62h36"/><path class="bt" d="M84 62H172"/><circle class="bd" cx="84" cy="62" r="4"/><circle class="br" cx="200" cy="62" r="24"/><circle class="bc" cx="200" cy="62" r="8"/></svg></div>
           <div class="lx-foot">
-            <p class="lx-desc">Sourcing teams’ own spreadsheets — uploaded, mapped and steward-approved into Supplier Matrix as evidence that never overrides source-owned data.</p>
-            <p class="lx-tags"><span>Insights Workspace</span><span>Data governance</span><span>Evidence labels</span><span>Supplier Matrix</span></p>
+            <p class="lx-desc">Bring your own spreadsheets into Supplier Matrix — mapped, matched and clearly labelled as evidence.</p>
+            <p class="lx-tags"><span>Vibe coded</span><span>Prototype</span><span>Supplier Matrix</span></p>
           </div>
         </a>
         </div>
@@ -7985,7 +7984,7 @@
     <div class="case-hero" id="by-overview">
       <div class="eyebrow-lbl">ENTERPRISE DATA · SUPPLIER MATRIX</div>
       <h1 class="case-h1">Supplier knowledge lived in local spreadsheets. <span class="case-gradient">BYOD turns it into evidence.</span></h1>
-      <p class="case-lede">Bring Your Own Data is a new capability inside Supplier Matrix. Sourcing managers upload their own capability and sustainability data, map and match it to Matrix suppliers, and route it through steward approval. They then use it in discovery, comparison and strategic review, without it ever overriding source-owned data.</p>
+      <p class="case-lede">Bring Your Own Data is a new capability inside Supplier Matrix. Sourcing managers upload their own capability and sustainability data, map and match it to Matrix suppliers, and send it for review. They then use it in discovery, comparison and strategic review, without it ever overriding source-owned data.</p>
 
       <div class="case-meta">
         <div><dt>Focus</dt><dd>Data contribution &amp; evidence</dd></div>
@@ -8034,11 +8033,11 @@
     <section class="case-sec" id="by-video">
       <div class="case-num">Prototype walkthrough</div>
       <h2 class="case-h2">Upload, map, match, publish, then use it to decide.</h2>
-      <p class="case-p">The working prototype end to end. A new dataset goes from description to steward approval, then into Find suppliers, a supplier profile, Compare, Configure and a strategic review.</p>
+      <p class="case-p">The working prototype end to end. A new dataset goes from description to approval, then into Find suppliers, a supplier profile, Compare, Configure and a strategic review.</p>
       <div class="byod-loop">
         <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div>
           <span class="byod-live" aria-hidden="true"><i></i>Live prototype</span>
-          <video id="byodLoop" muted loop playsinline preload="none" disablepictureinpicture poster="assets/images/byod-01-workspace.jpg" aria-label="Bring Your Own Data prototype: describe, upload, map and match a dataset, submit it for steward approval, then find, compare, configure and review suppliers">
+          <video id="byodLoop" muted loop playsinline preload="none" disablepictureinpicture poster="assets/images/byod-01-workspace.jpg" aria-label="Bring Your Own Data prototype: describe, upload, map and match a dataset, submit it for approval, then find, compare, configure and review suppliers">
             <source src="assets/videos/video-010-byod-prototype.mp4" type="video/mp4">
           </video>
         </div>
@@ -8089,7 +8088,7 @@
       </div>
       <div class="case-cardgrid case-cardgrid--3" style="margin-top:36px">
         <div class="case-card"><div class="case-card-lbl">Find suppliers</div><div class="case-card-copy"><b>Search by evidence.</b> Use capability, certification, sustainability and capacity filters, then view supplier details.</div></div>
-        <div class="case-card"><div class="case-card-lbl">Insights Workspace</div><div class="case-card-copy"><b>Contribute evidence.</b> Add supplier-level supplemental evidence, upload a dataset, and route it through steward approval.</div></div>
+        <div class="case-card"><div class="case-card-lbl">Insights Workspace</div><div class="case-card-copy"><b>Contribute evidence.</b> Add supplier-level supplemental evidence, upload a dataset, and send it for review.</div></div>
         <div class="case-card"><div class="case-card-lbl">Supplier review</div><div class="case-card-copy"><b>Decide with context.</b> Analyze and compare evidence while source-owned data stays authoritative.</div></div>
       </div>
     </section>
@@ -8116,7 +8115,7 @@
       <div class="case-num">04 / Insights Workspace</div>
       <h2 class="case-h2">Every dataset shows its status, version and freshness at a glance.</h2>
       <div class="case-step-stat">Draft → Pending approval → Published · refresh expected every 90 days</div>
-      <p class="case-p">My datasets sits beside Source-owned data, so the difference between the two is always visible. A newer version waiting for approval never replaces the published one until a steward signs it off, and stale data is flagged when it passes its refresh expectation.</p>
+      <p class="case-p">My datasets sits beside Source-owned data, so the difference between the two is always visible. A newer version waiting for approval never replaces the published one until it's approved, and stale data is flagged when it passes its refresh expectation.</p>
       <div class="si-shot" style="max-width:1100px">
         <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-01-workspace.jpg" alt="Bring your own data workspace: 4 supplemental datasets in view and 1 stale; table of datasets with status (Published, Draft, Unpublished), version, freshness (Current, Stale) and actions; New dataset button" loading="lazy"></div></div>
       </div>
@@ -8125,9 +8124,9 @@
     <section class="case-sec" id="by-describe">
       <div class="case-num">05 / Describe dataset</div>
       <h2 class="case-h2">Before any upload: what it covers, why it exists, and who can see it.</h2>
-      <p class="case-p">Name, scope, purpose and business context come first. Scope is shown alongside every value this dataset contributes. Sensitivity (Internal, Confidential or Restricted), intended audience and refresh expectation follow, along with who can see it by SBU, market, category and team. The owner and designated data steward are set from the start.</p>
+      <p class="case-p">Name, scope, purpose and business context come first. Scope is shown alongside every value this dataset contributes. Sensitivity (Internal, Confidential or Restricted), intended audience and refresh expectation follow, along with who can see it by SBU, market, category and team. Ownership and review are set from the start.</p>
       <div class="si-shot" style="max-width:1100px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-02-describe.jpg" alt="New dataset, step 1 of 7, Describe dataset: dataset name, scope, purpose and business context fields; owner and designated data steward; Sensitivity and refresh section below" loading="lazy"></div></div>
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-02-describe.jpg" alt="New dataset, step 1 of 7, Describe dataset: dataset name, scope, purpose and business context fields; ownership and review roles; Sensitivity and refresh section below" loading="lazy"></div></div>
       </div>
     </section>
 
@@ -8143,11 +8142,11 @@
 
     <section class="case-sec" id="by-publish">
       <div class="case-num">07 / Match, resolve &amp; publish</div>
-      <h2 class="case-h2">Ambiguous matches go to a person, and nothing goes live without a steward.</h2>
+      <h2 class="case-h2">Ambiguous matches go to a person, and nothing goes live without review.</h2>
       <div class="case-step-stat">Matched · Needs review · Unmatched · Invalid</div>
-      <p class="case-p">Rows are matched to Matrix suppliers by ID and normalized name. When a match is ambiguous, the user confirms it, sends it to the steward or excludes it. Invalid rows explain themselves one by one: a missing name, a unit outside the controlled list, a bad date format, a duplicate. Before submitting, the review step shows how conflicts resolve. Source-owned data always wins, and a re-upload becomes a new version with the full history kept.</p>
+      <p class="case-p">Rows are matched to Matrix suppliers by ID and normalized name. When a match is ambiguous, the user confirms it, sends it for review or excludes it. Invalid rows explain themselves one by one: a missing name, a unit outside the controlled list, a bad date format, a duplicate. Before submitting, the review step shows how conflicts resolve. Source-owned data always wins, and a re-upload becomes a new version with the full history kept.</p>
       <div class="si-shot" style="max-width:1100px">
-        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-04-published-version.jpg" alt="Published dataset Packaging Team Q3 2026 Capacity Update: banner noting version 3 is pending approval and shown separately; published version 2 details with source file, owner and steward, classification, visibility and Current freshness; confirmed mapping table" loading="lazy"></div></div>
+        <div class="shotbox-desktop"><div class="shotbox-browserbar"><i></i><i></i><i></i></div><div class="shotbox-crop"><img src="assets/images/byod-04-published-version.jpg" alt="Published dataset Packaging Team Q3 2026 Capacity Update: banner noting version 3 is pending approval and shown separately; published version 2 details with source file, ownership, classification, visibility and Current freshness; confirmed mapping table" loading="lazy"></div></div>
         <div class="case-caption">A published version stays live while the next one waits for approval.</div>
       </div>
     </section>
@@ -8178,7 +8177,7 @@
         <div><span class="ev ev--stale"><b>◷</b>Stale</span>Older than the dataset's refresh expectation.</div>
         <div><span class="ev ev--rev"><b>◔</b>Needs review</span>Published but not yet independently validated.</div>
         <div><span class="ev ev--unk"><b>i</b>Unknown</span>Provided but undated, or without a usable value.</div>
-        <div><span class="ev ev--con"><b>!</b>Conflict</span>Supplemental values disagree; steward resolution needed.</div>
+        <div><span class="ev ev--con"><b>!</b>Conflict</span>Supplemental values disagree and need review.</div>
         <div><span class="ev ev--na"><b>–</b>Unavailable</span>No published evidence exists.</div>
         <div><span class="ev ev--res"><b>⊘</b>Restricted</span>The dataset is outside your entitlements.</div>
       </div>
@@ -8233,10 +8232,10 @@
           <div class="case-tag">Data &amp; governance</div>
           <h3 class="case-compare-h3">Upload rules</h3>
           <div class="case-row"><b>Re-upload</b><span>A new version of the same dataset. The newest approved version is active and history is kept.</span></div>
-          <div class="case-row"><b>Publishing</b><span>Contributors save drafts, and a designated data steward approves publication during the pilot.</span></div>
+          <div class="case-row"><b>Publishing</b><span>Contributors save drafts, and a reviewer approves publication during the pilot.</span></div>
           <div class="case-row"><b>Unpublishing</b><span>Removed from profiles, search, comparison and shared analyses immediately.</span></div>
-          <div class="case-row"><b>Conflicts</b><span>Source-owned data always wins. Between uploads, a precedence rule applies or the steward decides.</span></div>
-          <div class="case-row"><b>Access</b><span>Four roles (contributor, steward, consumer, admin), with restrictions applied per dataset.</span></div>
+          <div class="case-row"><b>Conflicts</b><span>Source-owned data always wins. Between uploads, a precedence rule applies or a reviewer decides.</span></div>
+          <div class="case-row"><b>Access</b><span>Clear roles for contributing, reviewing, viewing and admin, with access set per dataset.</span></div>
         </div>
         <div class="case-compare-col case-compare-col--accent">
           <div class="case-tag">Discovery &amp; review</div>
@@ -9745,7 +9744,7 @@ try{
     chip.classList.add('is-on');
     const f = chip.dataset.filter;
     cards.forEach(card=>{
-      const show = f === 'all' || card.dataset.cat === f;
+      const show = f === 'all' || (card.dataset.cat||'').split(' ').includes(f);
       card.toggleAttribute('hidden', !show);
     });
   }));
