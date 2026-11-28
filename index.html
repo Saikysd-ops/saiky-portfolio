@@ -1958,6 +1958,58 @@
   @media (max-width:560px){
     .about-photo{max-width:320px;}
   }
+  /* ABOUT v2 — the short version as one full-screen spread: greeting + CTA on top, then a brand mark,
+     the portrait (uncropped, native 900×959) and a details card. Brand palette only. */
+  .ab2{position:relative;left:50%;margin-left:-50vw;width:100vw;box-sizing:border-box;
+    min-height:calc(100svh - var(--about-top, 100px));padding:clamp(20px,3.2svh,40px) clamp(20px,2.4vw,40px) clamp(20px,3svh,36px);
+    display:flex;flex-direction:column;gap:clamp(20px,3.4svh,44px);}
+  .ab2-head{display:grid;grid-template-columns:1fr auto;align-items:end;column-gap:40px;}
+  .ab2-intro{grid-column:1 / -1;}
+  .ab2-intro{max-width:1080px;}
+  .ab2-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,min(3.5vw,6svh),60px);line-height:1.06;letter-spacing:-.022em;color:var(--ink);margin:12px 0 0;}
+  .ab2-h1 b{display:block;font-weight:600;}
+  .ab2-h1 span{display:block;font-weight:400;color:color-mix(in srgb, var(--ink) 82%, transparent);}
+  .ab2-h1 em{font-style:italic;}
+  .ab2-sub{grid-column:1;margin:clamp(10px,1.6svh,20px) 0 0;max-width:70ch;font-size:clamp(14.5px,1.9svh,17px);line-height:1.55;color:var(--ink-soft);}
+  .ab2-cta{grid-column:2;flex:none;margin:0;align-self:end;}
+  .ab2-row{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(14px,1.4vw,22px);
+    height:clamp(360px, calc(100svh - var(--about-top, 100px) - var(--ab2-head, 280px) - clamp(64px,10svh,124px)), 960px);}
+  .ab2-mark{container-type:size;display:flex;align-items:center;justify-content:center;min-width:0;}
+  .ab2-circle{position:relative;display:block;width:min(100cqw,100cqh);aspect-ratio:1;border-radius:50%;background:#17171C;}
+  :root[data-theme="dark"] .ab2-circle{background:#452064;}
+  .ab2-dot{position:absolute;inset:0;animation:ab2Orbit 18s linear infinite;}
+  .ab2-dot::after{content:'';position:absolute;top:14.64%;right:14.64%;width:6.5%;aspect-ratio:1;border-radius:50%;background:#7546D8;transform:translate(50%,-50%);}
+  :root[data-theme="dark"] .ab2-dot::after{background:#F1EAF7;}
+  @keyframes ab2Orbit{to{transform:rotate(360deg);}}
+  @media (prefers-reduced-motion:reduce){ .ab2-dot{animation:none;} }
+  .ab2-photo{height:100%;border-radius:6px;overflow:hidden;background:var(--paper-raised);}
+  .ab2-photo img{display:block;height:100%;width:auto;max-width:none;}
+  .ab2-card{display:flex;flex-direction:column;min-width:0;overflow:auto;border-radius:6px;background:#F1EAF7;color:#17171C;
+    padding:clamp(18px,3svh,36px) clamp(20px,2.2vw,36px);}
+  :root[data-theme="dark"] .ab2-card{background:#211B2A;color:#F8F7F4;}
+  .ab2-name{font-family:var(--font-body);font-weight:700;font-size:clamp(20px,1.8vw,26px);letter-spacing:.02em;text-transform:uppercase;line-height:1.1;}
+  .ab2-role{margin-top:8px;font-size:clamp(12.5px,1.6svh,14px);line-height:1.4;opacity:.72;}
+  .ab2-bio{margin:0;font-size:clamp(12.5px,1.62svh,15.5px);line-height:1.5;opacity:.86;}
+  .ab2-role + .ab2-bio{margin-top:auto;padding-top:clamp(10px,2.2svh,24px);}
+  .ab2-bio + .ab2-bio{margin-top:clamp(6px,1.1svh,10px);}
+  .ab2-bio b{font-weight:600;opacity:1;}
+  .ab2-meta{display:grid;grid-template-columns:1fr 1.7fr;gap:16px;margin-top:clamp(16px,2.4svh,26px);padding-top:clamp(14px,2svh,20px);border-top:1px solid color-mix(in srgb, currentColor 20%, transparent);}
+  .ab2-meta dt{font-size:13px;font-weight:700;margin-bottom:4px;}
+  .ab2-meta dd{margin:0;font-size:clamp(12.5px,1.6svh,14px);line-height:1.45;opacity:.82;}
+  @media (max-width:1180px){
+    .ab2-row{grid-template-columns:auto 1fr;}
+    .ab2-mark{display:none;}
+  }
+  @media (max-width:860px){
+    .ab2{min-height:0;padding:28px 20px 40px;}
+    .ab2-head{grid-template-columns:1fr;row-gap:24px;}
+    .ab2-cta{grid-column:1;}
+    .ab2-row{display:flex;flex-direction:column;height:auto;}
+    .ab2-photo{height:auto;}
+    .ab2-photo img{width:100%;height:auto;}
+    .ab2-card{overflow:visible;}
+    .ab2-role + .ab2-bio{margin-top:0;}
+  }
   /* ---------- ABOUT PAGE ---------- */
   .about-hero{padding-top:0;padding-bottom:0;}
 
@@ -4983,27 +5035,30 @@
 </div>
 
   <div id="view-about">
-  <section class="about-hero">
-    <div class="about-hero--split">
-      <div class="about-hero-media"><img src="assets/images/image-022-67f0cd6926e6.jpg" alt="Saikiran Desai, portrait"></div>
-      <div class="about-hero-content">
+  <section class="ab2" aria-label="The short version">
+    <div class="ab2-head">
+      <div class="ab2-intro">
         <div class="eyebrow-lbl">The short version</div>
-        <div class="about-grid">
-          <p class="about-lede">I'm <b>Saiky</b> (Saikiran Desai), a senior product designer in Bengaluru. I design complex products and turn them into experiences people can actually use.<br><br>I've worked with <b>Walmart</b>, <b>Maersk</b>, <b>SOLV</b>, and <b>Standard Chartered</b>, designing products across enterprise, fintech, and emerging businesses.<br><br>Right now, I'm exploring how <b>AI</b> is changing the way we design, build, and interact with products — and what that means for the future of product design.</p>
-          <div class="pull">
-            <em>"I believe good design should be humane."</em>
-            People aren't perfect users. They're distracted, under pressure, learning, making mistakes, and trying to get things done. Humane design respects that reality — giving people clarity, control, and a way forward.
-          </div>
-        </div>
-        <div class="pills">
-          <span class="pill">🌍 Bengaluru</span>
-          <span class="pill">🎾 Tennis</span>
-          <span class="pill">🏔️ Solo backpacker</span>
-          <span class="pill">🎨 Acrylic painter</span>
-        </div>
-        <div class="cta-row about-cta">
-          <button class="btn btn-primary" data-scroll="closing">Get in touch <span class="cta-arrow">↓</span></button>
-          <a class="btn btn-ghost" data-resume-download href="#" download="Saikiran Desai Resume_Walmart_2026 updated.pdf">Download resume <span class="cta-arrow">↓</span></a>
+        <h1 class="ab2-h1"><b>Hi, I'm Saiky.</b><span>I believe good design should be <em class="case-gradient gw">humane.</em></span></h1>
+      </div>
+        <p class="ab2-sub">People aren't perfect users. They're distracted, under pressure, learning, making mistakes, and trying to get things done. Humane design respects that reality — giving people clarity, control, and a way forward.</p>
+      <div class="cta-row ab2-cta">
+        <button class="btn btn-primary" data-scroll="closing">Get in touch <span class="cta-arrow">↓</span></button>
+        <a class="btn btn-ghost" data-resume-download href="#" download="Saikiran Desai Resume_Walmart_2026 updated.pdf">Download resume <span class="cta-arrow">↓</span></a>
+      </div>
+    </div>
+    <div class="ab2-row">
+      <div class="ab2-mark" aria-hidden="true"><span class="ab2-circle"><i class="ab2-dot"></i></span></div>
+      <div class="ab2-photo"><img src="assets/images/image-022-67f0cd6926e6.jpg" width="900" height="959" alt="Saikiran Desai, portrait"></div>
+      <div class="ab2-card">
+        <div class="ab2-name">Saikiran Desai</div>
+        <div class="ab2-role">Senior Product Designer · Enterprise, fintech &amp; AI</div>
+        <p class="ab2-bio">I'm <b>Saiky</b>, a senior product designer in Bengaluru. I design complex products and turn them into experiences people can actually use.</p>
+        <p class="ab2-bio">I've worked with <b>Walmart</b>, <b>Maersk</b>, <b>SOLV</b>, and <b>Standard Chartered</b>, designing products across enterprise, fintech, and emerging businesses.</p>
+        <p class="ab2-bio">Right now, I'm exploring how <b>AI</b> is changing the way we design, build, and interact with products — and what that means for the future of product design.</p>
+        <div class="ab2-meta">
+          <div><dt>Based in</dt><dd>Bengaluru, India</dd></div>
+          <div><dt>Off screen</dt><dd>Tennis · Solo backpacking · Acrylic painting</dd></div>
         </div>
       </div>
     </div>
@@ -11338,8 +11393,9 @@ setActive(0); startRotation();
       var h=document.querySelector('#view-home .hero');
       if(h&&h.offsetParent) root.setProperty('--hero-top', Math.round(h.getBoundingClientRect().top+window.scrollY)+'px');
       // About: the full-bleed split starts below the navbar + tags, so it needs that offset to fit the viewport exactly
-      var a=document.querySelector('.about-hero--split');
-      if(a&&a.offsetParent) root.setProperty('--about-top', Math.round(a.getBoundingClientRect().top+window.scrollY)+'px');
+      var a=document.querySelector('.ab2');
+      if(a&&a.offsetParent){ root.setProperty('--about-top', Math.round(a.getBoundingClientRect().top+window.scrollY)+'px');
+        var hd=a.querySelector('.ab2-head'); if(hd) root.setProperty('--ab2-head', Math.round(hd.offsetHeight)+'px'); }
     }
     window.addEventListener('load', fit);
     window.addEventListener('resize', fit);
