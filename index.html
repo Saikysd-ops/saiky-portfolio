@@ -1977,24 +1977,20 @@
   .ab2-photo.is-real .ab2-half--color{opacity:1;transform:none;}
   .ab2-photo.is-real .ab2-half--dots{opacity:0;}
   @media (hover:hover){
-    .ab2-photo:not(.is-live):hover .ab2-half--color{opacity:1;transform:none;}
-    .ab2-photo:not(.is-live):hover .ab2-half--dots{opacity:0;}
+    .ab2-photo:hover .ab2-half--color{opacity:1;transform:none;}
+    .ab2-photo:hover .ab2-half--dots{opacity:0;}
   }
-  /* live dots: a canvas replaces the PNG; the real photo shows through a soft lens under the cursor */
+  /* glyph portrait: a canvas replaces the PNG once ready */
   .ab2-dots-cv{position:absolute;inset:0;width:100%;height:100%;display:none;}
   .ab2-photo.is-live .ab2-dots-cv{display:block;}
   .ab2-photo.is-live .ab2-half--dots img{display:none !important;}
-  .ab2-photo.is-live .ab2-half--color{transform:none;transition:opacity .5s ease;
-    -webkit-mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%),#000 0,#000 var(--lens,0px),transparent calc(var(--lens,0px) + 46px));
-            mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%),#000 0,#000 var(--lens,0px),transparent calc(var(--lens,0px) + 46px));}
-  .ab2-photo.is-live.is-lens .ab2-half--color{opacity:1;}
-  .ab2-photo.is-live.is-real .ab2-half--color{-webkit-mask-image:none;mask-image:none;opacity:1;}
   /* editorial callouts pinned to the portrait */
-  .ab2-tags{position:absolute;inset:0;pointer-events:none;overflow:hidden;color:var(--ink);transition:color .6s ease;}
-  .ab2-photo.is-real .ab2-tags{color:#F8F7F4;}
-  .ab2-photo.is-real .ab2-pin circle{fill:#8A0509;}
-  .ab2-photo.is-real .ab2-pin .c,.ab2-pin .c{fill:currentColor;}
-  .ab2-photo.is-real .ab2-tag span{background:transparent;}
+  .ab2-tags{position:absolute;inset:0;pointer-events:none;overflow:hidden;color:var(--ink);transition:opacity .5s ease;}
+  .ab2-photo.is-real .ab2-tags{opacity:0;}
+  @media (hover:hover){ .ab2-photo:hover .ab2-tags{opacity:0;} }
+  .ab2-photo.is-live:not(.is-formed) .ab2-tags{opacity:0;transition:none;}
+  .ab2-photo.is-live:not(.is-formed) .ab2-tags path,.ab2-photo.is-live:not(.is-formed) .ab2-pin,.ab2-photo.is-live:not(.is-formed) .ab2-tag{animation:none;}
+  .ab2-pin .c{fill:currentColor;}
   .ab2-tags-box{position:absolute;bottom:0;left:50%;height:100%;aspect-ratio:900/959;transform:translateX(-50%);}
   .ab2-tags svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
   .ab2-tags path{fill:none;stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke;opacity:.7;
@@ -5076,7 +5072,7 @@
   <div id="view-about">
   <section class="ab2" aria-label="The short version">
     <div class="ab2-media">
-      <div class="ab2-photo"><div class="ab2-frame" role="img" aria-label="Saikiran Desai, portrait — dotted; move over it to part the dots, click to see the photo">
+      <div class="ab2-photo"><div class="ab2-frame" role="img" aria-label="Saikiran Desai, portrait drawn in design glyphs; hover or tap to see the photo">
         <div class="ab2-half ab2-half--dots" aria-hidden="true"><img class="ab2-dots-l" src="assets/images/about-portrait-dots.png" width="1800" height="1918" alt=""><img class="ab2-dots-d" src="assets/images/about-portrait-dots-light.png" width="1800" height="1918" alt="" loading="lazy"><canvas class="ab2-dots-cv"></canvas></div>
         <div class="ab2-half ab2-half--color" aria-hidden="true"><img src="assets/images/about-portrait-wide.jpg" width="1620" height="959" alt=""></div>
       </div>
@@ -12128,78 +12124,73 @@ document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.
 <script>(function(){
   var p=document.querySelector('.ab2-photo');if(!p)return;
   var frame=p.querySelector('.ab2-frame'), cv=p.querySelector('.ab2-dots-cv');
-  var hoverable=matchMedia('(hover:hover)').matches;
-  // click / tap toggles the full real photo
   p.addEventListener('click',function(){p.classList.toggle('is-real');});
-  if(!cv||!cv.getContext||matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-  var ctx=cv.getContext('2d'), src=new Image(), N=0, hx,hy,ox,oy,vx,vy,rr, W=0,H=0,dpr=1, ink='#17171C';
-  var mx=-1e4,my=-1e4, inside=false, ripples=[], lastRip=0, lastX=0,lastY=0, raf=0, lens=0, lensT=0;
+  if(!cv||!cv.getContext) return;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var ctx=cv.getContext('2d'), src=new Image(), G=[], W=0,H=0,dpr=1, ink='#17171C', played=false, t0=0, raf=0, seen=false;
   src.src='assets/images/image-022-67f0cd6926e6.jpg';
   function dark(){return document.documentElement.getAttribute('data-theme')==='dark';}
+  function rnd(i){var x=Math.sin(i*12.9898+78.233)*43758.5453;return x-Math.floor(x);}
+  // glyph families by tone: light -> small marks, mid -> line glyphs, dark -> solid shapes
+  var LIGHT=['dot','dot','dot','tick'], MID=['plus','cross','ring','dot2','dot2'], DEEP=['ring','sq','dia','tri','plus','disc'], SOLID=['disc','disc','disc','fsq','fdia'];
   function build(){
     var b=frame.getBoundingClientRect(); W=b.width;H=b.height; if(!W||!H||!src.naturalWidth) return;
     dpr=Math.min(2,window.devicePixelRatio||1); cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
-    var step=W<600?3.4:4.6, bw=H*900/959, bl=(W-bw)/2;
-    var cols=Math.floor(bw/step), rows=Math.floor(H/step);
+    var cell=W<600?4:5.2, bw=H*900/959, bl=(W-bw)/2, cols=Math.floor(bw/cell), rows=Math.floor(H/cell);
     var oc=document.createElement('canvas'); oc.width=cols; oc.height=rows;
     var o=oc.getContext('2d'); o.imageSmoothingQuality='high'; o.drawImage(src,0,0,cols,rows);
-    var d=o.getImageData(0,0,cols,rows).data, dk=dark();
-    var X=[],Y=[],R=[];
+    var d=o.getImageData(0,0,cols,rows).data, dk=dark(); G=[];
     for(var j=0;j<rows;j++)for(var i=0;i<cols;i++){
       var k=(j*cols+i)*4, r=d[k],g=d[k+1],bb=d[k+2];
       if((r-Math.max(g,bb))/255>0.33&&r>85) continue;
-      var lum=(0.299*r+0.587*g+0.114*bb)/255, rad;
-      if(dk){var l=Math.min(1,Math.max(0,(lum-0.04)/0.6));rad=step*0.47*(0.2+0.8*Math.pow(l,0.85));}
-      else{var dd=Math.max(0,(1-lum-0.1)/0.9);dd=Math.pow(dd,1.8);if(dd<=0.1)continue;rad=step*0.48*(0.16+0.84*dd);}
-      var x=bl+(i+0.5)*step, y=(j+0.5)*step; if(x<-step||x>W+step) continue;
-      X.push(x);Y.push(y);R.push(rad);
+      var lum=(0.299*r+0.587*g+0.114*bb)/255, t;
+      if(dk){t=Math.min(1,Math.max(0,(lum-0.03)/0.62));t=Math.pow(t,0.8);t=0.14+0.86*t;}
+      else{t=Math.max(0,(1-lum-0.06)/0.94);t=Math.pow(t,1.35);if(t<0.06)continue;}
+      var n=j*cols+i, q=rnd(n), set=t<0.3?LIGHT:t<0.55?MID:t<0.82?DEEP:SOLID;
+      var x=bl+(i+0.5)*cell, y=(j+0.5)*cell; if(x<-cell||x>W+cell) continue;
+      G.push({x:x,y:y,t:t,k:set[Math.floor(q*set.length)],s:cell*(0.3+0.58*t),
+        sx:rnd(n+1)*W, sy:rnd(n+2)*H, sr:(rnd(n+3)-0.5)*6, dl:rnd(n+4)*0.45+ (y/H)*0.25});
     }
-    N=X.length; hx=new Float32Array(X);hy=new Float32Array(Y);rr=new Float32Array(R);
-    ox=new Float32Array(N);oy=new Float32Array(N);vx=new Float32Array(N);vy=new Float32Array(N);
-    ink=dk?'#F8F7F4':'#17171C'; p.classList.add('is-live'); draw();
+    ink=dk?'#F8F7F4':'#17171C'; p.classList.add('is-live');
+    if(played||reduce){ draw(1); p.classList.add('is-formed'); } else { draw(0); if(seen) play(); }
   }
-  function draw(){
+  function ease(x){return 1-Math.pow(1-x,3);}
+  function draw(prog){
     ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
-    ctx.fillStyle=ink; ctx.beginPath();
-    for(var n=0;n<N;n++){var x=hx[n]+ox[n],y=hy[n]+oy[n];ctx.moveTo(x+rr[n],y);ctx.arc(x,y,rr[n],0,6.2832);}
-    ctx.fill();
-    var now=performance.now();
-    for(var q=0;q<ripples.length;q++){var rp=ripples[q],age=(now-rp.t)/900; if(age>=1) continue;
-      ctx.beginPath();ctx.strokeStyle=ink;ctx.globalAlpha=0.32*(1-age);ctx.lineWidth=1;
-      ctx.arc(rp.x,rp.y,10+age*110,0,6.2832);ctx.stroke();ctx.globalAlpha=1;}
-  }
-  function tick(){
-    raf=0; var now=performance.now(), moving=false, R0=W<600?70:96;
-    ripples=ripples.filter(function(r){return now-r.t<900;});
-    for(var n=0;n<N;n++){
-      var fx=0,fy=0, x=hx[n]+ox[n], y=hy[n]+oy[n];
-      if(inside){var dx=x-mx,dy=y-my,d2=dx*dx+dy*dy;
-        if(d2<R0*R0){var d=Math.sqrt(d2)||1,f=(1-d/R0);f=f*f*2.4;fx+=dx/d*f;fy+=dy/d*f;}}
-      for(var q=0;q<ripples.length;q++){var rp=ripples[q],age=(now-rp.t)/900,rad=10+age*110;
-        var ex=hx[n]-rp.x,ey=hy[n]-rp.y,e=Math.sqrt(ex*ex+ey*ey)||1,w=Math.abs(e-rad);
-        if(w<9){var s2=(1-w/9)*(1-age)*0.55;fx+=ex/e*s2;fy+=ey/e*s2;}}
-      vx[n]=(vx[n]+fx-ox[n]*0.075)*0.84; vy[n]=(vy[n]+fy-oy[n]*0.075)*0.84;
-      ox[n]+=vx[n]; oy[n]+=vy[n];
-      if(!moving&&(Math.abs(ox[n])>0.05||Math.abs(oy[n])>0.05||Math.abs(vx[n])>0.02)) moving=true;
+    ctx.fillStyle=ink; ctx.strokeStyle=ink; ctx.lineWidth=W<600?0.8:1; ctx.lineCap='round';
+    var fill=new Path2D(), line=new Path2D();
+    for(var n=0;n<G.length;n++){var g=G[n], e=prog>=1?1:ease(Math.min(1,Math.max(0,(prog-g.dl)/(1-0.7))));
+      if(e<=0) continue;
+      var x=g.sx+(g.x-g.sx)*e, y=g.sy+(g.y-g.sy)*e, h=g.s/2, rot=g.sr*(1-e);
+      var c=Math.cos(rot), sn=Math.sin(rot);
+      function P(px,py){return [x+px*c-py*sn, y+px*sn+py*c];}
+      function poly(path,pts){var a=P(pts[0][0],pts[0][1]);path.moveTo(a[0],a[1]);for(var m=1;m<pts.length;m++){a=P(pts[m][0],pts[m][1]);path.lineTo(a[0],a[1]);}path.closePath();}
+      switch(g.k){
+        case 'dot': fill.moveTo(x+h*0.42,y); fill.arc(x,y,h*0.42,0,6.2832); break;
+        case 'dot2': fill.moveTo(x+h*0.62,y); fill.arc(x,y,h*0.62,0,6.2832); break;
+        case 'disc': fill.moveTo(x+h*0.92,y); fill.arc(x,y,h*0.92,0,6.2832); break;
+        case 'tick': var a1=P(-h*0.5,0),a2=P(h*0.5,0); line.moveTo(a1[0],a1[1]); line.lineTo(a2[0],a2[1]); break;
+        case 'plus': var p1=P(-h,0),p2=P(h,0),p3=P(0,-h),p4=P(0,h); line.moveTo(p1[0],p1[1]);line.lineTo(p2[0],p2[1]);line.moveTo(p3[0],p3[1]);line.lineTo(p4[0],p4[1]); break;
+        case 'cross': var q1=P(-h*.75,-h*.75),q2=P(h*.75,h*.75),q3=P(h*.75,-h*.75),q4=P(-h*.75,h*.75); line.moveTo(q1[0],q1[1]);line.lineTo(q2[0],q2[1]);line.moveTo(q3[0],q3[1]);line.lineTo(q4[0],q4[1]); break;
+        case 'ring': line.moveTo(x+h*0.8,y); line.arc(x,y,h*0.8,0,6.2832); break;
+        case 'sq': poly(line,[[-h*.75,-h*.75],[h*.75,-h*.75],[h*.75,h*.75],[-h*.75,h*.75]]); break;
+        case 'dia': poly(line,[[0,-h],[h,0],[0,h],[-h,0]]); break;
+        case 'tri': poly(line,[[0,-h*.9],[h*.85,h*.65],[-h*.85,h*.65]]); break;
+        case 'fsq': poly(fill,[[-h*.8,-h*.8],[h*.8,-h*.8],[h*.8,h*.8],[-h*.8,h*.8]]); break;
+        case 'fdia': poly(fill,[[0,-h*1.05],[h*1.05,0],[0,h*1.05],[-h*1.05,0]]); break;
+      }
     }
-    // lens grows while hovering, closes after leaving
-    var target=inside?(W<600?44:64):0; lens+= (target-lens)*0.12;
-    frame.style.setProperty('--lens',lens.toFixed(1)+'px');
-    p.classList.toggle('is-lens',lens>2);
-    draw();
-    if(inside||moving||ripples.length||Math.abs(lens-target)>0.5) raf=requestAnimationFrame(tick);
+    ctx.fill(fill); ctx.stroke(line);
   }
-  function kick(){ if(!raf) raf=requestAnimationFrame(tick); }
-  frame.addEventListener('pointermove',function(e){
-    if(p.classList.contains('is-real')) return;
-    var b=frame.getBoundingClientRect(); mx=e.clientX-b.left; my=e.clientY-b.top; inside=true;
-    frame.style.setProperty('--mx',mx+'px'); frame.style.setProperty('--my',my+'px');
-    var now=performance.now(), dist=Math.hypot(mx-lastX,my-lastY);
-    if(now-lastRip>140&&dist>14){ripples.push({x:mx,y:my,t:now});lastRip=now;lastX=mx;lastY=my;}
-    kick();
-  });
-  frame.addEventListener('pointerleave',function(){inside=false;kick();});
+  var DUR=2200;
+  function loaderGone(){ return !document.getElementById('introLoader'); }
+  function play(){ if(played||!G.length) return;
+    if(!loaderGone()){ var mo=new MutationObserver(function(){ if(loaderGone()){ mo.disconnect(); setTimeout(play,250); } }); mo.observe(document.body,{childList:true}); setTimeout(function(){mo.disconnect();play();},9000); return; }
+    played=true; p.classList.add('is-forming'); t0=performance.now(); raf=requestAnimationFrame(step); }
+  function step(now){ var prog=Math.min(1,(now-t0)/DUR); draw(prog);
+    if(prog<1) raf=requestAnimationFrame(step); else { p.classList.remove('is-forming'); p.classList.add('is-formed'); } }
   if(src.complete&&src.naturalWidth) build(); else src.onload=build;
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting&&e.boundingClientRect.width){ seen=true; if(!G.length) build(); else play(); } });},{threshold:0.25}).observe(frame); } else { seen=true; }
   if(window.ResizeObserver){var rt;new ResizeObserver(function(){clearTimeout(rt);rt=setTimeout(build,120);}).observe(frame);}
   new MutationObserver(build).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 })();</script>
