@@ -1961,20 +1961,27 @@
   /* ABOUT v2 — the short version as one full-screen spread: greeting + CTA on top, then a brand mark,
      the portrait (uncropped, native 900×959) and a details card. Brand palette only. */
   .ab2{position:relative;left:50%;margin-left:-50vw;width:100vw;box-sizing:border-box;
-    min-height:calc(100svh - var(--about-top, 100px));padding:clamp(20px,3.2svh,40px) clamp(20px,2.4vw,40px) clamp(20px,3svh,36px);
-    display:flex;flex-direction:column;gap:clamp(20px,3.4svh,44px);}
-  .ab2-head{display:grid;grid-template-columns:1fr auto;align-items:end;column-gap:40px;}
-  .ab2-intro{grid-column:1 / -1;}
-  .ab2-intro{max-width:1080px;}
-  .ab2{--ab2-body:clamp(14px,1.8svh,16px);--ab2-small:13px;}
-  .ab2-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(26px,min(2.7vw,4.6svh),44px);line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin:0;}
+    min-height:calc(100svh - var(--about-top, 100px));padding:clamp(20px,3.6svh,48px) clamp(20px,3vw,56px);
+    display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);column-gap:clamp(28px,4vw,72px);align-items:center;}
+  .ab2-text{max-width:620px;}
+  .ab2-eyebrow{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
+    display:flex;flex-wrap:wrap;column-gap:14px;row-gap:2px;margin-bottom:clamp(10px,1.8svh,20px);}
+  .ab2-eyebrow span{color:var(--ink-soft);}
+  .ab2-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(26px,min(2.7vw,4.4svh),44px);line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin:0;}
   .ab2-h1 b{display:block;font-weight:600;}
   .ab2-h1 span{display:block;font-weight:400;color:color-mix(in srgb, var(--ink) 78%, transparent);}
   .ab2-h1 em{font-style:italic;}
-  .ab2-sub{grid-column:1;margin:clamp(10px,1.5svh,16px) 0 0;max-width:60ch;font-size:clamp(13.5px,1.65svh,15px);line-height:1.6;color:var(--ink-soft);}
-  .ab2-cta{grid-column:2;flex:none;margin:0;align-self:end;}
-  .ab2-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.4vw,22px);
-    height:clamp(360px, calc(100svh - var(--about-top, 100px) - var(--ab2-head, 280px) - clamp(64px,10svh,124px)), 960px);}
+  .ab2-sub{margin:clamp(10px,1.6svh,18px) 0 0;font-size:clamp(14px,1.85svh,17px);line-height:1.55;color:var(--ink);}
+  .ab2-bios{margin-top:clamp(12px,2svh,24px);padding-top:clamp(12px,2svh,24px);border-top:1px solid var(--line, color-mix(in srgb, var(--ink) 14%, transparent));}
+  .ab2-bio{margin:0;font-size:clamp(13px,1.6svh,15px);line-height:1.6;color:var(--ink-soft);}
+  .ab2-bio + .ab2-bio{margin-top:clamp(6px,1.1svh,12px);}
+  .ab2-bio b{font-weight:500;color:var(--ink);}
+  .ab2-pills{margin-top:clamp(14px,2.4svh,28px);gap:6px;}
+  .ab2-pills .pill{font-size:11.5px;padding:6px 12px;}
+  .ab2-cta{margin:clamp(16px,2.8svh,36px) 0 0;}
+  @media (min-width:861px) and (max-height:780px){ .ab2-cta .btn{padding-top:12px;padding-bottom:12px;} }
+  .ab2-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.4vw,22px);
+    height:clamp(320px, calc(100svh - var(--about-top, 100px) - clamp(40px,7svh,96px)), 720px);}
   /* the mark: one circle, half black, half white */
   .ab2-mark{container-type:size;display:flex;align-items:center;justify-content:center;min-width:0;}
   .ab2-circle{display:block;width:min(100cqw,100cqh);aspect-ratio:1;border-radius:50%;box-sizing:border-box;
@@ -2001,44 +2008,24 @@
     .ab2-photo:hover .ab2-half--dots{clip-path:inset(0 100% 0 0);}
   }
   @media (prefers-reduced-motion:reduce){ .ab2-half{transition:none;} }
-  /* details card — Near Black / Warm Ivory: name, role, a lead line, then a small spec sheet */
-  .ab2-card{display:flex;flex-direction:column;min-width:0;overflow:auto;border-radius:4px;background:#17171C;color:#F8F7F4;
-    padding:clamp(20px,3svh,36px) clamp(22px,2.4vw,40px) clamp(10px,1.4svh,16px);scrollbar-width:none;}
-  .ab2-card::-webkit-scrollbar{display:none;}
-  :root[data-theme="dark"] .ab2-card{background:#F8F7F4;color:#17171C;}
-  .ab2-card-head{padding-bottom:clamp(12px,2svh,20px);border-bottom:1px solid color-mix(in srgb, currentColor 16%, transparent);}
-  .ab2-name{font-family:var(--font-display);font-weight:500;font-size:clamp(22px,min(1.9vw,3.4svh),30px);letter-spacing:-.015em;line-height:1.1;}
-  .ab2-role{margin-top:10px;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;line-height:1.6;
-    color:color-mix(in srgb, currentColor 62%, transparent);}
-  .ab2-role span{display:block;color:color-mix(in srgb, currentColor 70%, transparent);}
-  .ab2-card-body{margin-top:auto;padding-top:clamp(14px,2.2svh,24px);}
-  .ab2-bio{margin:0;font-size:clamp(13.5px,1.6svh,14.5px);line-height:1.62;color:color-mix(in srgb, currentColor 68%, transparent);}
-  .ab2-bio--lead{font-size:clamp(14.5px,1.85svh,17px);line-height:1.5;letter-spacing:-.005em;color:currentColor;}
-  .ab2-bio + .ab2-bio{margin-top:clamp(8px,1.4svh,14px);}
-  .ab2-bio b{font-weight:500;color:currentColor;}
-  .ab2-meta{margin:clamp(14px,2.2svh,24px) 0 0;}
-  .ab2-meta > div{display:grid;grid-template-columns:minmax(92px,32%) 1fr;gap:12px;align-items:baseline;padding:clamp(8px,1.2svh,12px) 0;border-top:1px solid color-mix(in srgb, currentColor 16%, transparent);}
-  .ab2-meta dt{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb, currentColor 58%, transparent);}
-  .ab2-meta dd{margin:0;font-size:13px;line-height:1.5;}
   @media (max-width:1180px){
-    .ab2-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .ab2-row{grid-template-columns:1fr;}
     .ab2-mark{display:none;}
   }
   @media (max-width:860px){
-    .ab2{min-height:0;padding:24px 20px 48px;gap:28px;}
-    .ab2-head{grid-template-columns:1fr;row-gap:0;}
+    .ab2{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:24px 20px 48px;gap:32px;}
+    .ab2-text{max-width:none;}
     .ab2-h1{font-size:clamp(28px,8vw,36px);line-height:1.12;}
-    .ab2-sub{margin-top:14px;font-size:15px;line-height:1.6;max-width:none;}
-    .ab2-cta{grid-column:1;margin-top:24px;display:grid;grid-template-columns:1fr;gap:10px;}
+    .ab2-sub{font-size:16px;}
+    .ab2-bio{font-size:14.5px;}
+    .ab2-eyebrow{flex-direction:column;font-size:10.5px;letter-spacing:.05em;}
+    .ab2 .ab2-pills{flex-wrap:wrap;gap:6px;margin-top:22px;}
+    .ab2 .ab2-pills .pill{font-size:11.5px !important;padding:6px 12px !important;}
+    .ab2-cta{margin-top:24px;display:grid;grid-template-columns:1fr;gap:10px;}
     .ab2-cta .btn{width:100%;justify-content:space-between;box-sizing:border-box;}
-    .ab2-row{display:flex;flex-direction:column;height:auto;gap:16px;}
+    .ab2-row{display:block;height:auto;}
     .ab2-photo{height:auto;width:100%;container-type:inline-size;}
     .ab2-disc{width:100cqw;}
-    .ab2-card{overflow:visible;padding:26px 22px 18px;}
-    .ab2-name{font-size:26px;}
-    .ab2-card-body{margin-top:0;padding-top:18px;}
-    .ab2-bio--lead{font-size:17px;}
-    .ab2-bio{font-size:14.5px;}
   }
   /* ---------- ABOUT PAGE ---------- */
   .about-hero{padding-top:0;padding-bottom:0;}
@@ -5066,11 +5053,21 @@
 
   <div id="view-about">
   <section class="ab2" aria-label="The short version">
-    <div class="ab2-head">
-      <div class="ab2-intro">
-        <h1 class="ab2-h1"><b>Hi, I'm Saiky.</b><span>I believe good design should be <em class="case-gradient gw">humane.</em></span></h1>
+    <div class="ab2-text">
+      <div class="ab2-eyebrow">Saikiran Desai<span>Senior Product Designer · Enterprise, fintech &amp; AI</span></div>
+      <h1 class="ab2-h1"><b>Hi, I'm Saiky.</b><span>I believe good design should be <em class="case-gradient gw">humane.</em></span></h1>
+      <p class="ab2-sub">People aren't perfect users. They're distracted, under pressure, learning, making mistakes, and trying to get things done. Humane design respects that reality — giving people clarity, control, and a way forward.</p>
+      <div class="ab2-bios">
+        <p class="ab2-bio">I'm <b>Saiky</b>, a senior product designer in Bengaluru. I design complex products and turn them into experiences people can actually use.</p>
+        <p class="ab2-bio">I've worked with <b>Walmart</b>, <b>Maersk</b>, <b>SOLV</b>, and <b>Standard Chartered</b>, designing products across enterprise, fintech, and emerging businesses.</p>
+        <p class="ab2-bio">Right now, I'm exploring how <b>AI</b> is changing the way we design, build, and interact with products — and what that means for the future of product design.</p>
       </div>
-        <p class="ab2-sub">People aren't perfect users. They're distracted, under pressure, learning, making mistakes, and trying to get things done. Humane design respects that reality — giving people clarity, control, and a way forward.</p>
+      <div class="pills ab2-pills" aria-label="Off screen">
+        <span class="pill">🌍 Bengaluru</span>
+        <span class="pill">🎾 Tennis</span>
+        <span class="pill">🏔️ Solo backpacker</span>
+        <span class="pill">🎨 Acrylic painter</span>
+      </div>
       <div class="cta-row ab2-cta">
         <button class="btn btn-primary" data-scroll="closing">Get in touch <span class="cta-arrow">↓</span></button>
         <a class="btn btn-ghost" data-resume-download href="#" download="Saikiran Desai Resume_Walmart_2026 updated.pdf">Download resume <span class="cta-arrow">↓</span></a>
@@ -5082,21 +5079,6 @@
         <div class="ab2-half ab2-half--dots" aria-hidden="true"><img src="assets/images/about-portrait-dots.png" width="1800" height="1918" alt=""></div>
         <div class="ab2-half ab2-half--color" aria-hidden="true"><img src="assets/images/image-022-67f0cd6926e6.jpg" width="900" height="959" alt=""></div>
       </div></div>
-      <div class="ab2-card">
-        <div class="ab2-card-head">
-          <div class="ab2-name">Saikiran Desai</div>
-          <div class="ab2-role">Senior Product Designer<span>Enterprise, fintech &amp; AI</span></div>
-        </div>
-        <div class="ab2-card-body">
-          <p class="ab2-bio ab2-bio--lead">I'm <b>Saiky</b>, a senior product designer in Bengaluru. I design complex products and turn them into experiences people can actually use.</p>
-          <p class="ab2-bio">I've worked with <b>Walmart</b>, <b>Maersk</b>, <b>SOLV</b>, and <b>Standard Chartered</b>, designing products across enterprise, fintech, and emerging businesses.</p>
-          <p class="ab2-bio">Right now, I'm exploring how <b>AI</b> is changing the way we design, build, and interact with products — and what that means for the future of product design.</p>
-        </div>
-        <dl class="ab2-meta">
-          <div><dt>Based in</dt><dd>Bengaluru, India</dd></div>
-          <div><dt>Off screen</dt><dd>Tennis · Solo backpacking · Acrylic painting</dd></div>
-        </dl>
-      </div>
     </div>
   </section>
 
@@ -11431,7 +11413,7 @@ setActive(0); startRotation();
       // About: the full-bleed split starts below the navbar + tags, so it needs that offset to fit the viewport exactly
       var a=document.querySelector('.ab2');
       if(a&&a.offsetParent){ root.setProperty('--about-top', Math.round(a.getBoundingClientRect().top+window.scrollY)+'px');
-        var hd=a.querySelector('.ab2-head'); if(hd) root.setProperty('--ab2-head', Math.round(hd.offsetHeight)+'px'); }
+}
     }
     window.addEventListener('load', fit);
     window.addEventListener('resize', fit);
