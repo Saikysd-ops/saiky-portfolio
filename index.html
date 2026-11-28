@@ -1974,14 +1974,16 @@
   :root[data-theme="dark"] .ab2-dots-d{display:block !important;}
   .ab2-half{position:absolute;inset:0;transition:opacity .9s cubic-bezier(.4,0,.2,1),transform 1.4s cubic-bezier(.2,.7,.2,1);}
   .ab2-half img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;width:auto;max-width:none;display:block;}
-  .ab2-half--color{opacity:0;transform:scale(1.025);transform-origin:50% 100%;
-    background:#8A0509;}
-  .ab2-photo.is-real .ab2-half--color{opacity:1;transform:none;}
+  /* hover: the colour illustration shows through a soft-edged circle that follows the cursor — the home hero's mask */
+  @property --mr{syntax:'<length>';inherits:true;initial-value:0px;}
+  .ab2-frame{--mx:50%;--my:50%;--mr:0px;transition:--mr .35s cubic-bezier(.2,.7,.2,1);}
+  .ab2-half--color{opacity:1;
+    -webkit-mask-image:radial-gradient(circle var(--mr) at var(--mx) var(--my),#000 98%,transparent 100%);
+            mask-image:radial-gradient(circle var(--mr) at var(--mx) var(--my),#000 98%,transparent 100%);
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
+  .ab2-half--color img{left:0;transform:none;width:100%;height:100%;object-fit:cover;object-position:50% 38%;}
+  .ab2-photo.is-real .ab2-half--color{-webkit-mask-image:none;mask-image:none;}
   .ab2-photo.is-real .ab2-half--dots{opacity:0;}
-  @media (hover:hover){
-    .ab2-photo:hover .ab2-half--color{opacity:1;transform:none;}
-    .ab2-photo:hover .ab2-half--dots{opacity:0;}
-  }
   /* glyph portrait: a canvas replaces the PNG once ready */
   .ab2-dots-cv{position:absolute;inset:0;width:100%;height:100%;display:none;}
   .ab2-photo.is-live .ab2-dots-cv{display:block;}
@@ -1989,7 +1991,6 @@
   /* editorial callouts pinned to the portrait */
   .ab2-tags{position:absolute;inset:0;pointer-events:none;overflow:hidden;color:var(--ink);transition:opacity .5s ease;}
   .ab2-photo.is-real .ab2-tags{opacity:0;}
-  @media (hover:hover){ .ab2-photo:hover .ab2-tags{opacity:0;} }
   .ab2-tags-box{position:absolute;bottom:0;left:50%;height:100%;aspect-ratio:900/959;transform:translateX(-50%);}
   /* black & white sticker tags, same family as the home hero tags */
   .ab2-st{position:absolute;white-space:nowrap;animation:pTagFloat 6s ease-in-out infinite;}
@@ -5076,9 +5077,9 @@
   <div id="view-about">
   <section class="ab2" aria-label="The short version">
     <div class="ab2-media">
-      <div class="ab2-photo"><div class="ab2-frame" role="img" aria-label="Saikiran Desai, portrait drawn in design glyphs; hover or tap to see the photo">
+      <div class="ab2-photo"><div class="ab2-frame" role="img" aria-label="Saikiran Desai, portrait drawn in design glyphs; hover or tap to reveal the colour illustration">
         <div class="ab2-half ab2-half--dots" aria-hidden="true"><img class="ab2-dots-l" src="assets/images/about-portrait-dots.png" width="1800" height="1918" alt=""><img class="ab2-dots-d" src="assets/images/about-portrait-dots-light.png" width="1800" height="1918" alt="" loading="lazy"><canvas class="ab2-dots-cv"></canvas></div>
-        <div class="ab2-half ab2-half--color" aria-hidden="true"><img src="assets/images/about-portrait-wide.jpg" width="1620" height="959" alt=""></div>
+        <div class="ab2-half ab2-half--color" aria-hidden="true"><img src="assets/images/about-illustration.jpg" width="745" height="1054" alt=""></div>
       </div>
       <div class="ab2-tags" aria-hidden="true"><div class="ab2-tags-box">
         <div class="ab2-st ab2-st--a"><span>Product thinker</span></div>
@@ -12130,7 +12131,14 @@ document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.
 <script>(function(){
   var p=document.querySelector('.ab2-photo');if(!p)return;
   var frame=p.querySelector('.ab2-frame'), cv=p.querySelector('.ab2-dots-cv');
-  p.addEventListener('click',function(){p.classList.toggle('is-real');});
+  p.addEventListener('click',function(){ if(!matchMedia('(hover:hover)').matches) p.classList.toggle('is-real'); });
+  // cursor mask, like the home hero portrait
+  frame.addEventListener('mousemove',function(e){var b=frame.getBoundingClientRect();
+    frame.style.setProperty('--mx',(e.clientX-b.left)+'px');frame.style.setProperty('--my',(e.clientY-b.top)+'px');});
+  frame.addEventListener('mouseenter',function(e){var b=frame.getBoundingClientRect();
+    frame.style.setProperty('--mx',(e.clientX-b.left)+'px');frame.style.setProperty('--my',(e.clientY-b.top)+'px');
+    frame.style.setProperty('--mr',(b.width<600?90:130)+'px');});
+  frame.addEventListener('mouseleave',function(){frame.style.setProperty('--mr','0px');});
   if(!cv||!cv.getContext) return;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var ctx=cv.getContext('2d'), src=new Image(), G=[], W=0,H=0,dpr=1, ink='#17171C', played=false, t0=0, raf=0, seen=false;
