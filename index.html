@@ -1981,7 +1981,7 @@
     -webkit-mask-image:radial-gradient(circle var(--mr) at var(--mx) var(--my),#000 98%,transparent 100%);
             mask-image:radial-gradient(circle var(--mr) at var(--mx) var(--my),#000 98%,transparent 100%);
     -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
-  .ab2-half--color img{left:0;transform:none;width:100%;height:100%;object-fit:cover;object-position:50% 38%;}
+  .ab2-half--dots img{filter:grayscale(1) contrast(1.2);opacity:.85;}
   .ab2-photo.is-real .ab2-half--color{-webkit-mask-image:none;mask-image:none;}
   .ab2-photo.is-real .ab2-half--dots{opacity:0;}
   /* glyph portrait: a canvas replaces the PNG once ready */
@@ -1991,7 +1991,7 @@
   /* editorial callouts pinned to the portrait */
   .ab2-tags{position:absolute;inset:0;pointer-events:none;overflow:hidden;color:var(--ink);transition:opacity .5s ease;}
   .ab2-photo.is-real .ab2-tags{opacity:0;}
-  .ab2-tags-box{position:absolute;bottom:0;left:50%;height:100%;aspect-ratio:900/959;transform:translateX(-50%);}
+  .ab2-tags-box{position:absolute;bottom:0;left:50%;height:100%;aspect-ratio:2880/4075;transform:translateX(-50%);}
   /* black & white sticker tags, same family as the home hero tags */
   .ab2-st{position:absolute;white-space:nowrap;animation:pTagFloat 6s ease-in-out infinite;}
   .ab2-st > span{display:inline-flex;align-items:center;gap:8px;border:2px dotted #17171C;border-radius:999px;transform:rotate(var(--rot,0deg));
@@ -2036,7 +2036,7 @@
   @media (min-width:861px) and (max-height:780px){ .ab2-cta .btn{padding-top:12px;padding-bottom:12px;} }
   @media (max-width:860px){
     .ab2{display:flex;flex-direction:column;height:auto;min-height:0;padding:0;}
-    .ab2-media{height:auto;aspect-ratio:900/959;}
+    .ab2-media{height:auto;aspect-ratio:2880/4075;}
     .ab2-text{padding:28px 20px 48px;}
     .ab2-text-in{max-width:none;}
     .ab2-h1{font-size:clamp(24px,6.8vw,30px);line-height:1.15;}
@@ -5078,8 +5078,8 @@
   <section class="ab2" aria-label="The short version">
     <div class="ab2-media">
       <div class="ab2-photo"><div class="ab2-frame" role="img" aria-label="Saikiran Desai, portrait drawn in design glyphs; hover or tap to reveal the colour illustration">
-        <div class="ab2-half ab2-half--dots" aria-hidden="true"><img class="ab2-dots-l" src="assets/images/about-portrait-dots.png" width="1800" height="1918" alt=""><img class="ab2-dots-d" src="assets/images/about-portrait-dots-light.png" width="1800" height="1918" alt="" loading="lazy"><canvas class="ab2-dots-cv"></canvas></div>
-        <div class="ab2-half ab2-half--color" aria-hidden="true"><img src="assets/images/about-illustration.jpg" width="745" height="1054" alt=""></div>
+        <div class="ab2-half ab2-half--dots" aria-hidden="true"><img class="ab2-dots-l" src="assets/images/about-illustration-4k.jpg" width="2880" height="4075" alt=""><img class="ab2-dots-d" src="assets/images/about-illustration-4k.jpg" width="2880" height="4075" alt="" loading="lazy"><canvas class="ab2-dots-cv"></canvas></div>
+        <div class="ab2-half ab2-half--color" aria-hidden="true"><img src="assets/images/about-illustration-4k.jpg" width="2880" height="4075" alt="" decoding="async"></div>
       </div>
       <div class="ab2-tags" aria-hidden="true"><div class="ab2-tags-box">
         <div class="ab2-st ab2-st--a"><span>Product thinker</span></div>
@@ -12142,7 +12142,7 @@ document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.
   if(!cv||!cv.getContext) return;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var ctx=cv.getContext('2d'), src=new Image(), G=[], W=0,H=0,dpr=1, ink='#17171C', played=false, t0=0, raf=0, seen=false;
-  src.src='assets/images/image-022-67f0cd6926e6.jpg';
+  src.src='assets/images/about-illustration-4k.jpg'; var AR=2880/4075;
   function dark(){return document.documentElement.getAttribute('data-theme')==='dark';}
   function rnd(i){var x=Math.sin(i*12.9898+78.233)*43758.5453;return x-Math.floor(x);}
   // glyph families by tone: light -> small marks, mid -> line glyphs, dark -> solid shapes
@@ -12150,24 +12150,28 @@ document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.
   function build(){
     var b=frame.getBoundingClientRect(); W=b.width;H=b.height; if(!W||!H||!src.naturalWidth) return;
     dpr=Math.min(2,window.devicePixelRatio||1); cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
-    var cell=W<600?3.8:4.6, bw=H*900/959, bl=(W-bw)/2, cols=Math.floor(bw/cell), rows=Math.floor(H/cell);
+    var cell=W<600?2.8:3.3, bw=H*AR, bl=(W-bw)/2, cols=Math.floor(bw/cell), rows=Math.floor(H/cell);
     var oc=document.createElement('canvas'); oc.width=cols; oc.height=rows;
     var o=oc.getContext('2d'); o.imageSmoothingQuality='high'; o.drawImage(src,0,0,cols,rows);
     var d=o.getImageData(0,0,cols,rows).data, dk=dark(); G=[];
     // luminance grid + unsharp mask so the face (glasses, beard, eyes) reads crisply
     var L=new Float32Array(cols*rows), B=new Float32Array(cols*rows), RED=new Uint8Array(cols*rows);
-    for(var z=0;z<cols*rows;z++){var r0=d[z*4],g0=d[z*4+1],b0=d[z*4+2];L[z]=(0.299*r0+0.587*g0+0.114*b0)/255;RED[z]=((r0-Math.max(g0,b0))/255>0.33&&r0>85)?1:0;}
+    var V=new Float32Array(cols*rows);for(var z=0;z<cols*rows;z++){var r0=d[z*4],g0=d[z*4+1],b0=d[z*4+2];L[z]=(0.299*r0+0.587*g0+0.114*b0)/255;V[z]=Math.max(r0,g0,b0)/255;RED[z]=0;}
     for(var jj=0;jj<rows;jj++)for(var ii=0;ii<cols;ii++){var sm=0,c2=0;for(var dy=-2;dy<=2;dy++)for(var dx=-2;dx<=2;dx++){var y2=jj+dy,x2=ii+dx;if(y2<0||y2>=rows||x2<0||x2>=cols)continue;var z2=y2*cols+x2;if(RED[z2])continue;sm+=L[z2];c2++;}B[jj*cols+ii]=c2?sm/c2:L[jj*cols+ii];}
+    // edges (Sobel on luminance) so the illustration's ink lines survive as dense dot runs
+    var E=new Float32Array(cols*rows);
+    for(var jj2=1;jj2<rows-1;jj2++)for(var ii2=1;ii2<cols-1;ii2++){var q0=jj2*cols+ii2;
+      var gx=L[q0-cols+1]+2*L[q0+1]+L[q0+cols+1]-L[q0-cols-1]-2*L[q0-1]-L[q0+cols-1];
+      var gy=L[q0+cols-1]+2*L[q0+cols]+L[q0+cols+1]-L[q0-cols-1]-2*L[q0-cols]-L[q0-cols+1];
+      E[q0]=Math.min(1,Math.sqrt(gx*gx+gy*gy)*0.9);}
     for(var j=0;j<rows;j++)for(var i=0;i<cols;i++){
-      var k=(j*cols+i)*4, r=d[k],g=d[k+1],bb=d[k+2];
-      if((r-Math.max(g,bb))/255>0.33&&r>85) continue;
-      var zi=j*cols+i, lum=Math.min(1,Math.max(0,L[zi]+0.9*(L[zi]-B[zi]))), t;
-      if(dk){t=Math.min(1,Math.max(0,(lum-0.03)/0.62));t=Math.pow(t,0.8);t=0.14+0.86*t;}
-      else{t=Math.max(0,(1-lum-0.06)/0.94);t=Math.pow(t,1.35);if(t<0.06)continue;}
-      var n=j*cols+i, q=rnd(n), set=t<0.3?LIGHT:t<0.55?MID:t<0.82?DEEP:SOLID;
-      var x=bl+(i+0.5)*cell, y=(j+0.5)*cell; if(x<-cell||x>W+cell) continue;
-      G.push({x:x,y:y,t:t,k:set[Math.floor(q*set.length)],s:cell*(0.3+0.58*t),
-        sx:rnd(n+1)*W, sy:rnd(n+2)*H, sr:(rnd(n+3)-0.5)*6, dl:rnd(n+4)*0.45+ (y/H)*0.25});
+      var zi=j*cols+i, lum=Math.min(1,Math.max(0,L[zi]+0.4*(L[zi]-B[zi]))), t;
+      // ink drawing: black linework (low value) becomes dense dots, colour fields become a light stipple
+      var lineT=Math.pow(Math.max(0,1-V[zi]-0.08)/0.92,1.1), shade=(1-lum)*0.2;
+      t=lineT*0.95+shade+E[zi]*0.22;
+      t=Math.min(1,t); if(t<0.07) continue;
+      var n=zi, x=bl+(i+0.5)*cell, y=(j+0.5)*cell;
+      G.push({x:x,y:y,t:t,k:'pen',s:cell*1.12*Math.sqrt(t), sx:rnd(n+1)*W, sy:rnd(n+2)*H, sr:0, dl:rnd(n+4)*0.45+(y/H)*0.25});
     }
     ink=dk?'#F8F7F4':'#17171C'; p.classList.add('is-live');
     if(played||reduce){ draw(1); p.classList.add('is-formed'); } else { draw(0); if(seen) play(); }
@@ -12184,6 +12188,7 @@ document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.
       function P(px,py){return [x+px*c-py*sn, y+px*sn+py*c];}
       function poly(path,pts){var a=P(pts[0][0],pts[0][1]);path.moveTo(a[0],a[1]);for(var m=1;m<pts.length;m++){a=P(pts[m][0],pts[m][1]);path.lineTo(a[0],a[1]);}path.closePath();}
       switch(g.k){
+        case 'pen': fill.moveTo(x+h,y); fill.arc(x,y,h,0,6.2832); break;
         case 'dot': fill.moveTo(x+h*0.42,y); fill.arc(x,y,h*0.42,0,6.2832); break;
         case 'dot2': fill.moveTo(x+h*0.62,y); fill.arc(x,y,h*0.62,0,6.2832); break;
         case 'disc': fill.moveTo(x+h*0.92,y); fill.arc(x,y,h*0.92,0,6.2832); break;
