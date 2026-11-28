@@ -1967,11 +1967,11 @@
   .ab2-intro{grid-column:1 / -1;}
   .ab2-intro{max-width:1080px;}
   .ab2{--ab2-body:clamp(14px,1.8svh,16px);--ab2-small:13px;}
-  .ab2-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,min(3.5vw,6svh),60px);line-height:1.06;letter-spacing:-.022em;color:var(--ink);margin:0;}
+  .ab2-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(26px,min(2.7vw,4.6svh),44px);line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin:0;}
   .ab2-h1 b{display:block;font-weight:600;}
   .ab2-h1 span{display:block;font-weight:400;color:color-mix(in srgb, var(--ink) 78%, transparent);}
   .ab2-h1 em{font-style:italic;}
-  .ab2-sub{grid-column:1;margin:clamp(12px,1.8svh,20px) 0 0;max-width:64ch;font-size:var(--ab2-body);line-height:1.6;color:var(--ink-soft);}
+  .ab2-sub{grid-column:1;margin:clamp(10px,1.5svh,16px) 0 0;max-width:60ch;font-size:clamp(13.5px,1.65svh,15px);line-height:1.6;color:var(--ink-soft);}
   .ab2-cta{grid-column:2;flex:none;margin:0;align-self:end;}
   .ab2-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.4vw,22px);
     height:clamp(360px, calc(100svh - var(--about-top, 100px) - var(--ab2-head, 280px) - clamp(64px,10svh,124px)), 960px);}
@@ -2001,32 +2001,44 @@
     .ab2-photo:hover .ab2-half--dots{clip-path:inset(0 100% 0 0);}
   }
   @media (prefers-reduced-motion:reduce){ .ab2-half{transition:none;} }
-  /* details card — brand Line grey */
+  /* details card — Near Black / Warm Ivory: name, role, a lead line, then a small spec sheet */
   .ab2-card{display:flex;flex-direction:column;min-width:0;overflow:auto;border-radius:4px;background:#17171C;color:#F8F7F4;
-    padding:clamp(20px,3.2svh,36px) clamp(20px,2.2vw,36px);}
+    padding:clamp(20px,3svh,36px) clamp(22px,2.4vw,40px) clamp(10px,1.4svh,16px);scrollbar-width:none;}
+  .ab2-card::-webkit-scrollbar{display:none;}
   :root[data-theme="dark"] .ab2-card{background:#F8F7F4;color:#17171C;}
-  .ab2-name{font-family:var(--font-body);font-weight:700;font-size:clamp(18px,1.5vw,22px);letter-spacing:.03em;text-transform:uppercase;line-height:1.15;}
-  .ab2-role{margin-top:8px;font-size:var(--ab2-small);line-height:1.45;color:color-mix(in srgb, currentColor 66%, transparent);}
-  .ab2-bio{margin:0;font-size:var(--ab2-body);line-height:1.6;color:color-mix(in srgb, currentColor 82%, transparent);}
-  .ab2-role + .ab2-bio{margin-top:auto;padding-top:clamp(12px,2.4svh,24px);}
-  .ab2-bio + .ab2-bio{margin-top:clamp(8px,1.3svh,12px);}
-  .ab2-bio b{font-weight:inherit;color:currentColor;}
-  .ab2-meta{display:grid;grid-template-columns:1fr 1.7fr;gap:16px;margin-top:clamp(16px,2.6svh,28px);padding-top:clamp(14px,2.2svh,22px);border-top:1px solid color-mix(in srgb, currentColor 18%, transparent);}
-  .ab2-meta dt{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb, currentColor 60%, transparent);margin-bottom:6px;}
-  .ab2-meta dd{margin:0;font-size:var(--ab2-small);line-height:1.5;}
+  .ab2-card-head{padding-bottom:clamp(12px,2svh,20px);border-bottom:1px solid color-mix(in srgb, currentColor 16%, transparent);}
+  .ab2-name{font-family:var(--font-display);font-weight:500;font-size:clamp(22px,min(1.9vw,3.4svh),30px);letter-spacing:-.015em;line-height:1.1;}
+  .ab2-role{margin-top:10px;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;line-height:1.6;
+    color:color-mix(in srgb, currentColor 62%, transparent);}
+  .ab2-role span{display:block;color:color-mix(in srgb, currentColor 70%, transparent);}
+  .ab2-card-body{margin-top:auto;padding-top:clamp(14px,2.2svh,24px);}
+  .ab2-bio{margin:0;font-size:clamp(13.5px,1.6svh,14.5px);line-height:1.62;color:color-mix(in srgb, currentColor 68%, transparent);}
+  .ab2-bio--lead{font-size:clamp(14.5px,1.85svh,17px);line-height:1.5;letter-spacing:-.005em;color:currentColor;}
+  .ab2-bio + .ab2-bio{margin-top:clamp(8px,1.4svh,14px);}
+  .ab2-bio b{font-weight:500;color:currentColor;}
+  .ab2-meta{margin:clamp(14px,2.2svh,24px) 0 0;}
+  .ab2-meta > div{display:grid;grid-template-columns:minmax(92px,32%) 1fr;gap:12px;align-items:baseline;padding:clamp(8px,1.2svh,12px) 0;border-top:1px solid color-mix(in srgb, currentColor 16%, transparent);}
+  .ab2-meta dt{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb, currentColor 58%, transparent);}
+  .ab2-meta dd{margin:0;font-size:13px;line-height:1.5;}
   @media (max-width:1180px){
     .ab2-row{grid-template-columns:repeat(2,minmax(0,1fr));}
     .ab2-mark{display:none;}
   }
   @media (max-width:860px){
-    .ab2{min-height:0;padding:28px 20px 40px;}
-    .ab2-head{grid-template-columns:1fr;row-gap:24px;}
-    .ab2-cta{grid-column:1;}
-    .ab2-row{display:flex;flex-direction:column;height:auto;}
+    .ab2{min-height:0;padding:24px 20px 48px;gap:28px;}
+    .ab2-head{grid-template-columns:1fr;row-gap:0;}
+    .ab2-h1{font-size:clamp(28px,8vw,36px);line-height:1.12;}
+    .ab2-sub{margin-top:14px;font-size:15px;line-height:1.6;max-width:none;}
+    .ab2-cta{grid-column:1;margin-top:24px;display:grid;grid-template-columns:1fr;gap:10px;}
+    .ab2-cta .btn{width:100%;justify-content:space-between;box-sizing:border-box;}
+    .ab2-row{display:flex;flex-direction:column;height:auto;gap:16px;}
     .ab2-photo{height:auto;width:100%;container-type:inline-size;}
     .ab2-disc{width:100cqw;}
-    .ab2-card{overflow:visible;}
-    .ab2-role + .ab2-bio{margin-top:0;}
+    .ab2-card{overflow:visible;padding:26px 22px 18px;}
+    .ab2-name{font-size:26px;}
+    .ab2-card-body{margin-top:0;padding-top:18px;}
+    .ab2-bio--lead{font-size:17px;}
+    .ab2-bio{font-size:14.5px;}
   }
   /* ---------- ABOUT PAGE ---------- */
   .about-hero{padding-top:0;padding-bottom:0;}
@@ -5071,15 +5083,19 @@
         <div class="ab2-half ab2-half--color" aria-hidden="true"><img src="assets/images/image-022-67f0cd6926e6.jpg" width="900" height="959" alt=""></div>
       </div></div>
       <div class="ab2-card">
-        <div class="ab2-name">Saikiran Desai</div>
-        <div class="ab2-role">Senior Product Designer · Enterprise, fintech &amp; AI</div>
-        <p class="ab2-bio">I'm <b>Saiky</b>, a senior product designer in Bengaluru. I design complex products and turn them into experiences people can actually use.</p>
-        <p class="ab2-bio">I've worked with <b>Walmart</b>, <b>Maersk</b>, <b>SOLV</b>, and <b>Standard Chartered</b>, designing products across enterprise, fintech, and emerging businesses.</p>
-        <p class="ab2-bio">Right now, I'm exploring how <b>AI</b> is changing the way we design, build, and interact with products — and what that means for the future of product design.</p>
-        <div class="ab2-meta">
+        <div class="ab2-card-head">
+          <div class="ab2-name">Saikiran Desai</div>
+          <div class="ab2-role">Senior Product Designer<span>Enterprise, fintech &amp; AI</span></div>
+        </div>
+        <div class="ab2-card-body">
+          <p class="ab2-bio ab2-bio--lead">I'm <b>Saiky</b>, a senior product designer in Bengaluru. I design complex products and turn them into experiences people can actually use.</p>
+          <p class="ab2-bio">I've worked with <b>Walmart</b>, <b>Maersk</b>, <b>SOLV</b>, and <b>Standard Chartered</b>, designing products across enterprise, fintech, and emerging businesses.</p>
+          <p class="ab2-bio">Right now, I'm exploring how <b>AI</b> is changing the way we design, build, and interact with products — and what that means for the future of product design.</p>
+        </div>
+        <dl class="ab2-meta">
           <div><dt>Based in</dt><dd>Bengaluru, India</dd></div>
           <div><dt>Off screen</dt><dd>Tennis · Solo backpacking · Acrylic painting</dd></div>
-        </div>
+        </dl>
       </div>
     </div>
   </section>
