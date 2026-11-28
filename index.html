@@ -1973,7 +1973,7 @@
   .ab2-h1 em{font-style:italic;}
   .ab2-sub{grid-column:1;margin:clamp(12px,1.8svh,20px) 0 0;max-width:64ch;font-size:var(--ab2-body);line-height:1.6;color:var(--ink-soft);}
   .ab2-cta{grid-column:2;flex:none;margin:0;align-self:end;}
-  .ab2-row{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(14px,1.4vw,22px);
+  .ab2-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.4vw,22px);
     height:clamp(360px, calc(100svh - var(--about-top, 100px) - var(--ab2-head, 280px) - clamp(64px,10svh,124px)), 960px);}
   /* the mark: one circle, half black, half white */
   .ab2-mark{container-type:size;display:flex;align-items:center;justify-content:center;min-width:0;}
@@ -1983,12 +1983,28 @@
   :root[data-theme="dark"] .ab2-circle{background:linear-gradient(90deg,#F8F7F4 50%,#17171C 50%);border-color:#F8F7F4;}
   @media (hover:hover){ .ab2-mark:hover .ab2-circle{transform:rotate(180deg);} }
   @media (prefers-reduced-motion:reduce){ .ab2-circle{transition:none;} }
-  .ab2-photo{height:100%;border-radius:4px;overflow:hidden;background:var(--paper-raised);}
-  .ab2-photo img{display:block;height:100%;width:auto;max-width:none;}
+  /* portrait in a circle: half the original colour photo, half a dotted stipple of it (like the home hero).
+     The whole photo sits inside the circle; the circle is filled with the photo's own red so nothing is cut off. */
+  .ab2-photo{container-type:size;height:100%;min-width:0;display:flex;align-items:center;justify-content:center;}
+  .ab2-disc{position:relative;width:min(100cqw,100cqh);aspect-ratio:1;border-radius:50%;overflow:hidden;box-sizing:border-box;border:1.5px solid #17171C;}
+  :root[data-theme="dark"] .ab2-disc{border-color:#F8F7F4;}
+  .ab2-half{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;transition:clip-path 1s cubic-bezier(.65,0,.35,1);}
+  .ab2-half img{display:block;height:88%;width:auto;max-width:none;margin-bottom:4%;}
+  .ab2-half--color{background:radial-gradient(circle at 50% 42%,#B30E16 0%,#9A0911 45%,#760207 100%);clip-path:inset(0 0 0 50%);}
+  .ab2-half--color img{-webkit-mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 9%,#000 94%,transparent);
+    -webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 9%,#000 94%,transparent);mask-composite:intersect;}
+  .ab2-half--dots{background:#F8F7F4;clip-path:inset(0 50% 0 0);}
+  :root[data-theme="dark"] .ab2-half--dots{background:#17171C;}
+  :root[data-theme="dark"] .ab2-half--dots img{filter:invert(1);}
+  @media (hover:hover){
+    .ab2-photo:hover .ab2-half--color{clip-path:inset(0 0 0 0);}
+    .ab2-photo:hover .ab2-half--dots{clip-path:inset(0 100% 0 0);}
+  }
+  @media (prefers-reduced-motion:reduce){ .ab2-half{transition:none;} }
   /* details card — brand Line grey */
-  .ab2-card{display:flex;flex-direction:column;min-width:0;overflow:auto;border-radius:4px;background:#DFDDD8;color:#17171C;
+  .ab2-card{display:flex;flex-direction:column;min-width:0;overflow:auto;border-radius:4px;background:#17171C;color:#F8F7F4;
     padding:clamp(20px,3.2svh,36px) clamp(20px,2.2vw,36px);}
-  :root[data-theme="dark"] .ab2-card{background:#2A2A33;color:#ECEAEE;}
+  :root[data-theme="dark"] .ab2-card{background:#F8F7F4;color:#17171C;}
   .ab2-name{font-family:var(--font-body);font-weight:700;font-size:clamp(18px,1.5vw,22px);letter-spacing:.03em;text-transform:uppercase;line-height:1.15;}
   .ab2-role{margin-top:8px;font-size:var(--ab2-small);line-height:1.45;color:color-mix(in srgb, currentColor 66%, transparent);}
   .ab2-bio{margin:0;font-size:var(--ab2-body);line-height:1.6;color:color-mix(in srgb, currentColor 82%, transparent);}
@@ -1999,7 +2015,7 @@
   .ab2-meta dt{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb, currentColor 60%, transparent);margin-bottom:6px;}
   .ab2-meta dd{margin:0;font-size:var(--ab2-small);line-height:1.5;}
   @media (max-width:1180px){
-    .ab2-row{grid-template-columns:auto 1fr;}
+    .ab2-row{grid-template-columns:repeat(2,minmax(0,1fr));}
     .ab2-mark{display:none;}
   }
   @media (max-width:860px){
@@ -2007,8 +2023,8 @@
     .ab2-head{grid-template-columns:1fr;row-gap:24px;}
     .ab2-cta{grid-column:1;}
     .ab2-row{display:flex;flex-direction:column;height:auto;}
-    .ab2-photo{height:auto;}
-    .ab2-photo img{width:100%;height:auto;}
+    .ab2-photo{height:auto;width:100%;container-type:inline-size;}
+    .ab2-disc{width:100cqw;}
     .ab2-card{overflow:visible;}
     .ab2-role + .ab2-bio{margin-top:0;}
   }
@@ -5050,7 +5066,10 @@
     </div>
     <div class="ab2-row">
       <div class="ab2-mark" aria-hidden="true"><span class="ab2-circle"></span></div>
-      <div class="ab2-photo"><img src="assets/images/image-022-67f0cd6926e6.jpg" width="900" height="959" alt="Saikiran Desai, portrait"></div>
+      <div class="ab2-photo"><div class="ab2-disc" role="img" aria-label="Saikiran Desai, portrait — half full colour, half dotted">
+        <div class="ab2-half ab2-half--dots" aria-hidden="true"><img src="assets/images/about-portrait-dots.png" width="1800" height="1918" alt=""></div>
+        <div class="ab2-half ab2-half--color" aria-hidden="true"><img src="assets/images/image-022-67f0cd6926e6.jpg" width="900" height="959" alt=""></div>
+      </div></div>
       <div class="ab2-card">
         <div class="ab2-name">Saikiran Desai</div>
         <div class="ab2-role">Senior Product Designer · Enterprise, fintech &amp; AI</div>
