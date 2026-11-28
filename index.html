@@ -1475,17 +1475,19 @@
   :root[data-theme="dark"] .lab-card:hover{border-color:color-mix(in srgb, var(--ink) 18%, var(--line));
     box-shadow:0 1px 2px rgba(0,0,0,.3), 0 16px 34px -18px rgba(0,0,0,.55);}
   .lab-card[hidden]{display:none;}
-  .lab-nav{position:absolute;top:calc(50% - 34px);width:42px;height:42px;border-radius:50%;
-    background:var(--paper-raised);border:1px solid var(--line);display:flex;align-items:center;
-    justify-content:center;cursor:pointer;z-index:5;color:var(--ink);padding:0;
-    box-shadow:0 10px 24px -12px rgba(12,10,30,.3);transition:background .2s ease,color .2s ease,border-color .2s ease;}
-  .lab-nav svg{width:16px;height:16px;}
-  .lab-nav:hover{background:var(--violet);color:#fff;border-color:var(--violet);}
-  .lab-nav--prev{left:-21px;}
-  .lab-nav--next{right:-21px;}
-  @media (max-width:1180px){
-    .lab-nav{display:none;}
-  }
+  /* Lab runs like "In their words": cards start on the content column and bleed off the right edge; arrows sit below, right */
+  .lab-carousel{width:100vw;margin-left:calc(50% - 50vw);}
+  .lab-grid.lab-grid--lx{padding:12px var(--lab-g,32px) 20px;scroll-padding:0 var(--lab-g,32px);-webkit-mask-image:none;mask-image:none;}
+  .lab-navrow{display:flex;justify-content:flex-end;gap:10px;margin-top:8px;padding:0 var(--lab-g,32px);}
+  .lab-navrow.is-static{display:none;}
+  .lab-nav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;
+    background:var(--paper-raised);border:1px solid var(--line);color:var(--ink);
+    cursor:pointer;transition:background .2s ease,border-color .2s ease,opacity .2s ease;}
+  .lab-nav svg{width:17px;height:17px;}
+  @media (hover:hover){ .lab-nav:hover:not(:disabled){background:color-mix(in srgb, var(--accent) 10%, var(--paper-raised));border-color:color-mix(in srgb, var(--accent) 45%, var(--line));} }
+  .lab-nav:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .lab-nav:disabled{background:transparent;color:var(--ink-soft);opacity:.45;cursor:default;}
+  @media (max-width:760px){ .lab-navrow{justify-content:flex-start;} }
   .lab-thumb{aspect-ratio:16/11;display:flex;align-items:center;justify-content:center;padding:18px;}
   .lt-violet{background:linear-gradient(150deg,#CFC2F5,#B7A4EE);}
   .lt-ink{background:linear-gradient(150deg,#2A2A33,#15151B);}
@@ -1574,7 +1576,7 @@
   /* LAB CARDS v2 — three tall, equal cards (lilac / paper / ink), brand palette only:
      Pale Lilac #F1EAF7 · Aubergine #5B2A68 · Warm Ivory #F8F7F4 · Near Black #17171C */
   .lab-grid--lx{gap:20px;padding:12px 2px 40px;}
-  .lx{position:relative;display:flex !important;flex-direction:column;flex:0 0 calc((100% - 40px)/3);min-height:clamp(560px,44vw,640px);
+  .lx{position:relative;display:flex !important;flex-direction:column;flex:0 0 calc((100vw - 2 * var(--lab-g,32px) - 40px)/3);min-height:clamp(560px,44vw,640px);
     padding:28px 28px 26px;border-radius:22px;overflow:hidden;border:1px solid transparent;scroll-snap-align:start;color:#17171C;
     transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease;}
   .lx[hidden]{display:none !important;}
@@ -4983,8 +4985,6 @@
       </div>
 
       <div class="lab-carousel">
-        <button type="button" class="lab-nav lab-nav--prev" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <button type="button" class="lab-nav lab-nav--next" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div class="lab-grid lab-grid--lx">
         <a class="lab-card lx lx--lilac" data-cat="ai" data-view="case-supplier-insights" role="link" tabindex="0" aria-label="Supplier Insights — view case study">
           <div class="lx-top"><span class="lx-label"><b></b>AI POC</span><span class="lx-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div>
@@ -5023,6 +5023,10 @@
             <p class="lx-tags"><span>Vibe coded</span><span>Prototype</span><span>Supplier Matrix</span></p>
           </div>
         </a>
+        </div>
+        <div class="lab-navrow">
+        <button type="button" class="lab-nav lab-nav--prev" disabled aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button type="button" class="lab-nav lab-nav--next" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
       </div>
     </section>
@@ -9868,11 +9872,21 @@ try{
     const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 22;
     return card ? card.getBoundingClientRect().width + gap : 360;
   }
-  /* the right-edge fade only shows while there is more to scroll */
-  function edge(){ track.classList.toggle('at-end', track.scrollLeft + track.clientWidth >= track.scrollWidth - 4); }
-  track.addEventListener('scroll', edge, {passive:true}); window.addEventListener('resize', edge);
+  /* the track starts on the content column (same left edge as the section) and runs to the screen edge */
+  const car = track.closest('.lab-carousel'), row = document.querySelector('.lab-navrow');
+  function gutter(){ if(!car || !car.parentElement) return; const r = car.parentElement.getBoundingClientRect();
+    if(r.width) car.style.setProperty('--lab-g', Math.max(20, Math.round(r.left)) + 'px'); }
+  function edge(){
+    const end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    track.classList.toggle('at-end', end);
+    prev.disabled = track.scrollLeft <= 4; next.disabled = end;
+    if(row) row.classList.toggle('is-static', track.scrollWidth <= track.clientWidth + 4);
+  }
+  track.addEventListener('scroll', edge, {passive:true});
+  window.addEventListener('resize', ()=>{ gutter(); edge(); });
   new MutationObserver(edge).observe(track, {subtree:true, attributes:true, attributeFilter:['hidden']});
-  edge();
+  if(window.ResizeObserver) new ResizeObserver(()=>{ gutter(); edge(); }).observe(car.parentElement);
+  gutter(); edge();
   prev.addEventListener('click', ()=> track.scrollBy({left:-step(), behavior:'smooth'}));
   next.addEventListener('click', ()=> track.scrollBy({left:step(), behavior:'smooth'}));
 })();
